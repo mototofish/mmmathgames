@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#43a047">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Animal Homes 動物之家 | 一對一 · 兩隻一屋 – MMathWorld</title>
+    <meta name="description" content="Animal Homes 動物之家遊戲：動物和房屋亂七八糟排在一幅圖裡，數清楚再回答！一對一：動物多還是屋多？多多少？兩隻住一屋：多少隻沒有屋住、多少間空屋？Animals and houses scattered in one picture — count carefully! Match 1-to-1 to see which has more, then pair 2 per house to find homeless animals and empty houses. 免費升小數學遊戲！Free counting & comparison practice for kids.">
+    <link rel="canonical" href="https://mathgames.missman.world/animal_homes">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Animal Homes 動物之家 | 一對一 · 兩隻一屋 – MMathWorld">
+    <meta property="og:description" content="Animal Homes 動物之家遊戲：動物和房屋亂七八糟排在一幅圖裡，數清楚再回答！一對一：動物多還是屋多？兩隻住一屋：多少隻沒有屋住、多少間空屋？Animals and houses scattered in one picture — count, match 1-to-1, then pair 2 per house! 免費升小數學遊戲！">
+    <meta property="og:url" content="https://mathgames.missman.world/animal_homes">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Animal Homes 動物之家 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Animal Homes 動物之家 | 一對一 · 兩隻一屋 – MMathWorld">
+    <meta name="twitter:description" content="Animal Homes 動物之家遊戲：動物和房屋亂七八糟排在一幅圖裡！一對一：動物多還是屋多？兩隻住一屋：多少隻沒有屋住、多少間空屋？Count, match and compare — free math game for kids!">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Animal Homes",
+      "alternateName": "動物之家",
+      "url": "https://mathgames.missman.world/animal_homes",
+      "description": "Animal Homes 動物之家遊戲：動物和房屋亂七八糟排在一幅圖裡，數清楚再回答！一對一：動物多還是屋多？兩隻住一屋：多少隻沒有屋住、多少間空屋？Animals and houses scattered in one picture — count, match 1-to-1, then pair 2 per house.",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": ["zh-Hant-HK", "en"],
+      "genre": ["Educational", "Math"],
+      "gamePlatform": ["Web Browser", "Mobile Web"],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "HKD" },
+      "audience": { "@type": "PeopleAudience", "suggestedMinAge": 4, "suggestedMaxAge": 7 },
+      "author": { "@type": "Organization", "name": "MMathWorld", "url": "https://mathgames.missman.world/" },
+      "learningResourceType": "Educational game",
+      "teaches": "一對一比較多少、每兩隻動物住一間屋：有多少隻沒有屋住、有多少間空屋 1-to-1 comparison and two-per-house matching with pictures"
+    }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%2343a047'/%3E%3Ctext x='24' y='34' font-size='28' text-anchor='middle'%3E🏠%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        :root {
+            --leaf: #43a047; --leaf-dark: #2e7d32;
+            --sky: #4fa8e0; --sky-dark: #2c6fb0;
+            --wood: #a9744f; --wood-dark: #8a5a3b;
+            --cream: #fffdf5; --danger: #e74c3c; --success: #2ecc71;
+            --text-main: #3d4a35; --text-muted: #7a8a6e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body {
+            min-height: 100vh; min-height: 100dvh;
+            background: linear-gradient(180deg, #8fd0ff 0%, #bfe8ff 42%, #d9f5d0 75%, #b7e39b 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: safe center;
+            padding: 14px; overflow-x: hidden; touch-action: manipulation;
+        }
+        .hidden { display: none !important; }
+        .deco { position: fixed; pointer-events: none; opacity: 0.5; z-index: 0; }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+        #back-btn {
+            position: fixed; top: 12px; left: 12px; z-index: 60;
+            background: #ffffff; border: 3px solid #d9c8b2; color: #8a7458;
+            font-size: 15px; font-weight: 800; border-radius: 999px; padding: 7px 16px;
+            cursor: pointer; box-shadow: 0 3px 0 #d9c8b2; transition: transform 0.12s;
+        }
+        #back-btn:hover { transform: translateY(-2px); }
+
+        #game-container {
+            position: relative; z-index: 1; width: 100%; max-width: 840px;
+            background: var(--cream); border: 5px solid var(--wood); border-radius: 28px;
+            box-shadow: 0 10px 0 var(--wood-dark), 0 22px 40px rgba(60, 80, 40, 0.25);
+            padding: 20px 22px 24px; text-align: center;
+            max-height: calc(100dvh - 28px); overflow-y: auto;
+        }
+
+        .mascot-big { font-size: 64px; animation: bob 2.6s infinite ease-in-out; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.18)); }
+        .game-title { font-size: 36px; font-weight: 900; color: var(--leaf-dark); margin: 4px 0 8px; }
+        .tag-pill {
+            display: inline-block; background: #eef7e8; color: var(--leaf-dark);
+            border: 3px solid #c4e3b4; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 6px 0 12px;
+        }
+        #trophy-pill {
+            display: inline-block; background: linear-gradient(145deg, #fff3c4, #ffe082);
+            border: 3px solid #f0c93f; color: #9c6500; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 4px 0 8px;
+        }
+        .intro-desc { font-size: 16px; font-weight: 700; color: #6b5a48; line-height: 1.55; max-width: 560px; margin: 0 auto 16px; }
+        .intro-desc .en { font-size: 13.5px; color: #a08b76; }
+
+        .btn {
+            background: linear-gradient(145deg, #6fcf73, #43a047); color: #fff;
+            border: none; border-radius: 999px; font-size: 20px; font-weight: 800;
+            padding: 13px 36px; cursor: pointer; box-shadow: 0 5px 0 var(--leaf-dark);
+            transition: transform 0.12s, box-shadow 0.12s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--leaf-dark); }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        #lock-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+        #lock-input {
+            font-family: inherit; font-size: 18px; font-weight: 700; padding: 12px 18px; width: 220px;
+            border: 3px solid #dfe9d8; border-radius: 999px; outline: none; text-align: center; color: #4a3f33;
+        }
+        #lock-input:focus { border-color: var(--leaf); }
+        #lock-input.error { border-color: var(--danger); animation: deny 0.35s; }
+        #unlock-btn { background: var(--leaf); box-shadow: 0 6px 0 var(--leaf-dark); }
+        #unlock-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        #unlock-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--leaf-dark); }
+        #lock-error { margin-top: 12px; font-weight: 800; color: var(--danger); font-size: 15px; }
+        .btn-secondary { background: linear-gradient(145deg, #8ec9f5, #4fa8e0); box-shadow: 0 5px 0 var(--sky-dark); font-size: 16px; padding: 11px 24px; }
+        .btn-secondary:active { box-shadow: 0 2px 0 var(--sky-dark); }
+
+        #progress-pill {
+            display: inline-block; background: #e8f4ff; color: var(--sky-dark);
+            border: 3px solid #bcd9f5; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 3px 14px; margin-bottom: 6px;
+        }
+        #same-tag {
+            display: inline-block; background: linear-gradient(145deg, #fff3c4, #ffe082);
+            border: 3px solid #f0c93f; color: #8a5a00; border-radius: 999px;
+            font-weight: 900; font-size: 14px; padding: 3px 14px; margin: 0 0 8px 6px;
+            box-shadow: 0 3px 0 rgba(240, 201, 63, 0.45);
+            animation: same-pulse 0.55s ease;
+        }
+        @keyframes same-pulse {
+            0% { transform: scale(0.92); }
+            55% { transform: scale(1.07); }
+            100% { transform: scale(1); }
+        }
+        #scene {
+            position: relative; width: 100%; height: 400px;
+            background: linear-gradient(to bottom, #cdefff 0%, #cdefff 36%, #c4e8a6 36%, #a9d98b 100%);
+            border: 3px solid #8fbf6f; border-radius: 20px;
+            margin-bottom: 8px; overflow: hidden;
+        }
+        .obj {
+            position: absolute; line-height: 1; cursor: pointer; user-select: none;
+            animation: obj-pop 0.3s backwards;
+            filter: drop-shadow(0 3px 3px rgba(0, 0, 0, 0.15));
+        }
+        .obj > span { display: inline-block; }
+        .obj.marked { opacity: 0.45; }
+        .obj.marked::after {
+            content: '✓'; position: absolute; top: -9px; right: -9px;
+            width: 22px; height: 22px; border-radius: 50%;
+            background: #2ecc71; color: #fff; font-size: 14px; font-weight: 900;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid #ffffff; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.25);
+        }
+        @keyframes obj-pop { from { transform: scale(0); } to { transform: scale(1); } }
+
+        #scene-hint { font-size: 14.5px; font-weight: 800; color: var(--text-muted); margin-bottom: 8px; }
+
+        #question-card {
+            background: #ffffff; border: 3px solid #e3d7c3; border-radius: 18px;
+            padding: 10px 16px 12px; margin-bottom: 10px;
+        }
+        #question-card.shake { animation: deny 0.35s; }
+        #q-zh { font-size: 21px; font-weight: 900; color: var(--text-main); line-height: 1.35; }
+        #q-en { font-size: 14.5px; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
+
+        #choices { display: flex; gap: 18px; justify-content: center; margin-bottom: 6px; }
+        .choice-bubble {
+            width: 66px; height: 66px; border-radius: 50%;
+            background: linear-gradient(145deg, #8ec9f5, #4fa8e0); color: #fff;
+            border: 3px solid #bcd9f5; font-size: 27px; font-weight: 900;
+            cursor: pointer; box-shadow: 0 5px 0 var(--sky-dark);
+            transition: transform 0.12s;
+        }
+        .choice-bubble:hover { transform: scale(1.1); }
+        .choice-bubble.correct { background: linear-gradient(145deg, #7bd88a, #2ecc71); border-color: #a9e8b4; box-shadow: 0 5px 0 #1e9e52; animation: pop 0.35s; }
+        .choice-bubble.wrong { background: linear-gradient(145deg, #ff9a8a, #e74c3c); border-color: #ffc4bb; box-shadow: 0 5px 0 #c0392b; animation: deny 0.35s; }
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.25); } 100% { transform: scale(1); } }
+        @keyframes deny { 0%, 100% { transform: translateX(0); } 30% { transform: translateX(-5px); } 60% { transform: translateX(5px); } }
+
+        #feedback { min-height: 28px; font-size: 18px; font-weight: 800; margin-top: 4px; }
+        #reveal {
+            background: #fffdf0; border: 3px solid var(--wood); border-radius: 16px;
+            padding: 8px 14px 10px; margin-top: 8px;
+            font-size: 16px; font-weight: 800; color: #6b5a48; line-height: 1.5;
+        }
+        #reveal .rv-en { font-size: 13.5px; color: #a08b76; }
+
+        .fx-popup {
+            position: fixed; z-index: 150; pointer-events: none;
+            font-size: 30px; font-weight: 900; animation: rise 0.9s forwards;
+        }
+        @keyframes rise { 0% { opacity: 1; transform: translate(-50%, 0) scale(1); } 100% { opacity: 0; transform: translate(-50%, -56px) scale(1.4); } }
+
+        #end-screen .mascot-big { font-size: 58px; }
+        #end-sub { font-weight: 700; color: #8a7458; font-size: 17px; margin-bottom: 14px; }
+        #end-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 120; }
+
+        @media (max-width: 640px) {
+            #game-container { padding: 14px 12px 16px; border-width: 4px; }
+            .game-title { font-size: 28px; }
+            .mascot-big { font-size: 50px; }
+            #scene { height: 330px; }
+            #q-zh { font-size: 18px; }
+            #q-en { font-size: 13px; }
+            .choice-bubble { width: 58px; height: 58px; font-size: 24px; }
+            #choices { gap: 14px; }
+            #feedback { font-size: 16px; }
+            .intro-desc { font-size: 14.5px; }
+        }
+        @media (max-height: 720px) {
+            .mascot-big { font-size: 44px; }
+            .game-title { font-size: 26px; margin: 2px 0 4px; }
+            #scene { height: 320px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="deco" style="top: 8%; left: 5%; font-size: 44px; animation: bob 3s infinite;">🌳</div>
+    <div class="deco" style="top: 14%; right: 6%; font-size: 40px; animation: bob 3.4s infinite;">🌷</div>
+    <div class="deco" style="bottom: 10%; left: 7%; font-size: 42px; animation: bob 2.8s infinite;">🐿️</div>
+    <div class="deco" style="bottom: 16%; right: 5%; font-size: 38px; animation: bob 3.2s infinite;">🌻</div>
+
+    <button id="back-btn" onclick="location.href='index.html'">&#8592; Home</button>
+
+    <div id="game-container">
+        <!-- INTRO -->
+        <!-- LOCK -->
+        <div id="lock-screen">
+            <div class="mascot-big">🔒</div>
+            <h1 class="game-title">Animal Homes 動物之家</h1>
+            <p class="intro-desc">
+                這關需要密碼才能玩！快問老師或者家長拿密碼吧。
+                <br><span class="en">This level is locked — ask your teacher or parent for the password!</span>
+            </p>
+            <div id="lock-row">
+                <input id="lock-input" type="password" placeholder="Password 密碼" autocomplete="off" />
+                <button id="unlock-btn" class="btn">Unlock 解鎖！</button>
+            </div>
+            <div id="lock-error" class="hidden">密碼不對，再試一次！Wrong password — try again! 🤔</div>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- INTRO -->
+        <div id="intro-screen" class="hidden">
+            <div class="mascot-big">🏡</div>
+            <h1 class="game-title">Animal Homes 動物之家</h1>
+            <div class="tag-pill">一對一 · 兩隻一屋 · 數一數比一比</div>
+            <div id="trophy-pill" class="hidden">🏆 全部完成！Village Hero!</div>
+            <p class="intro-desc">
+                動物和房屋亂成一團排在一幅圖裡！數清楚：一對一，動物多還是屋多？如果每間屋住 2 隻，有多少隻沒有屋住、多少間空屋？
+                <br><span class="en">The animals and houses are all jumbled up in one picture! Count carefully: one-to-one, which has more? If 2 animals share each house, how many have no home — and how many houses are empty?</span>
+            </p>
+            <button class="btn" onclick="startGame()">Play!</button>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- PLAY -->
+        <div id="play-screen" class="hidden">
+            <div>
+                <div id="progress-pill">第 1 / 10 題 Question</div><div id="same-tag" class="hidden">同一幅圖，不用再數！Same picture — no need to count again!</div>
+            </div>
+            <div id="scene"></div>
+            <div id="scene-hint">點一點數過的做記號 ✓ · Tap the ones you have counted!</div>
+            <div id="question-card">
+                <div id="q-zh"></div>
+                <div id="q-en"></div>
+            </div>
+            <div id="choices"></div>
+            <div id="feedback"></div>
+            <div id="reveal" class="hidden"></div>
+        </div>
+
+        <!-- END -->
+        <div id="end-screen" class="hidden">
+            <div class="mascot-big">🏆</div>
+            <h2 id="end-title" class="game-title">Village Hero!</h2>
+            <p id="end-sub"></p>
+            <div id="end-btns">
+                <button id="action-btn" class="btn">Play Again 再玩一次</button>
+                <button id="home-btn" class="btn btn-secondary" onclick="location.href='index.html'">Home 主頁</button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <script>
+        // ================= DATA =================
+        const ANIMALS = [
+            { e: '🐶', zh: '小狗', en: 'puppies' },
+            { e: '🐰', zh: '小兔', en: 'bunnies' },
+            { e: '🐱', zh: '小貓', en: 'kittens' },
+            { e: '🐤', zh: '小雞', en: 'chicks' },
+            { e: '🐹', zh: '小倉鼠', en: 'hamsters' },
+            { e: '🐷', zh: '小豬', en: 'piglets' },
+        ];
+
+        // ================= STATE =================
+        const introScreen = document.getElementById('intro-screen');
+        const playScreen = document.getElementById('play-screen');
+        const endScreen = document.getElementById('end-screen');
+        const progressPill = document.getElementById('progress-pill');
+        const sameTag = document.getElementById('same-tag');
+        const sceneEl = document.getElementById('scene');
+        const questionCard = document.getElementById('question-card');
+        const qZh = document.getElementById('q-zh');
+        const qEn = document.getElementById('q-en');
+        const choicesEl = document.getElementById('choices');
+        const feedback = document.getElementById('feedback');
+        const reveal = document.getElementById('reveal');
+
+        let pool = [], qIdx = 0, mistakes = [], isReview = false;
+        let currentQ = null, locked = false, renderedPic = null;
+
+        let audioStarted = false, synth;
+        function initAudio() { synth = new Tone.PolySynth(Tone.Synth).toDestination(); }
+        function playSound(type) {
+            if (!audioStarted || !synth) return;
+            const now = Tone.now();
+            if (type === 'pop') synth.triggerAttackRelease('A6', '32n', now);
+            else if (type === 'ding') synth.triggerAttackRelease('E6', '16n', now);
+            else if (type === 'correct') ['C5', 'E5', 'G5'].forEach((n, i) => synth.triggerAttackRelease(n, '16n', now + i * 0.07));
+            else if (type === 'wrong') synth.triggerAttackRelease('C2', '8n', now);
+            else if (type === 'fanfare') ['C5', 'E5', 'G5', 'C6'].forEach((n, i) => synth.triggerAttackRelease(n, '8n', now + i * 0.13));
+        }
+
+        function shuffle(a) { return a.sort(() => Math.random() - 0.5); }
+        function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+
+        // ================= FLOW =================
+        // password gate — unlocks the intro screen
+        const lockScreen = document.getElementById('lock-screen');
+        const lockInput = document.getElementById('lock-input');
+        const lockError = document.getElementById('lock-error');
+        const PASS_HASH = 1056886225; // djb2-xor of the password
+        function tryUnlock() {
+            const v = lockInput.value.trim().toLowerCase();
+            let h = 5381;
+            for (let i = 0; i < v.length; i++) h = ((h * 33) ^ v.charCodeAt(i)) >>> 0;
+            if (v && h === PASS_HASH) {
+                if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+                playSound('correct');
+                lockScreen.classList.add('hidden');
+                introScreen.classList.remove('hidden');
+            } else {
+                playSound('wrong');
+                lockError.classList.remove('hidden');
+                lockInput.value = '';
+                lockInput.classList.add('error');
+                setTimeout(() => lockInput.classList.remove('error'), 400);
+                lockInput.focus();
+            }
+        }
+        document.getElementById('unlock-btn').onclick = () => tryUnlock();
+        lockInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+        // in-game back button: Menu while playing (no password needed), Home on menu screens
+        const backBtn = document.getElementById('back-btn');
+        function setBackBtn(mode) {
+            if (mode === 'menu') {
+                backBtn.innerHTML = '&#8592; Menu 目錄';
+                backBtn.onclick = () => backToMenu();
+            } else {
+                backBtn.innerHTML = '&#8592; Home';
+                backBtn.onclick = () => location.href = 'index.html';
+            }
+        }
+        function backToMenu() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+            setBackBtn('home');
+        }
+
+        function startGame() {
+            if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+            pool = buildPool();
+            qIdx = 0; mistakes = []; isReview = false;
+            introScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+            playScreen.classList.remove('hidden');
+            setBackBtn('menu');
+            showQuestion();
+        }
+
+        // One game = 5 pictures x 2 questions = 10 questions.
+        // A and H are both in [5, 15] so kids really have to count, and
+        // A stays CLOSE TO 2 x H (a bit above or a bit below) so the SAME
+        // picture works for both questions:
+        //   (1) one-to-one: how many MORE animals than houses? (A - H)
+        //   (2) two per house: homeless (A - 2H) or empty houses (H - ceil(A/2))
+        function genPic(dir) {
+            if (dir === 'homeless') {
+                const H = randInt(5, 7);
+                const j = randInt(1, Math.min(2, 15 - 2 * H));
+                return { A: 2 * H + j, H };
+            }
+            const H = randInt(5, 9);
+            const empty = H < 8 ? 1 : randInt(1, 2);
+            const used = H - empty;
+            const opts = [2 * used - 1, 2 * used].filter(a => a >= 5 && a <= 15);
+            if (!opts.length) return null;
+            return { A: opts[randInt(0, opts.length - 1)], H };
+        }
+
+        function buildPool() {
+            // at least 2 homeless-style and 2 empty-style pictures per game
+            const dirs = [];
+            const nHome = randInt(2, 3);
+            for (let i = 0; i < 5; i++) dirs.push(i < nHome ? 'homeless' : 'empty');
+            shuffle(dirs);
+            const pics = [], seen = new Set();
+            for (const dir of dirs) {
+                let pic = null;
+                for (let t = 0; t < 300 && !pic; t++) {
+                    const cand = genPic(dir);
+                    if (!cand) continue;
+                    const key = cand.A + '-' + cand.H;
+                    if (seen.has(key)) continue;
+                    seen.add(key);
+                    pic = cand;
+                }
+                if (!pic) pic = { A: 11, H: 5 };
+                pic.animal = randInt(0, ANIMALS.length - 1);
+                pic.house = Math.random() < 0.5 ? '🏡' : '🏠';
+                pics.push(pic);
+            }
+            const out = [];
+            pics.forEach(pic => {
+                const q1 = { v: 'q1A', pic, answer: pic.A - pic.H };
+                const q2 = pic.A > 2 * pic.H
+                    ? { v: 'q2Homeless', pic, answer: pic.A - 2 * pic.H }
+                    : { v: 'q2Empty', pic, answer: pic.H - Math.ceil(pic.A / 2) };
+                const pair = shuffle([q1, q2]);
+                out.push(pair[0], pair[1]);
+            });
+            return out;
+        }
+
+        // ================= SCENE =================
+        // Random non-overlapping positions so kids must count, not pattern-read.
+        // The layout is cached on the picture, so the second question of a pair
+        // (and any review re-ask) shows the EXACT same scene — nothing moves.
+        function renderScene(pic) {
+            const W = sceneEl.clientWidth, Ht = sceneEl.clientHeight;
+            if (
+                renderedPic === pic && pic.layout &&
+                sceneEl.childElementCount === pic.layout.items.length &&
+                Math.abs(pic.layout.W - W) <= 2 && Math.abs(pic.layout.Ht - Ht) <= 2
+            ) return; // same picture, same size: leave it exactly where it is
+            sceneEl.innerHTML = '';
+            const small = W < 560;
+            // bigger crowds get smaller emojis so everything still fits
+            const total = pic.A + pic.H;
+            let hs, as;
+            if (small) {
+                if (total >= 23) { hs = 32; as = 24; }
+                else if (total >= 15) { hs = 38; as = 28; }
+                else { hs = 46; as = 36; }
+            } else {
+                if (total >= 23) { hs = 40; as = 30; }
+                else if (total >= 15) { hs = 48; as = 36; }
+                else { hs = 58; as = 44; }
+            }
+            if (!pic.layout || Math.abs(pic.layout.W - W) > 2 || Math.abs(pic.layout.Ht - Ht) > 2) {
+                const pad = 10;
+                const placed = [];
+                function tryOnce(size, gap) {
+                    for (let i = 0; i < 400; i++) {
+                        const x = pad + size / 2 + Math.random() * Math.max(1, W - 2 * pad - size);
+                        const y = pad + size / 2 + Math.random() * Math.max(1, Ht - 2 * pad - size);
+                        let ok = true;
+                        for (const p of placed) {
+                            const need = (size + p.size) / 2 + gap;
+                            if ((x - p.x) * (x - p.x) + (y - p.y) * (y - p.y) < need * need) { ok = false; break; }
+                        }
+                        if (ok) { const o = { x, y, size }; placed.push(o); return o; }
+                    }
+                    return null;
+                }
+                function place(size) {
+                    for (const g of [12, 6, 2, -4]) {
+                        const o = tryOnce(size, g);
+                        if (o) return o;
+                    }
+                    const o = {
+                        x: pad + size / 2 + Math.random() * Math.max(1, W - 2 * pad - size),
+                        y: pad + size / 2 + Math.random() * Math.max(1, Ht - 2 * pad - size),
+                        size,
+                    };
+                    placed.push(o);
+                    return o;
+                }
+                const items = [];
+                for (let i = 0; i < pic.H; i++) {
+                    const o = place(hs);
+                    items.push({ emoji: pic.house, size: hs, left: o.x - hs / 2, top: o.y - hs / 2, rotate: 0 });
+                }
+                const an = ANIMALS[pic.animal];
+                for (let i = 0; i < pic.A; i++) {
+                    const o = place(as);
+                    items.push({ emoji: an.e, size: as, left: o.x - as / 2, top: o.y - as / 2, rotate: randInt(-20, 20) });
+                }
+                pic.layout = { W, Ht, items };
+            }
+            pic.layout.items.forEach((it, idx) => {
+                const el = document.createElement('div');
+                el.className = 'obj';
+                el.style.left = it.left + 'px';
+                el.style.top = it.top + 'px';
+                el.style.fontSize = it.size + 'px';
+                el.style.animationDelay = Math.min(idx * 0.04, 0.9) + 's';
+                const sp = document.createElement('span');
+                sp.textContent = it.emoji;
+                if (it.rotate) sp.style.transform = 'rotate(' + it.rotate + 'deg)';
+                el.appendChild(sp);
+                el.addEventListener('click', () => { el.classList.toggle('marked'); playSound('pop'); });
+                sceneEl.appendChild(el);
+            });
+            renderedPic = pic;
+        }
+
+        function qText(q) {
+            const an = ANIMALS[q.pic.animal];
+            if (q.v === 'q1A') return {
+                zh: `一對一：1 隻${an.zh}住 1 間屋。${an.zh}比屋多多少隻？`,
+                en: `One-to-one: 1 animal per house. How many MORE ${an.en} than houses?`,
+            };
+            if (q.v === 'q1H') return {
+                zh: `一對一：1 隻${an.zh}住 1 間屋。屋比${an.zh}多多少間？`,
+                en: `One-to-one: 1 animal per house. How many MORE houses than ${an.en}?`,
+            };
+            if (q.v === 'q2Homeless') return {
+                zh: `每間屋住 2 隻${an.zh}。有多少隻${an.zh}沒有屋住？`,
+                en: `Each house fits 2 animals. How many ${an.en} have no home?`,
+            };
+            return {
+                zh: `每間屋住 2 隻${an.zh}。有多少間屋是空的？`,
+                en: `Each house fits 2 animals. How many houses are EMPTY?`,
+            };
+        }
+
+        function showQuestion() {
+            if (playScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            locked = false;
+            currentQ = pool[qIdx];
+            progressPill.innerText = `第 ${qIdx + 1} / 10 題 Question`;
+            const samePicAsPrev = qIdx > 0 && pool[qIdx - 1].pic === currentQ.pic;
+            sameTag.classList.toggle('hidden', !samePicAsPrev);
+            renderScene(currentQ.pic);
+            const t = qText(currentQ);
+            qZh.innerText = t.zh;
+            qEn.innerText = t.en;
+            feedback.innerText = '';
+            reveal.classList.add('hidden');
+            buildChoices();
+        }
+
+        function buildChoices() {
+            const ans = currentQ.answer;
+            const set = new Set([ans]);
+            const cands = shuffle([ans + 1, ans - 1, ans + 2, ans - 2, ans + 3].filter(v => v >= 0 && v <= 15 && !set.has(v)));
+            while (set.size < 3 && cands.length) set.add(cands.pop());
+            let extra = 0;
+            while (set.size < 3) { if (!set.has(extra)) set.add(extra); extra++; }
+            choicesEl.innerHTML = '';
+            shuffle([...set]).forEach(v => {
+                const b = document.createElement('button');
+                b.className = 'choice-bubble';
+                b.innerText = v;
+                b.addEventListener('click', () => checkAnswer(v, b));
+                choicesEl.appendChild(b);
+            });
+        }
+
+        function fxPopup(el, text, color) {
+            const r = el.getBoundingClientRect();
+            const d = document.createElement('div');
+            d.className = 'fx-popup';
+            d.innerText = text;
+            d.style.left = (r.left + r.width / 2) + 'px';
+            d.style.top = (r.top - 8) + 'px';
+            d.style.color = color;
+            document.body.appendChild(d);
+            setTimeout(() => d.remove(), 900);
+        }
+
+        function revealEquation() {
+            const q = currentQ, an = ANIMALS[q.pic.animal], A = q.pic.A, H = q.pic.H;
+            let zh, en;
+            if (q.v === 'q1A') {
+                zh = `${A} 隻${an.zh} − ${H} 間屋 = ${A - H}，${an.zh}多 ${A - H} 隻！`;
+                en = `${A} ${an.en} − ${H} houses = ${A - H} more ${an.en}!`;
+            } else if (q.v === 'q1H') {
+                zh = `${H} 間屋 − ${A} 隻${an.zh} = ${H - A}，屋多 ${H - A} 間！`;
+                en = `${H} houses − ${A} ${an.en} = ${H - A} more house${H - A > 1 ? 's' : ''}!`;
+            } else if (q.v === 'q2Homeless') {
+                zh = `${H} 間屋 × 2 隻 = 住滿 ${2 * H} 隻 → ${A} − ${2 * H} = ${A - 2 * H} 隻沒有屋住！`;
+                en = `${H} houses × 2 = ${2 * H} housed → ${A} − ${2 * H} = ${A - 2 * H} ${an.en} with no home!`;
+            } else {
+                const used = Math.ceil(A / 2);
+                zh = `${A} 隻${an.zh}，2 隻住一屋 → 住了 ${used} 間屋 → ${H} − ${used} = ${H - used} 間空屋！`;
+                en = `${A} ${an.en}, 2 per house → ${used} house${used > 1 ? 's' : ''} used → ${H} − ${used} = ${H - used} empty!`;
+            }
+            reveal.innerHTML = `${zh}<br><span class="rv-en">${en}</span>`;
+            reveal.classList.remove('hidden');
+        }
+
+        function checkAnswer(v, b) {
+            if (locked) return;
+            locked = true;
+            if (v === currentQ.answer) {
+                playSound('correct');
+                b.classList.add('correct');
+                fxPopup(b, '✓', '#2ecc71');
+                feedback.style.color = '#00b894';
+                const praises = [
+                    '答對了！Correct! 🎉',
+                    '真棒！Well done! 🎉',
+                    '正確！Brilliant! 🎉',
+                ];
+                feedback.innerText = praises[Math.floor(Math.random() * praises.length)];
+                setTimeout(nextStep, 1400);
+            } else {
+                playSound('wrong');
+                b.classList.add('wrong');
+                questionCard.classList.add('shake');
+                setTimeout(() => questionCard.classList.remove('shake'), 380);
+                if (!isReview) mistakes.push(currentQ);
+                feedback.style.color = '#d63031';
+                feedback.innerText = `正確答案是 ${currentQ.answer}！The answer is ${currentQ.answer}!`;
+                revealEquation();
+                const right = [...choicesEl.children].find(x => Number(x.innerText) === currentQ.answer);
+                if (right) setTimeout(() => right.classList.add('correct'), 550);
+                setTimeout(nextStep, 3600);
+            }
+        }
+
+        function nextStep() {
+            if (playScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            qIdx++;
+            if (qIdx < pool.length) { showQuestion(); return; }
+            if (mistakes.length > 0) {
+                isReview = true;
+                pool = shuffle([...new Set(mistakes)]);
+                mistakes = [];
+                qIdx = 0;
+                feedback.style.color = '#9c6500';
+                feedback.innerText = '🔄 再試一次！Let’s review the tricky ones!';
+                setTimeout(showQuestion, 1500);
+                return;
+            }
+            showEnd();
+        }
+
+        // ================= END & TROPHY =================
+        function showEnd() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            setBackBtn('home');
+            localStorage.setItem('homes_complete', 'true');
+            decorateIntro();
+            document.getElementById('end-title').innerText = 'Village Hero! 動物村英雄！';
+            document.getElementById('end-sub').innerText = '你數得又清楚又準，什麼都難不倒你！You counted and matched every picture!';
+            document.getElementById('action-btn').onclick = () => startGame();
+            playSound('fanfare');
+            fireConfetti();
+        }
+
+        function decorateIntro() {
+            let done = false;
+            try { done = localStorage.getItem('homes_complete') === 'true'; } catch (e) {}
+            document.getElementById('trophy-pill').classList.toggle('hidden', !done);
+        }
+        decorateIntro();
+
+        // ================= CONFETTI =================
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        function fireConfetti() {
+            canvas.width = innerWidth; canvas.height = innerHeight;
+            const pieces = [];
+            const colors = ['#43a047', '#4fa8e0', '#ffd54a', '#ff8a65', '#ffffff', '#a5d6a7'];
+            for (let i = 0; i < 130; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width, y: -20 - Math.random() * canvas.height * 0.5,
+                    w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
+                    c: colors[Math.floor(Math.random() * colors.length)],
+                    vy: 2 + Math.random() * 3, vx: -1.5 + Math.random() * 3,
+                    rot: Math.random() * Math.PI, vr: -0.1 + Math.random() * 0.2,
+                });
+            }
+            let start = performance.now();
+            (function tick(now) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                pieces.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+                    if (p.y < canvas.height + 30) alive = true;
+                    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+                    ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                });
+                if (alive && now - start < 4200) requestAnimationFrame(tick);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            })(start);
+        }
+    </script>
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>動物與房屋亂成一團！「一對一」環節用一一對應比較多少：每隻動物配一間屋，一眼看到哪樣多、多多少。「兩隻一屋」就是除法與餘數的前奏：兩隻住一間，有多少隻沒有屋子住？有多少間空屋？全部都是小一面試的常見圖畫題。</p>
+        <p class="pg-en">Animals and houses all jumbled up! The "one-to-one" stage compares quantities by matching: one animal per house shows at a glance which is more, and by how much. "Two animals per house" is the prelude to division with remainders: how many are left homeless? How many houses stay empty? All common picture questions in Primary One interviews.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>教小朋友用筆（或者手指）逐對連線、圈一圈 — 「一隻對一間」，不要用眼估。答「多多少」時數出聲：「多了1、2、3 — 多3間。」步驟分明，不會亂。</p>
+        <p class="pg-en">Teach your child to draw matching lines or circle pairs with a pen (or finger) — "one animal to one house", not guessing by eye. When answering "how many more", count out loud: "1, 2, 3 — 3 more." Clear steps, no confusion.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>收襪子配對、把鞋子擺成一對對、「兩個人一張椅子，6個人需要多少張椅子？」— 配對思想在家裡隨處可以練，不用額外買教具。</p>
+        <p class="pg-en">Pair up socks, line shoes up in pairs, "two people per chair — how many chairs for 6 people?" — matching ideas can be practised anywhere at home, no special materials needed.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

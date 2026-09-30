@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#29b6f6">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ocean Mystery | 20以內加減法求未知數 · Missing Numbers within 20 – MMathWorld</title>
+    <meta name="description" content="Ocean Mystery 海底尋謎數學遊戲：20以內加減法求未知數 Missing Numbers within 20。頑皮的貝殼把數字藏起來了，幫小章魚找出貝殼下的數字！免費升小數學練習，邊玩邊學！Free missing-number equation practice up to 20.">
+    <link rel="canonical" href="https://mathgames.missman.world/ocean_mystery">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Ocean Mystery | 20以內加減法求未知數 · Missing Numbers within 20 – MMathWorld">
+    <meta property="og:description" content="Ocean Mystery 海底尋謎數學遊戲：20以內加減法求未知數 Missing Numbers within 20。頑皮的貝殼把數字藏起來了，幫小章魚找出貝殼下的數字！免費升小數學練習，邊玩邊學！Free missing-number equation practice up to 20.">
+    <meta property="og:url" content="https://mathgames.missman.world/ocean_mystery">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Ocean Mystery 海洋解謎 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ocean Mystery | 20以內加減法求未知數 · Missing Numbers within 20 – MMathWorld">
+    <meta name="twitter:description" content="Ocean Mystery 海底尋謎數學遊戲：20以內加減法求未知數 Missing Numbers within 20。頑皮的貝殼把數字藏起來了，幫小章魚找出貝殼下的數字！免費升小數學練習，邊玩邊學！Free missing-number equation practice up to 20.">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Ocean Mystery",
+      "alternateName": "海洋解謎",
+      "url": "https://mathgames.missman.world/ocean_mystery",
+      "description": "Ocean Mystery 海底尋謎數學遊戲：20以內加減法求未知數 Missing Numbers within 20。頑皮的貝殼把數字藏起來了，幫小章魚找出貝殼下的數字！免費升小數學練習，邊玩邊學！Free missing-number equation practice up to 20.",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": [
+            "zh-Hant-HK",
+            "en"
+      ],
+      "genre": [
+            "Educational",
+            "Math"
+      ],
+      "gamePlatform": [
+            "Web Browser",
+            "Mobile Web"
+      ],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HKD"
+      },
+      "audience": {
+            "@type": "PeopleAudience",
+            "suggestedMinAge": 4,
+            "suggestedMaxAge": 7
+      },
+      "author": {
+            "@type": "Organization",
+            "name": "MMathWorld",
+            "url": "https://mathgames.missman.world/"
+      },
+      "learningResourceType": "Educational game",
+      "teaches": "20以內加減法求未知數 Finding the missing number within 20"
+}
+    </script>
+    <!-- Include Tone.js for synthesized sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #29b6f6;
+            --primary-dark: #0288d1;
+            --secondary: #ff8a65;
+            --secondary-dark: #e64a19;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --text-color: #0d3b66;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Comic Sans MS', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            transition: background-color 0.3s;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+            overscroll-behavior: none;
+        }
+        button { touch-action: manipulation; }
+
+        /* Undersea background */
+        .bg-underlay {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: linear-gradient(180deg, #aee9fb 0%, #5ec2ee 35%, #1c86d1 75%, #0a5ea8 100%);
+        }
+
+        /* Floating sea creatures */
+        .bg-deco {
+            position: fixed;
+            z-index: -1;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0.65;
+            filter: drop-shadow(0 6px 6px rgba(0, 30, 60, 0.18));
+            animation: deco-float ease-in-out infinite;
+        }
+        @keyframes deco-float {
+            0%, 100% { transform: translateY(0) rotate(-6deg); }
+            50% { transform: translateY(-22px) rotate(8deg); }
+        }
+
+        /* Rising bubbles */
+        .rise-bubble {
+            position: fixed;
+            bottom: -70px;
+            z-index: -1;
+            pointer-events: none;
+            border-radius: 50%;
+            background: radial-gradient(circle at 32% 30%, rgba(255,255,255,0.9), rgba(255,255,255,0.12) 62%);
+            border: 1.5px solid rgba(255,255,255,0.55);
+            animation: bubble-rise linear infinite;
+            opacity: 0.75;
+        }
+        @keyframes bubble-rise {
+            0% { transform: translateY(0) translateX(0); opacity: 0; }
+            8% { opacity: 0.75; }
+            50% { transform: translateY(-55vh) translateX(14px); }
+            100% { transform: translateY(-112vh) translateX(-10px); opacity: 0; }
+        }
+
+        #game-container {
+            background-color: rgba(255, 255, 255, 0.96);
+            padding: 46px 36px 34px 36px;
+            border-radius: 34px;
+            box-shadow: 0 14px 0 rgba(2, 119, 189, 0.14), 0 26px 50px rgba(4, 40, 75, 0.28);
+            border: 5px solid #ffffff;
+            max-width: 560px;
+            width: 92%;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        /* Titles & Text */
+        .game-title {
+            color: var(--text-color);
+            font-size: 32px;
+            margin-top: 0;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+        .hidden { display: none !important; }
+
+        .mascot-big { font-size: 78px; animation: mascot-bob 2.4s ease-in-out infinite; display: inline-block; }
+        @keyframes mascot-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .tag-pill {
+            display: inline-block;
+            font-size: 17px;
+            font-weight: 800;
+            color: #01579b;
+            background-color: #e1f5fe;
+            border: 3px solid #81d4fa;
+            padding: 6px 18px;
+            border-radius: 999px;
+            margin-bottom: 18px;
+        }
+
+        /* General Buttons */
+        .btn {
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 24px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s, box-shadow 0.1s, filter 0.15s;
+            font-family: inherit;
+            font-weight: 800;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.15);
+        }
+        .btn:active {
+            transform: translateY(4px) !important;
+            box-shadow: 0 2px 0 transparent !important;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            box-shadow: 0 6px 0 var(--primary-dark);
+        }
+        .btn-primary:hover { background-color: #4fc3f7; transform: translateY(-2px); }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            box-shadow: 0 6px 0 var(--secondary-dark);
+        }
+        .btn-secondary:hover { filter: brightness(1.06); transform: translateY(-2px); }
+
+        /* Back Button */
+        #back-btn {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background-color: #e1f2fb;
+            color: #27598a;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 800;
+            font-family: inherit;
+            box-shadow: 0 4px 0 #b4d5e8;
+            z-index: 20;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        #back-btn:hover { background-color: #cfe9f8; transform: translateY(-2px); }
+        #back-btn:active { transform: translateY(2px); box-shadow: 0 0 0 transparent; }
+
+        /* Sublevel picker */
+        .level-grid { display: flex; flex-direction: column; gap: 10px; margin: 12px auto 6px; max-width: 470px; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #f2faff; border: 3px solid #d3ecfa; border-radius: 18px;
+            padding: 12px 16px; cursor: pointer; font-family: inherit;
+            box-shadow: 0 5px 0 #d3ecfa;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #d3ecfa; filter: brightness(1.02); }
+        .level-card:active { transform: translateY(2px); box-shadow: 0 2px 0 #d3ecfa; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-color); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #5d87ad; }
+
+        /* Top Bar: Progress & Combo */
+        #top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 26px;
+            margin-bottom: 8px;
+            min-height: 40px;
+            gap: 10px;
+        }
+        #shell-display {
+            font-size: 21px;
+            text-align: left;
+            letter-spacing: 1px;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            white-space: nowrap;
+            background: linear-gradient(180deg, rgba(210, 240, 255, 0.6), rgba(175, 225, 250, 0.4));
+            border: 3px solid rgba(140, 205, 240, 0.8);
+            border-radius: 18px;
+            padding: 4px 10px;
+            box-shadow: inset 0 3px 8px rgba(80, 150, 200, 0.25);
+        }
+        .shell-unfed { opacity: 0.3; filter: grayscale(100%); }
+        #shell-display span { transition: transform 0.2s; }
+        #combo-display {
+            font-size: 19px;
+            font-weight: 800;
+            color: #e67e22;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            white-space: nowrap;
+        }
+        .fever-text {
+            color: #e74c3c !important;
+            animation: pop 0.5s infinite;
+            text-shadow: 0 0 10px #ffb8b8;
+        }
+
+        /* Octopus mascot */
+        #octo-zone { margin: 2px auto 6px auto; height: 104px; position: relative; }
+        #octo {
+            font-size: 88px;
+            display: inline-block;
+            animation: mascot-bob 3.2s ease-in-out infinite;
+            filter: drop-shadow(0 8px 10px rgba(4, 40, 75, 0.25));
+        }
+
+        /* Equation with hidden-number shell */
+        #equation {
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--text-color);
+            margin: 4px 0 20px 0;
+            text-shadow: 2px 2px 0px #e1f2fb;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+        }
+        .shell-x {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 82px;
+            height: 82px;
+            font-size: 42px;
+            margin: 0 8px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 32% 28%, #ffffff 0%, #b3e5fc 58%, #81d4fa 100%);
+            border: 3px solid rgba(255, 255, 255, 0.95);
+            box-shadow: 0 6px 14px rgba(3, 60, 110, 0.28), inset 0 -5px 10px rgba(2, 119, 189, 0.22);
+            animation: shell-pulse 1.8s ease-in-out infinite;
+            text-shadow: none;
+        }
+        @keyframes shell-pulse {
+            0%, 100% { transform: scale(1) rotate(-5deg); }
+            50% { transform: scale(1.09) rotate(5deg); }
+        }
+
+        /* Bubble answer buttons */
+        #options-container {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin-bottom: 22px;
+        }
+        .bubble-btn {
+            flex: 1;
+            max-width: 108px;
+            aspect-ratio: 1 / 1;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            font-family: inherit;
+            font-size: 34px;
+            font-weight: 800;
+            color: #05386b;
+            cursor: pointer;
+            background: radial-gradient(circle at 32% 28%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.55) 20%, rgba(179,229,252,0.9) 58%, rgba(129,212,250,0.95) 100%);
+            box-shadow: 0 8px 16px rgba(3, 60, 110, 0.25), inset 0 -6px 12px rgba(2, 119, 189, 0.25);
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+            text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+        }
+        .bubble-btn:hover { transform: translateY(-4px) scale(1.05); filter: brightness(1.05); }
+        .bubble-btn:active { transform: translateY(2px) scale(0.97); }
+        .bubble-btn.is-correct {
+            background: radial-gradient(circle at 32% 28%, #e8fff0 0%, #a5d6a7 45%, #2ecc71 100%);
+            color: #ffffff;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 8px 16px rgba(20, 120, 60, 0.35), inset 0 -6px 12px rgba(20, 120, 60, 0.3);
+        }
+        .bubble-btn.is-wrong {
+            background: radial-gradient(circle at 32% 28%, #ffe9e6 0%, #ef9a9a 45%, #e74c3c 100%);
+            color: #ffffff;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.2);
+            box-shadow: 0 8px 16px rgba(140, 30, 20, 0.35), inset 0 -6px 12px rgba(140, 30, 20, 0.3);
+        }
+        .bubble-btn.is-dim { opacity: 0.45; }
+
+        /* Timer Area */
+        #timer-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 30px;
+        }
+        #timer-container {
+            width: 100%;
+            height: 16px;
+            background-color: #e1f2fb;
+            border-radius: 999px;
+            overflow: hidden;
+            flex-grow: 1;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.12);
+        }
+        /* Timer on/off toggle */
+        .tt-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 12px; }
+        .tt-text { font-size: 15px; font-weight: 800; color: #5d87ad; }
+        .tt-state { font-size: 14px; font-weight: 800; color: #5d87ad; min-width: 58px; text-align: left; }
+        .tt-switch { position: relative; width: 56px; height: 30px; border-radius: 999px; border: none; background: #cbd5e1; cursor: pointer; transition: background 0.2s; padding: 0; flex-shrink: 0; }
+        .tt-switch.on { background: #2ecc71; }
+        .tt-knob { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; transition: left 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.25); }
+        .tt-switch.on .tt-knob { left: 29px; }
+        #timer-bar {
+            height: 100%;
+            width: 100%;
+            background-color: var(--primary);
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.35) 0 12px, rgba(255,255,255,0) 12px 24px);
+            background-size: 34px 34px;
+            animation: stripes-slide 1s linear infinite;
+            border-radius: 999px;
+            transition: width 0.05s linear, background-color 0.3s ease;
+        }
+        @keyframes stripes-slide {
+            from { background-position: 0 0; }
+            to { background-position: 34px 0; }
+        }
+        .splash { font-size: 26px; }
+
+        #feedback {
+            font-size: 24px;
+            margin-top: 12px;
+            font-weight: 800;
+            height: 32px;
+            line-height: 1.25;
+        }
+
+        /* End Screen */
+        #final-message {
+            font-size: 22px;
+            color: var(--text-color);
+            margin: 16px 0 4px 0;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+        #end-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .trophy-bounce { display: inline-block; animation: trophy-pop 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite; }
+        @keyframes trophy-pop {
+            0%, 100% { transform: scale(1) rotate(-6deg); }
+            50% { transform: scale(1.18) rotate(6deg); }
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Flying Shell Animation */
+        .flying-shell {
+            position: fixed;
+            font-size: 46px;
+            pointer-events: none;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-2deg); }
+            75% { transform: translateX(5px) rotate(2deg); }
+        }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .anim-shake { animation: shake 0.3s ease-in-out; }
+        .anim-jump { animation: jump 0.4s ease-in-out; }
+        .shake-active { animation: shake 0.4s infinite; }
+
+        /* Small-height screens (laptops/tablets landscape) */
+        @media (max-height: 720px) {
+            #octo-zone { height: 74px; margin-bottom: 0; }
+            #octo { font-size: 60px; }
+            #equation { font-size: 38px; margin: 2px 0 12px 0; }
+            .shell-x { width: 62px; height: 62px; font-size: 32px; margin: 0 6px; }
+            .bubble-btn { font-size: 27px; max-width: 86px; }
+            #options-container { margin-bottom: 14px; gap: 14px; }
+            #feedback { margin-top: 6px; font-size: 19px; height: 26px; }
+            #game-container { padding-top: 40px; }
+            #top-bar { margin-top: 24px; }
+            .mascot-big { font-size: 56px; }
+            .game-title { font-size: 26px; }
+        }
+
+        /* Narrow phones */
+        @media (max-width: 450px) {
+            #game-container { padding: 42px 18px 24px 18px; }
+            #equation { font-size: 34px; }
+            .shell-x { width: 60px; height: 60px; font-size: 30px; margin: 0 5px; }
+            .bubble-btn { font-size: 25px; }
+            #options-container { gap: 10px; }
+            .level-card .lv-name { font-size: 16.5px; }
+            .level-card .lv-sub { font-size: 12px; }
+            .btn { font-size: 20px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="bg-underlay"></div>
+
+<!-- Floating sea creatures -->
+<div class="bg-deco" style="font-size: 46px; top: 14%; left: 6%; animation-duration: 5.2s;">🐠</div>
+<div class="bg-deco" style="font-size: 40px; top: 68%; left: 9%; animation-duration: 6.4s; animation-delay: -2s;">🦀</div>
+<div class="bg-deco" style="font-size: 48px; top: 18%; right: 7%; animation-duration: 5.8s; animation-delay: -1s;">🐡</div>
+<div class="bg-deco" style="font-size: 42px; top: 64%; right: 10%; animation-duration: 7s; animation-delay: -3s;">🐟</div>
+
+<!-- Rising bubbles -->
+<div class="rise-bubble" style="width: 26px; height: 26px; left: 12%; animation-duration: 9s;"></div>
+<div class="rise-bubble" style="width: 14px; height: 14px; left: 22%; animation-duration: 7s; animation-delay: -3s;"></div>
+<div class="rise-bubble" style="width: 34px; height: 34px; left: 46%; animation-duration: 11s; animation-delay: -5s;"></div>
+<div class="rise-bubble" style="width: 18px; height: 18px; left: 64%; animation-duration: 8s; animation-delay: -2s;"></div>
+<div class="rise-bubble" style="width: 28px; height: 28px; left: 80%; animation-duration: 10s; animation-delay: -6s;"></div>
+<div class="rise-bubble" style="width: 12px; height: 12px; left: 90%; animation-duration: 7.5s; animation-delay: -1s;"></div>
+
+<!-- Confetti overlay -->
+<canvas id="confetti-canvas"></canvas>
+
+<div id="game-container">
+
+    <!-- INTRO SCREEN -->
+    <div id="intro-screen">
+        <div class="mascot-big">🐙</div>
+        <h1 class="game-title" style="font-size: 38px; margin-bottom: 10px; color: var(--primary-dark); text-transform: none;">Ocean Mystery</h1>
+        <div class="tag-pill" style="margin-bottom: 14px;">20以內加減法 · 求未知數</div>
+        <p style="font-size: 17px; font-weight: 700; color: #5d87ad; margin: 0 0 26px 0;">頑皮的貝殼把數字藏起來了！<br>A naughty seashell hid the number! 🐚</p>
+        <button class="btn btn-primary" onclick="showSetup()" style="font-size: 28px; padding: 15px 54px; border-radius: 50px; animation: pop 2s infinite;">Play!</button>
+        <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+    </div>
+
+    <!-- BACK BUTTON -->
+    <button id="back-btn" onclick="goBack()">&#8592; Home</button>
+
+    <!-- SETUP SCREEN: pick a sublevel -->
+    <div id="setup-screen" class="hidden">
+        <h2 class="game-title" style="color: var(--primary-dark); text-transform: none;">Ocean Mystery 🐙</h2>
+        <div class="tt-row">
+            <span class="tt-text">⏱️ 計時器 Timer</span>
+            <button class="tt-switch on" id="timer-switch" onclick="toggleTimer()" aria-label="Timer on or off"><span class="tt-knob"></span></button>
+            <span class="tt-state" id="timer-state">開 ON</span>
+        </div>
+        <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+        <div class="level-grid">
+            <button class="level-card" id="lv-card-1" onclick="startGame(1)">
+                <span class="lv-emoji">🐠</span>
+                <span><span class="lv-name">Sublevel 1: 找出加數</span><br><span class="lv-sub">Find the Addend — 🐚 + 5 = 13 · 主打退位 Borrowing practice</span></span>
+            </button>
+            <button class="level-card" id="lv-card-2" onclick="startGame(2)">
+                <span class="lv-emoji">🦀</span>
+                <span><span class="lv-name">Sublevel 2: 找出被減數</span><br><span class="lv-sub">Find the Minuend — 🐚 − 9 = 7 · 主打進位 Carrying practice</span></span>
+            </button>
+            <button class="level-card" id="lv-card-3" onclick="startGame(3)">
+                <span class="lv-emoji">🐡</span>
+                <span><span class="lv-name">Sublevel 3: 找出減數</span><br><span class="lv-sub">Find the Subtrahend — 16 − 🐚 = 4 · 主打退位 Borrowing practice</span></span>
+            </button>
+            <button class="level-card" id="lv-card-4" onclick="startGame(4)">
+                <span class="lv-emoji">🦈</span>
+                <span><span class="lv-name">Sublevel 4: 混合挑戰</span><br><span class="lv-sub">Mixed Challenge — all types, with borrowing &amp; carrying! ⭐</span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- PLAY SCREEN -->
+    <div id="play-screen" class="hidden">
+
+        <div id="top-bar">
+            <div id="shell-display"></div>
+            <div id="combo-display">COMBO x2! 🔥</div>
+        </div>
+
+        <div id="octo-zone">
+            <span id="octo">🐙</span>
+        </div>
+
+        <div id="equation"></div>
+
+        <div id="options-container">
+            <button class="bubble-btn" onclick="checkAnswer(0)"></button>
+            <button class="bubble-btn" onclick="checkAnswer(1)"></button>
+            <button class="bubble-btn" onclick="checkAnswer(2)"></button>
+        </div>
+
+        <div id="timer-area">
+            <span class="splash hidden">💦</span>
+            <div id="timer-container">
+                <div id="timer-bar"></div>
+            </div>
+            <span class="splash hidden">💦</span>
+        </div>
+
+        <div id="feedback"></div>
+    </div>
+
+    <!-- END SCREEN: Results & Correction Loop -->
+    <div id="end-screen" class="hidden">
+        <div style="font-size: 60px; margin: 10px 0;"><span class="trophy-bounce">🏆</span></div>
+        <h2 id="end-title" class="game-title" style="text-transform: none;">All done!</h2>
+        <div id="final-message"></div>
+        <div id="end-btns">
+            <button id="action-btn" class="btn btn-primary"></button>
+            <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Game Variables
+    let currentQuestion = null;
+    let questionPool = [];
+    let mistakes = [];
+    let currentOptions = [];
+    let isTransitioning = false;
+    let isCorrectionRound = false;
+    let comboCount = 0;
+    let shellsCollected = 0;
+    let totalQuestions = 10;
+    let activeLevelId = null;
+    let isFeverMode = false;
+
+    // Timer Variables
+    let timerInterval;
+    const timeLimit = 20000; // 20 seconds per question
+    let timeLeft = timeLimit;
+
+    // DOM Elements
+    const setupScreen = document.getElementById('setup-screen');
+    const playScreen = document.getElementById('play-screen');
+    const endScreen = document.getElementById('end-screen');
+    const introScreen = document.getElementById('intro-screen');
+    const backBtn = document.getElementById('back-btn');
+    const equationDisplay = document.getElementById('equation');
+    const optionButtons = document.querySelectorAll('.bubble-btn');
+    const feedbackDisplay = document.getElementById('feedback');
+    const actionBtn = document.getElementById('action-btn');
+    const pickerBtn = document.getElementById('picker-btn');
+    const shellDisplay = document.getElementById('shell-display');
+    const comboDisplay = document.getElementById('combo-display');
+    const octo = document.getElementById('octo');
+
+    // Timer Elements
+    const timerArea = document.getElementById('timer-area');
+    const timerBar = document.getElementById('timer-bar');
+    const splashes = document.querySelectorAll('.splash');
+
+    // Audio setup (Tone.js)
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const noiseSynth = new Tone.NoiseSynth({
+        noise: { type: 'pink' },
+        envelope: { attack: 0.005, decay: 0.1, sustain: 0 }
+    }).toDestination();
+    let audioContextStarted = false;
+
+    // Smart Back Button Logic
+    function goBack() {
+        if (!playScreen.classList.contains('hidden')) {
+            showSetup(); // Go back to sublevel picker from game
+        } else if (!setupScreen.classList.contains('hidden')) {
+            setupScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+            backBtn.innerText = '← Home';
+        } else if (!endScreen.classList.contains('hidden')) {
+            showSetup();
+        } else if (!introScreen.classList.contains('hidden')) {
+            window.location.href = 'index.html';
+        }
+    }
+
+    // Transition from Intro to Setup
+    function showSetup() {
+        if (!audioContextStarted) {
+            Tone.start();
+            audioContextStarted = true;
+        }
+        clearInterval(timerInterval);
+        introScreen.classList.add('hidden');
+        playScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        setupScreen.classList.remove('hidden');
+        backBtn.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+    }
+
+    // ---- Sound Effects ----
+    function playSound(type) {
+        if (!audioContextStarted) return;
+        const now = Tone.now();
+        if (type === 'correct') {
+            if (isFeverMode) {
+                synth.triggerAttackRelease(["E5", "G5"], "8n", now);
+                synth.triggerAttackRelease("C6", "8n", now + 0.1);
+            } else {
+                synth.triggerAttackRelease(["C5", "E5"], "8n", now);
+                synth.triggerAttackRelease("G5", "8n", now + 0.1);
+            }
+        } else if (type === 'wrong') {
+            synth.triggerAttackRelease("C3", "4n", now);
+            synth.triggerAttackRelease("G2", "4n", now + 0.15);
+        } else if (type === 'timeout') {
+            synth.triggerAttackRelease("A2", "4n", now);
+            synth.triggerAttackRelease("D2", "4n", now + 0.15);
+        } else if (type === 'pop') {
+            synth.triggerAttackRelease("G6", "32n", now);
+            noiseSynth.triggerAttackRelease("32n", now);
+        } else if (type === 'splash') {
+            noiseSynth.triggerAttackRelease("16n", now);
+            synth.triggerAttackRelease("C4", "32n", now);
+        } else if (type === 'fanfare') {
+            synth.triggerAttackRelease("C5", "8n", now);
+            synth.triggerAttackRelease("E5", "8n", now + 0.12);
+            synth.triggerAttackRelease("G5", "8n", now + 0.24);
+            synth.triggerAttackRelease("C6", "4n", now + 0.36);
+        } else if (type === 'tick') {
+            noiseSynth.triggerAttackRelease("32n", now);
+        }
+    }
+
+    // ---- Confetti ----
+    function fireConfetti(x, y, multiplier = 1) {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const colors = ['#4fc3f7', '#81d4fa', '#ffffff', '#ff8a65', '#ffd54f'];
+        const amount = 30 * multiplier;
+
+        for (let i = 0; i < amount; i++) {
+            particles.push({
+                x: x, y: y,
+                vx: (Math.random() - 0.5) * 15 * (multiplier > 1 ? 1.5 : 1),
+                vy: (Math.random() - 1) * 15 * (multiplier > 1 ? 1.5 : 1),
+                size: Math.random() * 8 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rot: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 20
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let active = false;
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy; p.vy += 0.5; p.rot += p.rotSpeed;
+                if (p.y < canvas.height) {
+                    active = true;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                    ctx.restore();
+                }
+            });
+            if (active) requestAnimationFrame(animate);
+            else ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        animate();
+    }
+
+    // ---- Question Generation ----
+    // q = { left, op, right, result, answer } — the hidden part is null
+    // All values positive integers, every number <= 20, no zeros.
+    const POOLS = { addLeft: [], addRight: [], subFirst: [], subSecond: [] };
+    (function buildPools() {
+        for (let x = 1; x <= 19; x++) {
+            for (let a = 1; a <= 20 - x; a++) {
+                const c = x + a;
+                POOLS.addLeft.push({ left: null, op: '+', right: a, result: c, answer: x });
+                POOLS.addRight.push({ left: a, op: '+', right: null, result: c, answer: x });
+            }
+        }
+        for (let x = 2; x <= 20; x++) {
+            for (let a = 1; a < x; a++) {
+                const c = x - a;
+                if (c < 1) continue;
+                POOLS.subFirst.push({ left: null, op: '−', right: a, result: c, answer: x });
+            }
+        }
+        for (let a = 2; a <= 20; a++) {
+            for (let x = 1; x < a; x++) {
+                const c = a - x;
+                if (c < 1) continue;
+                POOLS.subSecond.push({ left: a, op: '−', right: null, result: c, answer: x });
+            }
+        }
+    })();
+
+    function sample(arr, n) {
+        const copy = [...arr].sort(() => Math.random() - 0.5);
+        return copy.slice(0, n);
+    }
+
+    // Borrowing & carrying detectors — judged on the arithmetic the PLAYER must do:
+    // Find-the-addend (🐚 + a = c): player computes c − a, so borrowing = c's units < a's units.
+    function isBorrowAdd(q) {
+        const known = q.left === null ? q.right : q.left;
+        return q.result % 10 < known % 10;
+    }
+    // Find-the-minuend (🐚 − a = c): player computes a + c, so carrying = units sum to 10+.
+    function isCarryMinuend(q) {
+        return (q.right % 10) + (q.result % 10) >= 10;
+    }
+    // Find-the-subtrahend (a − 🐚 = c): player computes a − c, so borrowing = a's units < c's units.
+    function isBorrowSubtrahend(q) {
+        return q.left % 10 < q.result % 10;
+    }
+
+    // Take nBiased questions matching pred and nPlain not matching it (top up from the other side if short)
+    function sampleBiased(arr, pred, nBiased, nPlain) {
+        const yes = arr.filter(pred), no = arr.filter(q => !pred(q));
+        const a = sample(yes, nBiased);
+        const b = sample(no, nPlain + (nBiased - a.length));
+        const extra = a.length + b.length < nBiased + nPlain ? sample(yes.filter(q => !a.includes(q)), nBiased + nPlain - a.length - b.length) : [];
+        return [...a, ...b, ...extra];
+    }
+
+    function buildPool(level) {
+        let pool;
+        if (level === 1) pool = [
+            ...sampleBiased(POOLS.addLeft, isBorrowAdd, 4, 1),
+            ...sampleBiased(POOLS.addRight, isBorrowAdd, 4, 1)
+        ];
+        else if (level === 2) pool = sampleBiased(POOLS.subFirst, isCarryMinuend, 8, 2);
+        else if (level === 3) pool = sampleBiased(POOLS.subSecond, isBorrowSubtrahend, 8, 2);
+        else pool = [
+            ...sampleBiased(POOLS.addLeft, isBorrowAdd, 2, 0),
+            ...sampleBiased(POOLS.addRight, isBorrowAdd, 2, 0),
+            ...sampleBiased(POOLS.subFirst, isCarryMinuend, 2, 1),
+            ...sampleBiased(POOLS.subSecond, isBorrowSubtrahend, 2, 1)
+        ];
+        pool.sort(() => Math.random() - 0.5);
+        return pool;
+    }
+
+    function partHTML(part) {
+        if (part === null) return '<span class="shell-x">🐚</span>';
+        return `<span>${part}</span>`;
+    }
+
+    function renderEquation(q) {
+        equationDisplay.innerHTML = `${partHTML(q.left)} <span>${q.op}</span> ${partHTML(q.right)} <span>=</span> <span>${q.result}</span>`;
+    }
+
+    // ---- Progress & Combo ----
+    function updateCombo() {
+        if (comboCount >= 5) {
+            if (!isFeverMode) { isFeverMode = true; comboDisplay.classList.add('fever-text'); }
+            comboDisplay.style.opacity = 1; comboDisplay.innerText = `FEVER MODE x${comboCount}! 🔥🔥`;
+            comboDisplay.classList.remove('anim-jump'); void comboDisplay.offsetWidth; comboDisplay.classList.add('anim-jump');
+        } else {
+            if (isFeverMode) { isFeverMode = false; comboDisplay.classList.remove('fever-text'); }
+            if (comboCount >= 2) {
+                comboDisplay.style.opacity = 1; comboDisplay.innerText = `COMBO x${comboCount}! 🔥`;
+                comboDisplay.classList.remove('anim-jump'); void comboDisplay.offsetWidth; comboDisplay.classList.add('anim-jump');
+            } else comboDisplay.style.opacity = 0;
+        }
+    }
+
+    function updateProgress() {
+        shellDisplay.innerHTML = "";
+        for (let i = 0; i < totalQuestions; i++) {
+            const span = document.createElement('span');
+            span.innerText = "🐚";
+            if (i >= shellsCollected) span.className = "shell-unfed";
+            shellDisplay.appendChild(span);
+        }
+    }
+
+    function octoEmotion(emotion) {
+        if (emotion === 'happy') {
+            octo.classList.remove('anim-jump'); void octo.offsetWidth; octo.classList.add('anim-jump');
+        } else if (emotion === 'sad') {
+            octo.classList.remove('anim-shake'); void octo.offsetWidth; octo.classList.add('anim-shake');
+        }
+    }
+
+    // ---- Main Loop ----
+    function startGame(level) {
+        if (!audioContextStarted) { Tone.start(); audioContextStarted = true; }
+        activeLevelId = level; mistakes = []; isCorrectionRound = false; isTransitioning = false;
+        comboCount = 0; shellsCollected = 0; isFeverMode = false;
+        comboDisplay.classList.remove('fever-text');
+
+        questionPool = buildPool(level);
+        totalQuestions = questionPool.length;
+
+        updateCombo(); updateProgress();
+        setupScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+        playScreen.classList.remove('hidden'); backBtn.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+        feedbackDisplay.innerText = ""; nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (questionPool.length === 0) { handleRoundEnd(); return; }
+        currentQuestion = questionPool.pop();
+        renderEquation(currentQuestion);
+
+        const ans = currentQuestion.answer;
+        let options = [ans];
+        // Trap choice: the opposite operation on the two visible numbers, so kids
+        // must truly decide whether to add or subtract (e.g. 🐚 − 4 = 5 → 5+4=9 vs 5−4=1)
+        const vis = [currentQuestion.left, currentQuestion.right, currentQuestion.result].filter(n => n !== null);
+        let trap = (currentQuestion.op === '−' && currentQuestion.left === null)
+            ? Math.abs(vis[0] - vis[1])   // 🐚 − a = c  →  |c − a|
+            : vis[0] + vis[1];            // 🐚 + a = c / a + 🐚 = c / a − 🐚 = c  →  add the visible pair
+        if (trap >= 1 && !options.includes(trap)) options.push(trap);
+        // Third choice: a near-miss
+        while (options.length < 3) {
+            let decoy = ans + (Math.floor(Math.random() * 7) - 3);
+            if (decoy >= 1 && decoy <= 21 && !options.includes(decoy)) options.push(decoy);
+        }
+        options.sort(() => Math.random() - 0.5);
+        currentOptions = options;
+
+        for (let i = 0; i < 3; i++) {
+            optionButtons[i].innerText = options[i];
+            optionButtons[i].classList.remove('is-correct', 'is-wrong', 'is-dim');
+        }
+        isTransitioning = false; startTimer();
+    }
+
+    // ---- Timer on/off toggle (shared preference across games) ----
+    let timerEnabled = true; // timer is ON by default on every visit
+    function toggleTimer() {
+        timerEnabled = !timerEnabled;
+        updateTimerToggle();
+    }
+    function updateTimerToggle() {
+        const sw = document.getElementById('timer-switch');
+        const st = document.getElementById('timer-state');
+        if (!sw || !st) return;
+        sw.classList.toggle('on', timerEnabled);
+        st.innerText = timerEnabled ? '開 ON' : '關 OFF';
+    }
+    updateTimerToggle();
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        if (!timerEnabled) { timerArea.style.visibility = 'hidden'; return; }
+        timerArea.style.visibility = 'visible';
+        timeLeft = timeLimit;
+        timerBar.style.width = '100%';
+        timerBar.style.backgroundColor = 'var(--primary)';
+        timerArea.classList.remove('shake-active');
+        splashes.forEach(f => f.classList.add('hidden'));
+
+        timerInterval = setInterval(() => {
+            timeLeft -= 50;
+            timerBar.style.width = (timeLeft / timeLimit * 100) + '%';
+            if (timeLeft <= 3000 && timeLeft % 1000 === 0) playSound('tick');
+            if (timeLeft <= 3000) {
+                timerBar.style.backgroundColor = 'var(--danger)';
+                timerArea.classList.add('shake-active');
+                splashes.forEach(f => f.classList.remove('hidden'));
+            }
+            if (timeLeft <= 0) { clearInterval(timerInterval); handleTimeout(); }
+        }, 50);
+    }
+
+    function handleTimeout() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        comboCount = 0; updateCombo();
+        timerArea.classList.remove('shake-active');
+        playSound('timeout'); octoEmotion('sad');
+        feedbackDisplay.style.color = "var(--danger)";
+        feedbackDisplay.innerText = `時間到！Time's Up! 貝殼下是 ${currentQuestion.answer}！`;
+        mistakes.push(currentQuestion);
+        highlightCorrect(currentQuestion.answer);
+        setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 1800);
+    }
+
+    function checkAnswer(idx) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        clearInterval(timerInterval);
+        timerArea.classList.remove('shake-active');
+        playSound('pop');
+        if (currentOptions[idx] === currentQuestion.answer) handleCorrect(optionButtons[idx]);
+        else handleWrong(optionButtons[idx], currentQuestion.answer);
+    }
+
+    function handleCorrect(btn) {
+        playSound('correct');
+        btn.classList.add('is-correct');
+
+        // Flying shell from the bubble to the octopus
+        const shell = document.createElement('div');
+        shell.className = 'flying-shell'; shell.innerText = '🐚';
+        const b = btn.getBoundingClientRect();
+        shell.style.left = (b.left + b.width/2) + 'px'; shell.style.top = (b.top + b.height/2) + 'px';
+        document.body.appendChild(shell);
+
+        const m = octo.getBoundingClientRect();
+        void shell.offsetWidth;
+        shell.style.left = (m.left + m.width/2) + 'px'; shell.style.top = (m.top + m.height/2) + 'px';
+        shell.style.transform = 'translate(-50%, -50%) scale(0.2) rotate(360deg)'; shell.style.opacity = '0';
+
+        setTimeout(() => {
+            if (shell.parentNode) shell.parentNode.removeChild(shell);
+            octoEmotion('happy'); playSound('splash');
+            comboCount++; shellsCollected++;
+            updateProgress(); updateCombo();
+            fireConfetti(m.left + m.width/2, m.top + m.height/2, isFeverMode ? 2 : 1);
+            feedbackDisplay.style.color = "var(--success)";
+            feedbackDisplay.innerText = isFeverMode ? "停不下來！UNSTOPPABLE! 🚀" : "答對了！Correct! 🎉";
+            setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 1100);
+        }, 400);
+    }
+
+    function handleWrong(btn, ans) {
+        playSound('wrong'); octoEmotion('sad'); comboCount = 0; updateCombo();
+        btn.classList.add('is-wrong');
+        btn.classList.add('anim-shake');
+        setTimeout(() => btn.classList.remove('anim-shake'), 400);
+        feedbackDisplay.style.color = "var(--danger)";
+        feedbackDisplay.innerText = `答錯了！貝殼下是 ${ans}！It was ${ans}!`;
+        mistakes.push(currentQuestion);
+        highlightCorrect(ans);
+        setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 1800);
+    }
+
+    function highlightCorrect(ans) {
+        for (let i = 0; i < 3; i++) {
+            if (currentOptions[i] === ans) {
+                optionButtons[i].classList.add('is-correct');
+            } else {
+                optionButtons[i].classList.add('is-wrong', 'is-dim');
+            }
+        }
+    }
+
+    function handleRoundEnd() {
+        playScreen.classList.add('hidden'); endScreen.classList.remove('hidden'); backBtn.classList.add('hidden');
+        pickerBtn.onclick = () => showSetup();
+        if (mistakes.length === 0) {
+            playSound('fanfare');
+            markLevelComplete(activeLevelId);
+            document.getElementById('end-title').innerText = "Level Complete! 🎉";
+            document.getElementById('final-message').innerText = "Perfect Score! 全部答對！小章魚好開心！";
+            actionBtn.innerText = "Play Again 再玩一次";
+            actionBtn.onclick = () => startGame(activeLevelId);
+        } else {
+            document.getElementById('end-title').innerText = "Almost there! 差一點點！";
+            document.getElementById('final-message').innerText = `還有 ${mistakes.length} 題要複習！Fix ${mistakes.length} more!`;
+            actionBtn.innerText = "改正錯題 Review Mistakes";
+            actionBtn.onclick = startCorrectionRound;
+        }
+    }
+
+    function startCorrectionRound() {
+        isCorrectionRound = true;
+        questionPool = [...new Set(mistakes)]; questionPool.sort(() => Math.random() - 0.5);
+        totalQuestions = questionPool.length; shellsCollected = 0; updateProgress(); mistakes = [];
+        endScreen.classList.add('hidden'); playScreen.classList.remove('hidden'); backBtn.classList.remove('hidden');
+        nextQuestion();
+    }
+
+    // Completion trophies on the picker cards
+    function markLevelComplete(id) {
+        try { localStorage.setItem(`ocean_l${id}_complete`, '1'); } catch (e) {}
+        decorateCard(id);
+    }
+    function decorateCard(id) {
+        const card = document.getElementById(`lv-card-${id}`);
+        if (!card) return;
+        const name = card.querySelector('.lv-name');
+        if (name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+    }
+    for (let i = 1; i <= 4; i++) {
+        try { if (localStorage.getItem(`ocean_l${i}_complete`) === '1') decorateCard(i); } catch (e) {}
+    }
+</script>
+
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>頑皮的貝殼遮住了算式裡的數字：7 + ? = 12。這類「求未知數」題目是代數思維的萌芽 — 小朋友要理解加減互逆的關係，用「12-7」或者「由7數上去」找出答案。小一面試的填充題（fill in the blanks），考的正是這種能力。</p>
+        <p class="pg-en">A mischievous seashell hides a number in the equation: 7 + ? = 12. These "find the unknown" problems are the seeds of algebraic thinking — children use the inverse relationship between addition and subtraction, solving with "12−7" or by counting on from 7. Primary One interview fill-in-the-blank questions test exactly this.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>用實物演示：「7粒貝殼，要湊夠12粒，還要多少粒？」兩個方法都鼓勵嘗試：數上去（counting on）與直接減法，讓小朋友自己比較哪個方法快、為什麼快。</p>
+        <p class="pg-en">Demonstrate with real objects: "7 shells — how many more to make 12?" Encourage both methods — counting on and straight subtraction — and let your child compare which is faster, and why.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>玩「我想著一個數」謎語：「我想著一個數，加4之後是9，你猜是多少？」由10以內開始慢慢加深。調換角色、由小朋友出題考你，理解會更加深。</p>
+        <p class="pg-en">Play "I'm thinking of a number": "I'm thinking of a number; add 4 and you get 9 — what is it?" Start within 10 and build up slowly. Swap roles and let your child set the riddle — understanding deepens when they teach.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

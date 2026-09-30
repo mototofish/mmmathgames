@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#43a047">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fishy Numbers | 數字序列求未知數 · Number Sequences – MMathWorld</title>
+    <meta name="description" content="Fishy Numbers 釣魚數字遊戲：數字序列求未知數 Number Sequences。單雙數序列、加減 3 至 8 序列，一條小魚藏著答案，快來釣起正確的小魚！免費升小數學練習，邊玩邊學！Find the missing number in the sequence.">
+    <link rel="canonical" href="https://mathgames.missman.world/fishy_numbers">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Fishy Numbers | 數字序列求未知數 · Number Sequences – MMathWorld">
+    <meta property="og:description" content="Fishy Numbers 釣魚數字遊戲：數字序列求未知數 Number Sequences。單雙數序列、加減 3 至 8 序列，一條小魚藏著答案，快來釣起正確的小魚！免費升小數學練習，邊玩邊學！Find the missing number in the sequence.">
+    <meta property="og:url" content="https://mathgames.missman.world/fishy_numbers">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Fishy Numbers 釣魚數字 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fishy Numbers | 數字序列求未知數 · Number Sequences – MMathWorld">
+    <meta name="twitter:description" content="Fishy Numbers 釣魚數字遊戲：數字序列求未知數 Number Sequences。單雙數序列、加減 3 至 8 序列，一條小魚藏著答案，快來釣起正確的小魚！免費升小數學練習，邊玩邊學！Find the missing number in the sequence.">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Fishy Numbers",
+      "alternateName": "釣魚數字",
+      "url": "https://mathgames.missman.world/fishy_numbers",
+      "description": "Fishy Numbers 釣魚數字遊戲：數字序列求未知數 Number Sequences。單雙數序列、加減 3 至 8 序列，一條小魚藏著答案，快來釣起正確的小魚！免費升小數學練習，邊玩邊學！Find the missing number in the sequence.",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": [
+            "zh-Hant-HK",
+            "en"
+      ],
+      "genre": [
+            "Educational",
+            "Math"
+      ],
+      "gamePlatform": [
+            "Web Browser",
+            "Mobile Web"
+      ],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HKD"
+      },
+      "audience": {
+            "@type": "PeopleAudience",
+            "suggestedMinAge": 4,
+            "suggestedMaxAge": 7
+      },
+      "author": {
+            "@type": "Organization",
+            "name": "MMathWorld",
+            "url": "https://mathgames.missman.world/"
+      },
+      "learningResourceType": "Educational game",
+      "teaches": "數字序列求未知數 Number sequences"
+}
+    </script>
+    <!-- Include Tone.js for synthesized sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #43a047;
+            --primary-dark: #2e7d32;
+            --secondary: #ff8a65;
+            --secondary-dark: #e64a19;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --text-color: #23422a;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Comic Sans MS', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            transition: background-color 0.3s;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+            overscroll-behavior: none;
+        }
+        button { touch-action: manipulation; }
+
+        /* Riverside background: sky to grass */
+        .bg-underlay {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: linear-gradient(180deg, #b6e3ff 0%, #d8f3e0 55%, #a9dcb4 100%);
+        }
+
+        /* Floating riverside decorations */
+        .bg-deco {
+            position: fixed;
+            z-index: -1;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0.7;
+            filter: drop-shadow(0 6px 6px rgba(20, 60, 30, 0.15));
+            animation: deco-float ease-in-out infinite;
+        }
+        @keyframes deco-float {
+            0%, 100% { transform: translateY(0) rotate(-6deg); }
+            50% { transform: translateY(-18px) rotate(8deg); }
+        }
+
+        #game-container {
+            background-color: rgba(255, 255, 255, 0.96);
+            padding: 46px 30px 30px 30px;
+            border-radius: 34px;
+            box-shadow: 0 14px 0 rgba(46, 125, 50, 0.14), 0 26px 50px rgba(20, 55, 30, 0.25);
+            border: 5px solid #ffffff;
+            max-width: 620px;
+            width: 94%;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        /* Titles & Text */
+        .game-title {
+            color: var(--text-color);
+            font-size: 32px;
+            margin-top: 0;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+        .hidden { display: none !important; }
+
+        .mascot-big { font-size: 72px; animation: mascot-bob 2.4s ease-in-out infinite; display: inline-block; }
+        @keyframes mascot-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .tag-pill {
+            display: inline-block;
+            font-size: 17px;
+            font-weight: 800;
+            color: #1b5e20;
+            background-color: #e8f5e9;
+            border: 3px solid #a5d6a7;
+            padding: 6px 18px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+
+        /* General Buttons */
+        .btn {
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 24px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s, box-shadow 0.1s, filter 0.15s;
+            font-family: inherit;
+            font-weight: 800;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.15);
+        }
+        .btn:active {
+            transform: translateY(4px) !important;
+            box-shadow: 0 2px 0 transparent !important;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            box-shadow: 0 6px 0 var(--primary-dark);
+        }
+        .btn-primary:hover { background-color: #57b15c; transform: translateY(-2px); }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            box-shadow: 0 6px 0 var(--secondary-dark);
+        }
+        .btn-secondary:hover { filter: brightness(1.06); transform: translateY(-2px); }
+
+        /* Back Button */
+        #back-btn {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background-color: #e3f2e7;
+            color: #2f5d3a;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 800;
+            font-family: inherit;
+            box-shadow: 0 4px 0 #bcdac4;
+            z-index: 20;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        #back-btn:hover { background-color: #d3eadb; transform: translateY(-2px); }
+        #back-btn:active { transform: translateY(2px); box-shadow: 0 0 0 transparent; }
+
+        /* Sublevel picker */
+        .level-grid { display: flex; flex-direction: column; gap: 10px; margin: 12px auto 6px; max-width: 490px; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #f4fbf5; border: 3px solid #d5ecd9; border-radius: 18px;
+            padding: 12px 16px; cursor: pointer; font-family: inherit;
+            box-shadow: 0 5px 0 #d5ecd9;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #d5ecd9; filter: brightness(1.02); }
+        .level-card:active { transform: translateY(2px); box-shadow: 0 2px 0 #d5ecd9; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-color); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #628a6b; }
+
+        /* Top Bar: Progress & Combo */
+        #top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 26px;
+            margin-bottom: 8px;
+            min-height: 40px;
+            gap: 10px;
+        }
+        #fish-display {
+            font-size: 21px;
+            text-align: left;
+            letter-spacing: 1px;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            white-space: nowrap;
+            background: linear-gradient(180deg, rgba(220, 244, 226, 0.65), rgba(190, 230, 200, 0.45));
+            border: 3px solid rgba(140, 200, 155, 0.8);
+            border-radius: 18px;
+            padding: 4px 10px;
+            box-shadow: inset 0 3px 8px rgba(70, 140, 85, 0.22);
+        }
+        .fish-unfed { opacity: 0.3; filter: grayscale(100%); }
+        #fish-display span { transition: transform 0.2s; }
+        #combo-display {
+            font-size: 19px;
+            font-weight: 800;
+            color: #e67e22;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            white-space: nowrap;
+        }
+        .fever-text {
+            color: #e74c3c !important;
+            animation: pop 0.5s infinite;
+            text-shadow: 0 0 10px #ffb8b8;
+        }
+
+        /* Sequence display */
+        #seq-display {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 4px 0 6px 0;
+        }
+        .seq-slot {
+            min-width: 56px;
+            height: 64px;
+            padding: 0 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border: 3px solid #bfe3c8;
+            border-radius: 16px;
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--text-color);
+            box-shadow: 0 4px 0 #d9ecdd;
+        }
+        .seq-slot.hidden-slot {
+            background: #fff8e1;
+            border-color: #ffd54f;
+            box-shadow: 0 4px 0 #f0dfa8;
+            animation: slot-pulse 1.5s ease-in-out infinite;
+        }
+        @keyframes slot-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+        .seq-slot.revealed-good {
+            background: #e8f5e9;
+            border-color: #66bb6a;
+            color: #1b5e20;
+            animation: none;
+        }
+        .seq-slot.revealed-bad {
+            background: #ffebee;
+            border-color: #e57373;
+            color: #b71c1c;
+            animation: none;
+        }
+
+        #play-hint {
+            font-size: 14px;
+            font-weight: 700;
+            color: #6b9370;
+            margin: 0 0 8px 0;
+        }
+
+        /* The river */
+        #river {
+            position: relative;
+            height: 250px;
+            border-radius: 22px;
+            overflow: hidden;
+            border: 4px solid #d8f1ff;
+            background: linear-gradient(180deg, #83cdff 0%, #4aa8e8 48%, #2b7fc9 100%);
+            box-shadow: inset 0 12px 20px rgba(255, 255, 255, 0.35), inset 0 -16px 26px rgba(8, 55, 105, 0.4);
+        }
+        .river-deco {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        /* Fish */
+        .fish {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            will-change: transform;
+            padding: 6px;
+        }
+        .fish-emoji {
+            font-size: 68px;
+            display: inline-block;
+            transform: scaleX(-1);
+            filter: drop-shadow(0 3px 3px rgba(0, 40, 80, 0.35));
+        }
+        .fish-num {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.96);
+            border: 3px solid #4aa8e8;
+            color: #0d3b66;
+            border-radius: 999px;
+            min-width: 44px;
+            padding: 2px 7px;
+            font-size: 23px;
+            font-weight: 800;
+            pointer-events: none;
+            box-shadow: 0 2px 4px rgba(0, 40, 80, 0.3);
+        }
+        .fish.glow .fish-num {
+            border-color: #2ecc71;
+            background: #c8f7d4;
+            animation: num-pulse 0.5s infinite;
+        }
+        @keyframes num-pulse {
+            50% { transform: translate(-50%, -50%) scale(1.18); }
+        }
+        .fish.wrong .fish-num {
+            border-color: #e74c3c;
+            background: #ffd6d0;
+        }
+        .fish.caught {
+            transition: margin-top 0.5s ease-in, opacity 0.55s ease-in;
+            margin-top: -80px;
+            opacity: 0;
+        }
+        .fish.escaped {
+            transition: transform 0.5s ease-in, opacity 0.5s ease-in;
+            opacity: 0;
+        }
+
+        /* Splash effect at catch point */
+        .splash-fx {
+            position: fixed;
+            font-size: 44px;
+            pointer-events: none;
+            z-index: 1000;
+            animation: splash-pop 0.6s ease-out forwards;
+            transform: translate(-50%, -50%);
+        }
+        @keyframes splash-pop {
+            0% { transform: translate(-50%, -50%) scale(0.4); opacity: 1; }
+            100% { transform: translate(-50%, -90%) scale(1.4); opacity: 0; }
+        }
+
+        /* Timer Area */
+        #timer-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 30px;
+            margin-top: 12px;
+        }
+        #timer-container {
+            width: 100%;
+            height: 16px;
+            background-color: #e3f0e7;
+            border-radius: 999px;
+            overflow: hidden;
+            flex-grow: 1;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.12);
+        }
+        #timer-bar {
+            height: 100%;
+            width: 100%;
+            background-color: var(--primary);
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.35) 0 12px, rgba(255,255,255,0) 12px 24px);
+            background-size: 34px 34px;
+            animation: stripes-slide 1s linear infinite;
+            border-radius: 999px;
+            transition: width 0.05s linear, background-color 0.3s ease;
+        }
+        @keyframes stripes-slide {
+            from { background-position: 0 0; }
+            to { background-position: 34px 0; }
+        }
+        .splash-warn { font-size: 24px; }
+
+        #feedback {
+            font-size: 23px;
+            margin-top: 8px;
+            font-weight: 800;
+            height: 30px;
+            line-height: 1.25;
+        }
+
+        /* End Screen */
+        #final-message {
+            font-size: 22px;
+            color: var(--text-color);
+            margin: 16px 0 4px 0;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+        #end-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .trophy-bounce { display: inline-block; animation: trophy-pop 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite; }
+        @keyframes trophy-pop {
+            0%, 100% { transform: scale(1) rotate(-6deg); }
+            50% { transform: scale(1.18) rotate(6deg); }
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Animations */
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-2deg); }
+            75% { transform: translateX(5px) rotate(2deg); }
+        }
+        .shake-active { animation: shake 0.4s infinite; }
+
+        /* Small-height screens (laptops/tablets landscape) */
+        @media (max-height: 720px) {
+            #river { height: 180px; }
+            .fish-emoji { font-size: 54px; }
+            .fish-num { font-size: 18px; min-width: 36px; border-width: 2px; }
+            .seq-slot { min-width: 46px; height: 52px; font-size: 24px; }
+            #play-hint { font-size: 12px; margin-bottom: 4px; }
+            #feedback { margin-top: 4px; font-size: 18px; height: 24px; }
+            #timer-area { margin-top: 8px; }
+            #game-container { padding-top: 40px; padding-bottom: 20px; }
+            #top-bar { margin-top: 22px; margin-bottom: 4px; min-height: 34px; }
+            .mascot-big { font-size: 52px; }
+            .game-title { font-size: 25px; }
+        }
+
+        /* Narrow phones */
+        @media (max-width: 450px) {
+            #game-container { padding: 42px 14px 20px 14px; }
+            .seq-slot { min-width: 46px; height: 54px; font-size: 23px; border-radius: 13px; }
+            #seq-display { gap: 6px; }
+            #river { height: 220px; }
+            .fish-emoji { font-size: 58px; }
+            .fish-num { font-size: 20px; min-width: 40px; }
+            .level-card .lv-name { font-size: 16.5px; }
+            .level-card .lv-sub { font-size: 12px; }
+            .btn { font-size: 20px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="bg-underlay"></div>
+
+<!-- Riverside decorations -->
+<div class="bg-deco" style="font-size: 46px; top: 12%; left: 6%; animation-duration: 5.2s;">🦆</div>
+<div class="bg-deco" style="font-size: 40px; top: 70%; left: 9%; animation-duration: 6.4s; animation-delay: -2s;">🐸</div>
+<div class="bg-deco" style="font-size: 48px; top: 16%; right: 7%; animation-duration: 5.8s; animation-delay: -1s;">🪷</div>
+<div class="bg-deco" style="font-size: 42px; top: 66%; right: 10%; animation-duration: 7s; animation-delay: -3s;">🌾</div>
+
+<!-- Confetti overlay -->
+<canvas id="confetti-canvas"></canvas>
+
+<div id="game-container">
+
+    <!-- INTRO SCREEN -->
+    <div id="intro-screen">
+        <div class="mascot-big">🐱🎣</div>
+        <h1 class="game-title" style="font-size: 38px; margin-bottom: 10px; color: var(--primary-dark); text-transform: none;">Fishy Numbers</h1>
+        <div class="tag-pill" style="margin-bottom: 14px;">數字序列 · 找出缺少的數字</div>
+        <p style="font-size: 17px; font-weight: 700; color: #628a6b; margin: 0 0 26px 0;">小魚兒藏著答案，快釣起正確的小魚！<br>Catch the fish with the missing number! 🐟</p>
+        <button class="btn btn-primary" onclick="showSetup()" style="font-size: 28px; padding: 15px 54px; border-radius: 50px; animation: pop 2s infinite;">Play!</button>
+        <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+    </div>
+
+    <!-- BACK BUTTON -->
+    <button id="back-btn" onclick="goBack()">&#8592; Home</button>
+
+    <!-- SETUP SCREEN: pick a sublevel -->
+    <div id="setup-screen" class="hidden">
+        <h2 class="game-title" style="color: var(--primary-dark); text-transform: none;">Fishy Numbers 🎣</h2>
+        <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+        <div class="level-grid">
+            <button class="level-card" id="lv-card-1" onclick="startGame(1)">
+                <span class="lv-emoji">🐟</span>
+                <span><span class="lv-name">Sublevel 1: 單數與雙數</span><br><span class="lv-sub">Odd &amp; Even, up &amp; down, below 60 — 33, 35, 37, 39, 🎣</span></span>
+            </button>
+            <button class="level-card" id="lv-card-2" onclick="startGame(2)">
+                <span class="lv-emoji">🐠</span>
+                <span><span class="lv-name">Sublevel 2: 加減 3 和 4</span><br><span class="lv-sub">±3 &amp; ±4, within 40 — 13, 🎣, 19, 22, 25</span></span>
+            </button>
+            <button class="level-card" id="lv-card-3" onclick="startGame(3)">
+                <span class="lv-emoji">🐡</span>
+                <span><span class="lv-name">Sublevel 3: 加減 5 至 8</span><br><span class="lv-sub">±5 to ±8, within 40 — 6, 12, 🎣, 24, 30</span></span>
+            </button>
+            <button class="level-card" id="lv-card-4" onclick="startGame(4)">
+                <span class="lv-emoji">🦈</span>
+                <span><span class="lv-name">Sublevel 4: 混合挑戰</span><br><span class="lv-sub">Mixed Challenge — all steps together! ⭐</span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- PLAY SCREEN -->
+    <div id="play-screen" class="hidden">
+
+        <div id="top-bar">
+            <div id="fish-display"></div>
+            <div id="combo-display">COMBO x2! 🔥</div>
+        </div>
+
+        <div id="seq-display"></div>
+        <p id="play-hint">🎣 藏著哪個數字？釣起正確的小魚！Which number is the 🎣? Catch the right fish!</p>
+
+        <div id="river">
+            <span class="river-deco" style="font-size: 30px; left: 8px; bottom: 6px;">🪷</span>
+            <span class="river-deco" style="font-size: 26px; right: 10px; top: 8px;">🪷</span>
+        </div>
+
+        <div id="timer-area">
+            <span class="splash-warn hidden">⏰</span>
+            <div id="timer-container">
+                <div id="timer-bar"></div>
+            </div>
+            <span class="splash-warn hidden">⏰</span>
+        </div>
+
+        <div id="feedback"></div>
+    </div>
+
+    <!-- END SCREEN: Results & Correction Loop -->
+    <div id="end-screen" class="hidden">
+        <div style="font-size: 60px; margin: 10px 0;"><span class="trophy-bounce">🏆</span></div>
+        <h2 id="end-title" class="game-title" style="text-transform: none;">All done!</h2>
+        <div id="final-message"></div>
+        <div id="end-btns">
+            <button id="action-btn" class="btn btn-primary"></button>
+            <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Game Variables
+    let currentQuestion = null;
+    let questionPool = [];
+    let mistakes = [];
+    let isTransitioning = false;
+    let isCorrectionRound = false;
+    let comboCount = 0;
+    let fishCaught = 0;
+    let totalQuestions = 10;
+    let activeLevelId = null;
+    let isFeverMode = false;
+    let hiddenSlotEl = null;
+    let fishBag = [];
+
+    // Timer Variables
+    let timerInterval;
+    const timeLimit = 40000; // 40 seconds per question
+    let timeLeft = timeLimit;
+
+    // River Engine Variables
+    const FISH_EMOJI = ['🐟', '🐠', '🐡'];
+    let fishAlive = [];
+    let spawnerInt = null;
+    let rafId = null;
+    let lastFrameT = 0;
+    let lastCorrectSpawn = 0;
+    const CORRECT_WEIGHT = 0.27;
+    const CORRECT_MAX_GAP = 2600; // ms without a correct fish on screen before forcing one
+    const SPAWN_EVERY = 1050;     // ms between spawn attempts
+
+    // DOM Elements
+    const setupScreen = document.getElementById('setup-screen');
+    const playScreen = document.getElementById('play-screen');
+    const endScreen = document.getElementById('end-screen');
+    const introScreen = document.getElementById('intro-screen');
+    const backBtn = document.getElementById('back-btn');
+    const seqDisplay = document.getElementById('seq-display');
+    const river = document.getElementById('river');
+    const feedbackDisplay = document.getElementById('feedback');
+    const actionBtn = document.getElementById('action-btn');
+    const pickerBtn = document.getElementById('picker-btn');
+    const fishDisplay = document.getElementById('fish-display');
+    const comboDisplay = document.getElementById('combo-display');
+
+    // Timer Elements
+    const timerArea = document.getElementById('timer-area');
+    const timerBar = document.getElementById('timer-bar');
+    const splashWarns = document.querySelectorAll('.splash-warn');
+
+    // Audio setup (Tone.js)
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const noiseSynth = new Tone.NoiseSynth({
+        noise: { type: 'pink' },
+        envelope: { attack: 0.005, decay: 0.1, sustain: 0 }
+    }).toDestination();
+    let audioContextStarted = false;
+
+    // Smart Back Button Logic
+    function goBack() {
+        if (!playScreen.classList.contains('hidden')) {
+            showSetup();
+        } else if (!setupScreen.classList.contains('hidden')) {
+            setupScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+            backBtn.innerText = '← Home';
+        } else if (!endScreen.classList.contains('hidden')) {
+            showSetup();
+        } else if (!introScreen.classList.contains('hidden')) {
+            window.location.href = 'index.html';
+        }
+    }
+
+    // Transition from Intro to Setup
+    function showSetup() {
+        if (!audioContextStarted) {
+            Tone.start();
+            audioContextStarted = true;
+        }
+        stopRiver();
+        clearInterval(timerInterval);
+        introScreen.classList.add('hidden');
+        playScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        setupScreen.classList.remove('hidden');
+        backBtn.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+    }
+
+    // ---- Sound Effects ----
+    function playSound(type) {
+        if (!audioContextStarted) return;
+        const now = Tone.now();
+        if (type === 'correct') {
+            if (isFeverMode) {
+                synth.triggerAttackRelease(["E5", "G5"], "8n", now);
+                synth.triggerAttackRelease("C6", "8n", now + 0.1);
+            } else {
+                synth.triggerAttackRelease(["C5", "E5"], "8n", now);
+                synth.triggerAttackRelease("G5", "8n", now + 0.1);
+            }
+        } else if (type === 'wrong') {
+            synth.triggerAttackRelease("C3", "4n", now);
+            synth.triggerAttackRelease("G2", "4n", now + 0.15);
+        } else if (type === 'splash') {
+            noiseSynth.triggerAttackRelease("16n", now);
+            synth.triggerAttackRelease("E4", "32n", now + 0.02);
+        } else if (type === 'fanfare') {
+            synth.triggerAttackRelease("C5", "8n", now);
+            synth.triggerAttackRelease("E5", "8n", now + 0.12);
+            synth.triggerAttackRelease("G5", "8n", now + 0.24);
+            synth.triggerAttackRelease("C6", "4n", now + 0.36);
+        } else if (type === 'tick') {
+            noiseSynth.triggerAttackRelease("32n", now);
+        }
+    }
+
+    // ---- Confetti ----
+    function fireConfetti(x, y, multiplier = 1) {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const colors = ['#43a047', '#a5d6a7', '#4aa8e8', '#ffffff', '#ffd54f'];
+        const amount = 30 * multiplier;
+
+        for (let i = 0; i < amount; i++) {
+            particles.push({
+                x: x, y: y,
+                vx: (Math.random() - 0.5) * 15 * (multiplier > 1 ? 1.5 : 1),
+                vy: (Math.random() - 1) * 15 * (multiplier > 1 ? 1.5 : 1),
+                size: Math.random() * 8 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rot: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 20
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let active = false;
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy; p.vy += 0.5; p.rot += p.rotSpeed;
+                if (p.y < canvas.height) {
+                    active = true;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                    ctx.restore();
+                }
+            });
+            if (active) requestAnimationFrame(animate);
+            else ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        animate();
+    }
+
+    // ---- Sequence Pool Generation ----
+    // All sequences: 5 terms, constant step, strictly monotonic, positive integers.
+    function seqPool(steps, lo, hi) {
+        const out = [];
+        for (const step of steps) {
+            const span = 4 * step;
+            for (let s = lo; s <= hi - span; s++) {
+                const up = [];
+                for (let i = 0; i < 5; i++) up.push(s + i * step);
+                out.push({ seq: up, step, dir: 1 });
+                const dn = [];
+                for (let i = 0; i < 5; i++) dn.push(s + span - i * step);
+                out.push({ seq: dn, step, dir: -1 });
+            }
+        }
+        return out;
+    }
+
+    // Does the sequence cross or touch a multiple of 10 (the "turning point")?
+    function crossesTen(seq) {
+        const mn = Math.min(...seq), mx = Math.max(...seq);
+        if (Math.floor(mn / 10) !== Math.floor(mx / 10)) return true;
+        return seq.some(v => v % 10 === 0);
+    }
+
+    const SL1_ALL = seqPool([2], 1, 59);
+    const SL1_CROSS = SL1_ALL.filter(q => crossesTen(q.seq));
+    const SL1_PLAIN = SL1_ALL.filter(q => !crossesTen(q.seq));
+    const SL2_ALL = seqPool([3, 4], 1, 40);
+    const SL3_ALL = seqPool([5, 6, 7, 8], 1, 40);
+
+    function sample(arr, n) {
+        const copy = [...arr].sort(() => Math.random() - 0.5);
+        return copy.slice(0, n);
+    }
+
+    function buildPool(level) {
+        let seqs;
+        if (level === 1) seqs = [...sample(SL1_CROSS, 7), ...sample(SL1_PLAIN, 3)];
+        else if (level === 2) seqs = sample(SL2_ALL, 10);
+        else if (level === 3) seqs = sample(SL3_ALL, 10);
+        else seqs = [...sample(SL1_CROSS, 3), ...sample(SL1_PLAIN, 1), ...sample(SL2_ALL, 3), ...sample(SL3_ALL, 3)];
+
+        const seen = new Set();
+        const pool = [];
+        for (const q of seqs) {
+            const key = q.seq.join(',');
+            if (seen.has(key)) continue;
+            seen.add(key);
+            const hidden = Math.floor(Math.random() * 5);
+            pool.push({
+                seq: q.seq, step: q.step, dir: q.dir,
+                hidden: hidden, answer: q.seq[hidden],
+                hi: (level === 1 || SL1_ALL.indexOf(q) >= 0) ? 59 : 40
+            });
+        }
+        pool.sort(() => Math.random() - 0.5);
+        return pool;
+    }
+
+    // ---- Fish Number Bag ----
+    function buildFishBag(q) {
+        const set = new Set(q.seq); // includes the answer + the 4 visible numbers (great traps!)
+        const extras = [q.answer - 1, q.answer + 1, q.answer - 2, q.answer + 2,
+                        q.answer - q.step, q.answer + q.step]
+            .filter(n => n >= 1 && n <= q.hi && !set.has(n));
+        fishBag = [...set, ...extras];
+    }
+
+    // ---- River Engine ----
+    function fishCap() {
+        return Math.max(6, Math.min(9, Math.floor(river.clientWidth / 95)));
+    }
+
+    function pickLaneY() {
+        const lanes = 3;
+        // Only lanes whose rearmost fish has cleared the spawn zone
+        const candidates = [];
+        for (let i = 0; i < lanes; i++) {
+            const inLane = fishAlive.filter(f => f.lane === i);
+            const rearmost = inLane.length ? Math.min(...inLane.map(f => f.x)) : Infinity;
+            if (rearmost > 125) candidates.push({ lane: i, count: inLane.length });
+        }
+        if (!candidates.length) return null;
+        candidates.sort((a, b) => a.count - b.count || (Math.random() < 0.5 ? -1 : 1));
+        const lane = candidates[0].lane;
+        const laneH = river.clientHeight / lanes;
+        return { lane: lane, y: laneH * lane + laneH / 2 + (Math.random() * 10 - 5) };
+    }
+
+    function drawFishNumber() {
+        const aliveNums = new Set(fishAlive.map(f => f.num));
+        const ans = currentQuestion.answer;
+        if (Math.random() < CORRECT_WEIGHT && !aliveNums.has(ans)) return ans;
+        const cands = fishBag.filter(n => !aliveNums.has(n) && n !== ans);
+        if (!cands.length) return null;
+        return cands[Math.floor(Math.random() * cands.length)];
+    }
+
+    function spawnFish(forceNum = null, startX = -120) {
+        if (isTransitioning || !currentQuestion) return;
+        if (fishAlive.length >= fishCap()) return;
+        const num = (forceNum !== null) ? forceNum : drawFishNumber();
+        if (num === null) return;
+
+        const spot = pickLaneY();
+        if (!spot) return;
+        const { lane, y } = spot;
+        const el = document.createElement('div');
+        el.className = 'fish';
+        el.innerHTML = `<span class="fish-emoji">${FISH_EMOJI[Math.floor(Math.random() * FISH_EMOJI.length)]}</span><span class="fish-num">${num}</span>`;
+        river.appendChild(el);
+        const f = {
+            el, num, lane,
+            x: startX,
+            y: y - el.offsetHeight / 2,
+            speed: 30 + Math.random() * 14, // slow enough for 5-6 year olds
+            phase: Math.random() * Math.PI * 2
+        };
+        el.addEventListener('pointerdown', (e) => { e.preventDefault(); onFishTap(f); });
+        fishAlive.push(f);
+        if (num === currentQuestion.answer) lastCorrectSpawn = performance.now();
+        startRiverLoop();
+    }
+
+    function startSpawner() {
+        stopSpawner();
+        spawnerInt = setInterval(() => {
+            if (isTransitioning) return;
+            const hasCorrect = fishAlive.some(f => f.num === currentQuestion.answer);
+            if (!hasCorrect && performance.now() - lastCorrectSpawn > CORRECT_MAX_GAP) spawnFish(currentQuestion.answer);
+            else spawnFish();
+        }, SPAWN_EVERY);
+    }
+    function stopSpawner() { if (spawnerInt) { clearInterval(spawnerInt); spawnerInt = null; } }
+
+    function startRiverLoop() {
+        if (rafId !== null) return;
+        lastFrameT = performance.now();
+        rafId = requestAnimationFrame(riverTick);
+    }
+
+    function riverTick(t) {
+        const dt = Math.min(0.05, (t - lastFrameT) / 1000);
+        lastFrameT = t;
+        const W = river.clientWidth;
+        for (let i = fishAlive.length - 1; i >= 0; i--) {
+            const f = fishAlive[i];
+            f.x += f.speed * dt;
+            if (f.x > W + 140) {
+                f.el.remove();
+                fishAlive.splice(i, 1);
+                continue;
+            }
+            const yOff = Math.sin(t / 420 + f.phase) * 5;
+            f.el.style.transform = `translate(${f.x}px, ${f.y + yOff}px)`;
+        }
+        if (fishAlive.length > 0 || !playScreen.classList.contains('hidden')) {
+            rafId = requestAnimationFrame(riverTick);
+        } else {
+            rafId = null;
+        }
+    }
+
+    function clearRiver() {
+        stopSpawner();
+        fishAlive.forEach(f => f.el.remove());
+        fishAlive = [];
+    }
+
+    function stopRiver() {
+        clearRiver();
+        if (rafId !== null) { cancelAnimationFrame(rafId); rafId = null; }
+    }
+
+    function removeFish(f) {
+        const i = fishAlive.indexOf(f);
+        if (i >= 0) fishAlive.splice(i, 1);
+    }
+
+    // ---- Sequence Display ----
+    function renderSequence(q) {
+        seqDisplay.innerHTML = '';
+        hiddenSlotEl = null;
+        q.seq.forEach((v, i) => {
+            const slot = document.createElement('div');
+            if (i === q.hidden) {
+                slot.className = 'seq-slot hidden-slot';
+                slot.innerText = '🎣';
+                hiddenSlotEl = slot;
+            } else {
+                slot.className = 'seq-slot';
+                slot.innerText = v;
+            }
+            seqDisplay.appendChild(slot);
+        });
+    }
+
+    function revealSlot(good) {
+        if (!hiddenSlotEl || !currentQuestion) return;
+        hiddenSlotEl.innerText = currentQuestion.answer;
+        hiddenSlotEl.classList.remove('hidden-slot');
+        hiddenSlotEl.classList.add(good ? 'revealed-good' : 'revealed-bad');
+    }
+
+    // ---- Progress & Combo ----
+    function updateCombo() {
+        if (comboCount >= 5) {
+            if (!isFeverMode) { isFeverMode = true; comboDisplay.classList.add('fever-text'); }
+            comboDisplay.style.opacity = 1; comboDisplay.innerText = `FEVER MODE x${comboCount}! 🔥🔥`;
+            comboDisplay.classList.remove('anim-jump'); void comboDisplay.offsetWidth; comboDisplay.classList.add('anim-jump');
+        } else {
+            if (isFeverMode) { isFeverMode = false; comboDisplay.classList.remove('fever-text'); }
+            if (comboCount >= 2) {
+                comboDisplay.style.opacity = 1; comboDisplay.innerText = `COMBO x${comboCount}! 🔥`;
+                comboDisplay.classList.remove('anim-jump'); void comboDisplay.offsetWidth; comboDisplay.classList.add('anim-jump');
+            } else comboDisplay.style.opacity = 0;
+        }
+    }
+
+    function updateProgress() {
+        fishDisplay.innerHTML = "";
+        for (let i = 0; i < totalQuestions; i++) {
+            const span = document.createElement('span');
+            span.innerText = "🐟";
+            if (i >= fishCaught) span.className = "fish-unfed";
+            fishDisplay.appendChild(span);
+        }
+    }
+
+    // ---- Main Loop ----
+    function startGame(level) {
+        if (!audioContextStarted) { Tone.start(); audioContextStarted = true; }
+        activeLevelId = level; mistakes = []; isCorrectionRound = false; isTransitioning = false;
+        comboCount = 0; fishCaught = 0; isFeverMode = false;
+        comboDisplay.classList.remove('fever-text');
+
+        questionPool = buildPool(level);
+        totalQuestions = questionPool.length;
+
+        updateCombo(); updateProgress();
+        setupScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+        playScreen.classList.remove('hidden'); backBtn.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+        feedbackDisplay.innerText = ""; nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (questionPool.length === 0) { handleRoundEnd(); return; }
+        clearRiver();
+        currentQuestion = questionPool.pop();
+        renderSequence(currentQuestion);
+        buildFishBag(currentQuestion);
+        lastCorrectSpawn = 0;
+        isTransitioning = false;
+
+        // Opening burst spread across the river so it starts alive; one correct fish included
+        const W = Math.max(river.clientWidth, 320);
+        const bx = f => Math.max(10, Math.min(W - 130, W * f));
+        spawnFish(null, bx(0.06));
+        spawnFish(null, bx(0.45));
+        spawnFish(currentQuestion.answer, bx(0.24));
+        spawnFish(null, bx(0.66));
+        spawnFish(null, bx(0.87));
+
+        startSpawner();
+        startTimer();
+    }
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        timeLeft = timeLimit;
+        timerBar.style.width = '100%';
+        timerBar.style.backgroundColor = 'var(--primary)';
+        timerArea.classList.remove('shake-active');
+        splashWarns.forEach(f => f.classList.add('hidden'));
+
+        timerInterval = setInterval(() => {
+            timeLeft -= 50;
+            timerBar.style.width = (timeLeft / timeLimit * 100) + '%';
+            if (timeLeft <= 3000 && timeLeft % 1000 === 0) playSound('tick');
+            if (timeLeft <= 3000) {
+                timerBar.style.backgroundColor = 'var(--danger)';
+                timerArea.classList.add('shake-active');
+                splashWarns.forEach(f => f.classList.remove('hidden'));
+            }
+            if (timeLeft <= 0) { clearInterval(timerInterval); handleTimeout(); }
+        }, 50);
+    }
+
+    function handleTimeout() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        comboCount = 0; updateCombo();
+        timerArea.classList.remove('shake-active');
+        playSound('wrong');
+        glowCorrectFish();
+        revealSlot(false);
+        feedbackDisplay.style.color = "var(--danger)";
+        feedbackDisplay.innerText = `時間到！Time's Up! 🎣 是 ${currentQuestion.answer}！`;
+        mistakes.push(currentQuestion);
+        setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 2200);
+    }
+
+    function onFishTap(f) {
+        if (isTransitioning) return;
+        if (playScreen.classList.contains('hidden')) return;
+        isTransitioning = true;
+        clearInterval(timerInterval);
+        timerArea.classList.remove('shake-active');
+        if (f.num === currentQuestion.answer) handleCorrect(f);
+        else handleWrong(f);
+    }
+
+    function handleCorrect(f) {
+        playSound('correct'); playSound('splash');
+        removeFish(f);
+        f.el.classList.add('caught');
+        setTimeout(() => f.el.remove(), 600);
+
+        // Splash effect at the catch point
+        const r = f.el.getBoundingClientRect();
+        const splash = document.createElement('div');
+        splash.className = 'splash-fx'; splash.innerText = '💦';
+        splash.style.left = (r.left + r.width / 2) + 'px';
+        splash.style.top = (r.top + r.height / 2) + 'px';
+        document.body.appendChild(splash);
+        setTimeout(() => splash.remove(), 700);
+
+        revealSlot(true);
+        comboCount++; fishCaught++;
+        updateProgress(); updateCombo();
+        fireConfetti(r.left + r.width / 2, r.top + r.height / 2, isFeverMode ? 2 : 1);
+        feedbackDisplay.style.color = "var(--success)";
+        feedbackDisplay.innerText = isFeverMode ? "停不下來！UNSTOPPABLE! 🚀" : "釣到了！Great Catch! 🎣";
+        setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 1500);
+    }
+
+    function handleWrong(f) {
+        playSound('wrong'); comboCount = 0; updateCombo();
+        removeFish(f);
+        f.el.classList.add('wrong', 'escaped');
+        f.el.style.transform = `translate(${f.x + 150}px, ${f.y + 40}px)`;
+        setTimeout(() => f.el.remove(), 550);
+
+        glowCorrectFish();
+        revealSlot(false);
+        feedbackDisplay.style.color = "var(--danger)";
+        feedbackDisplay.innerText = `不是這條魚！🎣 是 ${currentQuestion.answer}！It was ${currentQuestion.answer}!`;
+        mistakes.push(currentQuestion);
+        setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 2200);
+    }
+
+    function glowCorrectFish() {
+        fishAlive.forEach(f => { if (f.num === currentQuestion.answer) f.el.classList.add('glow'); });
+    }
+
+    function handleRoundEnd() {
+        stopRiver();
+        playScreen.classList.add('hidden'); endScreen.classList.remove('hidden'); backBtn.classList.add('hidden');
+        pickerBtn.onclick = () => showSetup();
+        if (mistakes.length === 0) {
+            playSound('fanfare');
+            markLevelComplete(activeLevelId);
+            document.getElementById('end-title').innerText = "Level Complete! 🎉";
+            document.getElementById('final-message').innerText = "Perfect Score! 全部答對！小貓滿載而歸！";
+            actionBtn.innerText = "Play Again 再玩一次";
+            actionBtn.onclick = () => startGame(activeLevelId);
+        } else {
+            document.getElementById('end-title').innerText = "Almost there! 差一點點！";
+            document.getElementById('final-message').innerText = `還有 ${mistakes.length} 題要複習！Fix ${mistakes.length} more!`;
+            actionBtn.innerText = "改正錯題 Review Mistakes";
+            actionBtn.onclick = startCorrectionRound;
+        }
+    }
+
+    function startCorrectionRound() {
+        isCorrectionRound = true;
+        questionPool = [...new Set(mistakes)]; questionPool.sort(() => Math.random() - 0.5);
+        totalQuestions = questionPool.length; fishCaught = 0; updateProgress(); mistakes = [];
+        endScreen.classList.add('hidden'); playScreen.classList.remove('hidden'); backBtn.classList.remove('hidden');
+        nextQuestion();
+    }
+
+    // Completion trophies on the picker cards
+    function markLevelComplete(id) {
+        try { localStorage.setItem(`fishy_l${id}_complete`, '1'); } catch (e) {}
+        decorateCard(id);
+    }
+    function decorateCard(id) {
+        const card = document.getElementById(`lv-card-${id}`);
+        if (!card) return;
+        const name = card.querySelector('.lv-name');
+        if (name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+    }
+    for (let i = 1; i <= 4; i++) {
+        try { if (localStorage.getItem(`fishy_l${i}_complete`) === '1') decorateCard(i); } catch (e) {}
+    }
+</script>
+
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>數字序列考的是發現規律：2、4、6、_、10，下個是多少？順數、倒數、隔位跳數，全部都是邏輯推理加數感的綜合運用，同時為之後學乘數表鋪路。小貓釣魚的情境，讓「找規律」變成一場尋寶遊戲。</p>
+        <p class="pg-en">Number sequences are about spotting the rule: 2, 4, 6, _, 10 — what comes next? Counting forwards, backwards, and skipping all combine logical reasoning with number sense, while paving the way for times tables later. The kitten-fishing theme turns pattern-hunting into a treasure hunt.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>重點不是答對，而是說得出「為什麼」：「因為每次多2。」請小朋友指著相鄰兩個數，算一算它們之間的差，規律自然浮現。說得出規律，才是真正理解。</p>
+        <p class="pg-en">The goal isn't the right answer — it's saying why: "because it goes up by 2 each time." Ask your child to point at two neighbours and find the difference; the pattern reveals itself. Being able to state the rule is real understanding.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>等巴士時看門牌（單雙數排列）、看日曆（每行加7）、數電梯樓層 — 生活周圍都是數列。這個階段可以讓小朋友玩百數表（1-100格子表），對數字規律的感覺會突飛猛進。</p>
+        <p class="pg-en">Look at door numbers (odds and evens) while waiting for the bus, the calendar (each row adds 7), lift floors — sequences are everywhere. A hundred chart (1–100 grid) is a great toy at this stage; your child's feel for number patterns will leap forward.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#ff8f2e">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Carrot Count | 10以內加減法 · Add &amp; Subtract within 10 – MMathWorld</title>
+    <meta name="description" content="Carrot Count 數紅蘿蔔數學遊戲：10以內加減法 Add &amp; Subtract within 10。幫小兔子數紅蘿蔔，加一加、減一減，最適合初學小朋友！免費升小數學練習，邊玩邊學！Count the carrots with Bunny — a perfect first math game.">
+    <link rel="canonical" href="https://mathgames.missman.world/carrot_count">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Carrot Count | 10以內加減法 · Add &amp; Subtract within 10 – MMathWorld">
+    <meta property="og:description" content="Carrot Count 數紅蘿蔔數學遊戲：10以內加減法 Add &amp; Subtract within 10。幫小兔子數紅蘿蔔，加一加、減一減，最適合初學小朋友！免費升小數學練習，邊玩邊學！Count the carrots with Bunny — a perfect first math game.">
+    <meta property="og:url" content="https://mathgames.missman.world/carrot_count">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Carrot Count 數紅蘿蔔 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Carrot Count | 10以內加減法 · Add &amp; Subtract within 10 – MMathWorld">
+    <meta name="twitter:description" content="Carrot Count 數紅蘿蔔數學遊戲：10以內加減法 Add &amp; Subtract within 10。幫小兔子數紅蘿蔔，加一加、減一減，最適合初學小朋友！免費升小數學練習，邊玩邊學！Count the carrots with Bunny — a perfect first math game.">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Carrot Count",
+      "alternateName": "數紅蘿蔔",
+      "url": "https://mathgames.missman.world/carrot_count",
+      "description": "Carrot Count 數紅蘿蔔數學遊戲：10以內加減法 Add & Subtract within 10。幫小兔子數紅蘿蔔，加一加、減一減，最適合初學小朋友！免費升小數學練習，邊玩邊學！Count the carrots with Bunny — a perfect first math game.",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": [
+            "zh-Hant-HK",
+            "en"
+      ],
+      "genre": [
+            "Educational",
+            "Math"
+      ],
+      "gamePlatform": [
+            "Web Browser",
+            "Mobile Web"
+      ],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HKD"
+      },
+      "audience": {
+            "@type": "PeopleAudience",
+            "suggestedMinAge": 4,
+            "suggestedMaxAge": 7
+      },
+      "author": {
+            "@type": "Organization",
+            "name": "MMathWorld",
+            "url": "https://mathgames.missman.world/"
+      },
+      "learningResourceType": "Educational game",
+      "teaches": "10以內加減法 Addition and subtraction within 10"
+}
+    </script>
+    <!-- Include Tone.js for synthesized sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff8f2e;
+            --primary-dark: #e86f1c;
+            --secondary: #66bb6a;
+            --secondary-dark: #43a047;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --text-color: #5a3a1e;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Comic Sans MS', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            transition: background-color 0.3s;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+            overscroll-behavior: none;
+        }
+        button { touch-action: manipulation; }
+
+        /* Garden morning background */
+        .bg-underlay {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: linear-gradient(180deg, #ffe3b3 0%, #fff2dc 52%, #cdeab4 100%);
+        }
+
+        /* Floating garden decorations */
+        .bg-deco {
+            position: fixed;
+            z-index: -1;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0.7;
+            filter: drop-shadow(0 6px 6px rgba(90, 58, 30, 0.15));
+            animation: deco-float ease-in-out infinite;
+        }
+        @keyframes deco-float {
+            0%, 100% { transform: translateY(0) rotate(-6deg); }
+            50% { transform: translateY(-18px) rotate(8deg); }
+        }
+
+        #game-container {
+            background-color: rgba(255, 255, 255, 0.96);
+            padding: 46px 30px 30px 30px;
+            border-radius: 34px;
+            box-shadow: 0 14px 0 rgba(232, 111, 28, 0.13), 0 26px 50px rgba(90, 58, 30, 0.22);
+            border: 5px solid #ffffff;
+            max-width: 560px;
+            width: 92%;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        /* Titles & Text */
+        .game-title {
+            color: var(--text-color);
+            font-size: 32px;
+            margin-top: 0;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+        .hidden { display: none !important; }
+
+        .mascot-big { font-size: 74px; animation: mascot-bob 2.4s ease-in-out infinite; display: inline-block; }
+        @keyframes mascot-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-12px); }
+        }
+
+        .tag-pill {
+            display: inline-block;
+            font-size: 17px;
+            font-weight: 800;
+            color: #a34e07;
+            background-color: #fff1de;
+            border: 3px solid #ffcf96;
+            padding: 6px 18px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+
+        /* General Buttons */
+        .btn {
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 24px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s, box-shadow 0.1s, filter 0.15s;
+            font-family: inherit;
+            font-weight: 800;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.15);
+        }
+        .btn:active {
+            transform: translateY(4px) !important;
+            box-shadow: 0 2px 0 transparent !important;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            box-shadow: 0 6px 0 var(--primary-dark);
+        }
+        .btn-primary:hover { filter: brightness(1.06); transform: translateY(-2px); }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            box-shadow: 0 6px 0 var(--secondary-dark);
+        }
+        .btn-secondary:hover { filter: brightness(1.06); transform: translateY(-2px); }
+
+        /* Back Button */
+        #back-btn {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background-color: #fdead9;
+            color: #8a5524;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 800;
+            font-family: inherit;
+            box-shadow: 0 4px 0 #e8cba8;
+            z-index: 20;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        #back-btn:hover { background-color: #fbe3c9; transform: translateY(-2px); }
+        #back-btn:active { transform: translateY(2px); box-shadow: 0 0 0 transparent; }
+
+        /* Sublevel picker */
+        .level-grid { display: flex; flex-direction: column; gap: 10px; margin: 12px auto 6px; max-width: 470px; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #fff8f0; border: 3px solid #f5e2c8; border-radius: 18px;
+            padding: 12px 16px; cursor: pointer; font-family: inherit;
+            box-shadow: 0 5px 0 #f5e2c8;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #f5e2c8; filter: brightness(1.02); }
+        .level-card:active { transform: translateY(2px); box-shadow: 0 2px 0 #f5e2c8; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-color); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #a5825e; }
+
+        /* Top Bar: Progress & Combo */
+        #top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 26px;
+            margin-bottom: 8px;
+            min-height: 40px;
+            gap: 10px;
+        }
+        #carrot-display {
+            font-size: 21px;
+            text-align: left;
+            letter-spacing: 1px;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            white-space: nowrap;
+            background: linear-gradient(180deg, rgba(255, 236, 210, 0.7), rgba(255, 220, 180, 0.45));
+            border: 3px solid rgba(240, 180, 110, 0.8);
+            border-radius: 18px;
+            padding: 4px 10px;
+            box-shadow: inset 0 3px 8px rgba(200, 130, 60, 0.22);
+        }
+        .carrot-unfed { opacity: 0.3; filter: grayscale(100%); }
+        #carrot-display span { transition: transform 0.2s; }
+        #combo-display {
+            font-size: 19px;
+            font-weight: 800;
+            color: #e67e22;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            white-space: nowrap;
+        }
+        .fever-text {
+            color: #e74c3c !important;
+            animation: pop 0.5s infinite;
+            text-shadow: 0 0 10px #ffb8b8;
+        }
+
+        /* Bunny mascot */
+        #bunny-zone { margin: 2px auto 4px auto; height: 96px; position: relative; }
+        #bunny {
+            font-size: 82px;
+            display: inline-block;
+            animation: mascot-bob 3.2s ease-in-out infinite;
+            filter: drop-shadow(0 8px 10px rgba(90, 58, 30, 0.22));
+        }
+
+        /* Equation */
+        #equation {
+            font-size: 52px;
+            font-weight: 800;
+            color: var(--text-color);
+            margin: 2px 0 6px 0;
+            text-shadow: 2px 2px 0px #fde9d0;
+            letter-spacing: 2px;
+        }
+
+        /* Counting aid: real carrots to count */
+        #count-aid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            justify-content: center;
+            align-items: center;
+            min-height: 34px;
+            max-width: 360px;
+            margin: 0 auto 14px auto;
+        }
+        .aid-carrot { font-size: 25px; transition: transform 0.2s; }
+        .aid-carrot.crossed { opacity: 0.22; filter: grayscale(90%); }
+        .aid-gap { width: 18px; }
+
+        /* Answer buttons */
+        #options-container {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .carrot-btn {
+            flex: 1;
+            max-width: 118px;
+            padding: 16px 0;
+            font-family: inherit;
+            font-size: 36px;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.15);
+            background: linear-gradient(180deg, #ffb35c, #ff8f2e);
+            border: none;
+            border-radius: 22px;
+            box-shadow: 0 6px 0 #e86f1c;
+            cursor: pointer;
+            transition: transform 0.1s, box-shadow 0.1s, filter 0.15s;
+        }
+        .carrot-btn:hover { filter: brightness(1.06); transform: translateY(-2px); }
+        .carrot-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 transparent; }
+        .carrot-btn.is-correct {
+            background: linear-gradient(180deg, #7ed68a, #43a047);
+            box-shadow: 0 6px 0 #2e7d32;
+        }
+        .carrot-btn.is-wrong {
+            background: linear-gradient(180deg, #f08a80, #e74c3c);
+            box-shadow: 0 6px 0 #b71c1c;
+        }
+        .carrot-btn.is-dim { opacity: 0.45; }
+
+        /* Timer Area */
+        #timer-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 30px;
+        }
+        #timer-container {
+            width: 100%;
+            height: 16px;
+            background-color: #fdead9;
+            border-radius: 999px;
+            overflow: hidden;
+            flex-grow: 1;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.12);
+        }
+        /* Timer on/off toggle */
+        .tt-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 12px; }
+        .tt-text { font-size: 15px; font-weight: 800; color: #a5825e; }
+        .tt-state { font-size: 14px; font-weight: 800; color: #a5825e; min-width: 58px; text-align: left; }
+        .tt-switch { position: relative; width: 56px; height: 30px; border-radius: 999px; border: none; background: #cbd5e1; cursor: pointer; transition: background 0.2s; padding: 0; flex-shrink: 0; }
+        .tt-switch.on { background: #2ecc71; }
+        .tt-knob { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; transition: left 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.25); }
+        .tt-switch.on .tt-knob { left: 29px; }
+        #timer-bar {
+            height: 100%;
+            width: 100%;
+            background-color: var(--primary);
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.35) 0 12px, rgba(255,255,255,0) 12px 24px);
+            background-size: 34px 34px;
+            animation: stripes-slide 1s linear infinite;
+            border-radius: 999px;
+            transition: width 0.05s linear, background-color 0.3s ease;
+        }
+        @keyframes stripes-slide {
+            from { background-position: 0 0; }
+            to { background-position: 34px 0; }
+        }
+        .splash { font-size: 24px; }
+
+        #feedback {
+            font-size: 24px;
+            margin-top: 10px;
+            font-weight: 800;
+            height: 32px;
+            line-height: 1.25;
+        }
+
+        /* End Screen */
+        #final-message {
+            font-size: 22px;
+            color: var(--text-color);
+            margin: 16px 0 4px 0;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+        #end-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .trophy-bounce { display: inline-block; animation: trophy-pop 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite; }
+        @keyframes trophy-pop {
+            0%, 100% { transform: scale(1) rotate(-6deg); }
+            50% { transform: scale(1.18) rotate(6deg); }
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Flying Carrot Animation */
+        .flying-carrot {
+            position: fixed;
+            font-size: 46px;
+            pointer-events: none;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-2deg); }
+            75% { transform: translateX(5px) rotate(2deg); }
+        }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .anim-shake { animation: shake 0.3s ease-in-out; }
+        .anim-jump { animation: jump 0.4s ease-in-out; }
+        .shake-active { animation: shake 0.4s infinite; }
+
+        /* Small-height screens (laptops/tablets landscape) */
+        @media (max-height: 720px) {
+            #bunny-zone { height: 68px; margin-bottom: 0; }
+            #bunny { font-size: 56px; }
+            #equation { font-size: 40px; margin: 0 0 4px 0; }
+            #count-aid { min-height: 28px; margin-bottom: 8px; }
+            .aid-carrot { font-size: 20px; }
+            .carrot-btn { font-size: 28px; max-width: 92px; padding: 12px 0; }
+            #options-container { margin-bottom: 12px; gap: 12px; }
+            #feedback { margin-top: 6px; font-size: 19px; height: 26px; }
+            #game-container { padding-top: 40px; padding-bottom: 20px; }
+            #top-bar { margin-top: 22px; margin-bottom: 4px; min-height: 34px; }
+            .mascot-big { font-size: 54px; }
+            .game-title { font-size: 26px; }
+        }
+
+        /* Narrow phones */
+        @media (max-width: 450px) {
+            #game-container { padding: 42px 16px 22px 16px; }
+            #equation { font-size: 42px; }
+            .aid-carrot { font-size: 21px; }
+            .carrot-btn { font-size: 29px; }
+            #options-container { gap: 10px; }
+            .level-card .lv-name { font-size: 16.5px; }
+            .level-card .lv-sub { font-size: 12px; }
+            .btn { font-size: 20px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="bg-underlay"></div>
+
+<!-- Garden decorations -->
+<div class="bg-deco" style="font-size: 46px; top: 12%; left: 6%; animation-duration: 5.2s;">🌷</div>
+<div class="bg-deco" style="font-size: 40px; top: 70%; left: 9%; animation-duration: 6.4s; animation-delay: -2s;">🐞</div>
+<div class="bg-deco" style="font-size: 48px; top: 16%; right: 7%; animation-duration: 5.8s; animation-delay: -1s;">🌻</div>
+<div class="bg-deco" style="font-size: 42px; top: 66%; right: 10%; animation-duration: 7s; animation-delay: -3s;">🦋</div>
+
+<!-- Confetti overlay -->
+<canvas id="confetti-canvas"></canvas>
+
+<div id="game-container">
+
+    <!-- INTRO SCREEN -->
+    <div id="intro-screen">
+        <div class="mascot-big">🐰</div>
+        <h1 class="game-title" style="font-size: 38px; margin-bottom: 10px; color: var(--primary-dark); text-transform: none;">Carrot Count</h1>
+        <div class="tag-pill" style="margin-bottom: 14px;">10以內加減法 · 數紅蘿蔔</div>
+        <p style="font-size: 17px; font-weight: 700; color: #a5825e; margin: 0 0 26px 0;">幫小兔子數紅蘿蔔！<br>Count the carrots with Bunny! 🥕</p>
+        <button class="btn btn-primary" onclick="showSetup()" style="font-size: 28px; padding: 15px 54px; border-radius: 50px; animation: pop 2s infinite;">Play!</button>
+        <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+    </div>
+
+    <!-- BACK BUTTON -->
+    <button id="back-btn" onclick="goBack()">&#8592; Home</button>
+
+    <!-- SETUP SCREEN: pick a sublevel -->
+    <div id="setup-screen" class="hidden">
+        <h2 class="game-title" style="color: var(--primary-dark); text-transform: none;">Carrot Count 🐰</h2>
+        <div class="tt-row">
+            <span class="tt-text">⏱️ 計時器 Timer</span>
+            <button class="tt-switch on" id="timer-switch" onclick="toggleTimer()" aria-label="Timer on or off"><span class="tt-knob"></span></button>
+            <span class="tt-state" id="timer-state">開 ON</span>
+        </div>
+        <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+        <div class="level-grid">
+            <button class="level-card" id="lv-card-1" onclick="startGame(1)">
+                <span class="lv-emoji">➕</span>
+                <span><span class="lv-name">Sublevel 1: 加法</span><br><span class="lv-sub">Addition within 10 — 3 + 4 = ?</span></span>
+            </button>
+            <button class="level-card" id="lv-card-2" onclick="startGame(2)">
+                <span class="lv-emoji">➖</span>
+                <span><span class="lv-name">Sublevel 2: 減法</span><br><span class="lv-sub">Subtraction within 10 — 9 − 5 = ?</span></span>
+            </button>
+            <button class="level-card" id="lv-card-3" onclick="startGame(3)">
+                <span class="lv-emoji">🌟</span>
+                <span><span class="lv-name">Sublevel 3: 混合挑戰</span><br><span class="lv-sub">Challenge — add &amp; subtract mixed!</span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- PLAY SCREEN -->
+    <div id="play-screen" class="hidden">
+
+        <div id="top-bar">
+            <div id="carrot-display"></div>
+            <div id="combo-display">COMBO x2! 🔥</div>
+        </div>
+
+        <div id="bunny-zone">
+            <span id="bunny">🐰</span>
+        </div>
+
+        <div id="equation"></div>
+        <div id="count-aid"></div>
+
+        <div id="options-container">
+            <button class="carrot-btn" onclick="checkAnswer(0)"></button>
+            <button class="carrot-btn" onclick="checkAnswer(1)"></button>
+            <button class="carrot-btn" onclick="checkAnswer(2)"></button>
+        </div>
+
+        <div id="timer-area">
+            <span class="splash hidden">⏰</span>
+            <div id="timer-container">
+                <div id="timer-bar"></div>
+            </div>
+            <span class="splash hidden">⏰</span>
+        </div>
+
+        <div id="feedback"></div>
+    </div>
+
+    <!-- END SCREEN: Results & Correction Loop -->
+    <div id="end-screen" class="hidden">
+        <div style="font-size: 60px; margin: 10px 0;"><span class="trophy-bounce">🏆</span></div>
+        <h2 id="end-title" class="game-title" style="text-transform: none;">All done!</h2>
+        <div id="final-message"></div>
+        <div id="end-btns">
+            <button id="action-btn" class="btn btn-primary"></button>
+            <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // Game Variables
+    let currentQuestion = null;
+    let questionPool = [];
+    let mistakes = [];
+    let currentOptions = [];
+    let isTransitioning = false;
+    let isCorrectionRound = false;
+    let comboCount = 0;
+    let carrotsCollected = 0;
+    let totalQuestions = 10;
+    let activeLevelId = null;
+    let isFeverMode = false;
+
+    // Timer Variables
+    let timerInterval;
+    const timeLimit = 30000; // 30 seconds per question (gentle pace for young kids)
+    let timeLeft = timeLimit;
+
+    // DOM Elements
+    const setupScreen = document.getElementById('setup-screen');
+    const playScreen = document.getElementById('play-screen');
+    const endScreen = document.getElementById('end-screen');
+    const introScreen = document.getElementById('intro-screen');
+    const backBtn = document.getElementById('back-btn');
+    const equationDisplay = document.getElementById('equation');
+    const countAid = document.getElementById('count-aid');
+    const optionButtons = document.querySelectorAll('.carrot-btn');
+    const feedbackDisplay = document.getElementById('feedback');
+    const actionBtn = document.getElementById('action-btn');
+    const pickerBtn = document.getElementById('picker-btn');
+    const carrotDisplay = document.getElementById('carrot-display');
+    const comboDisplay = document.getElementById('combo-display');
+    const bunny = document.getElementById('bunny');
+
+    // Timer Elements
+    const timerArea = document.getElementById('timer-area');
+    const timerBar = document.getElementById('timer-bar');
+    const splashes = document.querySelectorAll('.splash');
+
+    // Audio setup (Tone.js)
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const noiseSynth = new Tone.NoiseSynth({
+        noise: { type: 'pink' },
+        envelope: { attack: 0.005, decay: 0.1, sustain: 0 }
+    }).toDestination();
+    let audioContextStarted = false;
+
+    // Smart Back Button Logic
+    function goBack() {
+        if (!playScreen.classList.contains('hidden')) {
+            showSetup();
+        } else if (!setupScreen.classList.contains('hidden')) {
+            setupScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+            backBtn.innerText = '← Home';
+        } else if (!endScreen.classList.contains('hidden')) {
+            showSetup();
+        } else if (!introScreen.classList.contains('hidden')) {
+            window.location.href = 'index.html';
+        }
+    }
+
+    // Transition from Intro to Setup
+    function showSetup() {
+        if (!audioContextStarted) {
+            Tone.start();
+            audioContextStarted = true;
+        }
+        clearInterval(timerInterval);
+        introScreen.classList.add('hidden');
+        playScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        setupScreen.classList.remove('hidden');
+        backBtn.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+    }
+
+    // ---- Sound Effects ----
+    function playSound(type) {
+        if (!audioContextStarted) return;
+        const now = Tone.now();
+        if (type === 'correct') {
+            if (isFeverMode) {
+                synth.triggerAttackRelease(["E5", "G5"], "8n", now);
+                synth.triggerAttackRelease("C6", "8n", now + 0.1);
+            } else {
+                synth.triggerAttackRelease(["C5", "E5"], "8n", now);
+                synth.triggerAttackRelease("G5", "8n", now + 0.1);
+            }
+        } else if (type === 'wrong') {
+            synth.triggerAttackRelease("C3", "4n", now);
+            synth.triggerAttackRelease("G2", "4n", now + 0.15);
+        } else if (type === 'munch') {
+            noiseSynth.triggerAttackRelease("32n", now);
+            synth.triggerAttackRelease("E5", "32n", now + 0.02);
+        } else if (type === 'fanfare') {
+            synth.triggerAttackRelease("C5", "8n", now);
+            synth.triggerAttackRelease("E5", "8n", now + 0.12);
+            synth.triggerAttackRelease("G5", "8n", now + 0.24);
+            synth.triggerAttackRelease("C6", "4n", now + 0.36);
+        } else if (type === 'tick') {
+            noiseSynth.triggerAttackRelease("32n", now);
+        }
+    }
+
+    // ---- Confetti ----
+    function fireConfetti(x, y, multiplier = 1) {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const colors = ['#ff8f2e', '#ffcf96', '#66bb6a', '#ffffff', '#ffd54f'];
+        const amount = 30 * multiplier;
+
+        for (let i = 0; i < amount; i++) {
+            particles.push({
+                x: x, y: y,
+                vx: (Math.random() - 0.5) * 15 * (multiplier > 1 ? 1.5 : 1),
+                vy: (Math.random() - 1) * 15 * (multiplier > 1 ? 1.5 : 1),
+                size: Math.random() * 8 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rot: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 20
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let active = false;
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy; p.vy += 0.5; p.rot += p.rotSpeed;
+                if (p.y < canvas.height) {
+                    active = true;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                    ctx.restore();
+                }
+            });
+            if (active) requestAnimationFrame(animate);
+            else ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        animate();
+    }
+
+    // ---- Question Generation ----
+    // q = { a, op, b, answer } — positive operands, everything within 10
+    const ADD_POOL = [];
+    const SUB_POOL = [];
+    (function buildPools() {
+        for (let a = 1; a <= 9; a++) {
+            for (let b = 1; b <= 10 - a; b++) ADD_POOL.push({ a, op: '+', b, answer: a + b });
+        }
+        for (let a = 2; a <= 10; a++) {
+            for (let b = 1; b < a; b++) SUB_POOL.push({ a, op: '−', b, answer: a - b });
+        }
+    })();
+
+    function sample(arr, n) {
+        const copy = [...arr].sort(() => Math.random() - 0.5);
+        return copy.slice(0, n);
+    }
+
+    function buildPool(level) {
+        let pool;
+        if (level === 1) pool = sample(ADD_POOL, 10);
+        else if (level === 2) pool = sample(SUB_POOL, 10);
+        else pool = [...sample(ADD_POOL, 5), ...sample(SUB_POOL, 5)];
+        pool.sort(() => Math.random() - 0.5);
+        return pool;
+    }
+
+    // ---- Counting Aid: real carrots the youngest kids can count ----
+    function renderCountingAid(q) {
+        countAid.innerHTML = '';
+        const makeCarrot = (crossed) => {
+            const s = document.createElement('span');
+            s.className = 'aid-carrot' + (crossed ? ' crossed' : '');
+            s.innerText = '🥕';
+            return s;
+        };
+        if (q.op === '+') {
+            for (let i = 0; i < q.a; i++) countAid.appendChild(makeCarrot(false));
+            const gap = document.createElement('span');
+            gap.className = 'aid-gap';
+            countAid.appendChild(gap);
+            for (let i = 0; i < q.b; i++) countAid.appendChild(makeCarrot(false));
+        } else {
+            // a carrots in total, the last b are "taken away" (dimmed)
+            for (let i = 0; i < q.a; i++) countAid.appendChild(makeCarrot(i >= q.a - q.b));
+        }
+    }
+
+    // ---- Progress & Combo ----
+    function updateCombo() {
+        if (comboCount >= 5) {
+            if (!isFeverMode) { isFeverMode = true; comboDisplay.classList.add('fever-text'); }
+            comboDisplay.style.opacity = 1; comboDisplay.innerText = `FEVER MODE x${comboCount}! 🔥🔥`;
+            comboDisplay.classList.remove('anim-jump'); void comboDisplay.offsetWidth; comboDisplay.classList.add('anim-jump');
+        } else {
+            if (isFeverMode) { isFeverMode = false; comboDisplay.classList.remove('fever-text'); }
+            if (comboCount >= 2) {
+                comboDisplay.style.opacity = 1; comboDisplay.innerText = `COMBO x${comboCount}! 🔥`;
+                comboDisplay.classList.remove('anim-jump'); void comboDisplay.offsetWidth; comboDisplay.classList.add('anim-jump');
+            } else comboDisplay.style.opacity = 0;
+        }
+    }
+
+    function updateProgress() {
+        carrotDisplay.innerHTML = "";
+        for (let i = 0; i < totalQuestions; i++) {
+            const span = document.createElement('span');
+            span.innerText = "🥕";
+            if (i >= carrotsCollected) span.className = "carrot-unfed";
+            carrotDisplay.appendChild(span);
+        }
+    }
+
+    function bunnyEmotion(emotion) {
+        if (emotion === 'happy') {
+            bunny.classList.remove('anim-jump'); void bunny.offsetWidth; bunny.classList.add('anim-jump');
+        } else if (emotion === 'sad') {
+            bunny.classList.remove('anim-shake'); void bunny.offsetWidth; bunny.classList.add('anim-shake');
+        }
+    }
+
+    // ---- Main Loop ----
+    function startGame(level) {
+        if (!audioContextStarted) { Tone.start(); audioContextStarted = true; }
+        activeLevelId = level; mistakes = []; isCorrectionRound = false; isTransitioning = false;
+        comboCount = 0; carrotsCollected = 0; isFeverMode = false;
+        comboDisplay.classList.remove('fever-text');
+
+        questionPool = buildPool(level);
+        totalQuestions = questionPool.length;
+
+        updateCombo(); updateProgress();
+        setupScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+        playScreen.classList.remove('hidden'); backBtn.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+        feedbackDisplay.innerText = ""; nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (questionPool.length === 0) { handleRoundEnd(); return; }
+        currentQuestion = questionPool.pop();
+        equationDisplay.innerText = `${currentQuestion.a} ${currentQuestion.op} ${currentQuestion.b} = ?`;
+        renderCountingAid(currentQuestion);
+
+        const ans = currentQuestion.answer;
+        let options = [ans];
+        while (options.length < 3) {
+            let decoy = ans + (Math.floor(Math.random() * 7) - 3);
+            if (decoy >= 0 && decoy <= 12 && !options.includes(decoy)) options.push(decoy);
+        }
+        options.sort(() => Math.random() - 0.5);
+        currentOptions = options;
+
+        for (let i = 0; i < 3; i++) {
+            optionButtons[i].innerText = options[i];
+            optionButtons[i].classList.remove('is-correct', 'is-wrong', 'is-dim');
+        }
+        isTransitioning = false; startTimer();
+    }
+
+    // ---- Timer on/off toggle (shared preference across games) ----
+    let timerEnabled = true; // timer is ON by default on every visit
+    function toggleTimer() {
+        timerEnabled = !timerEnabled;
+        updateTimerToggle();
+    }
+    function updateTimerToggle() {
+        const sw = document.getElementById('timer-switch');
+        const st = document.getElementById('timer-state');
+        if (!sw || !st) return;
+        sw.classList.toggle('on', timerEnabled);
+        st.innerText = timerEnabled ? '開 ON' : '關 OFF';
+    }
+    updateTimerToggle();
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        if (!timerEnabled) { timerArea.style.visibility = 'hidden'; return; }
+        timerArea.style.visibility = 'visible';
+        timeLeft = timeLimit;
+        timerBar.style.width = '100%';
+        timerBar.style.backgroundColor = 'var(--primary)';
+        timerArea.classList.remove('shake-active');
+        splashes.forEach(f => f.classList.add('hidden'));
+
+        timerInterval = setInterval(() => {
+            timeLeft -= 50;
+            timerBar.style.width = (timeLeft / timeLimit * 100) + '%';
+            if (timeLeft <= 3000 && timeLeft % 1000 === 0) playSound('tick');
+            if (timeLeft <= 3000) {
+                timerBar.style.backgroundColor = 'var(--danger)';
+                timerArea.classList.add('shake-active');
+                splashes.forEach(f => f.classList.remove('hidden'));
+            }
+            if (timeLeft <= 0) { clearInterval(timerInterval); handleTimeout(); }
+        }, 50);
+    }
+
+    function handleTimeout() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        comboCount = 0; updateCombo();
+        timerArea.classList.remove('shake-active');
+        playSound('wrong'); bunnyEmotion('sad');
+        feedbackDisplay.style.color = "var(--danger)";
+        feedbackDisplay.innerText = `時間到！Time's Up! 答案是 ${currentQuestion.answer}！`;
+        mistakes.push(currentQuestion);
+        highlightCorrect(currentQuestion.answer);
+        setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 1800);
+    }
+
+    function checkAnswer(idx) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        clearInterval(timerInterval);
+        timerArea.classList.remove('shake-active');
+        if (currentOptions[idx] === currentQuestion.answer) handleCorrect(optionButtons[idx]);
+        else handleWrong(optionButtons[idx], currentQuestion.answer);
+    }
+
+    function handleCorrect(btn) {
+        playSound('correct');
+        btn.classList.add('is-correct');
+
+        // Flying carrot from the button to the bunny
+        const carrot = document.createElement('div');
+        carrot.className = 'flying-carrot'; carrot.innerText = '🥕';
+        const b = btn.getBoundingClientRect();
+        carrot.style.left = (b.left + b.width/2) + 'px'; carrot.style.top = (b.top + b.height/2) + 'px';
+        document.body.appendChild(carrot);
+
+        const m = bunny.getBoundingClientRect();
+        void carrot.offsetWidth;
+        carrot.style.left = (m.left + m.width/2) + 'px'; carrot.style.top = (m.top + m.height/2) + 'px';
+        carrot.style.transform = 'translate(-50%, -50%) scale(0.2) rotate(360deg)'; carrot.style.opacity = '0';
+
+        setTimeout(() => {
+            if (carrot.parentNode) carrot.parentNode.removeChild(carrot);
+            bunnyEmotion('happy'); playSound('munch');
+            comboCount++; carrotsCollected++;
+            updateProgress(); updateCombo();
+            fireConfetti(m.left + m.width/2, m.top + m.height/2, isFeverMode ? 2 : 1);
+            feedbackDisplay.style.color = "var(--success)";
+            feedbackDisplay.innerText = isFeverMode ? "停不下來！UNSTOPPABLE! 🚀" : "答對了！Correct! 🥕";
+            setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 1100);
+        }, 400);
+    }
+
+    function handleWrong(btn, ans) {
+        playSound('wrong'); bunnyEmotion('sad'); comboCount = 0; updateCombo();
+        btn.classList.add('is-wrong');
+        btn.classList.add('anim-shake');
+        setTimeout(() => btn.classList.remove('anim-shake'), 400);
+        feedbackDisplay.style.color = "var(--danger)";
+        feedbackDisplay.innerText = `答錯了！是 ${ans}！It was ${ans}!`;
+        mistakes.push(currentQuestion);
+        highlightCorrect(ans);
+        setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 1800);
+    }
+
+    function highlightCorrect(ans) {
+        for (let i = 0; i < 3; i++) {
+            if (currentOptions[i] === ans) {
+                optionButtons[i].classList.add('is-correct');
+            } else {
+                optionButtons[i].classList.add('is-wrong', 'is-dim');
+            }
+        }
+    }
+
+    function handleRoundEnd() {
+        playScreen.classList.add('hidden'); endScreen.classList.remove('hidden'); backBtn.classList.add('hidden');
+        pickerBtn.onclick = () => showSetup();
+        if (mistakes.length === 0) {
+            playSound('fanfare');
+            markLevelComplete(activeLevelId);
+            document.getElementById('end-title').innerText = "Level Complete! 🎉";
+            document.getElementById('final-message').innerText = "Perfect Score! 全部答對！小兔子吃得好飽！";
+            actionBtn.innerText = "Play Again 再玩一次";
+            actionBtn.onclick = () => startGame(activeLevelId);
+        } else {
+            document.getElementById('end-title').innerText = "Almost there! 差一點點！";
+            document.getElementById('final-message').innerText = `還有 ${mistakes.length} 題要複習！Fix ${mistakes.length} more!`;
+            actionBtn.innerText = "改正錯題 Review Mistakes";
+            actionBtn.onclick = startCorrectionRound;
+        }
+    }
+
+    function startCorrectionRound() {
+        isCorrectionRound = true;
+        questionPool = [...new Set(mistakes)]; questionPool.sort(() => Math.random() - 0.5);
+        totalQuestions = questionPool.length; carrotsCollected = 0; updateProgress(); mistakes = [];
+        endScreen.classList.add('hidden'); playScreen.classList.remove('hidden'); backBtn.classList.remove('hidden');
+        nextQuestion();
+    }
+
+    // Completion trophies on the picker cards
+    function markLevelComplete(id) {
+        try { localStorage.setItem(`carrot_l${id}_complete`, '1'); } catch (e) {}
+        decorateCard(id);
+    }
+    function decorateCard(id) {
+        const card = document.getElementById(`lv-card-${id}`);
+        if (!card) return;
+        const name = card.querySelector('.lv-name');
+        if (name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+    }
+    for (let i = 1; i <= 3; i++) {
+        try { if (localStorage.getItem(`carrot_l${i}_complete`) === '1') decorateCard(i); } catch (e) {}
+    }
+</script>
+
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>這個遊戲是幼小銜接的第一步：建立「數感」（number sense）。小朋友透過幫小兔數紅蘿蔔，把抽象的數字符號與實際數量連繫起來（一一對應），再自然過渡到10以內加減。重點是透過故事情境理解「加法表示變多、減法表示變少」，而不是死記算式 — 這個概念根基打得穩，之後學什麼都快。</p>
+        <p class="pg-en">The first step of the kindergarten-to-primary transition: number sense. By counting carrots for the bunny, children link abstract numerals to real quantities (one-to-one correspondence), then move naturally on to addition and subtraction within 10. The goal is understanding "adding means more, subtracting means less" through stories — not memorising facts. A solid foundation here makes everything that follows easier.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>鼓勵小朋友逐粒數出聲，手指跟著指。答完之後多問一句：「現在變多了還是變少了？多了多少？」讓他用說話解釋。幼兒階段講得出思路，遠比計算得快有價值，所以不要催迫速度。</p>
+        <p class="pg-en">Encourage your child to count out loud, pointing at each item. After each answer, ask: "Did it get more or less? By how much?" and let them explain in words. At this age, being able to explain their thinking is far more valuable than speed — so don't rush them.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>日常吃水果、上樓梯、收拾玩具都可以數：「你有3塊餅，媽媽多給你2塊，現在有幾塊？」把加減藏在生活對話裡，小朋友不會覺得自己在做數學。</p>
+        <p class="pg-en">Count during daily routines — fruit, stairs, tidying toys: "You have 3 cookies, Mum gives you 2 more — how many now?" Weaving addition and subtraction into everyday conversation means maths never feels like a chore.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

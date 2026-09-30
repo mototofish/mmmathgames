@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#0ea5e9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Balance Swap 天平代換 | 等量代換遊戲 · Equal Substitution – MMathWorld</title>
+    <meta name="description" content="Balance Swap 天平代換遊戲：1 個菠蘿等於 2 粒草莓，2 個菠蘿等於多少粒草莓？把水果拖上天平，兩邊一樣重就平衡！設單種物品、兩種物品混合、估計天平傾向、數字謎題及動物謎題五級挑戰，免費升小數學等量代換練習！If 1 pineapple balances 2 strawberries, how many strawberries balance 2 pineapples — or a mix of both? And which way will the scale tip? A fun equal substitution game for kids.">
+    <link rel="canonical" href="https://mathgames.missman.world/scale_swap">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Balance Swap 天平代換 | 等量代換遊戲 · Equal Substitution – MMathWorld">
+    <meta property="og:description" content="1 個菠蘿等於 2 粒草莓，2 個菠蘿等於多少粒草莓？把水果拖上天平，兩邊一樣重就平衡！Drag fruit onto the scale and make it balance — a fun equal substitution game for kids.">
+    <meta property="og:url" content="https://mathgames.missman.world/scale_swap">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Balance Swap 天平代換 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Balance Swap 天平代換 | 等量代換遊戲 · Equal Substitution – MMathWorld">
+    <meta name="twitter:description" content="1 個菠蘿等於 2 粒草莓，2 個菠蘿等於多少粒草莓？把水果拖上天平，兩邊一樣重就平衡！Drag fruit onto the scale and make it balance — a fun equal substitution game for kids.">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Balance Swap",
+      "alternateName": "天平代換",
+      "url": "https://mathgames.missman.world/scale_swap",
+      "description": "Balance Swap 天平代換遊戲：把水果拖上天平，學習等量代換。Drag items onto a balance scale to learn equal substitution.",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": [
+            "zh-Hant-HK",
+            "en"
+      ],
+      "genre": [
+            "Educational",
+            "Math"
+      ],
+      "gamePlatform": [
+            "Web Browser",
+            "Mobile Web"
+      ],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HKD"
+      },
+      "audience": {
+            "@type": "PeopleAudience",
+            "suggestedMinAge": 4,
+            "suggestedMaxAge": 7
+      },
+      "author": {
+            "@type": "Organization",
+            "name": "MMathWorld",
+            "url": "https://mathgames.missman.world/"
+      },
+      "learningResourceType": "Educational game",
+      "teaches": "等量代換 Equal substitution with a balance scale"
+}
+    </script>
+    <!-- Include Tone.js for synthesized sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0369a1;
+            --secondary: #ffb020;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --text-color: #0c3b57;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Comic Sans MS', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(180deg, #d9f1ff 0%, #eef9ff 45%, #d6ecff 100%);
+            color: var(--text-color);
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+            overscroll-behavior: none;
+        }
+        button { touch-action: manipulation; }
+
+        /* Floating sky decorations */
+        .sky-deco { position: fixed; font-size: 60px; opacity: 0.5; z-index: 1; animation: float 6s ease-in-out infinite; pointer-events: none; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+        #game-container {
+            background-color: rgba(255, 255, 255, 0.96);
+            padding: 46px 26px 26px 26px;
+            border-radius: 34px;
+            box-shadow: 0 14px 0 rgba(3, 105, 161, 0.10), 0 26px 50px rgba(12, 59, 87, 0.16);
+            border: 5px solid #ffffff;
+            max-width: 560px;
+            width: 92%;
+            position: relative;
+            z-index: 10;
+            max-height: 100dvh;
+            overflow-y: auto;
+        }
+
+        .game-title { font-size: 34px; font-weight: 800; margin: 0 0 8px 0; letter-spacing: 1px; }
+
+        .btn {
+            border: none; border-radius: 50px; cursor: pointer;
+            font-family: inherit; font-weight: 800; color: white;
+            padding: 12px 30px; font-size: 19px;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.12);
+        }
+        .btn-primary { background: linear-gradient(145deg, #4cc9f5, var(--primary)); box-shadow: 0 6px 0 var(--primary-dark); }
+        .btn-primary:hover { filter: brightness(1.06); transform: translateY(-2px); }
+        .btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--primary-dark); }
+        .btn-secondary { background: linear-gradient(145deg, #ffc65c, var(--secondary)); box-shadow: 0 6px 0 #d98e04; color: #5b3a00; text-shadow: none; }
+        .btn-secondary:hover { filter: brightness(1.05); transform: translateY(-2px); }
+        .btn-secondary:active { transform: translateY(3px); box-shadow: 0 2px 0 #d98e04; }
+
+        #back-btn {
+            position: absolute; top: 14px; left: 14px;
+            background: #dcf1fd; color: #0369a1;
+            padding: 8px 16px; border-radius: 999px; cursor: pointer;
+            border: none; box-shadow: 0 4px 0 #aedcf5;
+            font-size: 15px; font-weight: 800; font-family: inherit; z-index: 30;
+        }
+        #back-btn:active { transform: translateY(2px); box-shadow: 0 0 0 transparent; }
+
+        .hidden { display: none !important; }
+
+        .tag-pill {
+            display: inline-block; font-size: 17px; font-weight: 800;
+            color: #0369a1; background-color: #dcf1fd;
+            border: 3px solid #a5dcf8; padding: 6px 18px;
+            border-radius: 999px; margin-bottom: 14px;
+        }
+        #trophy-pill { border-color: #ffd76a; background: #fff3d1; color: #8a5b00; }
+        .mode-row { display: flex; justify-content: center; gap: 10px; margin: 0 auto 16px; flex-wrap: wrap; }
+        .mode-btn {
+            font-family: inherit; font-size: 15.5px; font-weight: 800; padding: 9px 16px;
+            border-radius: 999px; border: 3px solid var(--primary); background: #fff;
+            color: var(--primary-dark); cursor: pointer; transition: all 0.15s;
+            box-shadow: 0 4px 0 #aedcf5;
+        }
+        .mode-btn.active { background: var(--primary); color: #fff; }
+        .mode-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #aedcf5; }
+
+        /* Sublevel picker */
+        .level-grid { display: flex; flex-direction: column; gap: 10px; margin: 8px auto 6px; max-width: 470px; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #f0f9ff; border: 3px solid #bae6fd; border-radius: 18px;
+            padding: 13px 16px; cursor: pointer; font-family: inherit;
+            box-shadow: 0 5px 0 #bae6fd;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #bae6fd; filter: brightness(1.02); }
+        .level-card:active { transform: translateY(2px); box-shadow: 0 2px 0 #bae6fd; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 20px; font-weight: 800; color: var(--text-color); }
+        .level-card .lv-sub { font-size: 14px; font-weight: 700; color: #41718c; }
+
+        /* Top Bar: Progress */
+        #top-bar { display: flex; justify-content: center; align-items: center; margin-top: 2px; margin-bottom: 4px; gap: 10px; }
+        #progress-display { font-size: 24px; display: flex; gap: 2px; }
+        .scale-unfed { opacity: 0.25; filter: grayscale(1); }
+
+        /* Question text */
+        #question-text { font-size: 19px; font-weight: 800; line-height: 1.45; margin-bottom: 4px; }
+        #question-text .qzh { font-size: 15.5px; font-weight: 700; color: #41718c; }
+        #question-text b { color: var(--primary-dark); background: #dcf1fd; padding: 0 8px; border-radius: 999px; }
+
+        /* Balance scales */
+        .scale { width: 100%; margin: 0 auto; }
+        .beam {
+            position: relative; height: 8px; background: var(--primary-dark);
+            border-radius: 999px; margin-top: 86px;
+            transition: transform 0.45s ease;
+        }
+        .pan {
+            position: absolute; top: -80px; width: 46%; min-height: 76px;
+            display: flex; flex-wrap: wrap; justify-content: center; align-content: center;
+            gap: 1px; padding: 5px;
+            background: #f0f9ff; border: 3px solid #7dd3fc; border-radius: 16px;
+            font-size: 26px; line-height: 1.1;
+        }
+        .pan.left { left: 0; }
+        .pan.right { right: 0; }
+        .pan .pan-cap { position: absolute; bottom: -13px; left: 50%; transform: translateX(-50%); font-size: 11px; font-weight: 800; color: #41718c; white-space: nowrap; }
+        .pan.drop { border-style: dashed; border-color: #38bdf8; background: #e8f6fe; cursor: pointer; }
+        .pan.drop.balanced { border-style: solid; border-color: var(--success); box-shadow: 0 0 16px rgba(46, 204, 113, 0.55); background: #edfff4; }
+        .pan .drop-hint { font-size: 12.5px; font-weight: 800; color: #4aa8d8; width: 100%; }
+        .post { width: 0; height: 0; border-left: 24px solid transparent; border-right: 24px solid transparent; border-bottom: 36px solid var(--primary-dark); margin: 0 auto; }
+        .base { width: 132px; height: 11px; background: var(--primary-dark); border-radius: 999px; margin: 0 auto; }
+
+        /* Mini relation scale */
+        .mini-scale { max-width: 350px; margin: 0 auto; }
+        .mini-scale .beam { margin-top: 56px; height: 6px; background: #7dd3fc; }
+        .mini-scale .pan { top: -50px; min-height: 46px; font-size: 19px; border-width: 2px; border-radius: 12px; }
+        .mini-scale .post { border-left-width: 15px; border-right-width: 15px; border-bottom-width: 22px; border-bottom-color: #7dd3fc; }
+        .mini-scale .base { width: 84px; height: 8px; background: #7dd3fc; }
+        .mini-label { font-size: 13.5px; font-weight: 800; color: #41718c; margin-top: 5px; }
+
+        /* Tray */
+        #tray-label { font-size: 14px; font-weight: 800; color: #41718c; margin: 12px 0 3px; }
+        #tray {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 4px;
+            background: #fff8e8; border: 3px solid #ffd76a; border-radius: 16px;
+            padding: 8px 10px; min-height: 52px; margin-bottom: 10px;
+        }
+        .tray-item { font-size: 30px; cursor: grab; touch-action: none; transition: transform 0.1s; line-height: 1.1; }
+        .tray-item:active { cursor: grabbing; transform: scale(1.15); }
+        .drag-ghost { position: fixed; font-size: 44px; pointer-events: none; z-index: 200; transform: translate(-50%, -60%); filter: drop-shadow(0 6px 6px rgba(0,0,0,0.25)); }
+
+        #check-btn { font-size: 22px; padding: 11px 42px; }
+
+        /* Which Way (compare) answers */
+        #cmp-row { display: flex; justify-content: center; gap: 10px; margin: 10px 0 6px; flex-wrap: wrap; }
+        .cmp-btn {
+            font-family: inherit; font-size: 16px; font-weight: 800; padding: 12px 14px; line-height: 1.3;
+            border-radius: 18px; border: 3px solid var(--primary); background: #fff;
+            color: var(--primary-dark); cursor: pointer; transition: all 0.15s;
+            box-shadow: 0 5px 0 #aedcf5; min-width: 104px;
+        }
+        .cmp-btn:hover { filter: brightness(1.04); transform: translateY(-2px); }
+        .cmp-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #aedcf5; }
+        .cmp-sym { font-size: 26px; font-weight: 800; color: var(--primary-dark); margin: 0 8px; }
+
+        /* Number puzzle (Sublevel 4): numbered coins + multiple choice answers */
+        .coin {
+            display: inline-flex; align-items: center; justify-content: center;
+            width: 36px; height: 36px; border-radius: 50%; margin: 1px;
+            background: radial-gradient(circle at 35% 30%, #7dd3fc, var(--primary));
+            color: #fff; font-size: 19px; font-weight: 800;
+            border: 2.5px solid var(--primary-dark);
+            text-shadow: 0 1px 0 rgba(0,0,0,0.2);
+        }
+        #choice-row { display: flex; justify-content: center; gap: 10px; margin: 10px 0 6px; flex-wrap: wrap; }
+        .choice-btn {
+            font-family: inherit; font-size: 26px; font-weight: 800; padding: 10px 18px;
+            min-width: 66px; border-radius: 18px; border: 3px solid var(--primary);
+            background: #fff; color: var(--primary-dark); cursor: pointer; transition: all 0.15s;
+            box-shadow: 0 5px 0 #aedcf5;
+        }
+        .choice-btn:hover { filter: brightness(1.04); transform: translateY(-2px); }
+        .choice-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #aedcf5; }
+        .choice-btn.picked { background: var(--primary); color: #fff; }
+
+        /* Equation reveal */
+        #equation { margin: 8px 0 2px; background: #f0f9ff; border: 3px solid #bae6fd; border-radius: 18px; padding: 10px 14px; }
+        #equation .eq-icons { font-size: 26px; line-height: 1.3; letter-spacing: 1px; }
+        #equation .eq-sub { font-size: 15px; font-weight: 700; color: #41718c; margin-top: 3px; }
+
+        #feedback { font-size: 18px; font-weight: 800; margin: 6px 0 2px; min-height: 26px; }
+        #timer-area { height: 14px; background: #d7e9f4; border-radius: 999px; overflow: hidden; margin-top: 8px; }
+        #timer-bar { height: 100%; width: 100%; background: var(--primary); border-radius: 999px; transition: width 0.05s linear; }
+        /* Timer on/off toggle */
+        .tt-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 12px; }
+        .tt-text { font-size: 15px; font-weight: 800; color: #41718c; }
+        .tt-state { font-size: 14px; font-weight: 800; color: #41718c; min-width: 58px; text-align: left; }
+        .tt-switch { position: relative; width: 56px; height: 30px; border-radius: 999px; border: none; background: #cbd5e1; cursor: pointer; transition: background 0.2s; padding: 0; flex-shrink: 0; }
+        .tt-switch.on { background: #2ecc71; }
+        .tt-knob { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; transition: left 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.25); }
+        .tt-switch.on .tt-knob { left: 29px; }
+
+        @keyframes jump { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 20%,60% { transform: translateX(-8px); } 40%,80% { transform: translateX(8px); } }
+        .shake { animation: shake 0.4s; }
+
+        #confetti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 100; }
+
+        @media (max-width: 450px) {
+            #game-container { padding: 42px 14px 20px 14px; }
+            .game-title { font-size: 27px; }
+            #question-text { font-size: 16.5px; }
+            #question-text .qzh { font-size: 13.5px; }
+            .pan { font-size: 21px; min-height: 68px; top: -72px; }
+            .beam { margin-top: 78px; }
+            .tray-item { font-size: 25px; }
+            #progress-display { font-size: 20px; }
+            .coin { width: 30px; height: 30px; font-size: 16px; }
+            .choice-btn { font-size: 22px; padding: 8px 14px; min-width: 56px; }
+        }
+        @media (max-height: 560px) {
+            #game-container { padding: 34px 14px 8px 14px; }
+            .game-title { font-size: 24px; }
+            #top-bar { margin-bottom: 0; }
+            #progress-display { font-size: 15px; }
+            #question-text { font-size: 14px; }
+            #question-text .qzh { font-size: 11.5px; }
+            .beam { margin-top: 52px; }
+            .pan { top: -46px; min-height: 42px; font-size: 16px; }
+            .post { border-left-width: 16px; border-right-width: 16px; border-bottom-width: 22px; }
+            .base { width: 100px; height: 8px; }
+            .mini-scale .beam { margin-top: 34px; }
+            .mini-scale .pan { top: -30px; min-height: 26px; font-size: 13px; }
+            .mini-scale .post { border-left-width: 10px; border-right-width: 10px; border-bottom-width: 14px; }
+            .mini-scale .base { width: 60px; height: 6px; }
+            .mini-label { font-size: 11px; margin-top: 0; }
+            #main-scale { margin-top: 24px !important; }
+            #tray { min-height: 34px; padding: 3px 8px; margin-bottom: 5px; }
+            .tray-item { font-size: 18px; }
+            #tray-label { margin: 4px 0 1px; font-size: 12px; }
+            #check-btn { font-size: 15px; padding: 6px 24px; }
+            #cmp-row { margin: 5px 0 3px; gap: 7px; }
+            .cmp-btn { font-size: 12.5px; padding: 7px 10px; min-width: 86px; border-radius: 14px; }
+            #feedback { font-size: 14px; min-height: 18px; margin: 2px 0 0; }
+            #timer-area { margin-top: 5px; }
+            #equation .eq-icons { font-size: 18px; }
+            #equation .eq-sub { font-size: 12px; }
+            .coin { width: 22px; height: 22px; font-size: 12px; border-width: 2px; }
+            .choice-btn { font-size: 16px; padding: 6px 12px; min-width: 48px; border-radius: 14px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        #lock-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+        #lock-input {
+            font-family: inherit; font-size: 18px; font-weight: 700; padding: 12px 18px; width: 220px;
+            border: 3px solid #bfe3f5; border-radius: 999px; outline: none; text-align: center; color: var(--text-color);
+        }
+        #lock-input:focus { border-color: var(--primary); }
+        #lock-input.error { border-color: var(--danger); animation: shake 0.35s; }
+        #unlock-btn { background: var(--primary); box-shadow: 0 6px 0 var(--primary-dark); }
+        #unlock-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        #unlock-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--primary-dark); }
+        #lock-error { margin-top: 12px; font-weight: 800; color: var(--danger); font-size: 15px; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Sky decorations -->
+    <span class="sky-deco" style="top: 6%; left: 4%;">⚖️</span>
+    <span class="sky-deco" style="top: 12%; right: 5%; animation-delay: 1s;">🍍</span>
+    <span class="sky-deco" style="bottom: 10%; left: 6%; animation-delay: 2s; font-size: 44px;">🍓</span>
+    <span class="sky-deco" style="bottom: 14%; right: 7%; animation-delay: 0.5s; font-size: 44px;">✨</span>
+
+    <canvas id="confetti-canvas"></canvas>
+
+    <div id="game-container">
+        <button id="back-btn" onclick="goHome()">← Home</button>
+
+        <!-- LOCK SCREEN -->
+        <div id="lock-screen">
+            <div style="font-size: 64px; margin-bottom: 6px;">🔒</div>
+            <h1 class="game-title" style="color: var(--primary);">Balance Swap 天平代換</h1>
+            <p style="font-size: 17px; font-weight: 700; color: #41718c; margin: 0 0 22px;">
+                這關需要密碼才能玩！快問老師或者家長拿密碼吧。<br>
+                <span style="font-size: 14.5px;">This level is locked — ask your teacher or parent for the password!</span>
+            </p>
+            <div id="lock-row">
+                <input id="lock-input" type="password" placeholder="Password 密碼" autocomplete="off" />
+                <button id="unlock-btn" class="btn">Unlock 解鎖！</button>
+            </div>
+            <div id="lock-error" class="hidden">密碼不對，再試一次！Wrong password — try again! 🤔</div>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- INTRO SCREEN -->
+        <div id="intro-screen" class="hidden">
+            <div style="font-size: 72px; margin-bottom: 6px; animation: jump 2s infinite;">⚖️</div>
+            <h1 class="game-title" style="color: var(--primary);">Balance Swap 天平代換</h1>
+            <div class="tag-pill">等量代換 · Equal Substitution</div>
+            <div id="trophy-pill" class="tag-pill hidden">🏆 全部答對過！Mastered!</div>
+            <p style="font-size: 17px; font-weight: 700; color: #41718c; margin: 0 0 22px;">
+                1 個菠蘿 = 2 粒草莓，2 個菠蘿 = ？<br>
+                把水果拖上天平，兩邊一樣重就平衡！<br>
+                <span style="font-size: 14.5px;">If 1 🍍 = 2 🍓, what do 2 🍍 make? Drag fruit onto the scale to balance it!</span>
+            </p>
+            <button class="btn btn-primary" onclick="showSetup()" style="font-size: 26px; padding: 14px 50px; animation: jump 2s infinite;">Play!</button>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- SETUP SCREEN -->
+        <div id="setup-screen" class="hidden">
+            <h2 class="game-title" style="color: var(--primary); font-size: 26px;">Balance Swap 天平代換</h2>
+            <div class="tag-pill">Pick a mode 選擇模式：</div>
+            <div class="mode-row">
+                <button class="mode-btn" id="mode-live" onclick="setMode(true)">⚖️ 即時平衡 Live Scale</button>
+                <button class="mode-btn" id="mode-submit" onclick="setMode(false)">🤔 先估後試 Submit First</button>
+            </div>
+            <div class="tt-row">
+                <span class="tt-text">⏱️ 計時器 Timer</span>
+                <button class="tt-switch on" id="timer-switch" onclick="toggleTimer()" aria-label="Timer on or off"><span class="tt-knob"></span></button>
+                <span class="tt-state" id="timer-state">開 ON</span>
+            </div>
+            <div class="tag-pill">Pick a level 選擇關卡：</div>
+            <div class="level-grid">
+                <button class="level-card" id="lv-card-1" onclick="startGame(1)">
+                    <span class="lv-emoji">🍍</span>
+                    <span><span class="lv-name">Sublevel 1: One Item 一種物品</span><br><span class="lv-sub">2 個菠蘿 = ? 粒草莓 · Swap one kind of item</span></span>
+                </button>
+                <button class="level-card" id="lv-card-2" onclick="startGame(2)">
+                    <span class="lv-emoji">🧺</span>
+                    <span><span class="lv-name">Sublevel 2: Mixed Items 兩種物品</span><br><span class="lv-sub">1 個菠蘿 + 2 粒草莓 = ? · Balance a mix of two items</span></span>
+                </button>
+                <button class="level-card" id="lv-card-3" onclick="startGame(3)">
+                    <span class="lv-emoji">🤔</span>
+                    <span><span class="lv-name">Sublevel 3: Which Way? 哪邊重？</span><br><span class="lv-sub">哪邊重一點？還是一樣重？· Guess which way the scale tips</span></span>
+                </button>
+                <button class="level-card" id="lv-card-4" onclick="startGame(4)">
+                    <span class="lv-emoji">🪙</span>
+                    <span><span class="lv-name">Sublevel 4: Number Puzzles 數字謎題</span><br><span class="lv-sub">硬幣 4+5+3 = 3 頂禮帽，1 頂 = ? · Add the coins, then split equally!</span></span>
+                </button>
+                <button class="level-card" id="lv-card-5" onclick="startGame(5)">
+                    <span class="lv-emoji">🔢</span>
+                    <span><span class="lv-name">Sublevel 5: Weight Puzzles 砝碼謎題</span><br><span class="lv-sub">砝碼 1+3+5 = 砝碼 1 + 2 隻兔仔，1 隻兔仔 = ? · Weights on BOTH sides — add, take away, then split!</span></span>
+                </button>
+                <button class="level-card" id="lv-card-6" onclick="startGame(6)">
+                    <span class="lv-emoji">🐶</span>
+                    <span><span class="lv-name">Sublevel 6: Animal Puzzles 動物謎題</span><br><span class="lv-sub">1 狗仔 = 7 個波，2 兔仔 = 8 個波，狗仔 + 兔仔 = ? · Two scales, two animals, work out the total!</span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PLAY SCREEN -->
+        <div id="play-screen" class="hidden">
+            <div id="top-bar">
+                <div id="progress-display"></div>
+            </div>
+
+            <div id="question-text"></div>
+
+            <!-- Relation scale (always balanced) -->
+            <div class="mini-label" id="mini-label">這個天平平衡了！This scale is balanced!</div>
+            <div class="scale mini-scale" id="mini-scale-1">
+                <div class="beam" style="transform: rotate(0deg);">
+                    <div class="pan left" id="rel-left"></div>
+                    <div class="pan right" id="rel-right"></div>
+                </div>
+                <div class="post"></div>
+                <div class="base"></div>
+            </div>
+            <!-- Second relation scale (Sublevel 4 two-step puzzles) -->
+            <div class="scale mini-scale hidden" id="mini-scale-2" style="margin-top: 12px;">
+                <div class="beam" style="transform: rotate(0deg);">
+                    <div class="pan left" id="rel2-left"></div>
+                    <div class="pan right" id="rel2-right"></div>
+                </div>
+                <div class="post"></div>
+                <div class="base"></div>
+            </div>
+
+            <!-- Main interactive scale -->
+            <div class="scale" id="main-scale" style="margin-top: 24px;">
+                <div class="beam" id="main-beam">
+                    <div class="pan left" id="left-pan"></div>
+                    <div class="pan right drop" id="right-pan"></div>
+                </div>
+                <div class="post"></div>
+                <div class="base"></div>
+            </div>
+
+            <div id="tray-label"></div>
+            <div id="tray"></div>
+            <button id="check-btn" class="btn btn-primary" onclick="checkAnswer()">放好了！Done!</button>
+
+            <div id="cmp-row" class="hidden">
+                <button class="cmp-btn" onclick="checkCompare('left')">⬅️ 左邊重<br>Left is heavier</button>
+                <button class="cmp-btn" onclick="checkCompare('balance')">⚖️ 一樣重<br>Balanced</button>
+                <button class="cmp-btn" onclick="checkCompare('right')">右邊重 ➡️<br>Right is heavier</button>
+            </div>
+
+            <div id="choice-row" class="hidden"></div>
+
+            <div id="equation" class="hidden"></div>
+            <div id="feedback"></div>
+            <div id="timer-area"><div id="timer-bar"></div></div>
+        </div>
+
+        <!-- END SCREEN -->
+        <div id="end-screen" class="hidden">
+            <div style="font-size: 60px; margin: 10px 0;"><span class="trophy-bounce">🏆</span></div>
+            <h2 id="end-title" class="game-title">All done!</h2>
+            <div id="final-message"></div>
+            <div id="end-btns" style="display: flex; flex-direction: column; gap: 12px; align-items: center; margin-top: 18px;">
+                <button id="action-btn" class="btn btn-primary"></button>
+                <button id="home-btn" class="btn btn-secondary" onclick="goHome()">回到主頁 Go Home</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    // ---- Tone.js Setup ----
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const noiseSynth = new Tone.NoiseSynth({ noise: { type: 'white' }, envelope: { attack: 0.01, decay: 0.12, sustain: 0 } }).toDestination();
+    noiseSynth.volume.value = -16;
+    let audioContextStarted = false;
+
+    // ---- DOM References ----
+    const introScreen = document.getElementById('intro-screen');
+    const setupScreen = document.getElementById('setup-screen');
+    const playScreen = document.getElementById('play-screen');
+    const endScreen = document.getElementById('end-screen');
+    const backBtn = document.getElementById('back-btn');
+    const questionText = document.getElementById('question-text');
+    const miniLabel = document.getElementById('mini-label');
+    const miniScale1 = document.getElementById('mini-scale-1');
+    const miniScale2 = document.getElementById('mini-scale-2');
+    const relLeft = document.getElementById('rel-left');
+    const relRight = document.getElementById('rel-right');
+    const rel2Left = document.getElementById('rel2-left');
+    const rel2Right = document.getElementById('rel2-right');
+    const mainBeam = document.getElementById('main-beam');
+    const leftPan = document.getElementById('left-pan');
+    const rightPan = document.getElementById('right-pan');
+    const trayDiv = document.getElementById('tray');
+    const trayLabel = document.getElementById('tray-label');
+    const checkBtn = document.getElementById('check-btn');
+    const cmpRow = document.getElementById('cmp-row');
+    const choiceRow = document.getElementById('choice-row');
+    const equationDiv = document.getElementById('equation');
+    const feedbackDisplay = document.getElementById('feedback');
+    const progressDisplay = document.getElementById('progress-display');
+    const timerBar = document.getElementById('timer-bar');
+    const actionBtn = document.getElementById('action-btn');
+
+    // ---- Game State ----
+    let currentQuestion = null;
+    let currentLevel = 1;
+    let questionPool = [];
+    let mistakes = [];
+    let panCount = 0;
+    let trayCount = 0;
+    let isTransitioning = false;
+    let isCorrectionRound = false;
+    let gameActive = false;
+    let questionsDone = 0, totalQuestions = 10;
+    let timerInterval = null;
+    let timeLeft = 0;
+    let timeLimit = 60000;
+
+    // ---- Item pairs: 1 big = n small ----
+    const PAIRS = [
+        { big: '🍍', bigZh: '菠蘿', bigEn: 'pineapple', bigM: '個', small: '🍓', smallZh: '草莓', smallEn: 'strawberries', smallM: '粒' },
+        { big: '🍉', bigZh: '西瓜', bigEn: 'watermelon', bigM: '個', small: '🍇', smallZh: '提子', smallEn: 'grapes', smallM: '粒' },
+        { big: '🏀', bigZh: '籃球', bigEn: 'basketball', bigM: '個', small: '⚽', smallZh: '足球', smallEn: 'footballs', smallM: '個' },
+        { big: '🎂', bigZh: '蛋糕', bigEn: 'cake', bigM: '個', small: '🍬', smallZh: '糖果', smallEn: 'candies', smallM: '粒' },
+        { big: '🧀', bigZh: '芝士', bigEn: 'cheese', bigM: '件', small: '🧁', smallZh: '杯子蛋糕', smallEn: 'cupcakes', smallM: '件' },
+        { big: '🍕', bigZh: '薄餅', bigEn: 'pizza', bigM: '件', small: '🍤', smallZh: '蝦仁', smallEn: 'shrimps', smallM: '隻' },
+        { big: '🎁', bigZh: '禮物', bigEn: 'present', bigM: '份', small: '🎈', smallZh: '氣球', smallEn: 'balloons', smallM: '個' },
+        { big: '🚗', bigZh: '汽車', bigEn: 'car', bigM: '輛', small: '🛞', smallZh: '車輪', smallEn: 'wheels', smallM: '個' }
+    ];
+
+    // ---- Sublevel 4: number puzzles ----
+    // Coin items: numbered coins balance k identical items → 1 item = total ÷ k
+    const NUM_ITEMS = [
+        { emoji: '🏖️', zh: '沙灘波', en: 'beach ball', m: '個' },
+        { emoji: '🎩', zh: '禮帽', en: 'top hat', m: '頂' },
+        { emoji: '🥁', zh: '鼓', en: 'drum', m: '個' },
+        { emoji: '🧸', zh: '熊公仔', en: 'teddy bear', m: '隻' },
+        { emoji: '⏰', zh: '鬧鐘', en: 'clock', m: '個' },
+        { emoji: '🎃', zh: '南瓜', en: 'pumpkin', m: '個' }
+    ];
+    // Sublevel 5: weight puzzles — numbered weights on BOTH sides, animals on the right
+    const WEIGHT_ITEMS = [
+        { emoji: '🐰', zh: '兔仔', en: 'rabbit', m: '隻' },
+        { emoji: '🐱', zh: '貓仔', en: 'cat', m: '隻' },
+        { emoji: '🐶', zh: '狗仔', en: 'dog', m: '隻' },
+        { emoji: '🐥', zh: '小雞', en: 'chick', m: '隻' },
+        { emoji: '🦆', zh: '鴨仔', en: 'duckling', m: '隻' },
+        { emoji: '🐢', zh: '烏龜', en: 'turtle', m: '隻' }
+    ];
+
+    // Animal sets: 1 A = x balls, m B = y balls → A + B = ?
+    const ANIMAL_SETS = [
+        { a: '🐶', aZh: '狗仔', aEn: 'dog', aM: '隻', b: '🐰', bZh: '兔仔', bEn: 'rabbit', bM: '隻', ball: '🏀', ballZh: '籃球', ballEn: 'basketballs', ballM: '個' },
+        { a: '🐱', aZh: '貓仔', aEn: 'cat', aM: '隻', b: '🐭', bZh: '老鼠', bEn: 'mouse', bM: '隻', ball: '🧀', ballZh: '芝士', ballEn: 'cheeses', ballM: '件' },
+        { a: '🦊', aZh: '狐狸', aEn: 'fox', aM: '隻', b: '🐥', bZh: '小雞', bEn: 'chick', bM: '隻', ball: '🌽', ballZh: '粟米', ballEn: 'corns', ballM: '條' },
+        { a: '🐵', aZh: '馬騮', aEn: 'monkey', aM: '隻', b: '🐢', bZh: '烏龜', bEn: 'turtle', bM: '隻', ball: '🍌', ballZh: '香蕉', ballEn: 'bananas', ballM: '條' },
+        { a: '🦁', aZh: '獅子', aEn: 'lion', aM: '隻', b: '🐷', bZh: '豬仔', bEn: 'pig', bM: '隻', ball: '🍎', ballZh: '蘋果', ballEn: 'apples', ballM: '個' }
+    ];
+
+    // ---- Audio ----
+    function initAudio() {
+        if (!audioContextStarted) {
+            Tone.start().then(() => { audioContextStarted = true; });
+        }
+    }
+    document.addEventListener('pointerdown', initAudio, { once: true });
+
+    // ---- Password gate — unlocks the intro screen ----
+    const lockScreen = document.getElementById('lock-screen');
+    const lockInput = document.getElementById('lock-input');
+    const lockError = document.getElementById('lock-error');
+    const PASS_HASH = 1056886225; // djb2-xor of the password
+    function tryUnlock() {
+        const v = lockInput.value.trim().toLowerCase();
+        let h = 5381;
+        for (let i = 0; i < v.length; i++) h = ((h * 33) ^ v.charCodeAt(i)) >>> 0;
+        if (v && h === PASS_HASH) {
+            playSound('correct');
+            lockScreen.classList.add('hidden');
+            document.getElementById('intro-screen').classList.remove('hidden');
+        } else {
+            playSound('wrong');
+            lockError.classList.remove('hidden');
+            lockInput.value = '';
+            lockInput.classList.add('error');
+            setTimeout(() => lockInput.classList.remove('error'), 400);
+            lockInput.focus();
+        }
+    }
+    document.getElementById('unlock-btn').onclick = () => tryUnlock();
+    lockInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+    function playSound(type) {
+        if (!audioContextStarted) return;
+        try {
+            if (type === 'pop') {
+                synth.triggerAttackRelease('E5', '16n', Tone.now(), 0.6);
+            } else if (type === 'remove') {
+                synth.triggerAttackRelease('A4', '16n', Tone.now(), 0.4);
+            } else if (type === 'correct') {
+                const now = Tone.now();
+                synth.triggerAttackRelease('C5', '8n', now);
+                synth.triggerAttackRelease('E5', '8n', now + 0.1);
+                synth.triggerAttackRelease('G5', '8n', now + 0.2);
+            } else if (type === 'wrong') {
+                synth.triggerAttackRelease(['C3', 'D3'], '0.4', Tone.now(), 0.5);
+            } else if (type === 'tick') {
+                noiseSynth.triggerAttackRelease('16n');
+            } else if (type === 'fanfare') {
+                const now = Tone.now();
+                ['C4', 'E4', 'G4', 'C5', 'E5', 'G5'].forEach((n, i) => {
+                    synth.triggerAttackRelease(n, '4n', now + i * 0.12, 0.7);
+                });
+            }
+        } catch (e) {}
+    }
+
+    // ---- Confetti ----
+    function confetti(multiplier = 1) {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const pieces = [];
+        const colors = ['#0ea5e9', '#38bdf8', '#ffb020', '#2ecc71', '#ff5a6e', '#a78bfa'];
+        for (let i = 0; i < 45 * multiplier; i++) {
+            pieces.push({
+                x: Math.random() * canvas.width, y: -20 - Math.random() * canvas.height * 0.5,
+                w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                vy: 2 + Math.random() * 3, vx: -1.5 + Math.random() * 3,
+                rot: Math.random() * Math.PI * 2, vr: -0.1 + Math.random() * 0.2
+            });
+        }
+        let frame;
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let alive = false;
+            for (const p of pieces) {
+                p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+                if (p.y < canvas.height + 20) alive = true;
+                ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+                ctx.fillStyle = p.color; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                ctx.restore();
+            }
+            if (alive) frame = requestAnimationFrame(animate);
+            else { cancelAnimationFrame(frame); ctx.clearRect(0, 0, canvas.width, canvas.height); }
+        }
+        animate();
+    }
+
+    // ---- Helpers ----
+    function shuffle(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+    function randInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+
+    // ---- Question generator ----
+    // Relation: 1 big = n small. Sublevel 1: k big = ? small (answer = n * k, kept small for dragging).
+    function makeQ(pair, n, k) {
+        const answer = n * k;
+        return { kind: 'single', pair, n, k, answer, tray: Math.min(answer + randInt(2, 3), 12) };
+    }
+
+    // Sublevel 2: left pan holds a mix — a big + b small. Answer = a * n + b small.
+    function makeQMixed(pair, n, a, b) {
+        const answer = a * n + b;
+        return { kind: 'mix', pair, n, a, b, answer, tray: Math.min(answer + randInt(2, 3), 12) };
+    }
+
+    // Sublevel 3: both pans pre-loaded (a big + b small each). Predict which way the scale tips.
+    // Values are measured in small items; outcome is 'left', 'right' or 'balance'.
+    function makeQCompare(pair, n, a1, b1, a2, b2) {
+        const leftVal = a1 * n + b1;
+        const rightVal = a2 * n + b2;
+        const outcome = leftVal > rightVal ? 'left' : (leftVal < rightVal ? 'right' : 'balance');
+        return { kind: 'compare', pair, n, a1, b1, a2, b2, leftVal, rightVal, outcome };
+    }
+
+    // Sublevel 4 helpers: split a total into 3 coins (each 1-9), build 4 answer choices
+    function splitCoins(total) {
+        // Pick c1 and c2 inside ranges that guarantee c3 is also 1-9
+        const lo1 = Math.max(1, total - 18), hi1 = Math.min(9, total - 2);
+        for (let tries = 0; tries < 60; tries++) {
+            const c1 = randInt(lo1, hi1);
+            const lo2 = Math.max(1, total - 9 - c1), hi2 = Math.min(9, total - 1 - c1);
+            const c2 = randInt(lo2, hi2);
+            const c3 = total - c1 - c2;
+            if (c1 === c2 && c2 === c3 && tries < 55) continue; // prefer varied coins
+            return shuffle([c1, c2, c3]);
+        }
+    }
+    function makeChoices(answer, extras) {
+        const distract = [];
+        for (const e of extras) { if (e > 0 && e !== answer && !distract.includes(e)) distract.push(e); }
+        while (distract.length < 3) {
+            const d = answer + randInt(-3, 4);
+            if (d > 0 && d !== answer && !distract.includes(d)) distract.push(d);
+        }
+        return shuffle([answer, ...distract.slice(0, 3)]);
+    }
+
+    // Type A (picture #1/#2): coins on the left balance k identical items → 1 item = total ÷ k
+    function makeQCoins(item, k, v) {
+        const total = k * v;
+        return { kind: 'coins', item, k, v, total, coins: splitCoins(total), answer: v, choices: makeChoices(v, [v - 1, v + 1, total, v + 2]) };
+    }
+
+    // Type A2 (both sides, like the hat puzzle): coins on the left balance k items + 1 coin on the right → 1 item = (total − e) ÷ k
+    function makeQCoins2(item, k, v, e) {
+        const total = k * v + e;
+        return { kind: 'coins2', item, k, v, e, total, coins: splitCoins(total), answer: v, choices: makeChoices(v, [v - 1, v + 1, k * v, total]) };
+    }
+
+    // Type A3 (weights on both sides): left weights sum L balance k animals + right weights sum R → 1 animal = (L − R) ÷ k
+    function makeQWeights(item, k, v, rightCoins) {
+        const R = rightCoins.reduce((a, b) => a + b, 0);
+        const total = k * v + R;
+        return { kind: 'weights', item, k, v, rightCoins, R, total, leftCoins: splitCoins(total), answer: v, choices: makeChoices(v, [v - 1, v + 1, k * v, total]) };
+    }
+
+    // Type B (picture #3): 1 A = x balls, m B = y balls → A + B = x + (y ÷ m)
+    function makeQTwoStep(set, x, m, w) {
+        const y = m * w;
+        const answer = x + w;
+        return { kind: 'twostep', set, x, m, w, y, answer, choices: makeChoices(answer, [x + y, answer - 1, answer + 1, x]) };
+    }
+
+    function buildPool(level) {
+        const combos = [];
+        if (level === 1) {
+            for (const pair of PAIRS) {
+                for (const n of [2, 3, 4]) {
+                    for (const k of [2, 3]) {
+                        if (n * k <= 9) combos.push(makeQ(pair, n, k));
+                    }
+                }
+            }
+        } else if (level === 2) {
+            for (const pair of PAIRS) {
+                for (const n of [2, 3]) {
+                    for (const a of [1, 2]) {
+                        for (const b of [1, 2, 3]) {
+                            if (a * n + b <= 9) combos.push(makeQMixed(pair, n, a, b));
+                        }
+                    }
+                }
+            }
+            return shuffle(combos).slice(0, 10);
+        } else if (level === 4) {
+            // Number puzzles: numbered coins on the LEFT only, item symbols on the RIGHT only
+            const pool = [];
+            const items4 = shuffle(NUM_ITEMS);
+            for (const item of items4.slice(0, 10)) {
+                const k = randInt(2, 4); // split the total into 2, 3 or 4 items
+                pool.push(makeQCoins(item, k, randInt(3, Math.min(8, Math.floor(27 / k)))));
+            }
+            return shuffle(pool);
+        } else if (level === 5) {
+            // Weight puzzles: numbered weights on BOTH sides, animals on the right
+            const pool = [];
+            for (let i = 0; i < 10; i++) {
+                const item = WEIGHT_ITEMS[randInt(0, WEIGHT_ITEMS.length - 1)];
+                const k = randInt(2, 3);
+                const rCoins = Math.random() < 0.5 ? [randInt(1, 9)] : [randInt(1, 6), randInt(1, 6)];
+                const R = rCoins.reduce((a, b) => a + b, 0);
+                const vmax = Math.max(2, Math.min(8, Math.floor((27 - R) / k)));
+                pool.push(makeQWeights(item, k, randInt(2, vmax), rCoins));
+            }
+            return shuffle(pool);
+        } else if (level === 6) {
+            // Animal puzzles: only two-step questions (two scales → work out A + B)
+            const pool = [];
+            for (const s of shuffle(ANIMAL_SETS).slice(0, 10)) {
+                const m = Math.random() < 0.65 ? 2 : 3;
+                pool.push(makeQTwoStep(s, randInt(4, 7), m, randInt(2, 4)));
+            }
+            return shuffle(pool);
+        } else {
+            // Compare pools: keep a mix of outcomes so kids can't just guess one answer
+            const groups = { left: [], right: [], balance: [] };
+            for (const pair of PAIRS) {
+                for (const n of [2, 3]) {
+                    for (let a1 = 0; a1 <= 2; a1++) for (let b1 = 0; b1 <= 4; b1++) {
+                        if (a1 + b1 < 1 || a1 + b1 > 4 || a1 * n + b1 > 12) continue;
+                        for (let a2 = 0; a2 <= 2; a2++) for (let b2 = 0; b2 <= 4; b2++) {
+                            if (a2 + b2 < 1 || a2 + b2 > 4 || a2 * n + b2 > 12) continue;
+                            if (a1 === a2 && b1 === b2) continue; // identical sides are too confusing visually
+                            const q = makeQCompare(pair, n, a1, b1, a2, b2);
+                            groups[q.outcome].push(q);
+                        }
+                    }
+                }
+            }
+            return shuffle([
+                ...shuffle(groups.left).slice(0, 4),
+                ...shuffle(groups.right).slice(0, 3),
+                ...shuffle(groups.balance).slice(0, 3)
+            ]);
+        }
+        return shuffle(combos).slice(0, 10);
+    }
+
+    // ---- Scale mode: tilt live while dragging, or only after submitting ----
+    let liveScale = false; // default: Submit First (no hints until Done is tapped)
+    try { liveScale = localStorage.getItem('scaleswap_live') === '1'; } catch (e) {}
+    function setMode(live) {
+        liveScale = live;
+        try { localStorage.setItem('scaleswap_live', live ? '1' : '0'); } catch (e) {}
+        updateModeButtons();
+    }
+    function updateModeButtons() {
+        document.getElementById('mode-live').classList.toggle('active', liveScale);
+        document.getElementById('mode-submit').classList.toggle('active', !liveScale);
+    }
+    updateModeButtons();
+
+    // ---- Rendering ----
+    function icons(emoji, count, size) {
+        return Array(count).fill(`<span style="font-size:${size}px">${emoji}</span>`).join('');
+    }
+
+    function renderTray() {
+        trayDiv.innerHTML = '';
+        for (let i = 0; i < trayCount; i++) {
+            const s = document.createElement('span');
+            s.className = 'tray-item';
+            s.innerText = currentQuestion.pair.small;
+            s.addEventListener('pointerdown', onTrayPointerDown);
+            trayDiv.appendChild(s);
+        }
+        if (trayCount === 0) trayDiv.innerHTML = '<span style="font-size:14px; font-weight:800; color:#b09035;">全部放上去了！點一下天平上的可以拿回來。All used! Tap one on the pan to take it back.</span>';
+    }
+
+    function renderPan() {
+        const q = currentQuestion;
+        const size = q.answer <= 6 ? 26 : (q.answer <= 8 ? 22 : 19);
+        rightPan.innerHTML = panCount === 0
+            ? '<span class="drop-hint">拖到這裡<br>Drag here!</span>'
+            : icons(q.pair.small, panCount, size);
+        updateBeam();
+    }
+
+    function updateBeam() {
+        if (currentQuestion.kind !== 'single' && currentQuestion.kind !== 'mix') return;
+        const showTilt = liveScale || isTransitioning;
+        const diff = showTilt ? panCount - currentQuestion.answer : 0;
+        const angle = Math.max(-9, Math.min(9, diff * 3));
+        mainBeam.style.transform = `rotate(${angle}deg)`;
+        rightPan.classList.toggle('balanced', showTilt && panCount === currentQuestion.answer);
+    }
+
+    // Icons for one side of a pre-loaded pan (Sublevel 3)
+    function sideIcons(pair, a, b) {
+        const c = a + b;
+        const size = c <= 2 ? 26 : (c <= 3 ? 23 : 19);
+        return icons(pair.big, a, size) + icons(pair.small, b, size - 3);
+    }
+
+    // Sublevel 4: render the multiple-choice answer buttons
+    function renderChoices(q) {
+        choiceRow.innerHTML = '';
+        for (const c of q.choices) {
+            const b = document.createElement('button');
+            b.className = 'choice-btn';
+            b.innerText = c;
+            b.onclick = () => checkChoice(c, b);
+            choiceRow.appendChild(b);
+        }
+        choiceRow.classList.remove('hidden');
+    }
+
+    function renderQuestion(q) {
+        feedbackDisplay.innerText = '';
+        equationDiv.classList.add('hidden');
+        equationDiv.innerHTML = '';
+        isTransitioning = false;
+        panCount = 0;
+        trayCount = q.tray || 0;
+        timeLimit = 60000;
+
+        leftPan.classList.remove('balanced');
+        rightPan.classList.remove('balanced');
+
+        // Default layout (Sublevels 1-3); puzzle kinds override below
+        miniScale1.classList.remove('hidden');
+        miniScale2.classList.add('hidden');
+        miniLabel.classList.remove('hidden');
+        miniLabel.innerText = '這個天平平衡了！This scale is balanced!';
+        choiceRow.classList.add('hidden');
+        choiceRow.innerHTML = '';
+
+        // Sublevel 4: number puzzles with multiple-choice answers
+        if (q.kind === 'coins' || q.kind === 'coins2' || q.kind === 'weights' || q.kind === 'twostep') {
+            rightPan.classList.remove('drop');
+            trayDiv.classList.add('hidden');
+            trayLabel.classList.add('hidden');
+            checkBtn.classList.add('hidden');
+            cmpRow.classList.add('hidden');
+            mainBeam.style.transform = 'rotate(0deg)';
+            if (q.kind === 'coins') {
+                questionText.innerHTML = `硬幣加起來 = <b>${q.k}</b> ${q.item.m}${q.item.zh}，那麼 <b>1</b> ${q.item.m}${q.item.zh} = <b>?</b><br><span class="qzh">先把硬幣加起來，再平均分成 ${q.k} 份！Add the coins, then share equally into ${q.k}!</span>`;
+                miniLabel.innerText = '這個天平平衡了！This scale is balanced!';
+                relLeft.innerHTML = q.coins.map(c => `<span class="coin" style="width:28px; height:28px; font-size:15px;">${c}</span>`).join('');
+                relRight.innerHTML = icons(q.item.emoji, q.k, q.k <= 3 ? 20 : 16);
+                leftPan.innerHTML = icons(q.item.emoji, 1, 26);
+                rightPan.innerHTML = '<span style="font-size:30px; font-weight:800; color: var(--primary-dark);">?</span>';
+            } else if (q.kind === 'coins2') {
+                questionText.innerHTML = `硬幣加起來 = <b>${q.k}</b> ${q.item.m}${q.item.zh} + <b>${q.e}</b>，那麼 <b>1</b> ${q.item.m}${q.item.zh} = <b>?</b><br><span class="qzh">先把硬幣加起來，減去右邊的 ${q.e}，再平均分成 ${q.k} 份！Add the coins, take away ${q.e}, then share equally into ${q.k}!</span>`;
+                miniLabel.innerText = '這個天平平衡了！This scale is balanced!';
+                relLeft.innerHTML = q.coins.map(c => `<span class="coin" style="width:28px; height:28px; font-size:15px;">${c}</span>`).join('');
+                relRight.innerHTML = icons(q.item.emoji, q.k, 20) + `<span class="coin" style="width:28px; height:28px; font-size:15px;">${q.e}</span>`;
+                leftPan.innerHTML = icons(q.item.emoji, 1, 26);
+                rightPan.innerHTML = '<span style="font-size:30px; font-weight:800; color: var(--primary-dark);">?</span>';
+            } else if (q.kind === 'weights') {
+                const wCoin = c => `<span class="coin" style="width:28px; height:28px; font-size:15px;">${c}</span>`;
+                questionText.innerHTML = `兩邊平衡了！<b>1</b> ${q.item.m}${q.item.zh} = <b>?</b><br><span class="qzh">先把左邊砝碼加起來，減去右邊的砝碼，再平均分成 ${q.k} 份！Add the weights on the left, take away the weights on the right, then share equally into ${q.k}!</span>`;
+                miniLabel.innerText = '這個天平平衡了！This scale is balanced!';
+                relLeft.innerHTML = q.leftCoins.map(wCoin).join('');
+                relRight.innerHTML = icons(q.item.emoji, q.k, 20) + q.rightCoins.map(wCoin).join('');
+                leftPan.innerHTML = icons(q.item.emoji, 1, 26);
+                rightPan.innerHTML = '<span style="font-size:30px; font-weight:800; color: var(--primary-dark);">?</span>';
+            } else {
+                const s = q.set;
+                questionText.innerHTML = `${s.a} + ${s.b} = <b>?</b> ${s.ballM}${s.ballZh}<br><span class="qzh">看看上面兩個天平，每隻動物值多少${s.ballM}${s.ballZh}？Use the two scales above to work out each animal in ${s.ballEn}!</span>`;
+                miniLabel.innerText = '這兩個天平都平衡了！Both scales are balanced!';
+                relLeft.innerHTML = icons(s.a, 1, 22);
+                relRight.innerHTML = icons(s.ball, q.x, q.x <= 5 ? 16 : 13);
+                miniScale2.classList.remove('hidden');
+                rel2Left.innerHTML = icons(s.b, q.m, 20);
+                rel2Right.innerHTML = icons(s.ball, q.y, q.y <= 5 ? 16 : 13);
+                leftPan.innerHTML = icons(s.a, 1, 24) + icons(s.b, 1, 24);
+                rightPan.innerHTML = '<span style="font-size:30px; font-weight:800; color: var(--primary-dark);">?</span>';
+            }
+            renderChoices(q);
+            startTimer();
+            return;
+        }
+
+        if (q.kind === 'compare') {
+            questionText.innerHTML = `天平會向<b>哪邊</b>傾？<br><span class="qzh">想一想兩邊各值多少${q.pair.smallM}${q.pair.smallZh}，再按答案！Work out each side in ${q.pair.smallEn}, then tap your answer!</span>`;
+            relLeft.innerHTML = icons(q.pair.big, 1, 20);
+            relRight.innerHTML = icons(q.pair.small, q.n, 17);
+            leftPan.innerHTML = sideIcons(q.pair, q.a1, q.b1);
+            rightPan.innerHTML = sideIcons(q.pair, q.a2, q.b2);
+            rightPan.classList.remove('drop');
+            mainBeam.style.transform = 'rotate(0deg)';
+            trayDiv.classList.add('hidden');
+            trayLabel.classList.add('hidden');
+            checkBtn.classList.add('hidden');
+            cmpRow.classList.remove('hidden');
+            startTimer();
+            return;
+        }
+
+        rightPan.classList.add('drop');
+        trayDiv.classList.remove('hidden');
+        trayLabel.classList.remove('hidden');
+        checkBtn.classList.remove('hidden');
+        cmpRow.classList.add('hidden');
+
+        if (q.kind === 'mix') {
+            questionText.innerHTML = `<b>${q.a}</b> ${q.pair.bigM}${q.pair.bigZh} + <b>${q.b}</b> ${q.pair.smallM}${q.pair.smallZh} = <b>?</b> ${q.pair.smallM}${q.pair.smallZh}<br><span class="qzh">拖${q.pair.smallZh}到右邊，令天平平衡！ Drag ${q.pair.smallEn} onto the right pan to balance the scale!</span>`;
+            leftPan.innerHTML = icons(q.pair.big, q.a, 26) + icons(q.pair.small, q.b, 22);
+        } else {
+            questionText.innerHTML = `<b>${q.k}</b> ${q.pair.bigM}${q.pair.bigZh} = <b>?</b> ${q.pair.smallM}${q.pair.smallZh}<br><span class="qzh">拖${q.pair.smallZh}到右邊，令天平平衡！ Drag ${q.pair.smallEn} onto the right pan to balance the scale!</span>`;
+            leftPan.innerHTML = icons(q.pair.big, q.k, q.k >= 3 ? 24 : 28);
+        }
+
+        relLeft.innerHTML = icons(q.pair.big, 1, 20);
+        relRight.innerHTML = icons(q.pair.small, q.n, 17);
+
+        trayLabel.innerText = `${q.pair.small} 水果盤 Tray（點一下天平上的可以拿回來）`;
+        renderTray();
+        renderPan();
+        startTimer();
+    }
+
+    // ---- Drag and drop ----
+    function onTrayPointerDown(e) {
+        if (!gameActive || isTransitioning || trayCount <= 0) return;
+        e.preventDefault();
+        playSound('pop');
+        const ghost = document.createElement('div');
+        ghost.className = 'drag-ghost';
+        ghost.innerText = currentQuestion.pair.small;
+        document.body.appendChild(ghost);
+        const moveGhost = (ev) => { ghost.style.left = ev.clientX + 'px'; ghost.style.top = ev.clientY + 'px'; };
+        moveGhost(e);
+        const move = (ev) => moveGhost(ev);
+        const up = (ev) => {
+            window.removeEventListener('pointermove', move);
+            window.removeEventListener('pointerup', up);
+            window.removeEventListener('pointercancel', up);
+            ghost.remove();
+            const r = rightPan.getBoundingClientRect();
+            if (ev.clientX >= r.left - 24 && ev.clientX <= r.right + 24 && ev.clientY >= r.top - 40 && ev.clientY <= r.bottom + 24) {
+                trayCount--;
+                panCount++;
+                renderTray();
+                renderPan();
+                playSound('pop');
+            }
+        };
+        window.addEventListener('pointermove', move);
+        window.addEventListener('pointerup', up);
+        window.addEventListener('pointercancel', up);
+    }
+
+    // Tap an item on the right pan to take it back
+    rightPan.addEventListener('click', () => {
+        if (!gameActive || isTransitioning || panCount <= 0) return;
+        panCount--;
+        trayCount++;
+        renderTray();
+        renderPan();
+        playSound('remove');
+    });
+
+    // ---- Answer checking & reveal ----
+    const OUTCOME_ZH = { left: '左邊重', right: '右邊重', balance: '一樣重' };
+    const OUTCOME_EN = { left: 'the left side is heavier', right: 'the right side is heavier', balance: 'they balance' };
+
+    function tiltOutcome(q) {
+        const angle = q.outcome === 'balance' ? 0 : (q.outcome === 'left' ? -9 : 9);
+        mainBeam.style.transform = `rotate(${angle}deg)`;
+        if (q.outcome === 'balance') {
+            leftPan.classList.add('balanced');
+            rightPan.classList.add('balanced');
+        }
+    }
+
+    function revealEquation(correct) {
+        const q = currentQuestion;
+        if (q.kind === 'coins') {
+            const smallCoin = c => `<span class="coin" style="width:30px; height:30px; font-size:16px;">${c}</span>`;
+            const eqIcons = q.coins.map(smallCoin).join('') +
+                `<span class="cmp-sym">=</span>` + icons(q.item.emoji, q.k, 22) +
+                `<span class="cmp-sym">→</span>` + icons(q.item.emoji, 1, 22) +
+                `<span class="cmp-sym">=</span><b style="font-size:26px;">${q.v}</b>`;
+            const subText = `${q.coins.join(' + ')} = ${q.total}，${q.total} 分做 ${q.k} 份：${q.total} ÷ ${q.k} = ${q.v}，所以 1 ${q.item.m}${q.item.zh} = ${q.v}！· The coins add up to ${q.total}, shared by ${q.k} — each ${q.item.en} = ${q.v}!`;
+            equationDiv.innerHTML = `<div class="eq-icons">${eqIcons}</div><div class="eq-sub">${subText}</div>`;
+            equationDiv.classList.remove('hidden');
+            if (!correct) {
+                equationDiv.querySelector('.eq-sub').innerHTML = `<b style="color: var(--danger);">正確答案：${q.answer} · Answer: ${q.answer}</b><br>` + equationDiv.querySelector('.eq-sub').innerHTML;
+            }
+            return;
+        }
+        if (q.kind === 'coins2') {
+            const smallCoin = c => `<span class="coin" style="width:30px; height:30px; font-size:16px;">${c}</span>`;
+            const eqIcons = q.coins.map(smallCoin).join('') +
+                `<span class="cmp-sym">=</span>` + icons(q.item.emoji, q.k, 22) + smallCoin(q.e) +
+                `<span class="cmp-sym">→</span>` + icons(q.item.emoji, 1, 22) +
+                `<span class="cmp-sym">=</span><b style="font-size:26px;">${q.v}</b>`;
+            const subText = `${q.coins.join(' + ')} = ${q.total}，兩邊都拿走 ${q.e}：${q.total} − ${q.e} = ${q.k * q.v}，再分做 ${q.k} 份：${q.k * q.v} ÷ ${q.k} = ${q.v}，所以 1 ${q.item.m}${q.item.zh} = ${q.v}！· The coins add up to ${q.total}; take away ${q.e} from both sides → ${q.k * q.v}, shared by ${q.k} — each ${q.item.en} = ${q.v}!`;
+            equationDiv.innerHTML = `<div class="eq-icons">${eqIcons}</div><div class="eq-sub">${subText}</div>`;
+            equationDiv.classList.remove('hidden');
+            if (!correct) {
+                equationDiv.querySelector('.eq-sub').innerHTML = `<b style="color: var(--danger);">正確答案：${q.answer} · Answer: ${q.answer}</b><br>` + equationDiv.querySelector('.eq-sub').innerHTML;
+            }
+            return;
+        }
+        if (q.kind === 'weights') {
+            const smallCoin = c => `<span class="coin" style="width:30px; height:30px; font-size:16px;">${c}</span>`;
+            const eqIcons = q.leftCoins.map(smallCoin).join('') +
+                `<span class="cmp-sym">=</span>` + icons(q.item.emoji, q.k, 22) + q.rightCoins.map(smallCoin).join('') +
+                `<span class="cmp-sym">→</span>` + icons(q.item.emoji, 1, 22) +
+                `<span class="cmp-sym">=</span><b style="font-size:26px;">${q.v}</b>`;
+            const subText = `${q.leftCoins.join(' + ')} = ${q.total}，右邊砝碼 = ${q.rightCoins.join(' + ')} = ${q.R}，兩邊都拿走 ${q.R}：${q.total} − ${q.R} = ${q.k * q.v}，再分做 ${q.k} 份：${q.k * q.v} ÷ ${q.k} = ${q.v}，所以 1 ${q.item.m}${q.item.zh} = ${q.v}！· Left weights add up to ${q.total}; take away ${q.R} from both sides → ${q.k * q.v}, shared by ${q.k} — each ${q.item.en} = ${q.v}!`;
+            equationDiv.innerHTML = `<div class="eq-icons">${eqIcons}</div><div class="eq-sub">${subText}</div>`;
+            equationDiv.classList.remove('hidden');
+            if (!correct) {
+                equationDiv.querySelector('.eq-sub').innerHTML = `<b style="color: var(--danger);">正確答案：${q.answer} · Answer: ${q.answer}</b><br>` + equationDiv.querySelector('.eq-sub').innerHTML;
+            }
+            return;
+        }
+        if (q.kind === 'twostep') {
+            const s = q.set;
+            const eqIcons = icons(s.a, 1, 22) + icons(s.b, 1, 22) +
+                `<span class="cmp-sym">=</span>` + icons(s.ball, q.answer, q.answer <= 8 ? 18 : 14) +
+                `<b style="font-size:24px;"> ${q.answer}</b>`;
+            const subText = `1 ${s.aM}${s.aZh} = ${q.x} ${s.ballM}${s.ballZh}，${q.m} ${s.bM}${s.bZh} = ${q.y} ${s.ballM}${s.ballZh}，所以 1 ${s.bM}${s.bZh} = ${q.y} ÷ ${q.m} = ${q.w}。加埋：${q.x} + ${q.w} = ${q.answer} ${s.ballM}${s.ballZh}！· 1 ${s.aEn} = ${q.x}, 1 ${s.bEn} = ${q.y} ÷ ${q.m} = ${q.w}, together ${q.x} + ${q.w} = ${q.answer} ${s.ballEn}!`;
+            equationDiv.innerHTML = `<div class="eq-icons">${eqIcons}</div><div class="eq-sub">${subText}</div>`;
+            equationDiv.classList.remove('hidden');
+            if (!correct) {
+                equationDiv.querySelector('.eq-sub').innerHTML = `<b style="color: var(--danger);">正確答案：${q.answer} · Answer: ${q.answer}</b><br>` + equationDiv.querySelector('.eq-sub').innerHTML;
+            }
+            return;
+        }
+        if (q.kind === 'compare') {
+            const sym = q.outcome === 'balance' ? '=' : (q.outcome === 'left' ? '>' : '<');
+            const leftIcons = sideIcons(q.pair, q.a1, q.b1);
+            const rightIcons = sideIcons(q.pair, q.a2, q.b2);
+            const subText = `1 ${q.pair.bigM}${q.pair.bigZh} = ${q.n} ${q.pair.smallM}${q.pair.smallZh}。左邊值 ${q.leftVal} ${q.pair.smallM}${q.pair.smallZh}，右邊值 ${q.rightVal} ${q.pair.smallM}${q.pair.smallZh}，所以${OUTCOME_ZH[q.outcome]}！· Left = ${q.leftVal}, right = ${q.rightVal} — ${OUTCOME_EN[q.outcome]}!`;
+            equationDiv.innerHTML = `<div class="eq-icons">${leftIcons}<span class="cmp-sym">${sym}</span>${rightIcons}</div><div class="eq-sub">${subText}</div>`;
+            equationDiv.classList.remove('hidden');
+            if (!correct) {
+                equationDiv.querySelector('.eq-sub').innerHTML = `<b style="color: var(--danger);">正確答案：${OUTCOME_ZH[q.outcome]} · Answer: ${OUTCOME_EN[q.outcome]}</b><br>` + equationDiv.querySelector('.eq-sub').innerHTML;
+            }
+            return;
+        }
+        const smallIcons = q.answer <= 6 ? icons(q.pair.small, q.answer, 22) : icons(q.pair.small, q.answer, 18);
+        let leftIcons, subText;
+        if (q.kind === 'mix') {
+            leftIcons = icons(q.pair.big, q.a, 24) + '<span style="font-size:20px; font-weight:800;"> + </span>' + icons(q.pair.small, q.b, 20);
+            subText = `1 ${q.pair.bigM}${q.pair.bigZh} = ${q.n} ${q.pair.smallM}${q.pair.smallZh}，所以 ${q.a} ${q.pair.bigM}${q.pair.bigZh} + ${q.b} ${q.pair.smallM}${q.pair.smallZh} = ${q.a * q.n} + ${q.b} = ${q.answer} ${q.pair.smallM}${q.pair.smallZh} · ${q.a} ${q.pair.bigEn}${q.a > 1 ? 's' : ''} + ${q.b} ${q.pair.smallEn} = ${q.a * q.n} + ${q.b} = ${q.answer} ${q.pair.smallEn}!`;
+        } else {
+            leftIcons = icons(q.pair.big, q.k, 24);
+            subText = `1 ${q.pair.bigM}${q.pair.bigZh} = ${q.n} ${q.pair.smallM}${q.pair.smallZh}，所以 ${q.k} ${q.pair.bigM}${q.pair.bigZh} = ${q.answer} ${q.pair.smallM}${q.pair.smallZh} · ${q.k} ${q.pair.bigEn}${q.k > 1 ? 's' : ''} = ${q.answer} ${q.pair.smallEn}!`;
+        }
+        equationDiv.innerHTML = `<div class="eq-icons">${leftIcons} = ${smallIcons}</div><div class="eq-sub">${subText}</div>`;
+        equationDiv.classList.remove('hidden');
+        if (!correct) {
+            equationDiv.querySelector('.eq-sub').innerHTML = `<b style="color: var(--danger);">正確答案：${q.answer} ${q.pair.smallM}${q.pair.smallZh} · Answer: ${q.answer}</b><br>` + equationDiv.querySelector('.eq-sub').innerHTML;
+        }
+    }
+
+    function autoBalance() {
+        panCount = currentQuestion.answer;
+        trayCount = currentQuestion.tray - currentQuestion.answer;
+        renderTray();
+        renderPan();
+    }
+
+    function checkAnswer() {
+        if (!gameActive || isTransitioning) return;
+        const q = currentQuestion;
+        isTransitioning = true;
+        clearInterval(timerInterval);
+        if (panCount === q.answer) {
+            playSound('correct');
+            confetti(1);
+            questionsDone++;
+            updateProgress();
+            feedbackDisplay.innerText = '平衡了！答對了！Balanced! Correct! 🎉';
+            feedbackDisplay.style.color = 'var(--success)';
+            revealEquation(true);
+            setTimeout(() => { feedbackDisplay.innerText = ''; feedbackDisplay.style.color = ''; nextQuestion(); }, 2400);
+        } else {
+            playSound('wrong');
+            mistakes.push(q);
+            questionsDone++;
+            updateProgress();
+            feedbackDisplay.innerText = panCount < q.answer ? '太少了！看看要多少才平衡。Too few — watch how many it takes!' : '太多了！看看要多少才平衡。Too many — watch how many it takes!';
+            feedbackDisplay.style.color = 'var(--danger)';
+            document.getElementById('game-container').classList.add('shake');
+            setTimeout(() => document.getElementById('game-container').classList.remove('shake'), 450);
+            updateBeam(); // show which side is heavier (only new in submit mode)
+            const delay = liveScale ? 0 : 1100;
+            setTimeout(() => { autoBalance(); revealEquation(false); }, delay);
+            setTimeout(() => { feedbackDisplay.innerText = ''; feedbackDisplay.style.color = ''; nextQuestion(); }, 3200 + delay);
+        }
+    }
+
+    // Sublevel 4: fill in the answer on the scale, then show the working
+    function finishPuzzle(q, correct) {
+        if (q.kind === 'twostep') {
+            rightPan.innerHTML = icons(q.set.ball, q.answer, q.answer <= 6 ? 20 : 15);
+        } else if (q.kind === 'coins' || q.kind === 'coins2' || q.kind === 'weights') {
+            rightPan.innerHTML = `<span class="coin" style="width:42px; height:42px; font-size:23px;">${q.v}</span>`;
+        }
+        leftPan.classList.add('balanced');
+        rightPan.classList.add('balanced');
+        revealEquation(correct);
+    }
+
+    // Sublevel 4: multiple-choice answer checking
+    function checkChoice(choice, btn) {
+        if (!gameActive || isTransitioning) return;
+        const q = currentQuestion;
+        if (q.kind !== 'coins' && q.kind !== 'coins2' && q.kind !== 'weights' && q.kind !== 'twostep') return;
+        isTransitioning = true;
+        clearInterval(timerInterval);
+        if (btn) btn.classList.add('picked');
+        if (choice === q.answer) {
+            playSound('correct');
+            confetti(1);
+            questionsDone++;
+            updateProgress();
+            feedbackDisplay.innerText = '答對了！Correct! 🎉';
+            feedbackDisplay.style.color = 'var(--success)';
+            finishPuzzle(q, true);
+            setTimeout(() => { feedbackDisplay.innerText = ''; feedbackDisplay.style.color = ''; nextQuestion(); }, 2800);
+        } else {
+            playSound('wrong');
+            mistakes.push(q);
+            questionsDone++;
+            updateProgress();
+            feedbackDisplay.innerText = '不對！看看怎樣計算。Not quite — here is how to work it out!';
+            feedbackDisplay.style.color = 'var(--danger)';
+            document.getElementById('game-container').classList.add('shake');
+            setTimeout(() => document.getElementById('game-container').classList.remove('shake'), 450);
+            setTimeout(() => finishPuzzle(q, false), 700);
+            setTimeout(() => { feedbackDisplay.innerText = ''; feedbackDisplay.style.color = ''; nextQuestion(); }, 5200);
+        }
+    }
+
+    // Sublevel 3: predict which way the scale tips, then watch it happen
+    function checkCompare(choice) {
+        if (!gameActive || isTransitioning || currentQuestion.kind !== 'compare') return;
+        const q = currentQuestion;
+        isTransitioning = true;
+        clearInterval(timerInterval);
+        if (choice === q.outcome) {
+            playSound('correct');
+            confetti(1);
+            questionsDone++;
+            updateProgress();
+            feedbackDisplay.innerText = `答對了！${OUTCOME_ZH[q.outcome]}！Correct! 🎉`;
+            feedbackDisplay.style.color = 'var(--success)';
+            tiltOutcome(q);
+            revealEquation(true);
+            setTimeout(() => { feedbackDisplay.innerText = ''; feedbackDisplay.style.color = ''; nextQuestion(); }, 2400);
+        } else {
+            playSound('wrong');
+            mistakes.push(q);
+            questionsDone++;
+            updateProgress();
+            feedbackDisplay.innerText = '不對！看看天平怎樣移動。Not quite — watch the scale!';
+            feedbackDisplay.style.color = 'var(--danger)';
+            document.getElementById('game-container').classList.add('shake');
+            setTimeout(() => document.getElementById('game-container').classList.remove('shake'), 450);
+            setTimeout(() => tiltOutcome(q), 500);
+            setTimeout(() => revealEquation(false), 1300);
+            setTimeout(() => { feedbackDisplay.innerText = ''; feedbackDisplay.style.color = ''; nextQuestion(); }, 4000);
+        }
+    }
+
+    function handleTimeout() {
+        if (!gameActive || isTransitioning) return;
+        isTransitioning = true;
+        playSound('wrong');
+        mistakes.push(currentQuestion);
+        questionsDone++;
+        updateProgress();
+        feedbackDisplay.innerText = '時間到！看看正確答案。Time’s up — here is the answer!';
+        feedbackDisplay.style.color = 'var(--danger)';
+        if (currentQuestion.kind === 'compare') {
+            tiltOutcome(currentQuestion);
+            revealEquation(false);
+        } else if (currentQuestion.kind === 'coins' || currentQuestion.kind === 'coins2' || currentQuestion.kind === 'weights' || currentQuestion.kind === 'twostep') {
+            finishPuzzle(currentQuestion, false);
+        } else {
+            autoBalance();
+            revealEquation(false);
+        }
+        const isPuzzle = currentQuestion.kind === 'coins' || currentQuestion.kind === 'coins2' || currentQuestion.kind === 'weights' || currentQuestion.kind === 'twostep';
+        setTimeout(() => { feedbackDisplay.innerText = ''; feedbackDisplay.style.color = ''; nextQuestion(); }, isPuzzle ? 5200 : 3200);
+    }
+
+    // ---- Progress & Timer ----
+    function updateProgress() {
+        progressDisplay.innerHTML = '';
+        for (let i = 0; i < totalQuestions; i++) {
+            const span = document.createElement('span');
+            span.innerText = '⚖️';
+            if (i >= questionsDone) span.className = 'scale-unfed';
+            progressDisplay.appendChild(span);
+        }
+    }
+
+    // ---- Timer on/off toggle (shared preference across games) ----
+    let timerEnabled = true; // timer is ON by default on every visit
+    function toggleTimer() {
+        timerEnabled = !timerEnabled;
+        updateTimerToggle();
+    }
+    function updateTimerToggle() {
+        const sw = document.getElementById('timer-switch');
+        const st = document.getElementById('timer-state');
+        if (!sw || !st) return;
+        sw.classList.toggle('on', timerEnabled);
+        st.innerText = timerEnabled ? '開 ON' : '關 OFF';
+    }
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        const area = document.getElementById('timer-area');
+        if (!timerEnabled) { area.style.visibility = 'hidden'; return; }
+        area.style.visibility = 'visible';
+        timeLeft = timeLimit;
+        timerBar.style.width = '100%';
+        timerBar.style.backgroundColor = 'var(--primary)';
+        timerInterval = setInterval(() => {
+            timeLeft -= 50;
+            timerBar.style.width = (timeLeft / timeLimit * 100) + '%';
+            if (timeLeft <= 5000 && timeLeft % 1000 === 0) playSound('tick');
+            if (timeLeft <= 5000) timerBar.style.backgroundColor = 'var(--danger)';
+            if (timeLeft <= 0) { clearInterval(timerInterval); handleTimeout(); }
+        }, 50);
+    }
+
+    // ---- Game flow ----
+    function showSetup() {
+        if (!lockScreen.classList.contains('hidden')) return;
+        initAudio();
+        introScreen.classList.add('hidden');
+        playScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        setupScreen.classList.remove('hidden');
+        backBtn.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+        backBtn.onclick = goToIntro;
+    }
+
+    function startGame(level) {
+        initAudio();
+        currentLevel = level;
+        isCorrectionRound = false;
+        mistakes = [];
+        questionsDone = 0;
+        questionPool = buildPool(level);
+        totalQuestions = questionPool.length;
+        updateProgress();
+        gameActive = true;
+        introScreen.classList.add('hidden');
+        setupScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        playScreen.classList.remove('hidden');
+        backBtn.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+        backBtn.onclick = goBack;
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (questionPool.length === 0) { handleRoundEnd(); return; }
+        currentQuestion = questionPool.pop();
+        renderQuestion(currentQuestion);
+    }
+
+    function handleRoundEnd() {
+        gameActive = false;
+        clearInterval(timerInterval);
+        playScreen.classList.add('hidden');
+        endScreen.classList.remove('hidden');
+        backBtn.classList.add('hidden');
+        if (mistakes.length === 0) {
+            playSound('fanfare');
+            confetti(2);
+            markComplete();
+            document.getElementById('end-title').innerText = 'Level Complete! 🎉';
+            document.getElementById('final-message').innerText = 'Perfect Score! 全部答對！';
+            actionBtn.innerText = 'Play Again 再玩一次';
+            actionBtn.onclick = () => startGame(currentLevel);
+        } else {
+            document.getElementById('end-title').innerText = 'Almost there! 差一點點！';
+            document.getElementById('final-message').innerText = `還有 ${mistakes.length} 題要複習！Fix ${mistakes.length} more!`;
+            actionBtn.innerText = '改正錯題 Review Mistakes';
+            actionBtn.onclick = startCorrectionRound;
+        }
+    }
+
+    function startCorrectionRound() {
+        isCorrectionRound = true;
+        questionPool = shuffle(mistakes);
+        mistakes = [];
+        questionsDone = 0;
+        totalQuestions = questionPool.length;
+        updateProgress();
+        gameActive = true;
+        endScreen.classList.add('hidden');
+        playScreen.classList.remove('hidden');
+        backBtn.classList.remove('hidden');
+        feedbackDisplay.innerText = '';
+        nextQuestion();
+    }
+
+    function goBack() {
+        gameActive = false;
+        clearInterval(timerInterval);
+        playScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        setupScreen.classList.remove('hidden');
+        backBtn.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+        backBtn.onclick = goToIntro;
+    }
+    function goToIntro() {
+        gameActive = false;
+        clearInterval(timerInterval);
+        playScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        setupScreen.classList.add('hidden');
+        backBtn.classList.remove('hidden');
+        backBtn.innerText = '← Home';
+        backBtn.onclick = goHome;
+        introScreen.classList.remove('hidden');
+    }
+    function goHome() { window.location.href = 'index.html'; }
+
+    // ---- Trophy ----
+    function markComplete() {
+        try { localStorage.setItem(`scaleswap_l${currentLevel}_complete`, '1'); } catch (e) {}
+        decorateCard(currentLevel);
+        checkAllComplete();
+    }
+    function decorateCard(id) {
+        const card = document.getElementById(`lv-card-${id}`);
+        if (!card) return;
+        const name = card.querySelector('.lv-name');
+        if (name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+    }
+    function checkAllComplete() {
+        try {
+            if (localStorage.getItem('scaleswap_l1_complete') === '1' && localStorage.getItem('scaleswap_l2_complete') === '1' && localStorage.getItem('scaleswap_l3_complete') === '1' && localStorage.getItem('scaleswap_l4_complete') === '1' && localStorage.getItem('scaleswap_l5_complete') === '1' && localStorage.getItem('scaleswap_l6_complete') === '1') {
+                document.getElementById('trophy-pill').classList.remove('hidden');
+            }
+        } catch (e) {}
+    }
+    // One-time migration: before sublevels, a single trophy covered the whole game
+    try {
+        const old = localStorage.getItem('scaleswap_complete');
+        if (old === '1') {
+            localStorage.setItem('scaleswap_l1_complete', '1');
+            localStorage.removeItem('scaleswap_complete');
+        }
+        // One-time remap: Sublevel 5 used to be Animal Puzzles (now Sublevel 6); Weight Puzzles took its place
+        if (localStorage.getItem('scaleswap_l5_complete') === '1' && localStorage.getItem('scaleswap_l6_complete') !== '1' && localStorage.getItem('scaleswap_l56_remapped') !== '1') {
+            localStorage.setItem('scaleswap_l6_complete', '1');
+            localStorage.removeItem('scaleswap_l5_complete');
+            localStorage.setItem('scaleswap_l56_remapped', '1');
+        }
+        for (let i = 1; i <= 6; i++) { if (localStorage.getItem(`scaleswap_l${i}_complete`) === '1') decorateCard(i); }
+    } catch (e) {}
+    checkAllComplete();
+    updateTimerToggle();
+    </script>
+
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>1個菠蘿等於2粒草莓，那麼2個菠蘿換到多少粒？「等量代換」是邏輯推理的經典題型：利用「一樣重、一樣多」的關係，一換二、二換四，逐步推出答案。遊戲由水果天秤玩到硬幣數字謎題，層層遞進，還有估計天秤傾向的觀察訓練。</p>
+        <p class="pg-en">If 1 pineapple equals 2 strawberries, what do 2 pineapples trade for? "Equal substitution" is a classic reasoning task: using "same weight, same amount" to swap one for two, two for four, step by step. The game builds from fruit scales to coin-number puzzles, with observation challenges on which way the scale tips.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>用實物排一排最穩妥：積木當菠蘿、提子當草莓，讓小朋友親手「換」一次。口訣是：「看著天秤兩邊，一樣重才可以換。」換錯了，排出來檢查。</p>
+        <p class="pg-en">Laying it out with real objects is safest: blocks as pineapples, grapes as strawberries — let your child physically "swap" once. The mantra: "watch both sides — only equal weights can be swapped." If a swap goes wrong, lay it out and check.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>生活裡的代換隨處可見：1杯等於2半碗、3張貼紙換1個印章。煮飯時請小朋友幫手量度，數學很自然地融入生活。</p>
+        <p class="pg-en">Substitutions are everywhere in daily life: 1 cup equals 2 half-bowls, 3 stickers trade for 1 stamp. Ask your child to help measure while cooking — maths blends into daily life naturally.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

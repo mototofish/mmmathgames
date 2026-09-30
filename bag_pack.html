@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#c026d3">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pack a Bag 執袋小能手 | 分組除法 · How Many Bags? – MMathWorld</title>
+    <meta name="description" content="Pack a Bag 執袋小能手遊戲：每個袋需要 2 包紙巾、1 支水、2 包餅乾 — 這些物品最多可以裝多少個袋？數一數、分一分，找出最快用完的物品！Each bag needs 2 tissues, 1 water and 2 biscuit packs — how many bags can we pack? Early division and grouping game for kids. 免費升小數學遊戲！">
+    <link rel="canonical" href="https://mathgames.missman.world/bag_pack">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Pack a Bag 執袋小能手 | 分組除法 · How Many Bags? – MMathWorld">
+    <meta property="og:description" content="Pack a Bag 執袋小能手遊戲：數一數物品，看看最多可以裝多少個袋！Count the items and work out how many bags we can pack! Free math game for kids. 免費升小數學遊戲！">
+    <meta property="og:url" content="https://mathgames.missman.world/bag_pack">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Pack a Bag 執袋小能手 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Pack a Bag 執袋小能手 | 分組除法 – MMathWorld">
+    <meta name="twitter:description" content="Pack a Bag 執袋小能手遊戲：數一數物品，看看最多可以裝多少個袋！Count the items — how many bags can we pack?">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Pack a Bag",
+      "alternateName": "執袋小能手",
+      "url": "https://mathgames.missman.world/bag_pack",
+      "description": "Pack a Bag 執袋小能手遊戲：每個袋需要指定的物品（例如 2 包紙巾、1 支水、2 包餅乾），數一數桌上的物品，算出最多可以裝多少個袋。訓練分組、包含除法與餘數概念。",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": ["zh-Hant-HK", "en"],
+      "genre": ["Educational", "Math"],
+      "gamePlatform": ["Web Browser", "Mobile Web"],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "HKD" },
+      "audience": { "@type": "PeopleAudience", "suggestedMinAge": 4, "suggestedMaxAge": 8 },
+      "author": { "@type": "Organization", "name": "MMathWorld", "url": "https://mathgames.missman.world/" },
+      "learningResourceType": "Educational game",
+      "teaches": "分組與包含除法、餘數概念、限制因素推理 Grouping and measurement division, remainders, limiting-factor reasoning"
+    }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23c026d3'/%3E%3Ctext x='24' y='34' font-size='26' text-anchor='middle'%3E🎒%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        :root {
+            --fuch: #c026d3; --fuch-dark: #86198f;
+            --purp: #9333c9; --purp-dark: #7e22a5;
+            --gold: #f0b429; --gold-dark: #c97b12;
+            --cream: #fffdf8; --danger: #e74c3c; --success: #2ecc71;
+            --text-main: #3d3550; --text-muted: #8a81a0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body {
+            min-height: 100vh; min-height: 100dvh;
+            background: linear-gradient(180deg, #f5d6fb 0%, #fceefe 45%, #fff8ec 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: safe center;
+            padding: 14px; overflow-x: hidden; touch-action: manipulation;
+        }
+        .hidden { display: none !important; }
+        .deco { position: fixed; pointer-events: none; opacity: 0.5; z-index: 0; }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+        #back-btn {
+            position: fixed; top: 12px; left: 12px; z-index: 60;
+            background: #ffffff; border: 3px solid #ecc8f5; color: #86198f;
+            font-size: 15px; font-weight: 800; border-radius: 999px; padding: 7px 16px;
+            cursor: pointer; box-shadow: 0 3px 0 #ecc8f5; transition: transform 0.12s;
+        }
+        #back-btn:hover { transform: translateY(-2px); }
+
+        #game-container {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: var(--cream); border: 5px solid #d946ef; border-radius: 28px;
+            box-shadow: 0 10px 0 #86198f, 0 22px 40px rgba(90, 20, 90, 0.22);
+            padding: 20px 22px 24px; text-align: center;
+            max-height: calc(100dvh - 28px); overflow-y: auto;
+        }
+
+        .mascot-big { font-size: 64px; animation: bob 2.6s infinite ease-in-out; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.18)); }
+        .game-title { font-size: 36px; font-weight: 900; color: var(--fuch-dark); margin: 4px 0 8px; }
+        .tag-pill {
+            display: inline-block; background: #fbe6fe; color: var(--fuch-dark);
+            border: 3px solid #f0c8f7; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 6px 0 12px;
+        }
+        #trophy-pill {
+            display: inline-block; background: linear-gradient(145deg, #fff3c4, #ffe082);
+            border: 3px solid #f0c93f; color: #9c6500; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 4px 0 8px;
+        }
+        .intro-desc { font-size: 16px; font-weight: 700; color: #4f5a6e; line-height: 1.55; max-width: 560px; margin: 0 auto 16px; }
+        .intro-desc .en { font-size: 13.5px; color: #9aa3b8; }
+
+        .btn {
+            background: linear-gradient(145deg, #e879f9, #c026d3); color: #fff;
+            border: none; border-radius: 999px; font-size: 20px; font-weight: 800;
+            padding: 13px 36px; cursor: pointer; box-shadow: 0 5px 0 var(--fuch-dark);
+            transition: transform 0.12s, box-shadow 0.12s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--fuch-dark); }
+        .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn-secondary { background: linear-gradient(145deg, #ffd88a, #ffb84d); box-shadow: 0 5px 0 #d97706; font-size: 16px; padding: 11px 24px; }
+        .btn-secondary:active { box-shadow: 0 2px 0 #d97706; }
+
+        #lock-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+        #lock-input {
+            font-family: inherit; font-size: 18px; font-weight: 700; padding: 12px 18px; width: 220px;
+            border: 3px solid #f0c8f7; border-radius: 999px; outline: none; text-align: center; color: var(--text-main);
+        }
+        #lock-input:focus { border-color: var(--fuch); }
+        #lock-input.error { border-color: var(--danger); animation: deny 0.35s; }
+        #unlock-btn { background: var(--fuch); box-shadow: 0 6px 0 var(--fuch-dark); }
+        #unlock-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        #unlock-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--fuch-dark); }
+        #lock-error { margin-top: 12px; font-weight: 800; color: var(--danger); font-size: 15px; }
+
+        .level-grid { display: flex; flex-direction: column; gap: 12px; max-width: 560px; margin: 0 auto; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #ffffff; border: 3px solid #f2d7f8; border-radius: 18px;
+            padding: 13px 18px; cursor: pointer; box-shadow: 0 4px 0 #f6e4fb;
+            transition: transform 0.12s, box-shadow 0.12s; font-family: inherit;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 7px 0 #f6e4fb; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-main); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #9aa3b8; }
+
+        #progress-pill {
+            display: inline-block; background: #f3e8fd; color: var(--purp-dark);
+            border: 3px solid #ddc5f5; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 3px 14px; margin-bottom: 8px;
+        }
+
+        #phase-banner {
+            background: #ffffff; border: 3px solid #f2d7f8; border-radius: 18px;
+            padding: 10px 16px 12px; margin-bottom: 12px;
+        }
+        #phase-banner.shake { animation: deny 0.35s; }
+        #banner-zh { font-size: 18px; font-weight: 900; color: var(--text-main); line-height: 1.4; }
+        #banner-en { font-size: 13.5px; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
+
+        /* ---------- Recipe card ---------- */
+        #recipe-card {
+            background: #ffffff; border: 3px solid #f0c8f7; border-radius: 20px;
+            padding: 12px 16px 14px; margin-bottom: 12px;
+        }
+        #recipe-title { font-size: 17px; font-weight: 900; color: var(--text-main); margin-bottom: 8px; }
+        #recipe-title .bag { font-size: 24px; }
+        #recipe-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+        .recipe-chip {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: #fbe6fe; border: 3px solid #d946ef; border-radius: 999px;
+            font-weight: 900; font-size: 18px; color: var(--fuch-dark);
+            padding: 4px 14px;
+        }
+        .recipe-chip .rc-emoji { font-size: 22px; }
+
+        /* ---------- Count chips ---------- */
+        #count-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 10px; }
+        .count-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #ffffff; border: 3px dashed #e3b7ee; border-radius: 999px;
+            font-weight: 800; font-size: 15px; color: #6b21a8; padding: 3px 12px;
+        }
+        .count-chip .cc-num { font-size: 18px; font-weight: 900; color: var(--fuch-dark); min-width: 18px; }
+
+        /* ---------- Scene ---------- */
+        #pack-scene {
+            position: relative; background: #ffffff; border: 3px solid #f2d7f8;
+            border-radius: 20px; height: 250px; margin-bottom: 12px; overflow: hidden;
+        }
+        .pack-item {
+            position: absolute; font-size: 44px; line-height: 1.1; cursor: pointer;
+            user-select: none; transition: opacity 0.15s, filter 0.15s;
+        }
+        .pack-item.counted { opacity: 0.35; filter: grayscale(0.5) drop-shadow(0 0 4px #2ecc71); }
+        .pack-item.counted::after {
+            content: '✓'; position: absolute; top: -8px; right: -8px;
+            font-size: 15px; font-weight: 900; color: #fff; background: #2ecc71;
+            border-radius: 50%; width: 20px; height: 20px; line-height: 20px; text-align: center;
+        }
+
+        #qline { font-size: 19px; font-weight: 900; color: var(--text-main); margin-bottom: 12px; line-height: 1.5; }
+        #qline .en { display: block; font-size: 13.5px; font-weight: 700; color: var(--text-muted); }
+
+        /* ---------- Answer row ---------- */
+        #ans-row { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 12px; }
+        #ans-label { font-size: 18px; font-weight: 900; color: var(--text-main); }
+        .ans-box {
+            min-width: 66px; height: 66px; padding: 0 8px; border-radius: 14px;
+            border: 4px dashed var(--fuch); background: #fdf2fe; color: #86198f;
+            font-size: 36px; font-weight: 900; line-height: 1;
+            display: flex; align-items: center; justify-content: center;
+            user-select: none; transition: box-shadow 0.12s;
+        }
+        .ans-box .q { color: #e3b7ee; }
+        .ans-box.good { border: 4px solid var(--success); background: #eafff2; color: #1e8e4e; animation: pop 0.35s; }
+        .ans-box.bad { border: 4px solid var(--danger); background: #ffeceb; animation: deny 0.35s; }
+
+        /* ---------- Keypad ---------- */
+        #keypad { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; max-width: 470px; margin: 0 auto 12px; }
+        .key {
+            font-family: inherit; font-size: 24px; font-weight: 900; color: var(--text-main);
+            background: #ffffff; border: 3px solid #ecc8f5; border-radius: 14px;
+            padding: 10px 0; cursor: pointer; box-shadow: 0 4px 0 #f2ddf8;
+            transition: transform 0.1s, box-shadow 0.1s; user-select: none;
+        }
+        .key:active { transform: translateY(2px); box-shadow: 0 1px 0 #f2ddf8; }
+        .key.wide { grid-column: span 2; font-size: 20px; }
+        #kb-hint { font-size: 13px; font-weight: 700; color: #9aa3b8; margin-bottom: 10px; }
+        #kb-hint .taphint { color: #c026d3; }
+
+        #feedback { min-height: 28px; font-size: 17px; font-weight: 800; margin-top: 10px; line-height: 1.45; }
+        #feedback.ok { color: #1e8e4e; }
+        #feedback.warn { color: var(--danger); }
+        #feedback .fen { font-size: 14px; font-weight: 700; color: #4a9e6d; }
+
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+        @keyframes deny { 0%, 100% { transform: translateX(0); } 30% { transform: translateX(-5px); } 60% { transform: translateX(5px); } }
+
+        #end-screen .mascot-big { font-size: 58px; }
+        #end-stars { font-size: 40px; margin: 4px 0 6px; letter-spacing: 6px; }
+        #end-sub { font-weight: 700; color: #86198f; font-size: 17px; margin-bottom: 14px; }
+        #end-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 120; }
+
+        @media (max-width: 640px) {
+            #game-container { padding: 14px 12px 16px; border-width: 4px; }
+            .game-title { font-size: 28px; }
+            .mascot-big { font-size: 50px; }
+            #banner-zh { font-size: 16px; }
+            #banner-en { font-size: 12.5px; }
+            .recipe-chip { font-size: 15px; padding: 3px 11px; }
+            .recipe-chip .rc-emoji { font-size: 19px; }
+            #pack-scene { height: 210px; }
+            .pack-item { font-size: 36px; }
+            #qline { font-size: 16.5px; }
+            .ans-box { min-width: 54px; height: 54px; font-size: 29px; border-radius: 12px; border-width: 3px; }
+            .ans-box.good, .ans-box.bad { border-width: 3px; }
+            .key { font-size: 20px; padding: 9px 0; }
+            #feedback { font-size: 15px; }
+            .intro-desc { font-size: 14.5px; }
+        }
+        @media (max-height: 720px) {
+            .mascot-big { font-size: 44px; }
+            .game-title { font-size: 26px; margin: 2px 0 4px; }
+        }
+
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="deco" style="top: 8%; left: 5%; font-size: 44px; animation: bob 3s infinite;">🎒</div>
+    <div class="deco" style="top: 14%; right: 6%; font-size: 40px; animation: bob 3.4s infinite;">🧻</div>
+    <div class="deco" style="bottom: 10%; left: 7%; font-size: 42px; animation: bob 2.8s infinite;">🍪</div>
+    <div class="deco" style="bottom: 16%; right: 5%; font-size: 38px; animation: bob 3.2s infinite;">💧</div>
+
+    <button id="back-btn" onclick="location.href='index.html'">&#8592; Home</button>
+
+    <div id="game-container">
+        <!-- LOCK -->
+        <div id="lock-screen">
+            <div class="mascot-big">🔒</div>
+            <h1 class="game-title">Pack a Bag 執袋小能手</h1>
+            <p class="intro-desc">
+                這關需要密碼才能玩！快問老師或者家長拿密碼吧。
+                <br><span class="en">This level is locked — ask your teacher or parent for the password!</span>
+            </p>
+            <div id="lock-row">
+                <input id="lock-input" type="password" placeholder="Password 密碼" autocomplete="off" />
+                <button id="unlock-btn" class="btn">Unlock 解鎖！</button>
+            </div>
+            <div id="lock-error" class="hidden">密碼不對，再試一次！Wrong password — try again! 🤔</div>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- INTRO -->
+        <div id="intro-screen" class="hidden">
+            <div class="mascot-big">🎒</div>
+            <h1 class="game-title">Pack a Bag 執袋小能手</h1>
+            <div class="tag-pill">數一數 · 分一分 · 裝一裝 · Count, Group & Pack</div>
+            <div id="trophy-pill" class="hidden">🏆 全部關卡完成！All sublevels complete!</div>
+            <p class="intro-desc">
+                每個袋需要 2 包紙巾、1 支水和 2 包餅乾 — 桌上有這麼多物品，最多可以裝多少個袋？記住：最快用完的物品，決定可以裝多少袋！點一下物品可以標記已數過，不怕數漏！
+                <br><span class="en">Each bag needs 2 packs of tissues, 1 bottle of water and 2 packs of biscuits — with everything on the table, how many bags can we pack at most? Remember: the item that runs out first decides the answer! Tap an item to mark it as counted so you never lose track!</span>
+            </p>
+            <button class="btn" onclick="showSetup()">Play!</button>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- SETUP -->
+        <div id="setup-screen" class="hidden">
+            <h2 class="game-title">Pack a Bag 🎒</h2>
+            <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+            <div class="level-grid">
+                <button class="level-card" id="card-1" onclick="startGame(1)">
+                    <span class="lv-emoji">🧺</span>
+                    <span><span class="lv-name">Sublevel 1: 兩種物品 · 入門</span><br><span class="lv-sub">每袋只要兩種物品，數量小小！Only two kinds of items per bag, small numbers!</span></span>
+                </button>
+                <button class="level-card" id="card-2" onclick="startGame(2)">
+                    <span class="lv-emoji">🎒</span>
+                    <span><span class="lv-name">Sublevel 2: 三種物品 · 經典</span><br><span class="lv-sub">紙巾、水、餅乾 — 經典執袋題！Tissues, water and biscuits — the classic!</span></span>
+                </button>
+                <button class="level-card" id="card-3" onclick="startGame(3)">
+                    <span class="lv-emoji">🎁</span>
+                    <span><span class="lv-name">Sublevel 3: 更大數目 · 挑戰</span><br><span class="lv-sub">每袋要更多件，物品更多！More items per bag and bigger numbers!</span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PLAY -->
+        <div id="play-screen" class="hidden">
+            <div id="progress-pill">第 1 / 5 題 Round</div>
+            <div id="phase-banner">
+                <div id="banner-zh"></div>
+                <div id="banner-en"></div>
+            </div>
+            <div id="recipe-card">
+                <div id="recipe-title"></div>
+                <div id="recipe-chips"></div>
+            </div>
+            <div id="count-chips"></div>
+            <div id="pack-scene"></div>
+            <div id="qline"></div>
+            <div id="ans-row">
+                <span id="ans-label">答案 Answer:</span>
+                <div id="ans-box" class="ans-box"><span class="q">?</span></div>
+            </div>
+            <div id="keypad"></div>
+            <div id="kb-hint"><span class="taphint">點一下物品可以標記「已數」· Tap items to mark them counted</span><br>按數字鍵輸入答案，再按「檢查」· Type your answer, then press Check!</div>
+            <div id="play-btns">
+                <button id="check-btn" class="btn">檢查！Check!</button>
+            </div>
+            <div id="feedback"></div>
+        </div>
+
+        <!-- END -->
+        <div id="end-screen" class="hidden">
+            <div class="mascot-big">🏆</div>
+            <h2 id="end-title" class="game-title">Packing Star! 執袋小達人！</h2>
+            <div id="end-stars">⭐⭐⭐</div>
+            <p id="end-sub"></p>
+            <div id="end-btns">
+                <button id="action-btn" class="btn">Play Again 再玩一次</button>
+                <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <script>
+        // ================= DATA =================
+        const ROUNDS = 5;
+        const THEMES = [
+            { zh: '野餐包', en: 'picnic bag', enP: 'picnic bags', icon: '🧺', items: [
+                { emoji: '🧻', zh: '紙巾', en: 'pack of tissues', enP: 'packs of tissues' },
+                { emoji: '💧', zh: '水', en: 'bottle of water', enP: 'bottles of water' },
+                { emoji: '🍪', zh: '餅乾', en: 'pack of biscuits', enP: 'packs of biscuits' },
+            ] },
+            { zh: '文具包', en: 'stationery pouch', enP: 'stationery pouches', icon: '✏️', items: [
+                { emoji: '✏️', zh: '鉛筆', en: 'pencil', enP: 'pencils' },
+                { emoji: '📓', zh: '筆記簿', en: 'notebook', enP: 'notebooks' },
+                { emoji: '🖍️', zh: '蠟筆', en: 'crayon', enP: 'crayons' },
+            ] },
+            { zh: '派對包', en: 'party bag', enP: 'party bags', icon: '🎉', items: [
+                { emoji: '🎈', zh: '氣球', en: 'balloon', enP: 'balloons' },
+                { emoji: '🍬', zh: '糖果', en: 'candy', enP: 'candies' },
+                { emoji: '🍭', zh: '棒棒糖', en: 'lollipop', enP: 'lollipops' },
+            ] },
+        ];
+
+        const BANNERS = {
+            1: { zh: '🧺 每種物品夠裝幾個袋？最快用完的那種，就是答案！', en: 'How many bags can EACH kind of item fill? The one that runs out first is the answer!' },
+            2: { zh: '🎒 每個袋三種物品都要齊 — 數清楚每種有多少！', en: 'Every bag needs ALL three kinds — count each kind carefully!' },
+            3: { zh: '🎁 每袋要更多件 — 慢慢數，再逐種分一分！', en: 'More items per bag — count carefully, then group kind by kind!' },
+        };
+        const HINT_WRONG = '逐種物品數一數：每種夠裝多少個袋？最快用完的就是答案！🤔<br><span class="fen">Count each kind: how many bags can each one fill? The one that runs out first is the answer!</span>';
+        const END_SUBS = {
+            1: '兩種物品分得清清楚楚 — 執袋小幫手！Two kinds, perfectly packed — a packing helper!',
+            2: '三種物品都難不倒你 — 執袋小達人！Three kinds are no match for you — a packing star!',
+            3: '大數目都數得清、分得準 — 執袋大師！Big numbers counted and grouped — a packing master!',
+        };
+
+        // ================= STATE =================
+        const introScreen = document.getElementById('intro-screen');
+        const setupScreen = document.getElementById('setup-screen');
+        const playScreen = document.getElementById('play-screen');
+        const endScreen = document.getElementById('end-screen');
+        const progressPill = document.getElementById('progress-pill');
+        const phaseBanner = document.getElementById('phase-banner');
+        const bannerZh = document.getElementById('banner-zh');
+        const bannerEn = document.getElementById('banner-en');
+        const recipeTitle = document.getElementById('recipe-title');
+        const recipeChips = document.getElementById('recipe-chips');
+        const countChips = document.getElementById('count-chips');
+        const packScene = document.getElementById('pack-scene');
+        const qline = document.getElementById('qline');
+        const ansBox = document.getElementById('ans-box');
+        const keypad = document.getElementById('keypad');
+        const checkBtn = document.getElementById('check-btn');
+        const backBtn = document.getElementById('back-btn');
+        const feedback = document.getElementById('feedback');
+
+        let level = 1, rounds = [], roundIdx = 0, mistakes = 0;
+        let currentQ = null, answer = '', locked = false;
+
+        let audioStarted = false, synth;
+        function initAudio() { synth = new Tone.PolySynth(Tone.Synth).toDestination(); }
+        function playSound(type) {
+            if (!audioStarted || !synth) return;
+            const now = Tone.now();
+            if (type === 'pop') synth.triggerAttackRelease('A6', '32n', now);
+            else if (type === 'ding') synth.triggerAttackRelease('E6', '16n', now);
+            else if (type === 'correct') ['C5', 'E5', 'G5'].forEach((n, i) => synth.triggerAttackRelease(n, '16n', now + i * 0.07));
+            else if (type === 'wrong') synth.triggerAttackRelease('C2', '8n', now);
+            else if (type === 'fanfare') ['C5', 'E5', 'G5', 'C6'].forEach((n, i) => synth.triggerAttackRelease(n, '8n', now + i * 0.13));
+        }
+
+        function shuffle(a) { return a.sort(() => Math.random() - 0.5); }
+        function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+
+        // ================= FLOW =================
+        // password gate — unlocks the intro screen
+        const lockScreen = document.getElementById('lock-screen');
+        const lockInput = document.getElementById('lock-input');
+        const lockError = document.getElementById('lock-error');
+        const PASS_HASH = 1056886225; // djb2-xor of the password
+        function tryUnlock() {
+            const v = lockInput.value.trim().toLowerCase();
+            let h = 5381;
+            for (let i = 0; i < v.length; i++) h = ((h * 33) ^ v.charCodeAt(i)) >>> 0;
+            if (v && h === PASS_HASH) {
+                if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+                playSound('correct');
+                lockScreen.classList.add('hidden');
+                introScreen.classList.remove('hidden');
+            } else {
+                playSound('wrong');
+                lockError.classList.remove('hidden');
+                lockInput.value = '';
+                lockInput.classList.add('error');
+                setTimeout(() => lockInput.classList.remove('error'), 400);
+                lockInput.focus();
+            }
+        }
+        document.getElementById('unlock-btn').onclick = () => tryUnlock();
+        lockInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+        function setBackBtn(mode) {
+            if (mode === 'menu') {
+                backBtn.innerHTML = '&#8592; Menu 目錄';
+                backBtn.onclick = () => backToMenu();
+            } else {
+                backBtn.innerHTML = '&#8592; Home';
+                backBtn.onclick = () => location.href = 'index.html';
+            }
+        }
+        function backToMenu() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            setBackBtn('home');
+        }
+
+        function showSetup() {
+            if (!lockScreen.classList.contains('hidden')) return;
+            if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+            introScreen.classList.add('hidden');
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            setBackBtn('home');
+        }
+
+        function startGame(lv) {
+            level = lv; mistakes = 0;
+            rounds = buildRounds(lv);
+            roundIdx = 0;
+            setupScreen.classList.add('hidden');
+            introScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            playScreen.classList.remove('hidden');
+            setBackBtn('menu');
+            nextRound();
+        }
+    </script>
+    <script>
+        // ================= ROUND GENERATION =================
+        function genPack(lv) {
+            const theme = THEMES[randInt(0, THEMES.length - 1)];
+            const nTypes = lv === 1 ? 2 : 3;
+            const types = theme.items.slice(0, nTypes);
+            let needs, res, haves, B, total;
+            // re-roll until the scene fits (18 items max)
+            for (let attempt = 0; attempt < 500; attempt++) {
+                needs = types.map(() => lv === 3 ? randInt(1, 3) : randInt(1, 2));
+                B = lv === 1 ? randInt(1, 3) : lv === 2 ? randInt(1, 3) : randInt(1, 2);
+                // bags each kind can fill: at least one kind fills exactly B
+                res = types.map(() => B + randInt(0, 1));
+                res[randInt(0, nTypes - 1)] = B;
+                // leftovers are always smaller than the need, so floor(have/need) = res
+                haves = res.map((r, i) => needs[i] * r + randInt(0, needs[i] - 1));
+                total = haves.reduce((a, b) => a + b, 0);
+                if (total <= 18) break;
+            }
+            return { theme, types, needs, res, haves, answer: B };
+        }
+        function buildRounds(lv) {
+            const out = [];
+            for (let i = 0; i < ROUNDS; i++) out.push(genPack(lv));
+            return out;
+        }
+
+        // ================= RENDERING =================
+        function renderRound(q) {
+            recipeTitle.innerHTML = `<span class="bag">${q.theme.icon}</span> 每個${q.theme.zh}需要：`;
+            recipeChips.innerHTML = q.types.map((t, i) =>
+                `<span class="recipe-chip"><span class="rc-emoji">${t.emoji}</span>${t.zh} ×${q.needs[i]}</span>`
+            ).join('');
+            countChips.innerHTML = q.types.map((t, i) =>
+                `<span class="count-chip">${t.emoji} ${t.zh} 已數 <span class="cc-num" id="cc-${i}">0</span></span>`
+            ).join('');
+            // scatter the items on a jittered 6x3 grid
+            const items = [];
+            q.haves.forEach((h, ti) => { for (let k = 0; k < h; k++) items.push(ti); });
+            shuffle(items);
+            const slots = shuffle([...Array(18).keys()]);
+            packScene.innerHTML = items.map((ti, i) => {
+                const slot = slots[i];
+                const col = slot % 6, row = Math.floor(slot / 6);
+                const dx = randInt(-6, 6), dy = randInt(-4, 4), rot = randInt(-20, 20);
+                return `<span class="pack-item" data-t="${ti}" style="left:calc(${col * 16.66}% + 18px);top:calc(${row * 33.33}% + 18px);transform:translate(${dx}px,${dy}px) rotate(${rot}deg)">${q.types[ti].emoji}</span>`;
+            }).join('');
+            packScene.querySelectorAll('.pack-item').forEach(el => {
+                el.onclick = () => {
+                    if (locked) return;
+                    el.classList.toggle('counted');
+                    playSound('pop');
+                    const ti = el.dataset.t;
+                    document.getElementById('cc-' + ti).textContent =
+                        packScene.querySelectorAll(`.pack-item.counted[data-t="${ti}"]`).length;
+                };
+            });
+            qline.innerHTML = `這些物品，最多可以裝多少個${q.theme.zh}？<span class="en">How many ${q.theme.enP} can we pack at most?</span>`;
+        }
+
+        function nextRound() {
+            currentQ = rounds[roundIdx];
+            answer = ''; locked = false;
+            progressPill.textContent = `第 ${roundIdx + 1} / ${ROUNDS} 題 Round ${roundIdx + 1} / ${ROUNDS}`;
+            bannerZh.innerHTML = BANNERS[level].zh;
+            bannerEn.innerHTML = BANNERS[level].en;
+            feedback.textContent = '';
+            feedback.className = '';
+            ansBox.className = 'ans-box';
+            ansBox.innerHTML = '<span class="q">?</span>';
+            renderRound(currentQ);
+        }
+
+        // ================= KEYPAD =================
+        const KEYS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '⌫'];
+        KEYS.forEach(k => {
+            const b = document.createElement('button');
+            b.className = 'key' + (k === '⌫' ? ' wide' : '');
+            b.textContent = k;
+            b.onclick = () => keyPress(k);
+            keypad.appendChild(b);
+        });
+        function keyPress(k) {
+            if (locked) return;
+            if (k === '⌫') {
+                if (answer !== '') { answer = answer.slice(0, -1); playSound('pop'); }
+            } else {
+                if (answer.length >= 2) return;
+                answer += k;
+                playSound('pop');
+            }
+            ansBox.innerHTML = answer === '' ? '<span class="q">?</span>' : answer;
+        }
+
+        // ================= CHECK =================
+        checkBtn.onclick = () => {
+            if (locked || !currentQ) return;
+            if (answer === '') {
+                playSound('wrong');
+                feedback.className = 'warn';
+                feedback.innerHTML = '記得先輸入答案！Type your answer first! ✍️';
+                phaseBanner.classList.add('shake');
+                setTimeout(() => phaseBanner.classList.remove('shake'), 400);
+                return;
+            }
+            if (parseInt(answer, 10) === currentQ.answer) {
+                locked = true;
+                playSound('correct');
+                ansBox.classList.add('good');
+                const q = currentQ;
+                const partsZh = q.types.map((t, i) => {
+                    const r = Math.floor(q.haves[i] / q.needs[i]);
+                    const left = q.haves[i] % q.needs[i];
+                    return `${t.emoji} ${q.haves[i]}÷${q.needs[i]}=${r}袋` + (left > 0 ? `（多${left}）` : '');
+                }).join('　');
+                const partsEn = q.types.map((t, i) => {
+                    const r = Math.floor(q.haves[i] / q.needs[i]);
+                    const left = q.haves[i] % q.needs[i];
+                    return `${t.emoji} ${q.haves[i]}÷${q.needs[i]}=${r}` + (left > 0 ? ` (${left} left)` : '');
+                }).join('  ');
+                const limiting = q.types.filter((t, i) => Math.floor(q.haves[i] / q.needs[i]) === q.answer)
+                    .map(t => t.emoji).join('');
+                feedback.className = 'ok';
+                feedback.innerHTML = `🎉 答對了！${partsZh}<br>最快用完的是 ${limiting} — 最多可以裝 ${q.answer} 個${q.theme.zh}！<br><span class="fen">Correct! ${partsEn} → ${limiting} runs out first, so we can pack ${q.answer} ${q.theme.enP}!</span>`;
+                setTimeout(() => {
+                    roundIdx++;
+                    if (roundIdx >= ROUNDS) showEnd();
+                    else nextRound();
+                }, 2800);
+            } else {
+                mistakes++;
+                playSound('wrong');
+                ansBox.classList.add('bad');
+                feedback.className = 'warn';
+                feedback.innerHTML = HINT_WRONG;
+                setTimeout(() => {
+                    ansBox.classList.remove('bad');
+                    answer = '';
+                    ansBox.innerHTML = '<span class="q">?</span>';
+                }, 600);
+            }
+        };
+
+        // ================= END =================
+        function showEnd() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            setBackBtn('home');
+            try { localStorage.setItem('bagpack_l' + level + '_complete', 'true'); } catch (e) {}
+            decorateCards();
+            const stars = mistakes <= 1 ? '⭐⭐⭐' : mistakes <= 3 ? '⭐⭐' : '⭐';
+            document.getElementById('end-stars').textContent = stars;
+            document.getElementById('end-title').innerText = 'Packing Star! 執袋小達人！';
+            document.getElementById('end-sub').innerText = END_SUBS[level];
+            document.getElementById('action-btn').onclick = () => startGame(level);
+            document.getElementById('picker-btn').onclick = () => showSetup();
+            playSound('fanfare');
+            fireConfetti();
+        }
+
+        function decorateCards() {
+            let all = true;
+            for (let i = 1; i <= 3; i++) {
+                let done = false;
+                try { done = localStorage.getItem('bagpack_l' + i + '_complete') === 'true'; } catch (e) {}
+                const name = document.querySelector('#card-' + i + ' .lv-name');
+                if (done && name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+                if (!done) all = false;
+            }
+            document.getElementById('trophy-pill').classList.toggle('hidden', !all);
+        }
+        decorateCards();
+
+        // ================= CONFETTI =================
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        function fireConfetti() {
+            canvas.width = innerWidth; canvas.height = innerHeight;
+            const pieces = [];
+            const colors = ['#c026d3', '#f0b429', '#e879f9', '#4d96ff', '#ffffff', '#2bbcb3'];
+            for (let i = 0; i < 130; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width, y: -20 - Math.random() * canvas.height * 0.5,
+                    w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
+                    c: colors[Math.floor(Math.random() * colors.length)],
+                    vy: 2 + Math.random() * 3, vx: -1.5 + Math.random() * 3,
+                    rot: Math.random() * Math.PI, vr: -0.1 + Math.random() * 0.2,
+                });
+            }
+            let start = performance.now();
+            (function tick(now) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                pieces.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+                    if (p.y < canvas.height + 30) alive = true;
+                    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+                    ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                });
+                if (alive && now - start < 4200) requestAnimationFrame(tick);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            })(start);
+        }
+    </script>
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>「執袋」題目是除法啟蒙中的「包含除法」（measurement division）：不是把物品平均分給幾個人，而是「每幾個一組，可以分成幾組？」— 例如 10 包紙巾，每袋 2 包，可以裝 5 袋。當物品有多種時，孩子會自然遇到「限制因素」的概念：最多可以裝多少袋，不是看最多的那種物品，而是看最快用完的那種。過程中還會遇到餘數 — 多出來的物品不夠再裝一袋，要捨去。這正是日後學習除法、餘數和應用題的重要基礎，同時訓練有系統地點數大量物品（一一對應、不遺漏、不重複）。</p>
+        <p class="pg-en">"Packing bags" is a gentle introduction to measurement division: instead of sharing items equally among people, we ask "in groups of this size, how many groups can we make?" — 10 tissue packs, 2 per bag, makes 5 bags. With several kinds of items, children naturally meet the idea of a limiting factor: the number of bags is set not by the item you have most of, but by the one that runs out first. Leftovers appear along the way — extras that aren't enough for another bag get set aside. This lays the groundwork for division, remainders and multi-step word problems, while training systematic counting of larger sets (one-to-one correspondence, no skipping, no double-counting).</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>鼓勵孩子善用「點一下標記已數」的功能 — 數一件、點一件，是有系統點數的重要策略。數完之後，先問：「每種物品夠裝幾個袋？」再問：「哪種最快用完？」答錯時，和孩子一起用手指把物品兩個兩個（或三個三個）圈成一組，親眼看到「不夠一組」的剩下來。不趕時間，慢慢數清楚最重要。</p>
+        <p class="pg-en">Encourage your child to use the tap-to-mark feature — counting one item and marking it at the same time is a key strategy for systematic counting. After counting, ask: "How many bags can each kind of item fill?" and then "Which kind runs out first?" When an answer is wrong, group the items with your child — circling them in twos or threes — so they can see with their own eyes that the leftovers aren't enough for one more bag. There's no rush: careful counting matters most.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>在家裡玩真的執袋遊戲：拿出紙巾、水瓶和餅乾，訂一個「食譜」（每袋 2 包紙巾、1 支水、2 包餅乾），讓孩子真的動手裝，裝到不夠為止。烘焙時也可以問：「每碟放 3 件曲奇，12 件可以分幾碟？」收拾玩具時：「每個箱子放 4 輛車，這裡可以裝滿幾個箱？」動手裝過，孩子的除法概念會扎實得多。</p>
+        <p class="pg-en">Play the packing game for real at home: take out tissue packs, water bottles and biscuit packs, set a "recipe" (2 tissues, 1 water, 2 biscuits per bag), and let your child physically pack until the items run out. Baking works too: "3 cookies per plate — how many plates for 12 cookies?" Tidying up: "4 cars per box — how many full boxes can we make?" Children who have packed with their own hands develop a far sturdier sense of division.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+</script>
+<!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

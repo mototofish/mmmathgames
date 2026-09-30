@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#7b6cf0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Robot Challenge | 20以內不進位不退位加減 – MMathWorld</title>
+    <meta name="description" content="Robot Challenge 機械人加減挑戰：20以內不進位不退位 No Carry & Borrow within 20。拖放零件組裝機械人，免費升小數學遊戲！">
+    <link rel="canonical" href="https://mathgames.missman.world/robot_lab">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Robot Challenge | 20以內不進位不退位加減 – MMathWorld">
+    <meta property="og:description" content="Robot Challenge 機械人加減挑戰：20以內不進位不退位 No Carry & Borrow within 20。拖放零件組裝機械人，免費升小數學遊戲！">
+    <meta property="og:url" content="https://mathgames.missman.world/robot_lab">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Robot Challenge 機械人挑戰 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Robot Challenge | 20以內不進位不退位加減 – MMathWorld">
+    <meta name="twitter:description" content="Robot Challenge 機械人加減挑戰：20以內不進位不退位 No Carry & Borrow within 20。拖放零件組裝機械人，免費升小數學遊戲！">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Robot Challenge",
+      "alternateName": "機械人挑戰",
+      "url": "https://mathgames.missman.world/robot_lab",
+      "description": "Robot Challenge 機械人加減挑戰：20以內不進位不退位 No Carry & Borrow within 20。拖放零件組裝機械人，免費升小數學遊戲！",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": [
+            "zh-Hant-HK",
+            "en"
+      ],
+      "genre": [
+            "Educational",
+            "Math"
+      ],
+      "gamePlatform": [
+            "Web Browser",
+            "Mobile Web"
+      ],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HKD"
+      },
+      "audience": {
+            "@type": "PeopleAudience",
+            "suggestedMinAge": 4,
+            "suggestedMaxAge": 7
+      },
+      "author": {
+            "@type": "Organization",
+            "name": "MMathWorld",
+            "url": "https://mathgames.missman.world/"
+      },
+      "learningResourceType": "Educational game",
+      "teaches": "20以內不進位不退位加減 Addition and subtraction within 20 without carrying or borrowing"
+}
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --robot-blue: #00cec9;
+            --robot-dark: #2d3436;
+            --danger: #d63031;
+            --success: #00b894;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Segoe UI', sans-serif;
+            background-color: var(--robot-dark);
+            background-image: radial-gradient(circle at center, #3a4260 0%, #262b3d 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            margin: 0;
+            color: white;
+            overflow: hidden;
+            overscroll-behavior: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+        }
+
+        /* Factory decorations */
+        .bg-gear { position: fixed; z-index: 0; opacity: 0.12; pointer-events: none; animation: gear-spin linear infinite; }
+        @keyframes gear-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .bg-light { position: fixed; width: 12px; height: 12px; border-radius: 50%; z-index: 0; pointer-events: none; animation: light-blink 2s infinite; }
+        @keyframes light-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.15; } }
+
+        #game-container {
+            background: linear-gradient(180deg, #f7f9fc 0%, #e3e9f2 100%);
+            padding: 34px 30px 26px 30px;
+            border-radius: 32px;
+            box-shadow: 0 14px 0 rgba(0,0,0,0.25), 0 0 60px rgba(0, 206, 201, 0.25);
+            border: 5px solid #ffffff;
+            max-width: 540px;
+            width: 93%;
+            text-align: center;
+            color: var(--robot-dark);
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes float-anim { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .float-anim { animation: float-anim 3s ease-in-out infinite; }
+
+        .btn {
+            background: linear-gradient(145deg, #34e0da, #0fbdb6);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            font-weight: 800;
+            font-family: inherit;
+            border-radius: 999px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #0a8f8a, 0 10px 16px rgba(15, 189, 182, 0.35);
+            margin: 8px;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.12);
+        }
+        .btn:hover { filter: brightness(1.07); transform: translateY(-2px); }
+        .btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #0a8f8a; }
+
+        #back-btn {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: #e7ecff;
+            color: #4a5578;
+            padding: 8px 16px;
+            border-radius: 999px;
+            cursor: pointer;
+            border: none;
+            box-shadow: 0 4px 0 #b9c2dd;
+            font-size: 15px;
+            font-weight: 800;
+            font-family: inherit;
+            z-index: 30;
+        }
+        #back-btn:hover { background: #d5ddf8; }
+        #back-btn:active { transform: translateY(2px); box-shadow: 0 0 0 transparent; }
+
+        /* Sublevel picker (Level 0 style) */
+        .tag-pill {
+            display: inline-block;
+            font-size: 17px;
+            font-weight: 800;
+            color: #0a8f8a;
+            background-color: #e0faf7;
+            border: 3px solid #a9e5dc;
+            padding: 6px 18px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+        .level-grid { display: flex; flex-direction: column; gap: 10px; margin: 12px auto 6px; max-width: 470px; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #effcfb; border: 3px solid #c5efec; border-radius: 18px;
+            padding: 12px 16px; cursor: pointer; font-family: inherit;
+            box-shadow: 0 5px 0 #c5efec;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #c5efec; filter: brightness(1.02); }
+        .level-card:active { transform: translateY(2px); box-shadow: 0 2px 0 #c5efec; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--robot-dark); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #4d8a83; }
+
+        #top-bar { display: flex; justify-content: space-between; align-items: center; margin-top: 30px; margin-bottom: 12px; font-size: 22px; gap: 10px; }
+        #combo-display { font-weight: 800; color: #e67e22; opacity: 0; transition: opacity 0.2s; font-size: 18px; white-space: nowrap; }
+
+        #progress-display {
+            flex-grow: 0;
+            white-space: nowrap;
+            text-align: left;
+            background: linear-gradient(180deg, rgba(210, 235, 255, 0.55), rgba(180, 220, 250, 0.35));
+            border: 3px solid rgba(160, 205, 245, 0.8);
+            border-radius: 16px;
+            padding: 3px 10px;
+            box-shadow: inset 0 3px 8px rgba(120, 170, 220, 0.25);
+        }
+        .cell-empty { opacity: 0.3; filter: grayscale(100%); }
+
+        /* Digital equation screen */
+        #equation-screen {
+            border-radius: 20px;
+            border: 4px solid #57606f;
+            padding: 8px 12px;
+            margin-bottom: 6px;
+            background-image:
+                radial-gradient(circle at 10px 10px, rgba(255,255,255,0.18) 2.5px, transparent 3.5px),
+                radial-gradient(circle at calc(100% - 10px) 10px, rgba(255,255,255,0.18) 2.5px, transparent 3.5px),
+                radial-gradient(circle at 10px calc(100% - 10px), rgba(255,255,255,0.18) 2.5px, transparent 3.5px),
+                radial-gradient(circle at calc(100% - 10px) calc(100% - 10px), rgba(255,255,255,0.18) 2.5px, transparent 3.5px),
+                linear-gradient(180deg, #2f3640, #22272e);
+        }
+        #equation {
+            font-size: 44px;
+            font-weight: 800;
+            color: #7ef9ff;
+            text-shadow: 0 0 12px rgba(126, 249, 255, 0.7), 0 0 30px rgba(126, 249, 255, 0.35);
+            letter-spacing: 2px;
+        }
+
+        /* Robot assembly zone */
+        #robot-zone {
+            position: relative;
+            width: 220px;
+            margin: 0 auto;
+            border-radius: 24px;
+            transition: background 0.2s, box-shadow 0.2s;
+            touch-action: none;
+        }
+        #robot-zone.awaiting {
+            background: rgba(255, 213, 74, 0.12);
+            box-shadow: 0 0 0 4px rgba(255, 213, 74, 0.45), 0 0 30px rgba(255, 213, 74, 0.35);
+        }
+        #robot-zone.hover {
+            background: rgba(46, 204, 113, 0.14);
+            box-shadow: 0 0 0 4px rgba(46, 204, 113, 0.55), 0 0 34px rgba(46, 204, 113, 0.4);
+        }
+        #robot-svg { width: 100%; height: auto; display: block; overflow: visible; }
+        #robot-svg.complete { animation: robot-dance 0.8s ease-in-out infinite; }
+        @keyframes robot-dance {
+            0%, 100% { transform: rotate(-4deg) translateY(0); }
+            50% { transform: rotate(4deg) translateY(-12px); }
+        }
+
+        .rpart { transition: opacity 0.3s, filter 0.3s; transform-box: fill-box; transform-origin: center; }
+        .rpart.locked { opacity: 0.16; filter: grayscale(1); }
+        .rpart.activated { animation: part-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        @keyframes part-pop {
+            0% { transform: scale(0.3); }
+            60% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        #chest-slot {
+            fill: rgba(0, 0, 0, 0.05);
+            stroke: #95a5a6;
+            stroke-width: 3;
+            stroke-dasharray: 7 6;
+        }
+        #robot-zone.awaiting #chest-slot {
+            stroke: #f1b400;
+            fill: rgba(241, 180, 0, 0.15);
+            animation: slot-pulse 0.7s infinite;
+        }
+        #robot-zone.hover #chest-slot {
+            stroke: #2ecc71;
+            fill: rgba(46, 204, 113, 0.25);
+            animation: slot-pulse 0.5s infinite;
+        }
+        @keyframes slot-pulse {
+            0%, 100% { stroke-width: 3; }
+            50% { stroke-width: 6; }
+        }
+
+        #drop-hint {
+            position: absolute;
+            top: 38%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f1b400;
+            color: #5c4400;
+            font-weight: 800;
+            font-size: 14px;
+            padding: 4px 14px;
+            border-radius: 999px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            animation: hint-bounce 0.7s ease-in-out infinite;
+        }
+        #robot-zone.awaiting #drop-hint { opacity: 1; }
+        @keyframes hint-bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-6px); }
+        }
+
+        /* Draggable parts */
+        #parts-row {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+            margin: 10px 0 16px 0;
+            min-height: 100px;
+        }
+        .part-chip {
+            --c1: #ffb35c; --c2: #ff8f2b; --cd: #d35400;
+            width: 96px;
+            height: 96px;
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.25);
+            cursor: grab;
+            touch-action: none;
+            position: relative;
+            background-image:
+                radial-gradient(circle at 12px 12px, rgba(0,0,0,0.28) 3px, transparent 4.5px),
+                radial-gradient(circle at calc(100% - 12px) 12px, rgba(0,0,0,0.28) 3px, transparent 4.5px),
+                radial-gradient(circle at 12px calc(100% - 12px), rgba(0,0,0,0.28) 3px, transparent 4.5px),
+                radial-gradient(circle at calc(100% - 12px) calc(100% - 12px), rgba(0,0,0,0.28) 3px, transparent 4.5px),
+                linear-gradient(145deg, var(--c1), var(--c2));
+            box-shadow: 0 7px 0 var(--cd), 0 14px 18px rgba(0,0,0,0.22);
+            transition: box-shadow 0.15s, filter 0.15s;
+            -webkit-touch-callout: none;
+        }
+        .chip-color-1 { --c1: #4de8e1; --c2: #0fbdb6; --cd: #0a8f8a; }
+        .chip-color-2 { --c1: #b7a8ff; --c2: #8f7bf0; --cd: #6c5ce7; }
+
+        .part-chip:hover { filter: brightness(1.06); }
+        .part-chip.dragging { cursor: grabbing; z-index: 500; box-shadow: 0 12px 0 var(--cd), 0 24px 30px rgba(0,0,0,0.3); }
+        .part-chip.selected {
+            box-shadow: 0 7px 0 var(--cd), 0 0 0 5px #ffd54a, 0 0 26px rgba(255, 213, 74, 0.8);
+            filter: brightness(1.08);
+        }
+        .part-chip.reveal-correct {
+            box-shadow: 0 7px 0 #1e8449, 0 0 0 5px #2ecc71, 0 0 26px rgba(46, 204, 113, 0.8);
+            background-image: linear-gradient(145deg, #55e6a5, #27ae60);
+        }
+        .part-chip.reveal-dim { opacity: 0.35; }
+        .part-chip.wrong-flash {
+            background-image: linear-gradient(145deg, #ff8a80, #e74c3c);
+            box-shadow: 0 7px 0 #c0392b;
+            animation: chip-shake 0.35s;
+        }
+        @keyframes chip-shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-7px) rotate(-3deg); }
+            75% { transform: translateX(7px) rotate(3deg); }
+        }
+
+        /* Timer */
+        #timer-container { width: 100%; height: 16px; background: #cfd8dc; border-radius: 999px; overflow: hidden; margin: 4px 0 12px 0; box-shadow: inset 0 2px 4px rgba(0,0,0,0.15); }
+        /* Timer on/off toggle */
+        .tt-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 12px; }
+        .tt-text { font-size: 15px; font-weight: 800; color: #4d8a83; }
+        .tt-state { font-size: 14px; font-weight: 800; color: #4d8a83; min-width: 58px; text-align: left; }
+        .tt-switch { position: relative; width: 56px; height: 30px; border-radius: 999px; border: none; background: #cbd5e1; cursor: pointer; transition: background 0.2s; padding: 0; flex-shrink: 0; }
+        .tt-switch.on { background: #2ecc71; }
+        .tt-knob { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; transition: left 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.25); }
+        .tt-switch.on .tt-knob { left: 29px; }
+        #timer-bar {
+            height: 100%;
+            width: 100%;
+            background-color: var(--robot-blue);
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.35) 0 12px, rgba(255,255,255,0) 12px 24px);
+            background-size: 34px 34px;
+            animation: stripes-slide 1s linear infinite;
+            transition: width 0.05s linear, background-color 0.3s;
+        }
+        @keyframes stripes-slide { from { background-position: 0 0; } to { background-position: 34px 0; } }
+
+        .hidden { display: none !important; }
+        #feedback { font-size: 23px; font-weight: 800; min-height: 30px; margin-bottom: 4px; color: var(--robot-dark); }
+        .shake-effect { animation: shake 0.3s; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
+
+        /* Answer feedback effects */
+        .fx-popup {
+            position: fixed; z-index: 120; pointer-events: none;
+            font-weight: 800; font-size: 46px;
+            text-shadow: 0 0 4px #fff, 0 0 4px #fff, 0 3px 8px rgba(0,0,0,0.3);
+            animation: fx-rise 0.9s ease-out forwards;
+        }
+        @keyframes fx-rise {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            20% { opacity: 1; transform: translate(-50%, -70%) scale(1.05); }
+            100% { transform: translate(-50%, -190%) scale(1.15); opacity: 0; }
+        }
+        .fx-ring {
+            position: fixed; z-index: 119; pointer-events: none;
+            width: 90px; height: 90px; border-radius: 50%;
+            border: 6px solid #ffd54a;
+            animation: fx-ring-grow 0.55s ease-out forwards;
+        }
+        @keyframes fx-ring-grow {
+            0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0.9; }
+            100% { transform: translate(-50%, -50%) scale(2.4); opacity: 0; }
+        }
+        @keyframes zone-glow-good {
+            0% { box-shadow: 0 0 0 rgba(46, 204, 113, 0); }
+            30% { box-shadow: 0 0 36px rgba(46, 204, 113, 0.9); }
+            100% { box-shadow: 0 0 0 rgba(46, 204, 113, 0); }
+        }
+        @keyframes zone-glow-bad {
+            0% { box-shadow: 0 0 0 rgba(231, 76, 60, 0); }
+            30% { box-shadow: 0 0 36px rgba(231, 76, 60, 0.9); }
+            100% { box-shadow: 0 0 0 rgba(231, 76, 60, 0); }
+        }
+        #robot-zone.glow-good { animation: zone-glow-good 0.7s; }
+        #robot-zone.glow-bad { animation: zone-glow-bad 0.7s; }
+
+        /* Sparks */
+        .spark {
+            position: fixed;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 999;
+            animation: spark-fly 0.6s ease-out forwards;
+        }
+        @keyframes spark-fly {
+            to { transform: translate(var(--dx), var(--dy)) scale(0.15); opacity: 0; }
+        }
+
+        /* End screen */
+        #end-robot-slot svg { width: 150px; height: auto; }
+        .robot-dance { animation: robot-dance 0.7s ease-in-out infinite; }
+        #end-title { font-size: 34px; margin: 8px 0 4px; }
+
+        /* Small-height screens */
+        @media (max-height: 760px) {
+            #robot-zone { width: 168px; }
+            #equation { font-size: 34px; }
+            .part-chip { width: 80px; height: 80px; font-size: 34px; border-radius: 20px; }
+            #parts-row { min-height: 84px; gap: 14px; }
+            #game-container { padding-top: 30px; }
+            #top-bar { margin-top: 34px; }
+            #feedback { font-size: 19px; min-height: 24px; }
+        }
+        @media (max-height: 640px) {
+            #robot-zone { width: 150px; }
+            #equation { font-size: 29px; }
+            #equation-screen { padding: 5px 12px; margin-bottom: 4px; }
+            #parts-row { margin: 6px 0 10px 0; }
+            #game-container { padding-bottom: 16px; }
+            #timer-container { margin: 2px 0 8px 0; }
+            #top-bar { margin-bottom: 8px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Factory decorations -->
+    <div class="bg-gear" style="font-size: 160px; top: -30px; left: -30px; animation-duration: 24s;">⚙️</div>
+    <div class="bg-gear" style="font-size: 120px; bottom: -20px; right: -20px; animation-duration: 18s; animation-direction: reverse;">⚙️</div>
+    <div class="bg-light" style="background: #ff6b6b; box-shadow: 0 0 14px #ff6b6b; top: 12%; left: 8%;"></div>
+    <div class="bg-light" style="background: #4de8e1; box-shadow: 0 0 14px #4de8e1; top: 20%; right: 10%; animation-delay: -0.7s;"></div>
+    <div class="bg-light" style="background: #ffd54a; box-shadow: 0 0 14px #ffd54a; bottom: 16%; left: 12%; animation-delay: -1.3s;"></div>
+    <div class="bg-light" style="background: #b7a8ff; box-shadow: 0 0 14px #b7a8ff; bottom: 26%; right: 7%; animation-delay: -0.4s;"></div>
+
+    <div id="game-container">
+        <button id="back-btn" onclick="goBack()">← Home</button>
+
+        <div id="intro-screen">
+            <div class="float-anim" style="font-size: 78px; margin: 12px 0 6px;">🤖</div>
+            <h1 style="font-size: 36px; margin-bottom: 8px; color: #0fbdb6;">Robot Challenge</h1>
+            <p style="margin-bottom: 18px; font-weight: 700; color: #5b6b8c;">20以內不進位不退位加減</p>
+            <div style="background: rgba(15,189,182,0.08); border: 3px dashed rgba(15,189,182,0.5); border-radius: 18px; padding: 10px 14px; margin-bottom: 18px; font-weight: 700; color: #0a8f8a; font-size: 16px;">
+                🖐️ Drag the correct part onto the robot to build it!
+            </div>
+
+            <button class="btn float-anim" onclick="showSetup()">Play!</button>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <div id="setup-screen" class="hidden">
+            <div style="font-size: 56px; margin: 8px 0 4px;">🤖</div>
+            <h2 style="font-size: 30px; margin-bottom: 10px; color: #0fbdb6;">Robot Challenge</h2>
+            <div class="tt-row">
+                <span class="tt-text">⏱️ 計時器 Timer</span>
+                <button class="tt-switch on" id="timer-switch" onclick="toggleTimer()" aria-label="Timer on or off"><span class="tt-knob"></span></button>
+                <span class="tt-state" id="timer-state">開 ON</span>
+            </div>
+            <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+            <div class="level-grid">
+                <button class="level-card" id="lv-card-warmup" onclick="startGame('warmup')">
+                    <span class="lv-emoji">🌟</span>
+                    <span><span class="lv-name">Sublevel 0: Warm-up 熱身</span><br><span class="lv-sub">±10 與十位數 · Tens and units warm-up</span></span>
+                </button>
+                <button class="level-card" id="lv-card-addition" onclick="startGame('addition')">
+                    <span class="lv-emoji">➕</span>
+                    <span><span class="lv-name">Sublevel 1: 加法</span><br><span class="lv-sub">No carrying 不進位 — 12 + 5 = ?</span></span>
+                </button>
+                <button class="level-card" id="lv-card-subtraction" onclick="startGame('subtraction')">
+                    <span class="lv-emoji">➖</span>
+                    <span><span class="lv-name">Sublevel 2: 減法</span><br><span class="lv-sub">No borrowing 不退位 — 18 − 6 = ?</span></span>
+                </button>
+                <button class="level-card" id="lv-card-challenge" onclick="startGame('challenge')">
+                    <span class="lv-emoji">⭐</span>
+                    <span><span class="lv-name">Sublevel 3: 混合挑戰</span><br><span class="lv-sub">Add &amp; subtract mixed!</span></span>
+                </button>
+            </div>
+        </div>
+
+        <div id="play-screen" class="hidden">
+            <div id="top-bar">
+                <div id="progress-display"></div>
+                <div id="combo-display">COMBO x0! 🔥</div>
+            </div>
+
+            <div id="equation-screen">
+                <div id="equation">? + ? = ?</div>
+            </div>
+
+            <div id="robot-zone">
+                <svg id="robot-svg" viewBox="0 0 220 272">
+                    <!-- platform shadow -->
+                    <ellipse cx="110" cy="264" rx="72" ry="7" fill="rgba(0,0,0,0.12)"/>
+                    <!-- legs -->
+                    <g id="part-leftLeg" class="rpart locked">
+                        <rect x="70" y="198" width="24" height="40" rx="9" fill="#55efc4" stroke="#00b894" stroke-width="3"/>
+                    </g>
+                    <g id="part-rightLeg" class="rpart locked">
+                        <rect x="126" y="198" width="24" height="40" rx="9" fill="#55efc4" stroke="#00b894" stroke-width="3"/>
+                    </g>
+                    <!-- wheels -->
+                    <g id="part-wheels" class="rpart locked">
+                        <rect x="52" y="234" width="116" height="18" rx="9" fill="#636e72"/>
+                        <circle cx="84" cy="252" r="12" fill="#2f3542" stroke="#a4b0be" stroke-width="4"/>
+                        <circle cx="136" cy="252" r="12" fill="#2f3542" stroke="#a4b0be" stroke-width="4"/>
+                        <circle cx="84" cy="252" r="4" fill="#a4b0be"/>
+                        <circle cx="136" cy="252" r="4" fill="#a4b0be"/>
+                    </g>
+                    <!-- arms -->
+                    <g id="part-leftArm" class="rpart locked">
+                        <rect x="24" y="112" width="22" height="60" rx="11" fill="#ff9f43" stroke="#e67e22" stroke-width="3"/>
+                        <circle cx="35" cy="180" r="11" fill="#ff9f43" stroke="#e67e22" stroke-width="3"/>
+                    </g>
+                    <g id="part-rightArm" class="rpart locked">
+                        <rect x="174" y="112" width="22" height="60" rx="11" fill="#ff9f43" stroke="#e67e22" stroke-width="3"/>
+                        <circle cx="185" cy="180" r="11" fill="#ff9f43" stroke="#e67e22" stroke-width="3"/>
+                    </g>
+                    <!-- torso (always built) -->
+                    <rect x="52" y="106" width="116" height="96" rx="20" fill="#e9eef4" stroke="#aeb9c4" stroke-width="4"/>
+                    <rect x="62" y="114" width="96" height="12" rx="6" fill="#d3dbe4"/>
+                    <!-- chest slot (always visible) -->
+                    <circle id="chest-slot" cx="110" cy="150" r="22"/>
+                    <!-- belly panel -->
+                    <g id="part-belly" class="rpart locked">
+                        <rect x="76" y="176" width="68" height="18" rx="8" fill="#a29bfe" stroke="#6c5ce7" stroke-width="3"/>
+                        <line x1="93" y1="178" x2="93" y2="192" stroke="#6c5ce7" stroke-width="3"/>
+                        <line x1="110" y1="178" x2="110" y2="192" stroke="#6c5ce7" stroke-width="3"/>
+                        <line x1="127" y1="178" x2="127" y2="192" stroke="#6c5ce7" stroke-width="3"/>
+                    </g>
+                    <!-- chest core -->
+                    <g id="part-chestCore" class="rpart locked">
+                        <circle cx="110" cy="150" r="15" fill="#fdcb6e" stroke="#e1a612" stroke-width="4"/>
+                        <polygon points="110,141 113,148 120,148 114,153 116,160 110,156 104,160 106,153 100,148 107,148" fill="#fff3c4"/>
+                    </g>
+                    <!-- antenna -->
+                    <g id="part-antenna" class="rpart locked">
+                        <line x1="110" y1="20" x2="110" y2="42" stroke="#e17055" stroke-width="5" stroke-linecap="round"/>
+                        <circle cx="110" cy="15" r="8" fill="#ff7675" stroke="#d63031" stroke-width="3"/>
+                    </g>
+                    <!-- head -->
+                    <g id="part-head" class="rpart locked">
+                        <rect x="60" y="40" width="100" height="62" rx="18" fill="#74b9ff" stroke="#4a6fa5" stroke-width="4"/>
+                        <circle cx="54" cy="70" r="8" fill="#fdcb6e" stroke="#e1a612" stroke-width="3"/>
+                        <circle cx="166" cy="70" r="8" fill="#fdcb6e" stroke="#e1a612" stroke-width="3"/>
+                    </g>
+                    <!-- visor -->
+                    <g id="part-visor" class="rpart locked">
+                        <rect x="76" y="54" width="68" height="30" rx="15" fill="#2d3436"/>
+                        <circle cx="97" cy="69" r="6" fill="#00fff0"/>
+                        <circle cx="123" cy="69" r="6" fill="#00fff0"/>
+                    </g>
+                </svg>
+                <div id="drop-hint">⬇ Drop it here!</div>
+            </div>
+
+            <div id="parts-row">
+                <div class="part-chip chip-color-0" id="chip-0"><span class="chip-num"></span></div>
+                <div class="part-chip chip-color-1" id="chip-1"><span class="chip-num"></span></div>
+                <div class="part-chip chip-color-2" id="chip-2"><span class="chip-num"></span></div>
+            </div>
+
+            <div id="timer-container">
+                <div id="timer-bar"></div>
+            </div>
+            <div id="feedback"></div>
+        </div>
+
+        <div id="end-screen" class="hidden">
+            <div id="end-robot-slot"></div>
+            <h2 id="end-title">Mission Complete!</h2>
+            <button id="action-btn" class="btn" onclick="retryMistakes()"></button>
+        </div>
+    </div>
+
+    <script>
+        let mode = '', currentQ = {}, pool = [], mistakes = [], timer, isCorrectionRound = false, comboCount = 0;
+        let totalQuestions = 10, questionsDone = 0, isTransitioning = false, gameActive = false;
+        let buildIndex = 0;
+        const buildOrder = ['antenna', 'head', 'visor', 'chestCore', 'leftArm', 'rightArm', 'belly', 'leftLeg', 'rightLeg', 'wheels'];
+
+        const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+        let metal = null;
+        try {
+            metal = new Tone.MetalSynth({
+                envelope: { attack: 0.001, decay: 0.18, release: 0.05 },
+                harmonicity: 6.1, modulationIndex: 18, resonance: 3200, octaves: 1.2
+            }).toDestination();
+            metal.volume.value = -10;
+        } catch (e) { metal = null; }
+
+        const robotZone = document.getElementById('robot-zone');
+        const robotSvg = document.getElementById('robot-svg');
+        const chips = [0, 1, 2].map(i => document.getElementById('chip-' + i));
+        let selectedChip = null;
+
+        // Check for completed levels on load
+        window.onload = applyCompletionStyles;
+
+        function applyCompletionStyles() {
+            ['warmup', 'addition', 'subtraction', 'challenge'].forEach(m => {
+                if (localStorage.getItem('robot_' + m + '_complete') === 'true') {
+                    const card = document.getElementById('lv-card-' + m);
+                    if (!card) return;
+                    const name = card.querySelector('.lv-name');
+                    if (name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+                }
+            });
+        }
+
+        function showSetup() {
+            Tone.start();
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('setup-screen').classList.remove('hidden');
+            document.getElementById('back-btn').innerText = '← Back';
+        }
+
+        function goBack() {
+            const setup = document.getElementById('setup-screen');
+            const play = document.getElementById('play-screen');
+            const end = document.getElementById('end-screen');
+            if (!play.classList.contains('hidden') || !end.classList.contains('hidden')) {
+                gameActive = false;
+                clearInterval(timer);
+                play.classList.add('hidden');
+                end.classList.add('hidden');
+                setup.classList.remove('hidden');
+            } else if (!setup.classList.contains('hidden')) {
+                setup.classList.add('hidden');
+                document.getElementById('intro-screen').classList.remove('hidden');
+                document.getElementById('back-btn').innerText = '← Home';
+            } else {
+                window.location.href = 'index.html';
+            }
+        }
+
+        function playSound(type) {
+            if (Tone.context.state !== 'running') return;
+            const now = Tone.now();
+            if (type === 'correct') {
+                if (metal) metal.triggerAttackRelease('G5', '16n', now);
+                synth.triggerAttackRelease(["C5", "E5"], "16n", now + 0.06);
+                synth.triggerAttackRelease("G5", "8n", now + 0.16);
+            } else if (type === 'wrong') {
+                synth.triggerAttackRelease("C2", "8n", now);
+                synth.triggerAttackRelease("G1", "8n", now + 0.15);
+            } else if (type === 'select') {
+                synth.triggerAttackRelease("E5", "32n", now);
+            } else if (type === 'tick') {
+                synth.triggerAttackRelease("C6", "64n", now);
+            } else if (type === 'fanfare') {
+                synth.triggerAttackRelease(["C5", "E5", "G5"], "8n", now);
+                synth.triggerAttackRelease(["D5", "F5", "A5"], "8n", now + 0.15);
+                synth.triggerAttackRelease(["E5", "G5", "C6"], "4n", now + 0.3);
+            }
+        }
+
+        function startGame(m) {
+            Tone.start();
+            mode = m;
+            mistakes = [];
+            isCorrectionRound = false;
+            comboCount = 0;
+            gameActive = true;
+            buildIndex = 0;
+            robotSvg.classList.remove('complete');
+            buildOrder.forEach(p => {
+                const g = document.getElementById('part-' + p);
+                g.classList.add('locked');
+                g.classList.remove('activated');
+            });
+            generatePool();
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('play-screen').classList.remove('hidden');
+            nextQuestion();
+        }
+
+        function generatePool() {
+            pool = [];
+            let seen = new Set();
+            if (mode === 'warmup') {
+                const types = [];
+                // Type 1: x - 10  (x = 10..20)
+                for (let x = 10; x <= 20; x++) {
+                    types.push({x: x, y: 10, op: '-', ans: x - 10});
+                }
+                // Type 2: x + 10  (x = 0..10)
+                for (let x = 0; x <= 10; x++) {
+                    types.push({x: x, y: 10, op: '+', ans: x + 10});
+                }
+                // Type 3: x - units digit = 10  (x = 10..19)
+                for (let x = 10; x <= 19; x++) {
+                    types.push({x: x, y: x % 10, op: '-', ans: 10});
+                }
+                const shuffled = types.sort(() => Math.random() - 0.5);
+                for (let i = 0; i < 10 && i < shuffled.length; i++) {
+                    pool.push(shuffled[i]);
+                }
+                totalQuestions = pool.length;
+                questionsDone = 0;
+                return;
+            }
+            while (pool.length < 10) {
+                let add = (mode === 'addition') || (mode === 'challenge' && Math.random() > 0.5);
+                let x, y, op, ans;
+                if (add) {
+                    x = Math.floor(Math.random() * 8) + 10;
+                    let max_y = 9 - (x % 10);
+                    if (max_y < 3) continue;
+                    y = Math.floor(Math.random() * (max_y - 3 + 1)) + 3;
+                    op = '+'; ans = x + y;
+                } else {
+                    x = Math.floor(Math.random() * 8) + 13;
+                    let units_x = x % 10;
+                    if (units_x < 3) continue;
+                    let max_y = Math.min(units_x, 9);
+                    y = Math.floor(Math.random() * (max_y - 3 + 1)) + 3;
+                    op = '-'; ans = x - y;
+                }
+                let key = `${x}${op}${y}`;
+                if (!seen.has(key)) { seen.add(key); pool.push({x, y, op, ans}); }
+            }
+            totalQuestions = pool.length;
+            questionsDone = 0;
+        }
+
+        function updateProgress() {
+            const display = document.getElementById('progress-display');
+            display.innerHTML = "";
+            for (let i = 0; i < totalQuestions; i++) {
+                const cell = document.createElement('span');
+                cell.innerText = "🔋";
+                if (i >= questionsDone) cell.className = "cell-empty";
+                display.appendChild(cell);
+            }
+        }
+
+        function updateCombo() {
+            const comboEl = document.getElementById('combo-display');
+            if (comboCount >= 3) {
+                comboEl.innerText = `COMBO x${comboCount}! 🔥`;
+                comboEl.style.opacity = 1;
+            } else {
+                comboEl.style.opacity = 0;
+            }
+        }
+
+        function activateNextPart() {
+            if (buildIndex >= buildOrder.length) return;
+            const g = document.getElementById('part-' + buildOrder[buildIndex]);
+            g.classList.remove('locked');
+            g.classList.remove('activated');
+            void g.getBBox;
+            g.classList.add('activated');
+            buildIndex++;
+            if (buildIndex >= buildOrder.length) robotSvg.classList.add('complete');
+        }
+
+        function nextQuestion() {
+            if (pool.length === 0) { showEnd(); return; }
+            isTransitioning = false;
+            currentQ = pool.pop();
+            updateProgress();
+            updateCombo();
+            deselectChip();
+            document.getElementById('equation').innerText = `${currentQ.x} ${currentQ.op} ${currentQ.y} = ?`;
+            document.getElementById('feedback').innerText = "";
+
+            let opts = [currentQ.ans];
+            let candidates = [currentQ.ans + 1, currentQ.ans - 1, currentQ.ans + 2, currentQ.ans - 2]
+                .filter(v => v >= 0 && v !== currentQ.ans);
+            candidates.sort(() => Math.random() - 0.5);
+            opts.push(candidates[0], candidates[1]);
+            opts.sort(() => Math.random() - 0.5);
+
+            chips.forEach((c, i) => {
+                c.className = 'part-chip chip-color-' + i;
+                c.style.transition = '';
+                c.style.transform = '';
+                c.style.opacity = '1';
+                c.style.display = '';
+                c._tx = 0; c._ty = 0;
+                c.dataset.value = opts[i];
+                c.querySelector('.chip-num').innerText = opts[i];
+            });
+            startTimer();
+        }
+
+        // ---- Timer on/off toggle (shared preference across games) ----
+        let timerEnabled = true; // timer is ON by default on every visit
+        function toggleTimer() {
+            timerEnabled = !timerEnabled;
+                updateTimerToggle();
+        }
+        function updateTimerToggle() {
+            const sw = document.getElementById('timer-switch');
+            const st = document.getElementById('timer-state');
+            if (!sw || !st) return;
+            sw.classList.toggle('on', timerEnabled);
+            st.innerText = timerEnabled ? '開 ON' : '關 OFF';
+        }
+        updateTimerToggle();
+
+        function startTimer() {
+            clearInterval(timer);
+            const tc = document.getElementById('timer-container');
+            if (!timerEnabled) { tc.style.visibility = 'hidden'; return; }
+            tc.style.visibility = 'visible';
+            let time = 30000;
+            const bar = document.getElementById('timer-bar');
+            bar.style.width = '100%';
+            bar.style.backgroundColor = 'var(--robot-blue)';
+            timer = setInterval(() => {
+                time -= 50;
+                bar.style.width = (time / 30000 * 100) + '%';
+                if (time <= 3000 && time % 1000 === 0) playSound('tick');
+                if (time <= 3000) bar.style.backgroundColor = '#e74c3c';
+                if (time <= 0) {
+                    clearInterval(timer);
+                    if (!isTransitioning) { isTransitioning = true; handleResult(null, null); }
+                }
+            }, 50);
+        }
+
+        // ---------- Drag & Drop + Tap fallback ----------
+        let dragState = null;
+
+        function overRobot(x, y) {
+            const r = robotZone.getBoundingClientRect();
+            const pad = 14;
+            return x > r.left - pad && x < r.right + pad && y > r.top - pad && y < r.bottom + pad;
+        }
+
+        function deselectChip() {
+            if (selectedChip) selectedChip.classList.remove('selected');
+            selectedChip = null;
+            robotZone.classList.remove('awaiting');
+        }
+
+        chips.forEach(chip => {
+            chip.addEventListener('contextmenu', e => e.preventDefault());
+
+            chip.addEventListener('pointerdown', e => {
+                if (isTransitioning || !gameActive) return;
+                e.preventDefault();
+                if (Tone.context.state !== 'running') Tone.start();
+                chip.setPointerCapture(e.pointerId);
+                dragState = { chip, startX: e.clientX, startY: e.clientY, moved: false, downTime: Date.now() };
+                chip.style.transition = 'none';
+                chip.classList.add('dragging');
+                if (selectedChip && selectedChip !== chip) deselectChip();
+            });
+
+            chip.addEventListener('pointermove', e => {
+                if (!dragState || dragState.chip !== chip || isTransitioning) return;
+                const dx = e.clientX - dragState.startX;
+                const dy = e.clientY - dragState.startY;
+                if (Math.hypot(dx, dy) > 7) dragState.moved = true;
+                if (dragState.moved) {
+                    chip._tx = dx; chip._ty = dy;
+                    chip.style.transform = `translate(${dx}px, ${dy}px) scale(1.06)`;
+                    robotZone.classList.add('awaiting');
+                    robotZone.classList.toggle('hover', overRobot(e.clientX, e.clientY));
+                }
+            });
+
+            chip.addEventListener('pointerup', e => {
+                if (!dragState || dragState.chip !== chip) return;
+                const wasTap = !dragState.moved && (Date.now() - dragState.downTime) < 500;
+                dragState = null;
+                chip.classList.remove('dragging');
+                robotZone.classList.remove('hover');
+                if (isTransitioning || !gameActive) { snapBack(chip); return; }
+
+                if (wasTap) {
+                    chip.style.transition = '';
+                    chip.style.transform = '';
+                    chip._tx = 0; chip._ty = 0;
+                    // Tap-tap fallback: select this part, then tap the robot to place it
+                    if (selectedChip === chip) { deselectChip(); }
+                    else {
+                        deselectChip();
+                        selectedChip = chip;
+                        chip.classList.add('selected');
+                        robotZone.classList.add('awaiting');
+                        playSound('select');
+                    }
+                } else if (overRobot(e.clientX, e.clientY)) {
+                    placeChip(chip);
+                } else {
+                    snapBack(chip);
+                }
+            });
+
+            chip.addEventListener('pointercancel', () => {
+                if (dragState && dragState.chip === chip) {
+                    dragState = null;
+                    chip.classList.remove('dragging');
+                    snapBack(chip);
+                }
+            });
+        });
+
+        // Tap on robot to place the selected part (laptop-friendly fallback)
+        robotZone.addEventListener('pointerup', () => {
+            if (selectedChip && !isTransitioning && gameActive && !dragState) {
+                const c = selectedChip;
+                deselectChip();
+                placeChip(c);
+            }
+        });
+
+        function snapBack(chip) {
+            chip.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            chip.style.transform = '';
+            chip._tx = 0; chip._ty = 0;
+            setTimeout(() => { chip.style.transition = ''; }, 320);
+            robotZone.classList.remove('awaiting', 'hover');
+        }
+
+        function placeChip(chip) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            clearInterval(timer);
+            deselectChip();
+            robotZone.classList.remove('hover');
+            const val = parseInt(chip.dataset.value);
+
+            // Fly the part into the chest slot
+            const slot = document.getElementById('chest-slot').getBoundingClientRect();
+            const c = chip.getBoundingClientRect();
+            const ddx = (slot.left + slot.width / 2) - (c.left + c.width / 2);
+            const ddy = (slot.top + slot.height / 2) - (c.top + c.height / 2);
+            const curTx = chip._tx || 0, curTy = chip._ty || 0;
+            chip.style.transition = 'none';
+            chip.style.transform = `translate(${curTx}px, ${curTy}px)`;
+            void chip.offsetWidth;
+            chip.style.transition = 'transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.35s';
+            chip.style.transform = `translate(${curTx + ddx}px, ${curTy + ddy}px) scale(0.15)`;
+            chip.style.opacity = '0';
+
+            setTimeout(() => handleResult(val, chip), 360);
+        }
+
+        function sparkBurst(x, y, big, palette) {
+            let colors = ['#ffd54a', '#4de8e1', '#ff8fb3', '#b7a8ff', '#ffffff'];
+            if (palette === 'good') colors = ['#ffd54a', '#2ecc71', '#ffffff', '#f1c40f'];
+            if (palette === 'bad') colors = ['#e74c3c', '#c0392b', '#7f8c8d'];
+            const n = big ? 26 : 12;
+            for (let i = 0; i < n; i++) {
+                const s = document.createElement('div');
+                s.className = 'spark';
+                const ang = Math.random() * Math.PI * 2;
+                const dist = (big ? 90 : 55) + Math.random() * (big ? 70 : 35);
+                s.style.setProperty('--dx', Math.cos(ang) * dist + 'px');
+                s.style.setProperty('--dy', Math.sin(ang) * dist + 'px');
+                s.style.left = x + 'px';
+                s.style.top = y + 'px';
+                s.style.background = colors[Math.floor(Math.random() * colors.length)];
+                document.body.appendChild(s);
+                setTimeout(() => s.remove(), 650);
+            }
+        }
+
+        function fxPopup(x, y, text, color) {
+            const d = document.createElement('div');
+            d.className = 'fx-popup';
+            d.innerText = text;
+            d.style.left = x + 'px'; d.style.top = y + 'px';
+            d.style.color = color;
+            document.body.appendChild(d);
+            setTimeout(() => d.remove(), 950);
+        }
+
+        function fxRing(x, y, color) {
+            const d = document.createElement('div');
+            d.className = 'fx-ring';
+            d.style.left = x + 'px'; d.style.top = y + 'px';
+            d.style.borderColor = color;
+            document.body.appendChild(d);
+            setTimeout(() => d.remove(), 600);
+        }
+
+        function zoneGlow(kind) {
+            robotZone.classList.remove('glow-good', 'glow-bad');
+            void robotZone.offsetWidth;
+            robotZone.classList.add(kind);
+            setTimeout(() => robotZone.classList.remove(kind), 750);
+        }
+
+        function revealCorrect() {
+            chips.forEach(c => {
+                if (parseInt(c.dataset.value) === currentQ.ans) c.classList.add('reveal-correct');
+                else c.classList.add('reveal-dim');
+            });
+        }
+
+        function handleResult(val, chip) {
+            const fb = document.getElementById('feedback');
+            const slot = document.getElementById('chest-slot').getBoundingClientRect();
+            const sx = slot.left + slot.width / 2, sy = slot.top + slot.height / 2;
+
+            if (val === currentQ.ans) {
+                playSound('correct');
+                if (chip) chip.style.display = 'none';
+                sparkBurst(sx, sy, false, 'good');
+                fxRing(sx, sy, '#ffd54a');
+                fxPopup(sx, sy - 60, '✓', '#2ecc71');
+                zoneGlow('glow-good');
+                activateNextPart();
+                questionsDone++;
+                comboCount++;
+                updateProgress();
+                updateCombo();
+                const praise = ['Clank! Perfect fit! 🤖', 'Beep boop! ⚡', 'Nice building! 🔧', 'Woohoo! 🎉', 'Spark-tastic! ✨'];
+                fb.style.color = '#00b894';
+                fb.innerText = praise[Math.floor(Math.random() * praise.length)];
+                setTimeout(nextQuestion, 950);
+            } else {
+                playSound('wrong');
+                if (chip) {
+                    chip.style.transition = 'transform 0.3s';
+                    chip.style.transform = '';
+                    chip.style.opacity = '1';
+                    chip._tx = 0; chip._ty = 0;
+                    chip.classList.add('wrong-flash');
+                }
+                robotZone.classList.add('shake-effect');
+                setTimeout(() => robotZone.classList.remove('shake-effect'), 350);
+                sparkBurst(sx, sy, false, 'bad');
+                fxPopup(sx, sy - 60, '✗', '#e74c3c');
+                zoneGlow('glow-bad');
+                mistakes.push(currentQ);
+                comboCount = 0;
+                updateCombo();
+                revealCorrect();
+                fb.style.color = '#d63031';
+                fb.innerText = val === null ? 'Too slow! 🕒' : `Zap! It was ${currentQ.ans} ⚡`;
+                setTimeout(nextQuestion, 1600);
+            }
+        }
+
+        function showEnd() {
+            gameActive = false;
+            document.getElementById('play-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.remove('hidden');
+            const btn = document.getElementById('action-btn');
+            const slotEl = document.getElementById('end-robot-slot');
+            if (mistakes.length === 0) {
+                localStorage.setItem('robot_' + mode + '_complete', 'true');
+                applyCompletionStyles(); // Refresh icons
+                document.getElementById('end-title').innerText = "Perfect Build!";
+                const clone = robotSvg.cloneNode(true);
+                clone.id = 'robot-svg-end';
+                clone.classList.add('robot-dance');
+                slotEl.innerHTML = '';
+                slotEl.appendChild(clone);
+                playSound('fanfare');
+                setTimeout(() => {
+                    const r = slotEl.getBoundingClientRect();
+                    sparkBurst(r.left + r.width / 2, r.top + r.height / 2, true);
+                }, 250);
+                btn.innerText = "Play Again";
+                btn.onclick = () => window.location.reload();
+            } else {
+                slotEl.innerHTML = '<div style="font-size: 70px;">🔧</div>';
+                document.getElementById('end-title').innerText = "Robot needs repairs!";
+                btn.innerText = `Review ${mistakes.length} mistakes`;
+                btn.onclick = () => {
+                    slotEl.innerHTML = '';
+                    pool = [...mistakes]; mistakes = []; isCorrectionRound = true; questionsDone = 0; totalQuestions = pool.length;
+                    gameActive = true;
+                    document.getElementById('end-screen').classList.add('hidden');
+                    document.getElementById('play-screen').classList.remove('hidden');
+                    nextQuestion();
+                };
+            }
+        }
+    </script>
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>在組裝機械人的過程中，小朋友練習20以內「不進位加法」與「不退位減法」，例如 14+3、17-5。這類題目真正的學習重點是位值觀念（place value）：「十幾」就是1個十加幾個一，計算時個位對個位，不用煩惱進位退位 — 先把位值看通透。</p>
+        <p class="pg-en">While assembling the robot, children practise no-carry addition and no-borrow subtraction within 20, such as 14+3 and 17−5. The real learning goal is place value: "teen" numbers are one ten plus some ones, so ones line up with ones and there is no carrying or borrowing to worry about — place value comes first.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>跟小朋友強調：「14是1個十和4個一。」計算 14+3 時問他：「加的是十位還是個位？」幫他建立「個位加個位」的規律感，之後學進位加法時，他才會真正明白為什麼要「過十」。</p>
+        <p class="pg-en">Emphasise: "14 is one ten and four ones." When solving 14+3, ask: "Are we adding to the tens or the ones?" Building the "ones add to ones" habit now means carrying will genuinely make sense later.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>把日常見到的數量拆開來說：「13粒提子 = 10粒 + 3粒」。逛超市、砌積木都可以玩數字分拆，位值概念是小二學直式計算的重要根基。</p>
+        <p class="pg-en">Split everyday quantities out loud: "13 grapes = 10 + 3." Supermarket trips and block building are all chances to decompose numbers — place value is the foundation of the column arithmetic taught in Primary Two.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

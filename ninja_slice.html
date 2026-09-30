@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#7b6cf0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Ninja Slice | 20以內減法 · Subtraction Dojo – MMathWorld</title>
+    <meta name="description" content="Ninja Slice 忍者切水果：20以內減法 Subtraction within 20、20以內退位減法 Borrowing Subtraction、混合模式 Mixed Mode。切開正確答案，免費升小數學遊戲！">
+    <link rel="canonical" href="https://mathgames.missman.world/ninja_slice">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Ninja Slice | 20以內減法 · Subtraction Dojo – MMathWorld">
+    <meta property="og:description" content="Ninja Slice 忍者切水果：20以內減法 Subtraction within 20、20以內退位減法 Borrowing Subtraction。切開正確答案，免費升小數學遊戲！">
+    <meta property="og:url" content="https://mathgames.missman.world/ninja_slice">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Ninja Slice 忍者切切 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ninja Slice | 20以內減法 · Subtraction Dojo – MMathWorld">
+    <meta name="twitter:description" content="Ninja Slice 忍者切水果：20以內減法 Subtraction within 20、20以內退位減法 Borrowing Subtraction。切開正確答案，免費升小數學遊戲！">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Ninja Slice",
+      "alternateName": "忍者切切",
+      "url": "https://mathgames.missman.world/ninja_slice",
+      "description": "Ninja Slice 忍者切水果：20以內減法 Subtraction within 20、20以內退位減法 Borrowing Subtraction。切開正確答案，免費升小數學遊戲！",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": [
+            "zh-Hant-HK",
+            "en"
+      ],
+      "genre": [
+            "Educational",
+            "Math"
+      ],
+      "gamePlatform": [
+            "Web Browser",
+            "Mobile Web"
+      ],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HKD"
+      },
+      "audience": {
+            "@type": "PeopleAudience",
+            "suggestedMinAge": 4,
+            "suggestedMaxAge": 7
+      },
+      "author": {
+            "@type": "Organization",
+            "name": "MMathWorld",
+            "url": "https://mathgames.missman.world/"
+      },
+      "learningResourceType": "Educational game",
+      "teaches": "20以內減法及退位減法 Subtraction within 20 with borrowing"
+}
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dojo-wood: #d35400;
+            --dojo-wood-dark: #a04000;
+            --dojo-bg: #1c2541;
+            --speed-btn: #3498db;
+            --speed-btn-dark: #2980b9;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Comic Sans MS', sans-serif;
+            background: radial-gradient(circle at 50% 30%, #2d3e6e 0%, #1c2541 70%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            margin: 0;
+            color: white;
+            overflow: hidden;
+            overscroll-behavior: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+        }
+
+        #game-container {
+            background: linear-gradient(180deg, #31446f, #243358);
+            padding: 18px;
+            border-radius: 30px;
+            box-shadow: 0 14px 0 rgba(0,0,0,0.3), 0 0 60px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            height: 92vh;
+            height: 92dvh;
+            max-width: 620px;
+            text-align: center;
+            position: relative;
+            border: 6px solid #c0392b;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .animate-float { animation: float 3s ease-in-out infinite; }
+
+        canvas {
+            cursor: crosshair;
+            touch-action: none;
+            border-radius: 20px;
+            display: block;
+            margin: 0 auto;
+            /* keep the playfield perfectly square on any screen */
+            width: min(100%, 82vh);
+            width: min(100%, 82dvh);
+            aspect-ratio: 1 / 1;
+            height: auto;
+            box-shadow: inset 0 0 40px rgba(0,0,0,0.35);
+        }
+
+        #home-btn {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: linear-gradient(145deg, #ff8a80, #e74c3c);
+            padding: 9px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            color: white;
+            border: none;
+            font-weight: 800;
+            font-family: inherit;
+            font-size: 15px;
+            z-index: 10;
+            text-decoration: none;
+            box-shadow: 0 4px 0 #b03a2e;
+        }
+        #home-btn:active { transform: translateY(2px); box-shadow: 0 0 0 transparent; }
+
+        /* Premium 3D Button Styles */
+        .btn {
+            background: linear-gradient(145deg, #e67e22, #d35400);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            font-size: 15px;
+            font-weight: 800;
+            font-family: inherit;
+            border-radius: 50px;
+            cursor: pointer;
+            margin: 5px;
+            box-shadow: 0 6px 0 var(--dojo-wood-dark);
+            transition: all 0.15s ease;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.15);
+        }
+        .btn:hover { filter: brightness(1.08); transform: translateY(-3px); box-shadow: 0 9px 0 var(--dojo-wood-dark); }
+        .btn:active { transform: translateY(3px); box-shadow: 0 3px 0 var(--dojo-wood-dark); }
+
+        /* Sublevel picker (Level 0 style) */
+        .tag-pill {
+            display: inline-block;
+            font-size: 16px;
+            font-weight: 800;
+            color: #a34e07;
+            background-color: #fff1de;
+            border: 3px solid #ffcf96;
+            padding: 5px 16px;
+            border-radius: 999px;
+            margin: 8px 0 4px;
+        }
+        .level-grid { display: flex; flex-direction: column; gap: 10px; margin: 10px auto 6px; max-width: 470px; }
+        .mini-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 10px auto 6px; max-width: 470px; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #fff6e8; border: 3px solid #e8d3b0; border-radius: 18px;
+            padding: 10px 16px; cursor: pointer; font-family: inherit;
+            box-shadow: 0 5px 0 #e8d3b0;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+            color: #6b3a0e;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #e8d3b0; filter: brightness(1.02); }
+        .level-card:active { transform: translateY(2px); box-shadow: 0 2px 0 #e8d3b0; }
+        .level-card .lv-emoji { font-size: 32px; }
+        .level-card .lv-name { font-size: 18px; font-weight: 800; color: #6b3a0e; }
+        .level-card .lv-sub { font-size: 13px; font-weight: 700; color: #a5825e; }
+        .level-card.mini { flex-direction: column; gap: 2px; padding: 10px 6px; text-align: center; }
+        .level-card.mini .lv-emoji { font-size: 24px; }
+        .level-card.mini .lv-name { font-size: 16px; }
+        .level-card.selected {
+            border-color: #ffd54a;
+            background: #fff3d6;
+            box-shadow: 0 5px 0 #d9ad3c, 0 0 22px rgba(255, 213, 74, 0.55);
+        }
+
+        .ninja-anim {
+            animation: float 3s infinite;
+            font-size: 58px;
+            display: inline-block;
+            filter: drop-shadow(0 8px 8px rgba(0,0,0,0.4));
+        }
+
+        .sun-circle {
+            width: 112px;
+            height: 112px;
+            margin: 8px auto 2px;
+            background: radial-gradient(circle at 38% 35%, #ff9d7a, #e74c3c 70%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 46px rgba(231, 76, 60, 0.55);
+        }
+
+        /* Intro screen fits inside the frame on any screen */
+        #intro-screen {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: safe center;
+            overflow-y: auto;
+        }
+        .intro-title {
+            font-size: 30px;
+            margin-top: 0;
+            margin-bottom: 8px;
+            color: #fff;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-shadow: 0 3px 0 rgba(0,0,0,0.3), 0 0 24px rgba(231,76,60,0.6);
+        }
+        .intro-label { font-weight: 800; color: #ffe9a8; letter-spacing: 1px; margin: 4px 0; }
+        .intro-hint { margin-top: 8px; font-size: 13px; color: rgba(255,233,168,0.8); font-weight: 700; }
+        #start-btn {
+            background: linear-gradient(145deg,#58d68d,#27ae60);
+            box-shadow: 0 6px 0 #1e8449;
+            padding: 14px 38px;
+            font-size: 20px;
+        }
+        #start-btn:hover { box-shadow: 0 9px 0 #1e8449; }
+        #start-btn:active { box-shadow: 0 3px 0 #1e8449; }
+
+        #ui-layer {
+            position: absolute;
+            top: 56px;
+            left: 0;
+            width: 100%;
+            pointer-events: none;
+            padding: 0 20px;
+        }
+
+        #equation-display {
+            display: inline-block;
+            background: rgba(10, 14, 30, 0.72);
+            border: 3px solid rgba(255, 213, 74, 0.55);
+            padding: 6px 26px;
+            border-radius: 999px;
+            font-size: 38px;
+            color: #ffe9a8;
+            text-shadow: 0 0 14px rgba(255, 213, 74, 0.5);
+            font-weight: 800;
+            margin-top: 8px;
+            letter-spacing: 2px;
+        }
+
+        #progress-bar {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 6px;
+            pointer-events: all;
+        }
+
+        .progress-slot {
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(255, 233, 168, 0.7);
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 19px;
+            background: rgba(255, 213, 74, 0.18);
+            transition: transform 0.2s;
+        }
+        .progress-slot.inactive {
+            opacity: 0.3;
+            filter: grayscale(1);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .hidden { display: none !important; }
+
+        #play-screen {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        @media (max-height: 900px) {
+            .ninja-anim { font-size: 44px; }
+            .sun-circle { width: 84px; height: 84px; }
+            .intro-title { font-size: 24px; margin-bottom: 4px; }
+            #equation-display { font-size: 28px; }
+            .btn { padding: 8px 14px; font-size: 14px; margin: 4px; }
+            #start-btn { padding: 10px 28px; font-size: 17px; }
+            .intro-hint { font-size: 12px; margin-top: 4px; }
+            .intro-label { font-size: 14px; margin: 2px 0; }
+            .level-grid { gap: 7px; margin: 6px auto 4px; }
+            .mini-grid { gap: 7px; margin: 6px auto 4px; }
+            .level-card { padding: 7px 12px; }
+            .level-card .lv-emoji { font-size: 26px; }
+            .level-card .lv-name { font-size: 15.5px; }
+            .level-card .lv-sub { font-size: 11.5px; }
+            .level-card.mini { padding: 6px 4px; }
+            .tag-pill { font-size: 13px; padding: 3px 12px; margin: 5px 0 2px; }
+        }
+        @media (max-height: 560px) {
+            .ninja-anim { font-size: 34px; }
+            .sun-circle { width: 62px; height: 62px; margin: 4px auto 0; }
+            .intro-title { font-size: 20px; }
+            .intro-hint { display: none; }
+            .level-card { padding: 5px 10px; }
+            .level-card .lv-name { font-size: 14px; }
+            .level-card .lv-sub { font-size: 10.5px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div id="game-container">
+        <a id="home-btn" href="index.html">← Home</a>
+
+        <div id="intro-screen">
+            <div class="sun-circle"><div class="ninja-anim">🥷</div></div>
+            <h1 class="intro-title">Ninja Slice</h1>
+
+            <div>
+                <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+                <div class="level-grid">
+                    <button class="level-card selected" id="btn-within10" onclick="selectLevel('within10', this)">
+                        <span class="lv-emoji">🔟</span>
+                        <span><span class="lv-name">Sublevel 1: 10以內減法</span><br><span class="lv-sub">Within 10 — 9 − 4 = ?</span></span>
+                    </button>
+                    <button class="level-card" id="btn-within20_borrow" onclick="selectLevel('within20_borrow', this)">
+                        <span class="lv-emoji">⚔️</span>
+                        <span><span class="lv-name">Sublevel 2: 20以內借位減法</span><br><span class="lv-sub">Within 20, borrowing — 13 − 8 = ?</span></span>
+                    </button>
+                    <button class="level-card" id="btn-within20_simple" onclick="selectLevel('within20_simple', this)">
+                        <span class="lv-emoji">🍃</span>
+                        <span><span class="lv-name">Sublevel 3: 20以內不借位減法</span><br><span class="lv-sub">Within 20, no borrowing — 18 − 5 = ?</span></span>
+                    </button>
+                    <button class="level-card" id="btn-mixed20" onclick="selectLevel('mixed20', this)">
+                        <span class="lv-emoji">🌀</span>
+                        <span><span class="lv-name">Sublevel 4: 混合模式</span><br><span class="lv-sub">Mixed — mostly bigger numbers up to 20 主打大數</span></span>
+                    </button>
+                </div>
+                <div class="tag-pill">Pick a speed 選擇速度：</div>
+                <div class="mini-grid">
+                    <button class="level-card mini speed-btn" onclick="setSpeed(0.0006, this)"><span class="lv-emoji">🐢</span><span class="lv-name">Slow 慢</span></button>
+                    <button class="level-card mini speed-btn selected" onclick="setSpeed(0.0012, this)"><span class="lv-emoji">🐇</span><span class="lv-name">Medium 中</span></button>
+                    <button class="level-card mini speed-btn" onclick="setSpeed(0.002, this)"><span class="lv-emoji">⚡</span><span class="lv-name">Fast 快</span></button>
+                </div>
+                <div style="margin-top: 10px;">
+                    <button class="btn" id="start-btn" onclick="startGame()">Start Dojo!</button>
+                    <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+                </div>
+                <p class="intro-hint">⚔️ Swipe through the fruit with the correct answer!</p>
+            </div>
+        </div>
+
+        <div id="play-screen" class="hidden" style="height: 100%;">
+            <div id="ui-layer">
+                <div id="progress-bar"></div>
+                <div id="equation-display">? - ? = ?</div>
+            </div>
+            <canvas id="canvas"></canvas>
+        </div>
+
+        <div id="end-screen" class="hidden">
+            <div class="ninja-anim" style="margin-top: 60px;">🏆</div>
+            <h2 style="font-size: 44px; margin: 14px 0 24px; text-shadow: 0 3px 0 rgba(0,0,0,0.3), 0 0 26px rgba(255,213,74,0.6);">Dojo Master! 🏆</h2>
+            <button class="btn" onclick="goBack()">Back to Menu</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+        const noiseSynth = new Tone.NoiseSynth({ noise: { type: 'white' }, envelope: { attack: 0.01, decay: 0.1, sustain: 0 } }).toDestination();
+        const swooshSynth = new Tone.NoiseSynth({ noise: { type: 'pink' }, envelope: { attack: 0.001, decay: 0.06, sustain: 0 } }).toDestination();
+        swooshSynth.volume.value = -14;
+
+        let pool = [], incorrectQueue = [], currentQ = null, floatingObjects = [], particles = [], halves = [], shakeFrames = 0;
+        let popups = [], rings = [], flash = null;
+        let gameActive = false, isPaused = false, questionsAnswered = 0, selectedLevel = 'within10', speedMultiplier = 0.0012;
+        let blade = [], bladeDown = false, bladeSpent = false, lastSwoosh = 0;
+
+        const FRUIT_TYPES = ['watermelon', 'orange', 'apple'];
+        const DANGER_Y = 180;
+
+        // ---------- Pre-rendered night dojo backdrop ----------
+        const bgCanvas = document.createElement('canvas');
+        bgCanvas.width = 600; bgCanvas.height = 600;
+        (function paintBg() {
+            const b = bgCanvas.getContext('2d');
+            const g = b.createLinearGradient(0, 0, 0, 600);
+            g.addColorStop(0, '#141d38'); g.addColorStop(0.5, '#24355f'); g.addColorStop(1, '#31446f');
+            b.fillStyle = g; b.fillRect(0, 0, 600, 600);
+            // stars
+            for (let i = 0; i < 70; i++) {
+                b.fillStyle = `rgba(255,255,255,${0.25 + Math.random() * 0.65})`;
+                b.beginPath(); b.arc(Math.random() * 600, Math.random() * 330, Math.random() * 1.6 + 0.4, 0, 7); b.fill();
+            }
+            // moon
+            b.fillStyle = '#fdf6d8';
+            b.beginPath(); b.arc(505, 78, 40, 0, 7); b.fill();
+            b.fillStyle = 'rgba(228,218,180,0.65)';
+            b.beginPath(); b.arc(492, 68, 9, 0, 7); b.fill();
+            b.beginPath(); b.arc(516, 90, 6, 0, 7); b.fill();
+            b.beginPath(); b.arc(500, 96, 4, 0, 7); b.fill();
+            // mountains
+            b.fillStyle = '#101a30';
+            b.beginPath(); b.moveTo(0, 320); b.lineTo(130, 190); b.lineTo(270, 320); b.closePath(); b.fill();
+            b.beginPath(); b.moveTo(160, 320); b.lineTo(310, 165); b.lineTo(480, 320); b.closePath(); b.fill();
+            b.beginPath(); b.moveTo(390, 320); b.lineTo(510, 215); b.lineTo(630, 320); b.closePath(); b.fill();
+            // ground
+            const g2 = b.createLinearGradient(0, 320, 0, 600);
+            g2.addColorStop(0, '#1a2646'); g2.addColorStop(1, '#0c1426');
+            b.fillStyle = g2; b.fillRect(0, 320, 600, 280);
+            // wooden floor boards
+            b.strokeStyle = 'rgba(255,255,255,0.05)'; b.lineWidth = 2;
+            for (let y = 350; y < 600; y += 42) { b.beginPath(); b.moveTo(0, y); b.lineTo(600, y); b.stroke(); }
+        })();
+
+        function goBack() {
+            gameActive = false; isPaused = false; particles = []; halves = []; blade = [];
+            document.getElementById('play-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('intro-screen').classList.remove('hidden');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function setSpeed(s, el) {
+            speedMultiplier = s;
+            document.querySelectorAll('.speed-btn').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function selectLevel(lvl, el) {
+            selectedLevel = lvl;
+            ['btn-within10', 'btn-within20_borrow', 'btn-within20_simple', 'btn-mixed20'].forEach(id => document.getElementById(id).classList.remove('selected'));
+            el.classList.add('selected');
+        }
+
+        function markLevelMastered(lvl) {
+            let btn = document.getElementById('btn-' + lvl);
+            if (btn) {
+                btn.style.background = "linear-gradient(145deg, #ffd94d, #f1b400)";
+                btn.style.boxShadow = "0 6px 0 #b7950b, 0 0 22px rgba(255,213,74,0.55)";
+                if (!btn.innerText.includes("🏆")) btn.innerText += " 🏆";
+            }
+        }
+
+        function resetProgress() {
+            questionsAnswered = 0;
+            const bar = document.getElementById('progress-bar');
+            bar.innerHTML = '';
+            for (let i = 0; i < 10; i++) {
+                let div = document.createElement('div');
+                div.className = 'progress-slot inactive';
+                div.id = 'slot-' + i;
+                div.innerText = '🥷';
+                bar.appendChild(div);
+            }
+        }
+
+        function startGame() {
+            if (Tone.context.state !== 'running') Tone.start();
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('end-screen').classList.add('hidden');
+            document.getElementById('play-screen').classList.remove('hidden');
+            gameActive = true; isPaused = false; incorrectQueue = []; particles = []; halves = []; blade = [];
+            resetProgress(); generatePool(selectedLevel); spawnBoard(); animate();
+        }
+
+        function createParticles(x, y, type) {
+            const colors = type === 'correct' ? ['#2ecc71', '#f1c40f', '#ffd54a', '#ffffff'] : ['#e74c3c', '#c0392b', '#7f8c8d'];
+            for (let i = 0; i < 40; i++) {
+                particles.push({ x, y, vx: (Math.random() - 0.5) * 12, vy: (Math.random() - 0.5) * 12, size: Math.random() * 7 + 3, color: colors[Math.floor(Math.random() * colors.length)], life: 1.0, decay: 0.02 });
+            }
+        }
+
+        function spawnHalves(o) {
+            halves.push({ x: o.x, y: o.y, r: o.r, vx: -2.2 - Math.random(), vy: -3.5, rot: o.rot, rotSpeed: -0.12, type: o.type, side: 'left', life: 1 });
+            halves.push({ x: o.x, y: o.y, r: o.r, vx: 2.2 + Math.random(), vy: -3.5, rot: o.rot, rotSpeed: 0.12, type: o.type, side: 'right', life: 1 });
+        }
+
+        function generatePool(lvl) {
+            pool = []; let seenKeys = new Set();
+            while (pool.length < 10) {
+                let x, y, ans;
+                if (lvl === 'within10') {
+                    x = Math.floor(Math.random() * 10) + 1;      // 1..10
+                    let maxY = Math.min(x, 9);                   // never y=10 (no "x-10")
+                    y = Math.floor(Math.random() * maxY) + 1;    // 1..maxY, never y=0
+                    ans = x - y;
+                }
+                else if (lvl === 'mixed20') {
+                    if (pool.length < 2) {
+                        // just a couple of within-10 warm-ups (never a 0 answer)
+                        x = Math.floor(Math.random() * 9) + 2;          // 2..10
+                        y = Math.floor(Math.random() * (x - 1)) + 1;    // 1..x-1, so ans >= 1
+                    } else {
+                        // mostly bigger numbers up to 20 — skip the trivial ones:
+                        // never x−10 (too easy), never 14−4 / 15−5 style (answer is just 10), never a 0 answer
+                        do {
+                            x = Math.floor(Math.random() * 10) + 11;     // 11..20
+                            y = Math.floor(Math.random() * (x - 1)) + 1; // 1..x-1
+                        } while (y === 10 || y === x - 10);
+                    }
+                    ans = x - y;
+                }
+                else if (lvl === 'within20_borrow') { x = Math.floor(Math.random() * 8) + 11; let last = x % 10; y = Math.floor(Math.random() * (9 - (last + 1) + 1)) + (last + 1); ans = x - y; }
+                else {
+                    x = Math.floor(Math.random() * 8) + 12;      // 12..19 (11 has no valid question under these rules)
+                    let last = x % 10;
+                    if (Math.random() < 0.5 && last > 1) {
+                        y = Math.floor(Math.random() * (last - 1)) + 1;   // single digit 1..last-1 — no 15−5 "make ten"
+                    } else {
+                        y = 11 + Math.floor(Math.random() * (last - 1));  // double digit 11..x-1 — no 15−15 zero, never y=10
+                    }
+                    ans = x - y;
+                }
+                let key = `${x}-${y}`;
+                if (!seenKeys.has(key)) { pool.push({x, y, ans}); seenKeys.add(key); }
+            }
+        }
+
+        function spawnBoard() {
+            if (!gameActive) return;
+            if (pool.length === 0) {
+                if (incorrectQueue.length > 0) {
+                    isPaused = true;
+                    document.getElementById('equation-display').innerText = "🔄 Reviewing Missed!";
+                    pool = [...incorrectQueue].sort(() => Math.random() - 0.5);
+                    incorrectQueue = [];
+                    setTimeout(() => { isPaused = false; spawnBoard(); }, 1500);
+                    return;
+                } else {
+                    markLevelMastered(selectedLevel);
+                    gameActive = false;
+                    document.getElementById('play-screen').classList.add('hidden');
+                    document.getElementById('end-screen').classList.remove('hidden');
+                    return;
+                }
+            }
+            currentQ = pool.pop();
+            document.getElementById('equation-display').innerText = `${currentQ.x} - ${currentQ.y} = ?`;
+            let answers;
+            if (currentQ.y >= 10) {
+                // classic slip: subtract only the ones digit (18−16 → 18−6 = 12) — offer it as a trap choice
+                const slip = currentQ.x - (currentQ.y % 10);
+                answers = [currentQ.ans, slip, currentQ.ans + (Math.random() < 0.5 ? 1 : -1)];
+            } else {
+                answers = [currentQ.ans, currentQ.ans + 1, currentQ.ans - 1];
+            }
+            answers = answers.sort(() => Math.random() - 0.5);
+            floatingObjects = answers.map((a, i) => ({
+                text: a,
+                baseX: 115 + (i * 185),
+                x: 115 + (i * 185),
+                y: 560,
+                r: 52,
+                speed: (1 + Math.random() * 2) * speedMultiplier * 200,
+                correct: a === currentQ.ans,
+                type: FRUIT_TYPES[Math.floor(Math.random() * FRUIT_TYPES.length)],
+                rot: (Math.random() - 0.5) * 0.4,
+                rotSpeed: (Math.random() - 0.5) * 0.02,
+                sway: Math.random() * Math.PI * 2
+            }));
+        }
+
+        // ---------- Fruit rendering ----------
+        function fruitColors(type) {
+            if (type === 'watermelon') return { skin: '#2e8b57', stripe: '#1f6b40', flesh: '#ff6b81' };
+            if (type === 'orange') return { skin: '#ff9f43', stripe: '#e67e22', flesh: '#ffbf69' };
+            return { skin: '#ff4757', stripe: '#c0392b', flesh: '#ff8a94' };
+        }
+
+        function drawFruit(o) {
+            ctx.save();
+            ctx.translate(o.x, o.y);
+            ctx.rotate(o.rot);
+            const c = fruitColors(o.type);
+            // body
+            ctx.fillStyle = c.skin;
+            ctx.beginPath(); ctx.arc(0, 0, o.r, 0, 7); ctx.fill();
+            // stripes / details
+            if (o.type === 'watermelon') {
+                ctx.strokeStyle = c.stripe; ctx.lineWidth = 5; ctx.lineCap = 'round';
+                for (let k = -1; k <= 1; k++) {
+                    ctx.beginPath(); ctx.arc(k * 20, 0, o.r - 10, -1.1, 1.1); ctx.stroke();
+                    ctx.beginPath(); ctx.arc(k * 20, 0, o.r - 10, Math.PI - 1.1, Math.PI + 1.1); ctx.stroke();
+                }
+            } else {
+                // leaf
+                ctx.fillStyle = '#2ecc71';
+                ctx.beginPath(); ctx.ellipse(11, -o.r + 2, 14, 8, -0.5, 0, 7); ctx.fill();
+                ctx.strokeStyle = c.stripe; ctx.lineWidth = 4;
+                ctx.beginPath(); ctx.moveTo(0, -o.r + 4); ctx.lineTo(2, -o.r - 5); ctx.stroke();
+            }
+            // glossy highlight
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.beginPath(); ctx.ellipse(-o.r * 0.35, -o.r * 0.4, o.r * 0.22, o.r * 0.13, -0.6, 0, 7); ctx.fill();
+            // number badge
+            ctx.fillStyle = 'rgba(255,255,255,0.95)';
+            ctx.beginPath(); ctx.arc(0, 4, 25, 0, 7); ctx.fill();
+            ctx.strokeStyle = 'rgba(0,0,0,0.15)'; ctx.lineWidth = 2; ctx.stroke();
+            ctx.fillStyle = '#2c3e50';
+            ctx.font = '800 32px "Baloo 2", Arial';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText(o.text, 0, 6);
+            ctx.restore();
+        }
+
+        function drawHalf(h) {
+            ctx.save();
+            ctx.translate(h.x, h.y);
+            ctx.rotate(h.rot);
+            const c = fruitColors(h.type);
+            ctx.globalAlpha = Math.max(h.life, 0);
+            // flesh
+            ctx.fillStyle = c.flesh;
+            ctx.beginPath();
+            if (h.side === 'left') ctx.arc(0, 0, h.r, Math.PI / 2, Math.PI * 1.5);
+            else ctx.arc(0, 0, h.r, -Math.PI / 2, Math.PI / 2);
+            ctx.closePath(); ctx.fill();
+            // rind
+            ctx.strokeStyle = c.skin; ctx.lineWidth = 6;
+            ctx.beginPath();
+            if (h.side === 'left') ctx.arc(0, 0, h.r - 2, Math.PI / 2, Math.PI * 1.5);
+            else ctx.arc(0, 0, h.r - 2, -Math.PI / 2, Math.PI / 2);
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        function drawDangerLine() {
+            ctx.save();
+            ctx.strokeStyle = 'rgba(231, 76, 60, 0.85)';
+            ctx.lineWidth = 3;
+            ctx.setLineDash([16, 10]);
+            ctx.shadowColor = '#e74c3c';
+            ctx.shadowBlur = 14;
+            ctx.beginPath(); ctx.moveTo(14, DANGER_Y); ctx.lineTo(586, DANGER_Y); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = '#e74c3c';
+            ctx.beginPath(); ctx.arc(14, DANGER_Y, 6, 0, 7); ctx.fill();
+            ctx.beginPath(); ctx.arc(586, DANGER_Y, 6, 0, 7); ctx.fill();
+            ctx.restore();
+        }
+
+        function drawBlade() {
+            if (blade.length < 2) return;
+            ctx.save();
+            ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+            ctx.shadowColor = 'rgba(140, 240, 255, 0.9)';
+            ctx.shadowBlur = 16;
+            for (let i = 1; i < blade.length; i++) {
+                const t = i / blade.length;
+                ctx.strokeStyle = `rgba(220, 250, 255, ${t * 0.95})`;
+                ctx.lineWidth = 2 + 9 * t;
+                ctx.beginPath();
+                ctx.moveTo(blade[i - 1].x, blade[i - 1].y);
+                ctx.lineTo(blade[i].x, blade[i].y);
+                ctx.stroke();
+            }
+            ctx.restore();
+        }
+
+        function animate() {
+            if (!gameActive) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            if (shakeFrames > 0) { ctx.translate((Math.random() - 0.5) * 20, (Math.random() - 0.5) * 20); shakeFrames--; }
+
+            ctx.drawImage(bgCanvas, 0, 0);
+            drawDangerLine();
+
+            // floating fruits
+            floatingObjects.forEach(obj => {
+                if (!isPaused) {
+                    obj.y -= obj.speed;
+                    obj.rot += obj.rotSpeed;
+                    obj.x = obj.baseX + Math.sin(obj.y * 0.02 + obj.sway) * 12;
+                }
+                drawFruit(obj);
+                if (!isPaused && obj.y < DANGER_Y) {
+                    synth.triggerAttackRelease("C2", "8n");
+                    incorrectQueue.push({ ...currentQ });
+                    isPaused = true; shakeFrames = 15;
+                    createParticles(obj.x, obj.y, 'wrong');
+                    popups.push({ x: obj.x, y: obj.y - obj.r - 10, text: '✗', color: '#e74c3c', life: 1, vy: -1.2, size: 54 });
+                    flash = { color: '231, 76, 60', alpha: 0.14 };
+                    floatingObjects = floatingObjects.filter(o => o !== obj);
+                    setTimeout(() => { isPaused = false; floatingObjects = []; spawnBoard(); }, 800);
+                }
+            });
+
+            // fruit halves
+            halves.forEach((h, i) => {
+                h.x += h.vx; h.y += h.vy; h.vy += 0.25; h.rot += h.rotSpeed; h.life -= 0.03;
+                if (h.life <= 0 || h.y > 640) halves.splice(i, 1);
+                else drawHalf(h);
+            });
+
+            // juice particles
+            particles.forEach((p, i) => {
+                p.x += p.vx; p.y += p.vy; p.life -= p.decay;
+                ctx.globalAlpha = Math.max(p.life, 0);
+                ctx.fillStyle = p.color;
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, 7); ctx.fill();
+                if (p.life <= 0) particles.splice(i, 1);
+            });
+            ctx.globalAlpha = 1.0;
+
+            // answer feedback effects: color flash, result ring, ✓/✗ popup
+            if (flash && flash.alpha > 0.01) {
+                ctx.fillStyle = `rgba(${flash.color}, ${flash.alpha})`;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                flash.alpha *= 0.88;
+            }
+            rings.forEach((r, i) => {
+                r.r += 7; r.life -= 0.04;
+                if (r.life <= 0) { rings.splice(i, 1); return; }
+                ctx.globalAlpha = Math.max(r.life, 0);
+                ctx.strokeStyle = r.color; ctx.lineWidth = 6 * r.life + 1;
+                ctx.beginPath(); ctx.arc(r.x, r.y, r.r, 0, 7); ctx.stroke();
+            });
+            ctx.globalAlpha = 1.0;
+            popups.forEach((t, i) => {
+                t.y += t.vy; t.life -= 0.02;
+                if (t.life <= 0) { popups.splice(i, 1); return; }
+                ctx.globalAlpha = Math.max(t.life, 0);
+                ctx.font = `800 ${t.size}px "Baloo 2", Arial`;
+                ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.lineWidth = 8; ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+                ctx.strokeText(t.text, t.x, t.y);
+                ctx.fillStyle = t.color;
+                ctx.fillText(t.text, t.x, t.y);
+            });
+            ctx.globalAlpha = 1.0;
+
+            drawBlade();
+            ctx.restore();
+            requestAnimationFrame(animate);
+        }
+
+        // ---------- Pointer input: tap + real slicing ----------
+        function canvasPos(e) {
+            const rect = canvas.getBoundingClientRect();
+            return {
+                x: (e.clientX - rect.left) * (canvas.width / rect.width),
+                y: (e.clientY - rect.top) * (canvas.height / rect.height)
+            };
+        }
+
+        function distToSegment(px, py, x1, y1, x2, y2) {
+            const dx = x2 - x1, dy = y2 - y1;
+            const len2 = dx * dx + dy * dy;
+            let t = len2 === 0 ? 0 : ((px - x1) * dx + (py - y1) * dy) / len2;
+            t = Math.max(0, Math.min(1, t));
+            const cx = x1 + t * dx, cy = y1 + t * dy;
+            return Math.hypot(px - cx, py - cy);
+        }
+
+        function sliceFruit(obj) {
+            if (Tone.context.state !== 'running') Tone.start();
+            noiseSynth.triggerAttackRelease("8n");
+            isPaused = true;
+            bladeSpent = true;
+            spawnHalves(obj);
+            floatingObjects = floatingObjects.filter(o => o !== obj);
+            if (obj.correct) {
+                synth.triggerAttackRelease("C5", "8n");
+                synth.triggerAttackRelease("G5", "8n", Tone.now() + 0.08);
+                createParticles(obj.x, obj.y, 'correct');
+                rings.push({ x: obj.x, y: obj.y, r: obj.r, life: 1, color: '#ffd54a' });
+                popups.push({ x: obj.x, y: obj.y - obj.r - 10, text: '✓', color: '#2ecc71', life: 1, vy: -1.6, size: 54 });
+                flash = { color: '255, 213, 74', alpha: 0.16 };
+                let slot = document.getElementById('slot-' + questionsAnswered);
+                if (slot) { slot.classList.remove('inactive'); slot.style.transform = 'scale(1.25)'; setTimeout(() => slot.style.transform = '', 250); }
+                questionsAnswered++;
+                setTimeout(() => { isPaused = false; floatingObjects = []; spawnBoard(); }, 600);
+            } else {
+                synth.triggerAttackRelease("C2", "8n");
+                incorrectQueue.push({ ...currentQ });
+                shakeFrames = 15;
+                createParticles(obj.x, obj.y, 'wrong');
+                popups.push({ x: obj.x, y: obj.y - obj.r - 10, text: '✗', color: '#e74c3c', life: 1, vy: -1.2, size: 54 });
+                flash = { color: '231, 76, 60', alpha: 0.14 };
+                setTimeout(() => { isPaused = false; floatingObjects = []; spawnBoard(); }, 800);
+            }
+        }
+
+        canvas.addEventListener('pointerdown', e => {
+            if (!gameActive || isPaused) return;
+            e.preventDefault();
+            canvas.setPointerCapture(e.pointerId);
+            bladeDown = true;
+            bladeSpent = false;
+            blade = [canvasPos(e)];
+            // tap hit-test
+            const p = blade[0];
+            for (const obj of floatingObjects) {
+                if (Math.hypot(p.x - obj.x, p.y - obj.y) < obj.r + 8) { sliceFruit(obj); break; }
+            }
+        });
+
+        canvas.addEventListener('pointermove', e => {
+            if (!bladeDown || bladeSpent || !gameActive || isPaused) return;
+            const p = canvasPos(e);
+            const prev = blade[blade.length - 1];
+            blade.push(p);
+            if (blade.length > 14) blade.shift();
+            // swoosh sound (throttled)
+            const now = performance.now();
+            if (now - lastSwoosh > 110 && Math.hypot(p.x - prev.x, p.y - prev.y) > 8) {
+                swooshSynth.triggerAttackRelease("32n");
+                lastSwoosh = now;
+            }
+            // slice hit-test along the swipe segment
+            for (const obj of floatingObjects) {
+                if (distToSegment(obj.x, obj.y, prev.x, prev.y, p.x, p.y) < obj.r + 6) { sliceFruit(obj); break; }
+            }
+        });
+
+        function endBlade() { bladeDown = false; bladeSpent = false; setTimeout(() => { if (!bladeDown) blade = []; }, 120); }
+        canvas.addEventListener('pointerup', endBlade);
+        canvas.addEventListener('pointercancel', endBlade);
+
+        canvas.width = 600; canvas.height = 600;
+    </script>
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>20以內退位減法（例如 13-5）是不少小朋友的絆腳石，關鍵策略是「破十法」：先由13減3到10，再減2，答案是8。另一個思路是「想加算減」：13-5，就是想「5加多少等於13」。Ninja Slice 用爽快的切割動作，讓這些必須的反覆練習變得不枯燥。</p>
+        <p class="pg-en">Borrowing subtraction within 20 (e.g. 13−5) trips up many children. The key strategy is "break ten": subtract 3 from 13 down to 10, then subtract 2 more to get 8. Another route is "think addition": 13−5 means "5 plus what makes 13?" The ninja's satisfying slicing turns these essential repetitions into fun.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>小朋友答錯了，就用實物跟他排一次：13粒豆拿走5粒，親眼看著整個過程。之後口頭重溫步驟：「先減3到10，再減2。」步驟說得多，就會內化成心算。</p>
+        <p class="pg-en">When your child gets one wrong, lay it out with real objects: 13 beans, take away 5, and watch the process together. Then retell the steps out loud: "first take 3 to reach 10, then take 2." Steps spoken often enough become mental maths.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>吃飯情境最實用：「碟子裡有12粒提子，吃了4粒，還有幾粒？」偶然換個問法：「5加多少才是13？」— 加減互逆的感覺，是學好減法的關鍵。</p>
+        <p class="pg-en">Mealtimes are perfect: "There are 12 grapes on the plate, we ate 4 — how many are left?" Occasionally flip the question: "5 plus what makes 13?" — feeling that addition and subtraction are inverses is the key to mastering subtraction.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

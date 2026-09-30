@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#4ecdc4">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Monster Math | 二十以內加法 · 進位加法 – MMathWorld</title>
+    <meta name="description" content="Monster Math 曲奇怪獸數學遊戲：二十以內加法 Addition within 20、二十以內進位加法 Carrying Addition。免費升小數學練習，邊玩邊學！Free addition practice up to 20.">
+    <link rel="canonical" href="https://mathgames.missman.world/monster_math">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Monster Math | 二十以內加法 · 進位加法 – MMathWorld">
+    <meta property="og:description" content="Monster Math 曲奇怪獸數學遊戲：二十以內加法 Addition within 20、二十以內進位加法 Carrying Addition。免費升小數學練習，邊玩邊學！Free addition practice up to 20.">
+    <meta property="og:url" content="https://mathgames.missman.world/monster_math">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Monster Math 曲奇怪獸加法 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Monster Math | 二十以內加法 · 進位加法 – MMathWorld">
+    <meta name="twitter:description" content="Monster Math 曲奇怪獸數學遊戲：二十以內加法 Addition within 20、二十以內進位加法 Carrying Addition。免費升小數學練習，邊玩邊學！Free addition practice up to 20.">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Monster Math",
+      "alternateName": "曲奇怪獸加法",
+      "url": "https://mathgames.missman.world/monster_math",
+      "description": "Monster Math 曲奇怪獸數學遊戲：二十以內加法 Addition within 20、二十以內進位加法 Carrying Addition。免費升小數學練習，邊玩邊學！Free addition practice up to 20.",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": [
+            "zh-Hant-HK",
+            "en"
+      ],
+      "genre": [
+            "Educational",
+            "Math"
+      ],
+      "gamePlatform": [
+            "Web Browser",
+            "Mobile Web"
+      ],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HKD"
+      },
+      "audience": {
+            "@type": "PeopleAudience",
+            "suggestedMinAge": 4,
+            "suggestedMaxAge": 7
+      },
+      "author": {
+            "@type": "Organization",
+            "name": "MMathWorld",
+            "url": "https://mathgames.missman.world/"
+      },
+      "learningResourceType": "Educational game",
+      "teaches": "二十以內加法及進位加法 Addition within 20 with carrying"
+}
+    </script>
+    <!-- Include Tone.js for synthesized sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4ecdc4;
+            --primary-dark: #45b7d1;
+            --secondary: #ff9f43;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --text-color: #3d3565;
+            --monster-color: #9b59b6;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Comic Sans MS', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            transition: background-color 0.3s;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+            overscroll-behavior: none;
+        }
+        button { touch-action: manipulation; }
+
+        /* Bakery sky underlay */
+        .bg-underlay {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background: linear-gradient(180deg, #ffe3f1 0%, #fff3e0 45%, #e8f9ff 100%);
+        }
+
+        /* Floating cookies in the background */
+        .bg-cookie {
+            position: fixed;
+            z-index: -1;
+            pointer-events: none;
+            user-select: none;
+            opacity: 0.5;
+            filter: blur(0.4px) drop-shadow(0 6px 6px rgba(0,0,0,0.08));
+            animation: cookie-float ease-in-out infinite;
+        }
+        @keyframes cookie-float {
+            0%, 100% { transform: translateY(0) rotate(-10deg); }
+            50% { transform: translateY(-26px) rotate(12deg); }
+        }
+
+        #game-container {
+            background-color: rgba(255, 255, 255, 0.96);
+            padding: 46px 36px 34px 36px;
+            border-radius: 34px;
+            box-shadow: 0 14px 0 rgba(155, 89, 182, 0.12), 0 26px 50px rgba(61, 53, 101, 0.18);
+            border: 5px solid #ffffff;
+            max-width: 560px;
+            width: 92%;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        /* Titles & Text */
+        .game-title {
+            color: var(--text-color);
+            font-size: 32px;
+            margin-top: 0;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+        h1 { color: #ff6b6b; margin-top: 0; font-size: 24px; }
+        .hidden { display: none !important; }
+
+        /* General Buttons */
+        .btn {
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            font-size: 24px;
+            border-radius: 16px;
+            cursor: pointer;
+            transition: transform 0.1s, background-color 0.2s, box-shadow 0.1s, filter 0.15s;
+            font-family: inherit;
+            font-weight: 800;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.15);
+        }
+        .btn:active {
+            transform: translateY(4px) !important;
+            box-shadow: 0 2px 0 transparent !important;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            box-shadow: 0 6px 0 #16a085;
+        }
+        .btn-primary:hover { background-color: var(--primary-dark); transform: translateY(-2px); }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            box-shadow: 0 6px 0 #d35400;
+        }
+        .btn-secondary:hover { filter: brightness(1.06); transform: translateY(-2px); }
+
+        /* Back Button */
+        #back-btn {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background-color: #e7ecff;
+            color: #4a5578;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 15px;
+            cursor: pointer;
+            font-weight: 800;
+            font-family: inherit;
+            box-shadow: 0 4px 0 #b9c2dd;
+            z-index: 20;
+            transition: transform 0.1s, box-shadow 0.1s;
+        }
+        #back-btn:hover { background-color: #d5ddf8; transform: translateY(-2px); }
+        #back-btn:active { transform: translateY(2px); box-shadow: 0 0 0 transparent; }
+
+        /* Setup Grid */
+        /* Sublevel picker (Level 0 style) */
+        .tag-pill {
+            display: inline-block;
+            font-size: 17px;
+            font-weight: 800;
+            color: #12736a;
+            background-color: #e0f7f3;
+            border: 3px solid #a9e5dc;
+            padding: 6px 18px;
+            border-radius: 999px;
+            margin-bottom: 16px;
+        }
+        .level-grid { display: flex; flex-direction: column; gap: 10px; margin: 12px auto 6px; max-width: 470px; }
+        .mini-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin: 12px auto 6px; max-width: 470px; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #f0fbf9; border: 3px solid #c8ece8; border-radius: 18px;
+            padding: 12px 16px; cursor: pointer; font-family: inherit;
+            box-shadow: 0 5px 0 #c8ece8;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #c8ece8; filter: brightness(1.02); }
+        .level-card:active { transform: translateY(2px); box-shadow: 0 2px 0 #c8ece8; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-color); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #4d8a83; }
+        .level-card.mini { flex-direction: column; gap: 4px; padding: 12px 6px; text-align: center; }
+        .level-card.mini .lv-emoji { font-size: 26px; }
+        .level-card.mini .lv-name { font-size: 20px; }
+        /* Keep the whole picker reachable on short phone screens */
+        #setup-screen { max-height: calc(100dvh - 110px); overflow-y: auto; }
+        @media (max-height: 720px) {
+            #setup-screen .game-title { font-size: 30px !important; }
+            #setup-screen .tag-pill { font-size: 15px; padding: 4px 14px; margin-bottom: 8px; }
+            .mini-grid { gap: 8px; margin: 8px auto 4px; }
+            .level-grid { gap: 8px; margin: 8px auto 4px; }
+            .level-card { padding: 10px 14px; }
+            .level-card .lv-emoji { font-size: 28px; }
+            .level-card.mini { padding: 8px 4px; }
+            .level-card.mini .lv-emoji { font-size: 22px; }
+            .level-card.mini .lv-name { font-size: 17px; }
+        }
+        @media (max-width: 450px) {
+            .mini-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+            #game-container { padding: 42px 18px 24px 18px; }
+        }
+
+        /* Top Bar: Progress & Combo */
+        #top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 26px;
+            margin-bottom: 14px;
+            min-height: 40px;
+            gap: 10px;
+        }
+        /* Cookie jar */
+        #cookie-display {
+            font-size: 21px;
+            text-align: left;
+            letter-spacing: 1px;
+            flex-grow: 0;
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            white-space: nowrap;
+            background: linear-gradient(180deg, rgba(210, 235, 255, 0.55), rgba(180, 220, 250, 0.35));
+            border: 3px solid rgba(160, 205, 245, 0.8);
+            border-radius: 18px;
+            padding: 4px 10px;
+            box-shadow: inset 0 3px 8px rgba(120, 170, 220, 0.25);
+        }
+        .cookie-unfed {
+            opacity: 0.3;
+            filter: grayscale(100%);
+        }
+        #cookie-display span { transition: transform 0.2s; }
+        #combo-display {
+            font-size: 19px;
+            font-weight: 800;
+            color: #e67e22;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.2s;
+            white-space: nowrap;
+        }
+        .fever-text {
+            color: #e74c3c !important;
+            animation: pop 0.5s infinite;
+            text-shadow: 0 0 10px #ffb8b8;
+        }
+
+        /* Monster Character */
+        #monster-container {
+            margin: 0 auto 14px auto;
+            width: 150px;
+            height: 158px;
+            position: relative;
+            animation: monster-bob 3.2s ease-in-out infinite;
+        }
+        @keyframes monster-bob {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
+        }
+        #monster-gfx {
+            width: 150px;
+            height: 150px;
+            background-color: var(--monster-color);
+            border-radius: 50% 50% 22% 22%;
+            position: relative;
+            box-shadow: inset -12px -12px 24px rgba(0,0,0,0.18), 0 10px 18px rgba(61, 53, 101, 0.18);
+            transition: background-color 0.3s;
+        }
+        /* Horns */
+        .horn {
+            position: absolute;
+            top: -16px;
+            width: 30px;
+            height: 34px;
+            background: linear-gradient(180deg, #ffeaa7, #fdcb6e);
+            border-radius: 50% 50% 30% 30%;
+            z-index: -1;
+        }
+        .horn.left { left: 22px; transform: rotate(-18deg); }
+        .horn.right { right: 22px; transform: rotate(18deg); }
+        /* Arms */
+        .arm {
+            position: absolute;
+            top: 82px;
+            width: 26px;
+            height: 44px;
+            background-color: #8a45a8;
+            border-radius: 14px;
+            box-shadow: inset -4px -4px 8px rgba(0,0,0,0.15);
+        }
+        .arm.left { left: -14px; transform: rotate(16deg); }
+        .arm.right { right: -14px; transform: rotate(-16deg); }
+        /* Belly */
+        .belly {
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 84px;
+            height: 62px;
+            background: rgba(255, 255, 255, 0.28);
+            border-radius: 50%;
+        }
+        /* Rosy cheeks */
+        .cheek {
+            position: absolute;
+            top: 78px;
+            width: 18px;
+            height: 12px;
+            background: rgba(255, 150, 180, 0.55);
+            border-radius: 50%;
+        }
+        .cheek.left { left: 16px; }
+        .cheek.right { right: 16px; }
+
+        .eye {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 40px;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
+            animation: blink 4.5s infinite;
+            transform-origin: center;
+        }
+        .eye::after {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: #222;
+            border-radius: 50%;
+            position: absolute;
+            top: 11px;
+            left: 11px;
+        }
+        @keyframes blink {
+            0%, 91%, 98%, 100% { transform: scaleY(1); }
+            94% { transform: scaleY(0.08); }
+        }
+        #eye-left { left: 30px; }
+        #eye-right { right: 30px; }
+
+        /* SVG Mouth for crisp rendering */
+        #mouth-svg {
+            position: absolute;
+            bottom: 16px;
+            left: 25px;
+        }
+
+        /* Game Screen */
+        #equation {
+            font-size: 52px;
+            font-weight: 800;
+            color: var(--text-color);
+            margin: 6px 0 22px 0;
+            text-shadow: 2px 2px 0px #ecf0f1;
+            letter-spacing: 1px;
+        }
+        #options-container {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .option-btn {
+            font-size: 36px;
+            padding: 18px 26px;
+            flex: 1;
+            border-radius: 22px;
+            position: relative;
+            overflow: hidden;
+        }
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            top: 6px; left: 10%; right: 10%;
+            height: 34%;
+            background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0));
+            border-radius: 999px;
+            pointer-events: none;
+        }
+
+        /* Timer Area */
+        #timer-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            height: 30px;
+        }
+        #timer-container {
+            width: 100%;
+            height: 16px;
+            background-color: #ecf0f1;
+            border-radius: 999px;
+            overflow: hidden;
+            flex-grow: 1;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.12);
+        }
+        /* Timer on/off toggle */
+        .tt-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 12px; }
+        .tt-text { font-size: 15px; font-weight: 800; color: #4d8a83; }
+        .tt-state { font-size: 14px; font-weight: 800; color: #4d8a83; min-width: 58px; text-align: left; }
+        .tt-switch { position: relative; width: 56px; height: 30px; border-radius: 999px; border: none; background: #cbd5e1; cursor: pointer; transition: background 0.2s; padding: 0; flex-shrink: 0; }
+        .tt-switch.on { background: #2ecc71; }
+        .tt-knob { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; transition: left 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.25); }
+        .tt-switch.on .tt-knob { left: 29px; }
+        #timer-bar {
+            height: 100%;
+            width: 100%;
+            background-color: var(--primary);
+            background-image: repeating-linear-gradient(45deg, rgba(255,255,255,0.35) 0 12px, rgba(255,255,255,0) 12px 24px);
+            background-size: 34px 34px;
+            animation: stripes-slide 1s linear infinite;
+            border-radius: 999px;
+            transition: width 0.05s linear, background-color 0.3s ease;
+        }
+        @keyframes stripes-slide {
+            from { background-position: 0 0; }
+            to { background-position: 34px 0; }
+        }
+        .flame { font-size: 28px; }
+
+        #feedback {
+            font-size: 27px;
+            margin-top: 14px;
+            font-weight: 800;
+            height: 34px;
+        }
+
+        /* End Screen */
+        #final-message {
+            font-size: 26px;
+            color: var(--text-color);
+            margin: 20px 0;
+            line-height: 1.4;
+            font-weight: 700;
+        }
+        .trophy-bounce { display: inline-block; animation: trophy-pop 1.4s cubic-bezier(0.34, 1.56, 0.64, 1) infinite; }
+        @keyframes trophy-pop {
+            0%, 100% { transform: scale(1) rotate(-6deg); }
+            50% { transform: scale(1.18) rotate(6deg); }
+        }
+
+        /* Confetti Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* Flying Cookie Animation */
+        .flying-cookie {
+            position: fixed;
+            font-size: 50px;
+            pointer-events: none;
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform: translate(-50%, -50%) scale(1) rotate(0deg);
+            opacity: 1;
+        }
+
+        /* Animations */
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px) rotate(-2deg); }
+            75% { transform: translateX(5px) rotate(2deg); }
+        }
+        @keyframes jump {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .anim-shake { animation: shake 0.3s ease-in-out; }
+        .anim-jump { animation: jump 0.4s ease-in-out; }
+        .shake-active { animation: shake 0.4s infinite; }
+
+        /* Boss Mode (Final Question) */
+        .boss-mode {
+            background-color: #2c3e50 !important;
+            border-color: #1a252f !important;
+        }
+        .boss-mode .game-title, .boss-mode #equation {
+            color: white !important;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        /* Small-height screens (laptops/tablets landscape) */
+        @media (max-height: 720px) {
+            #monster-container { transform: scale(0.82); margin-bottom: 2px; margin-top: -12px; }
+            #equation { font-size: 42px; margin: 2px 0 14px 0; }
+            .option-btn { font-size: 30px; padding: 12px 18px; }
+            #feedback { margin-top: 8px; font-size: 22px; height: 28px; }
+            #game-container { padding-top: 40px; }
+            #top-bar { margin-top: 26px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="bg-underlay"></div>
+
+<!-- Floating background treats -->
+<div class="bg-cookie" style="font-size: 54px; top: 12%; left: 6%; animation-duration: 5s;">🍪</div>
+<div class="bg-cookie" style="font-size: 40px; top: 70%; left: 10%; animation-duration: 6.5s; animation-delay: -2s;">🥛</div>
+<div class="bg-cookie" style="font-size: 48px; top: 18%; right: 8%; animation-duration: 5.6s; animation-delay: -1s;">🧁</div>
+<div class="bg-cookie" style="font-size: 42px; top: 66%; right: 12%; animation-duration: 7s; animation-delay: -3s;">🍩</div>
+
+<!-- Confetti overlay -->
+<canvas id="confetti-canvas"></canvas>
+
+<div id="game-container">
+
+    <!-- INTRO SCREEN -->
+    <div id="intro-screen">
+        <div style="font-size: 80px; margin-bottom: 10px; animation: jump 2s infinite;">👾</div>
+        <h1 class="game-title" style="font-size: 38px; margin-bottom: 10px; color: var(--primary); text-transform: none;">Monster Math</h1>
+        <div style="font-size: 18px; color: #d35400; font-weight: 800; margin-bottom: 40px; background-color: #ffeaa7; display: inline-block; padding: 6px 18px; border-radius: 999px; border: 3px solid #fdcb6e;">10以內加法 + 20以內進位加法</div>
+        <br>
+        <button class="btn btn-primary" onclick="showSetup()" style="font-size: 28px; padding: 15px 54px; box-shadow: 0 6px 0 #16a085; border-radius: 50px; animation: pop 2s infinite;">Play!</button>
+        <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+    </div>
+
+    <!-- BACK BUTTON -->
+    <button id="back-btn" onclick="goBack()">&#8592; Home</button>
+
+    <!-- SETUP SCREEN: Choose y -->
+    <div id="setup-screen" class="hidden">
+        <div class="game-title" style="font-size: 40px; color: var(--monster-color); text-transform: none; text-shadow: 2px 2px 0px #ecf0f1;">Feed the Beast!</div>
+        <div class="tt-row">
+            <span class="tt-text">⏱️ 計時器 Timer</span>
+            <button class="tt-switch on" id="timer-switch" onclick="toggleTimer()" aria-label="Timer on or off"><span class="tt-knob"></span></button>
+            <span class="tt-state" id="timer-state">開 ON</span>
+        </div>
+        <div class="tag-pill">Pick a cookie plate 選擇關卡：🍪</div>
+        <div class="mini-grid">
+            <button class="level-card mini" id="level-btn-1" onclick="startGame(1)"><span class="lv-emoji">🍪</span><span class="lv-name">+1</span></button>
+            <button class="level-card mini" id="level-btn-2" onclick="startGame(2)"><span class="lv-emoji">🍪</span><span class="lv-name">+2</span></button>
+            <button class="level-card mini" id="level-btn-3" onclick="startGame(3)"><span class="lv-emoji">🍪</span><span class="lv-name">+3</span></button>
+            <button class="level-card mini" id="level-btn-4" onclick="startGame(4)"><span class="lv-emoji">🍪</span><span class="lv-name">+4</span></button>
+            <button class="level-card mini" id="level-btn-5" onclick="startGame(5)"><span class="lv-emoji">🍪</span><span class="lv-name">+5</span></button>
+            <button class="level-card mini" id="level-btn-6" onclick="startGame(6)"><span class="lv-emoji">🍪</span><span class="lv-name">+6</span></button>
+            <button class="level-card mini" id="level-btn-7" onclick="startGame(7)"><span class="lv-emoji">🍪</span><span class="lv-name">+7</span></button>
+            <button class="level-card mini" id="level-btn-8" onclick="startGame(8)"><span class="lv-emoji">🍪</span><span class="lv-name">+8</span></button>
+            <button class="level-card mini" id="level-btn-9" onclick="startGame(9)"><span class="lv-emoji">🍪</span><span class="lv-name">+9</span></button>
+            <button class="level-card mini" id="level-btn-10" onclick="startGame(10)"><span class="lv-emoji">🍪</span><span class="lv-name">+10</span></button>
+        </div>
+        <div class="level-grid">
+            <button class="level-card" id="level-btn-challenge" onclick="startGame('challenge')">
+                <span class="lv-emoji">⭐</span>
+                <span><span class="lv-name">Challenge Mode 挑戰模式</span><br><span class="lv-sub">全部20以內加法 All sums within 20</span></span>
+            </button>
+            <button class="level-card" id="level-btn-bigsums" onclick="startGame('bigsums')">
+                <span class="lv-emoji">💥</span>
+                <span><span class="lv-name">Big Sums Mode 進位加法</span><br><span class="lv-sub">只有進位加法 Carrying only</span></span>
+            </button>
+        </div>
+    </div>
+
+    <!-- PLAY SCREEN: The actual questions -->
+    <div id="play-screen" class="hidden">
+
+        <div id="top-bar">
+            <div id="cookie-display"></div>
+            <div id="combo-display">COMBO x2! 🔥</div>
+        </div>
+
+        <div id="monster-container">
+            <div id="monster-gfx">
+                <div class="horn left"></div>
+                <div class="horn right"></div>
+                <div class="arm left"></div>
+                <div class="arm right"></div>
+                <div class="belly"></div>
+                <div class="cheek left"></div>
+                <div class="cheek right"></div>
+                <div class="eye" id="eye-left"></div>
+                <div class="eye" id="eye-right"></div>
+                <svg id="mouth-svg" width="100" height="100">
+                    <path id="monster-mouth" d="M 35 60 Q 50 70 65 60" stroke="#2c3e50" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </div>
+
+        <div id="equation">? + ? = ?</div>
+
+        <div id="options-container">
+            <button class="btn btn-secondary option-btn" onclick="checkAnswer(0)"></button>
+            <button class="btn btn-secondary option-btn" onclick="checkAnswer(1)"></button>
+            <button class="btn btn-secondary option-btn" onclick="checkAnswer(2)"></button>
+        </div>
+
+        <div id="timer-area">
+            <span class="flame hidden">🔥</span>
+            <div id="timer-container">
+                <div id="timer-bar"></div>
+            </div>
+            <span class="flame hidden">🔥</span>
+        </div>
+
+        <div id="feedback"></div>
+    </div>
+
+    <!-- END SCREEN: Results & Correction Loop -->
+    <div id="end-screen" class="hidden">
+        <div style="font-size: 60px; margin: 10px 0;"><span class="trophy-bounce">🏆</span></div>
+        <h2 id="end-title" style="font-size: 36px;">All done!</h2>
+        <div id="final-message"></div>
+        <button id="action-btn" class="btn btn-primary" style="margin-top: 20px; font-size: 24px; padding: 15px 30px; border-radius: 999px;"></button>
+    </div>
+
+</div>
+
+<script>
+    // Game Variables
+    let currentQuestion = {x: 0, y: 0};
+    let questionPool = [];
+    let mistakes = [];
+    let currentOptions = [];
+    let isTransitioning = false;
+    let isCorrectionRound = false;
+    let comboCount = 0;
+    let cookiesFed = 0;
+    let totalQuestions = 10;
+    let isChallengeMode = false;
+    let activeLevelId = null;
+    let isBossMode = false;
+    let isFeverMode = false;
+
+    // Timer Variables
+    let timerInterval;
+    const timeLimit = 30000; // 30 seconds per question
+    let timeLeft = timeLimit;
+
+    // DOM Elements
+    const setupScreen = document.getElementById('setup-screen');
+    const playScreen = document.getElementById('play-screen');
+    const endScreen = document.getElementById('end-screen');
+    const introScreen = document.getElementById('intro-screen');
+    const backBtn = document.getElementById('back-btn');
+    const equationDisplay = document.getElementById('equation');
+    const optionButtons = document.querySelectorAll('.option-btn');
+    const feedbackDisplay = document.getElementById('feedback');
+    const actionBtn = document.getElementById('action-btn');
+    const cookieDisplay = document.getElementById('cookie-display');
+    const comboDisplay = document.getElementById('combo-display');
+
+    // Timer Elements
+    const timerArea = document.getElementById('timer-area');
+    const timerBar = document.getElementById('timer-bar');
+    const flames = document.querySelectorAll('.flame');
+
+    // Monster Animation Elements
+    const monsterGfx = document.getElementById('monster-gfx');
+    const monsterMouth = document.getElementById('monster-mouth');
+    const gameContainer = document.getElementById('game-container');
+
+    // Audio setup (Tone.js)
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const noiseSynth = new Tone.NoiseSynth({
+        noise: { type: 'pink' },
+        envelope: { attack: 0.005, decay: 0.1, sustain: 0 }
+    }).toDestination();
+    let audioContextStarted = false;
+
+    // Smart Back Button Logic
+    function goBack() {
+        if (!playScreen.classList.contains('hidden')) {
+            resetMenu(); // Go back to level select from game
+        } else if (!setupScreen.classList.contains('hidden')) {
+            // Go back to intro from level select
+            setupScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+            backBtn.innerText = '← Home';
+        } else if (!introScreen.classList.contains('hidden')) {
+            // Exit game to index.html
+            window.location.href = 'index.html';
+        }
+    }
+
+    // Transition from Intro to Setup
+    function showSetup() {
+        if (!audioContextStarted) {
+            Tone.start();
+            audioContextStarted = true;
+        }
+        introScreen.classList.add('hidden');
+        setupScreen.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+    }
+
+    // ---- Helper Functions ----
+
+    function playSound(type) {
+        if (!audioContextStarted) return;
+        const now = Tone.now();
+        if (type === 'correct') {
+            if (isFeverMode) {
+                synth.triggerAttackRelease(["E5", "G5"], "8n", now);
+                synth.triggerAttackRelease("C6", "8n", now + 0.1);
+            } else {
+                synth.triggerAttackRelease(["C5", "E5"], "8n", now);
+                synth.triggerAttackRelease("G5", "8n", now + 0.1);
+            }
+        } else if (type === 'wrong') {
+            synth.triggerAttackRelease("C3", "4n", now);
+            synth.triggerAttackRelease("G2", "4n", now + 0.15);
+        } else if (type === 'grunt') {
+            synth.triggerAttackRelease("D2", "16n", now);
+            synth.triggerAttackRelease("A1", "8n", now + 0.1);
+        } else if (type === 'crunch') {
+            noiseSynth.triggerAttackRelease("16n", now);
+            synth.triggerAttackRelease("C4", "32n", now);
+        } else if (type === 'tick') {
+            noiseSynth.triggerAttackRelease("32n", now);
+        }
+    }
+
+    function fireConfetti(x, y, multiplier = 1) {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const particles = [];
+        const colors = ['#f1c40f', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6'];
+        const amount = 30 * multiplier;
+
+        for (let i = 0; i < amount; i++) {
+            particles.push({
+                x: x, y: y,
+                vx: (Math.random() - 0.5) * 15 * (multiplier > 1 ? 1.5 : 1),
+                vy: (Math.random() - 1) * 15 * (multiplier > 1 ? 1.5 : 1),
+                size: Math.random() * 8 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rot: Math.random() * 360, rotSpeed: (Math.random() - 0.5) * 20
+            });
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let active = false;
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy; p.vy += 0.5; p.rot += p.rotSpeed;
+                if (p.y < canvas.height) {
+                    active = true;
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot * Math.PI / 180);
+                    ctx.fillStyle = p.color;
+                    ctx.fillRect(-p.size/2, -p.size/2, p.size, p.size);
+                    ctx.restore();
+                }
+            });
+            if (active) requestAnimationFrame(animate);
+            else ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+        animate();
+    }
+
+    function setMonsterEmotion(emotion) {
+        if (emotion === 'idle') { monsterMouth.setAttribute('d', 'M 35 60 Q 50 70 65 60'); monsterMouth.setAttribute('fill', 'none'); }
+        else if (emotion === 'open') { monsterMouth.setAttribute('d', 'M 30 55 Q 50 85 70 55 Z'); monsterMouth.setAttribute('fill', '#2c3e50'); }
+        else if (emotion === 'chew') {
+            monsterMouth.setAttribute('d', 'M 35 60 Q 50 75 65 60'); monsterMouth.setAttribute('fill', 'none');
+            monsterGfx.classList.remove('anim-jump'); void monsterGfx.offsetWidth; monsterGfx.classList.add('anim-jump');
+        } else if (emotion === 'angry') { monsterMouth.setAttribute('d', 'M 35 70 Q 50 60 65 70'); monsterMouth.setAttribute('fill', 'none'); }
+        else if (emotion === 'sad') { monsterMouth.setAttribute('d', 'M 35 70 Q 42 65 50 70 T 65 70'); monsterMouth.setAttribute('fill', 'none'); }
+    }
+
+    function setBossMode(active) {
+        isBossMode = active;
+        if (active) { gameContainer.classList.add('boss-mode'); monsterGfx.style.backgroundColor = "#e74c3c"; setMonsterEmotion('angry'); }
+        else { gameContainer.classList.remove('boss-mode'); monsterGfx.style.backgroundColor = "var(--monster-color)"; }
+    }
+
+    function updateCombo() {
+        if (comboCount >= 5) {
+            if (!isFeverMode) { isFeverMode = true; comboDisplay.classList.add('fever-text'); }
+            comboDisplay.style.opacity = 1; comboDisplay.innerText = `FEVER MODE x${comboCount}! 🔥🔥`;
+            comboDisplay.classList.remove('anim-jump'); void comboDisplay.offsetWidth; comboDisplay.classList.add('anim-jump');
+        } else {
+            if (isFeverMode) { isFeverMode = false; comboDisplay.classList.remove('fever-text'); }
+            if (comboCount >= 2) {
+                comboDisplay.style.opacity = 1; comboDisplay.innerText = `COMBO x${comboCount}! 🔥`;
+                comboDisplay.classList.remove('anim-jump'); void comboDisplay.offsetWidth; comboDisplay.classList.add('anim-jump');
+            } else comboDisplay.style.opacity = 0;
+        }
+    }
+
+    function updateProgress() {
+        cookieDisplay.innerHTML = "";
+        for (let i = 0; i < totalQuestions; i++) {
+            const span = document.createElement('span');
+            span.innerText = "🍪";
+            if (i >= cookiesFed) span.className = "cookie-unfed";
+            cookieDisplay.appendChild(span);
+        }
+    }
+
+    // --- LOOP ---
+    function startGame(level) {
+        if (!audioContextStarted) { Tone.start(); audioContextStarted = true; }
+        activeLevelId = level; mistakes = []; isCorrectionRound = false; isTransitioning = false;
+        comboCount = 0; cookiesFed = 0; isFeverMode = false;
+        comboDisplay.classList.remove('fever-text');
+
+        questionPool = [];
+        if (level === 'challenge' || level === 'bigsums') {
+            isChallengeMode = true; totalQuestions = 10;
+            let allCombos = [];
+            for(let x = 0; x <= 10; x++) {
+                for(let y = 1; y <= 10; y++) {
+                    if (level === 'challenge' || (level === 'bigsums' && x + y > 10)) allCombos.push({x: x, y: y});
+                }
+            }
+            allCombos.sort(() => Math.random() - 0.5); questionPool = allCombos.slice(0, totalQuestions);
+        } else {
+            isChallengeMode = false; totalQuestions = 10;
+            let allCombos = [];
+            for(let x = 0; x <= 10; x++) allCombos.push({x: x, y: level});
+            allCombos.sort(() => Math.random() - 0.5);
+            questionPool = allCombos.slice(0, totalQuestions);
+        }
+        updateCombo(); updateProgress();
+        setupScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+        playScreen.classList.remove('hidden'); backBtn.classList.remove('hidden');
+        setBossMode(false); feedbackDisplay.innerText = ""; nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (questionPool.length === 0) { handleRoundEnd(); return; }
+        if (questionPool.length === 1 && !isCorrectionRound && mistakes.length === 0) setBossMode(true);
+        else setBossMode(false);
+        setMonsterEmotion('idle');
+        currentQuestion = questionPool.pop();
+        const ans = currentQuestion.x + currentQuestion.y;
+        equationDisplay.innerText = `${currentQuestion.x} + ${currentQuestion.y} = ?`;
+        let options = [ans];
+        while (options.length < 3) {
+            let decoy = ans + (Math.floor(Math.random() * 7) - 3);
+            if (decoy >= 0 && !options.includes(decoy)) options.push(decoy);
+        }
+        options.sort(() => Math.random() - 0.5); currentOptions = options;
+        for (let i = 0; i < 3; i++) {
+            optionButtons[i].innerText = options[i];
+            optionButtons[i].style.backgroundColor = "var(--secondary)";
+            optionButtons[i].style.boxShadow = "0 6px 0 #d35400";
+            optionButtons[i].style.opacity = "1";
+        }
+        isTransitioning = false; startTimer();
+    }
+
+    // ---- Timer on/off toggle (shared preference across games) ----
+    let timerEnabled = true; // timer is ON by default on every visit
+    function toggleTimer() {
+        timerEnabled = !timerEnabled;
+        updateTimerToggle();
+    }
+    function updateTimerToggle() {
+        const sw = document.getElementById('timer-switch');
+        const st = document.getElementById('timer-state');
+        if (!sw || !st) return;
+        sw.classList.toggle('on', timerEnabled);
+        st.innerText = timerEnabled ? '開 ON' : '關 OFF';
+    }
+    updateTimerToggle();
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        if (!timerEnabled) { timerArea.style.visibility = 'hidden'; return; }
+        timerArea.style.visibility = 'visible';
+        timeLeft = timeLimit;
+        timerBar.style.width = '100%';
+        timerBar.style.backgroundColor = 'var(--primary)';
+        timerArea.classList.remove('shake-active');
+        flames.forEach(f => f.classList.add('hidden'));
+
+        timerInterval = setInterval(() => {
+            timeLeft -= 50;
+            timerBar.style.width = (timeLeft / timeLimit * 100) + '%';
+            if (timeLeft <= 3000 && timeLeft % 1000 === 0) playSound('tick');
+            if (timeLeft <= 3000) {
+                timerBar.style.backgroundColor = 'var(--danger)';
+                timerArea.classList.add('shake-active');
+                flames.forEach(f => f.classList.remove('hidden'));
+            }
+            if (timeLeft <= 0) { clearInterval(timerInterval); handleTimeout(); }
+        }, 50);
+    }
+
+    function handleTimeout() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        comboCount = 0; updateCombo();
+        timerArea.classList.remove('shake-active');
+        playSound('grunt'); setMonsterEmotion('angry');
+        feedbackDisplay.style.color = isBossMode ? "#ff6b6b" : "var(--danger)";
+        feedbackDisplay.innerText = "Too slow! 🕒";
+        mistakes.push(currentQuestion);
+        highlightCorrect(currentQuestion.x + currentQuestion.y);
+        setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 1500);
+    }
+
+    function checkAnswer(idx) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        clearInterval(timerInterval);
+        timerArea.classList.remove('shake-active');
+        if (currentOptions[idx] === (currentQuestion.x + currentQuestion.y)) handleCorrect(optionButtons[idx]);
+        else handleWrong(optionButtons[idx], currentQuestion.x + currentQuestion.y);
+    }
+
+    function handleCorrect(btn) {
+        playSound('correct'); setMonsterEmotion('open');
+        btn.style.backgroundColor = "var(--success)"; btn.style.boxShadow = "0 6px 0 #27ae60";
+
+        const cookie = document.createElement('div');
+        cookie.className = 'flying-cookie'; cookie.innerText = '🍪';
+        const b = btn.getBoundingClientRect();
+        cookie.style.left = (b.left + b.width/2) + 'px'; cookie.style.top = (b.top + b.height/2) + 'px';
+        document.body.appendChild(cookie);
+
+        const m = monsterMouth.getBoundingClientRect();
+        void cookie.offsetWidth;
+        cookie.style.left = (m.left + m.width/2) + 'px'; cookie.style.top = (m.top + m.height/2) + 'px';
+        cookie.style.transform = 'translate(-50%, -50%) scale(0.2) rotate(360deg)'; cookie.style.opacity = '0';
+
+        setTimeout(() => {
+            if (cookie.parentNode) cookie.parentNode.removeChild(cookie);
+            setMonsterEmotion('chew'); playSound('crunch');
+            comboCount++; cookiesFed++;
+            updateProgress(); updateCombo();
+            fireConfetti(m.left + m.width/2, m.top + m.height/2, isFeverMode ? 2 : 1);
+            feedbackDisplay.style.color = isBossMode ? "#2ecc71" : "var(--success)";
+            feedbackDisplay.innerText = isFeverMode ? "UNSTOPPABLE! 🚀" : "Yum!";
+            setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 1100);
+        }, 400);
+    }
+
+    function handleWrong(btn, ans) {
+        playSound('grunt'); setMonsterEmotion('sad'); comboCount = 0; updateCombo();
+        btn.style.backgroundColor = "var(--danger)"; btn.style.boxShadow = "0 6px 0 #c0392b";
+        btn.classList.add('anim-shake');
+        setTimeout(() => btn.classList.remove('anim-shake'), 400);
+        feedbackDisplay.style.color = isBossMode ? "#ff6b6b" : "var(--danger)";
+        feedbackDisplay.innerText = `Blegh! It was ${ans}`;
+        mistakes.push(currentQuestion);
+        highlightCorrect(ans);
+        setTimeout(() => { feedbackDisplay.innerText = ""; nextQuestion(); }, 1500);
+    }
+
+    function highlightCorrect(ans) {
+        for (let i = 0; i < 3; i++) {
+            if (currentOptions[i] === ans) {
+                optionButtons[i].style.backgroundColor = "var(--success)";
+                optionButtons[i].style.boxShadow = "0 6px 0 #27ae60";
+            } else {
+                optionButtons[i].style.backgroundColor = "var(--danger)";
+                optionButtons[i].style.boxShadow = "0 6px 0 #c0392b";
+                optionButtons[i].style.opacity = "0.5";
+            }
+        }
+    }
+
+    function handleRoundEnd() {
+        playScreen.classList.add('hidden'); endScreen.classList.remove('hidden'); backBtn.classList.add('hidden');
+        if (mistakes.length === 0) {
+            playSound('correct');
+            try { localStorage.setItem(`monster_l${activeLevelId}_complete`, '1'); } catch (e) {}
+            markLevelComplete(activeLevelId);
+            document.getElementById('end-title').innerText = "Level Complete!";
+            document.getElementById('final-message').innerText = "Perfect Score!";
+            actionBtn.innerText = "Back to Menu"; actionBtn.onclick = resetMenu;
+        } else {
+            document.getElementById('end-title').innerText = "Almost there!";
+            document.getElementById('final-message').innerText = `Fix ${mistakes.length} mistakes!`;
+            actionBtn.innerText = "Review Mistakes"; actionBtn.onclick = startCorrectionRound;
+        }
+    }
+
+    function startCorrectionRound() {
+        isCorrectionRound = true; questionPool = [...mistakes]; questionPool.sort(() => Math.random() - 0.5);
+        totalQuestions = questionPool.length; cookiesFed = 0; updateProgress(); mistakes = [];
+        endScreen.classList.add('hidden'); playScreen.classList.remove('hidden'); backBtn.classList.remove('hidden');
+        nextQuestion();
+    }
+
+    function resetMenu() {
+        clearInterval(timerInterval);
+        endScreen.classList.add('hidden'); playScreen.classList.add('hidden'); setupScreen.classList.remove('hidden');
+        backBtn.classList.remove('hidden'); backBtn.innerText = '← Back';
+    }
+
+    function markLevelComplete(id) {
+        const btn = document.getElementById(`level-btn-${id}`);
+        if (!btn) return;
+        const name = btn.querySelector('.lv-name');
+        if (name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+    }
+    // Restore trophies on load
+    ['1','2','3','4','5','6','7','8','9','10','challenge','bigsums'].forEach(id => {
+        try { if (localStorage.getItem(`monster_l${id}_complete`) === '1') markLevelComplete(id); } catch (e) {}
+    });
+</script>
+
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>20以內進位加法是小一數學的第一道大關，核心技巧是「湊十法」：例如 8+5，先把5拆成2+3，8+2湊成10，再加3等於13。遊戲用餵飽曲奇怪獸的情境，讓小朋友在不知不覺間反覆練習這個心算策略 — 這正是小一面試與日常課業最常見的題型。</p>
+        <p class="pg-en">Carrying addition within 20 is the first big hurdle of Primary One maths, and the key strategy is "make ten": for 8+5, split 5 into 2+3, make 10 with 8+2, then add 3 to get 13. Feeding the cookie monster turns this essential drill into play — and it is one of the most common question types in Primary One interviews and schoolwork.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>問小朋友：「8加5，可不可以先湊到10？」引導他說出「8+2=10，10+3=13」的完整思路。如果他還在逐隻手指數，不要緊 — 可以畫一個十格框（ten frame）讓他看著擺，視覺化之後，策略自然記牢。</p>
+        <p class="pg-en">Ask: "For 8+5, can we make 10 first?" Guide your child to say the full thinking: "8+2=10, 10+3=13." If they are still counting finger by finger, that's fine — draw a ten frame for them to place items on. Once they can see it, the strategy sticks.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>用積木或硬幣玩「湊十」：拿出8粒，問要加多少粒才夠10？熟練之後，見到9就想到1、見到8就想到2 — 這種直覺是所有進位加法的基礎。</p>
+        <p class="pg-en">Play "make ten" with blocks or coins: take out 8 and ask how many more make 10. Once fluent, seeing 9 reminds them of 1 and seeing 8 reminds them of 2 — this instinct underpins all carrying addition.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

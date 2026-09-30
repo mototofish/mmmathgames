@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#4f46e5">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Logic Puzzles 邏輯小偵探 | 排除法 · 排名 · 配對推理 – MMathWorld</title>
+    <meta name="description" content="Logic Puzzles 邏輯小偵探遊戲：讀懂線索，一步一步推理！排除法找去處、賽跑排名、顏色圖案配對、比較輕重高矮 — 四款經典邏輯題，訓練小一面試必備推理力！Classic logic puzzles for kids: elimination, ranking, matching and comparison. Free math logic game! 免費升小數學遊戲！">
+    <link rel="canonical" href="https://mathgames.missman.world/logic_puzzles">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Logic Puzzles 邏輯小偵探 | 排除法 · 排名 · 配對推理 – MMathWorld">
+    <meta property="og:description" content="Logic Puzzles 邏輯小偵探遊戲：讀懂線索，一步一步推理！排除法、排名、配對、比較 — 四款經典邏輯題！Classic logic puzzles for kids — free math game! 免費升小數學遊戲！">
+    <meta property="og:url" content="https://mathgames.missman.world/logic_puzzles">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Logic Puzzles 邏輯小偵探 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Logic Puzzles 邏輯小偵探 | 排除法 · 排名 – MMathWorld">
+    <meta name="twitter:description" content="Logic Puzzles 邏輯小偵探遊戲：讀懂線索，一步一步推理！排除法、排名、配對、比較 — 四款經典邏輯題！">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Logic Puzzles",
+      "alternateName": "邏輯小偵探",
+      "url": "https://mathgames.missman.world/logic_puzzles",
+      "description": "Logic Puzzles 邏輯小偵探遊戲：讀懂線索，一步一步推理。四款經典邏輯題：排除法（誰去了哪裡）、賽跑排名（第幾名是誰）、顏色圖案配對（最喜歡的是什麼圖案）、比較排序（誰最重最輕），訓練演繹推理與邏輯思維。",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": ["zh-Hant-HK", "en"],
+      "genre": ["Educational", "Math", "Logic"],
+      "gamePlatform": ["Web Browser", "Mobile Web"],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "HKD" },
+      "audience": { "@type": "PeopleAudience", "suggestedMinAge": 4, "suggestedMaxAge": 8 },
+      "author": { "@type": "Organization", "name": "MMathWorld", "url": "https://mathgames.missman.world/" },
+      "learningResourceType": "Educational game",
+      "teaches": "演繹推理、排除法、排序、一一對應配對、遞移比較 Deductive reasoning, elimination, ordering, one-to-one matching, transitive comparison"
+    }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%234f46e5'/%3E%3Ctext x='24' y='34' font-size='26' text-anchor='middle'%3E🔍%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        :root {
+            --ind: #4f46e5; --ind-dark: #3730a3;
+            --gold: #f0b429; --gold-dark: #c97b12;
+            --cream: #fffdf8; --danger: #e74c3c; --success: #2ecc71;
+            --text-main: #2b2a55; --text-muted: #8b93b8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body {
+            min-height: 100vh; min-height: 100dvh;
+            background: linear-gradient(180deg, #dbe4ff 0%, #eef1fe 45%, #fff8ec 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: safe center;
+            padding: 14px; overflow-x: hidden; touch-action: manipulation;
+        }
+        .hidden { display: none !important; }
+        .deco { position: fixed; pointer-events: none; opacity: 0.5; z-index: 0; }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+        #back-btn {
+            position: fixed; top: 12px; left: 12px; z-index: 60;
+            background: #ffffff; border: 3px solid #c7d0f8; color: #3730a3;
+            font-size: 15px; font-weight: 800; border-radius: 999px; padding: 7px 16px;
+            cursor: pointer; box-shadow: 0 3px 0 #c7d0f8; transition: transform 0.12s;
+        }
+        #back-btn:hover { transform: translateY(-2px); }
+
+        #game-container {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: var(--cream); border: 5px solid #6366f1; border-radius: 28px;
+            box-shadow: 0 10px 0 #3730a3, 0 22px 40px rgba(40, 35, 110, 0.22);
+            padding: 20px 22px 24px; text-align: center;
+            max-height: calc(100dvh - 28px); overflow-y: auto;
+        }
+
+        .mascot-big { font-size: 64px; animation: bob 2.6s infinite ease-in-out; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.18)); }
+        .game-title { font-size: 36px; font-weight: 900; color: var(--ind-dark); margin: 4px 0 8px; }
+        .tag-pill {
+            display: inline-block; background: #e6e9fe; color: var(--ind-dark);
+            border: 3px solid #c9d1fb; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 6px 0 12px;
+        }
+        #trophy-pill {
+            display: inline-block; background: linear-gradient(145deg, #fff3c4, #ffe082);
+            border: 3px solid #f0c93f; color: #9c6500; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 4px 0 8px;
+        }
+        .intro-desc { font-size: 16px; font-weight: 700; color: #4f5a6e; line-height: 1.55; max-width: 560px; margin: 0 auto 16px; }
+        .intro-desc .en { font-size: 13.5px; color: #9aa3b8; }
+
+        .btn {
+            background: linear-gradient(145deg, #818cf8, #4f46e5); color: #fff;
+            border: none; border-radius: 999px; font-size: 20px; font-weight: 800;
+            padding: 13px 36px; cursor: pointer; box-shadow: 0 5px 0 var(--ind-dark);
+            transition: transform 0.12s, box-shadow 0.12s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--ind-dark); }
+        .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn-secondary { background: linear-gradient(145deg, #ffd88a, #ffb84d); box-shadow: 0 5px 0 #d97706; font-size: 16px; padding: 11px 24px; }
+        .btn-secondary:active { box-shadow: 0 2px 0 #d97706; }
+
+        #lock-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+        #lock-input {
+            font-family: inherit; font-size: 18px; font-weight: 700; padding: 12px 18px; width: 220px;
+            border: 3px solid #c9d1fb; border-radius: 999px; outline: none; text-align: center; color: var(--text-main);
+        }
+        #lock-input:focus { border-color: var(--ind); }
+        #lock-input.error { border-color: var(--danger); animation: deny 0.35s; }
+        #unlock-btn { background: var(--ind); box-shadow: 0 6px 0 var(--ind-dark); }
+        #unlock-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        #unlock-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--ind-dark); }
+        #lock-error { margin-top: 12px; font-weight: 800; color: var(--danger); font-size: 15px; }
+
+        .level-grid { display: flex; flex-direction: column; gap: 12px; max-width: 560px; margin: 0 auto; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #ffffff; border: 3px solid #d7dcfb; border-radius: 18px;
+            padding: 13px 18px; cursor: pointer; box-shadow: 0 4px 0 #e9ecfe;
+            transition: transform 0.12s, box-shadow 0.12s; font-family: inherit;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 7px 0 #e9ecfe; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-main); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #9aa3b8; }
+
+        #progress-pill {
+            display: inline-block; background: #eef2ff; color: var(--ind-dark);
+            border: 3px solid #c9d1fb; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 3px 14px; margin-bottom: 8px;
+        }
+
+        #phase-banner {
+            background: #ffffff; border: 3px solid #d7dcfb; border-radius: 18px;
+            padding: 10px 16px 12px; margin-bottom: 12px;
+        }
+        #banner-zh { font-size: 18px; font-weight: 900; color: var(--text-main); line-height: 1.4; }
+        #banner-en { font-size: 13.5px; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
+
+        /* ---------- Clue card ---------- */
+        #clue-card {
+            background: #ffffff; border: 3px solid #dfe4fd; border-radius: 20px;
+            padding: 12px 16px 14px; margin-bottom: 12px; text-align: left;
+        }
+        #clue-intro { font-size: 16.5px; font-weight: 900; color: var(--text-main); margin-bottom: 8px; line-height: 1.5; }
+        #clue-intro .en { display: block; font-size: 12.5px; font-weight: 700; color: var(--text-muted); }
+        #clue-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+        #clue-list li { display: flex; align-items: flex-start; gap: 9px; background: #eef2ff; border-radius: 12px; padding: 8px 12px; }
+        .clue-no {
+            flex: 0 0 auto; width: 24px; height: 24px; border-radius: 50%;
+            background: var(--ind); color: #fff; font-size: 14px; font-weight: 900;
+            display: flex; align-items: center; justify-content: center; margin-top: 1px;
+        }
+        .clue-zh { display: block; font-size: 16px; font-weight: 800; color: #2b2a55; line-height: 1.45; }
+        .clue-en { display: block; font-size: 12.5px; font-weight: 700; color: #8b93b8; }
+        .ccol { font-weight: 900; }
+
+        #qline { font-size: 20px; font-weight: 900; color: var(--ind-dark); margin-bottom: 12px; line-height: 1.5; }
+        #qline .en { display: block; font-size: 14px; font-weight: 700; color: var(--text-muted); }
+
+        /* ---------- Option cards ---------- */
+        #opt-row { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 8px; }
+        .opt-card {
+            font-family: inherit; background: #ffffff; border: 3px solid #c7d0f8; border-radius: 18px;
+            padding: 12px 16px 10px; cursor: pointer; box-shadow: 0 4px 0 #dfe4fd;
+            display: flex; flex-direction: column; align-items: center; gap: 2px; min-width: 106px;
+            transition: transform 0.12s, box-shadow 0.12s, opacity 0.15s; user-select: none;
+        }
+        .opt-card:hover { transform: translateY(-3px); }
+        .opt-card .opt-emoji { font-size: 42px; line-height: 1.15; }
+        .opt-card .opt-zh { font-size: 17px; font-weight: 900; color: var(--text-main); }
+        .opt-card .opt-en { font-size: 12px; font-weight: 700; color: #9aa3b8; }
+        .opt-card.good { border-color: var(--success); background: #eafff2; animation: pop 0.35s; }
+        .opt-card.bad { border-color: var(--danger); background: #ffeceb; opacity: 0.55; animation: deny 0.35s; cursor: not-allowed; }
+
+        #tap-hint { font-size: 13px; font-weight: 700; color: #9aa3b8; margin-bottom: 6px; }
+        #tap-hint .taphint { color: var(--ind); }
+
+        #feedback { min-height: 28px; font-size: 16.5px; font-weight: 800; margin-top: 10px; line-height: 1.5; }
+        #feedback.ok { color: #1e8e4e; }
+        #feedback.warn { color: var(--danger); }
+        #feedback .fen { font-size: 13.5px; font-weight: 700; color: #4a9e6d; }
+
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+        @keyframes deny { 0%, 100% { transform: translateX(0); } 30% { transform: translateX(-5px); } 60% { transform: translateX(5px); } }
+
+        #end-screen .mascot-big { font-size: 58px; }
+        #end-stars { font-size: 40px; margin: 4px 0 6px; letter-spacing: 6px; }
+        #end-sub { font-weight: 700; color: var(--ind-dark); font-size: 17px; margin-bottom: 14px; }
+        #end-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 120; }
+
+        @media (max-width: 640px) {
+            #game-container { padding: 14px 12px 16px; border-width: 4px; }
+            .game-title { font-size: 28px; }
+            .mascot-big { font-size: 50px; }
+            #banner-zh { font-size: 16px; }
+            #banner-en { font-size: 12.5px; }
+            #clue-intro { font-size: 15px; }
+            .clue-zh { font-size: 14.5px; }
+            .clue-en { font-size: 11.5px; }
+            #qline { font-size: 17.5px; }
+            .opt-card { min-width: 88px; padding: 10px 12px 8px; }
+            .opt-card .opt-emoji { font-size: 34px; }
+            .opt-card .opt-zh { font-size: 14.5px; }
+            .opt-card .opt-en { font-size: 10.5px; }
+            #feedback { font-size: 14.5px; }
+            .intro-desc { font-size: 14.5px; }
+        }
+        @media (max-height: 720px) {
+            .mascot-big { font-size: 44px; }
+            .game-title { font-size: 26px; margin: 2px 0 4px; }
+        }
+
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="deco" style="top: 8%; left: 5%; font-size: 44px; animation: bob 3s infinite;">🔍</div>
+    <div class="deco" style="top: 14%; right: 6%; font-size: 40px; animation: bob 3.4s infinite;">🧩</div>
+    <div class="deco" style="bottom: 10%; left: 7%; font-size: 42px; animation: bob 2.8s infinite;">💡</div>
+    <div class="deco" style="bottom: 16%; right: 5%; font-size: 38px; animation: bob 3.2s infinite;">🕵️</div>
+
+    <button id="back-btn" onclick="location.href='index.html'">&#8592; Home</button>
+
+    <div id="game-container">
+        <!-- LOCK -->
+        <div id="lock-screen">
+            <div class="mascot-big">🔒</div>
+            <h1 class="game-title">Logic Puzzles 邏輯小偵探</h1>
+            <p class="intro-desc">
+                這關需要密碼才能玩！快問老師或者家長拿密碼吧。
+                <br><span class="en">This level is locked — ask your teacher or parent for the password!</span>
+            </p>
+            <div id="lock-row">
+                <input id="lock-input" type="password" placeholder="Password 密碼" autocomplete="off" />
+                <button id="unlock-btn" class="btn">Unlock 解鎖！</button>
+            </div>
+            <div id="lock-error" class="hidden">密碼不對，再試一次！Wrong password — try again! 🤔</div>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- INTRO -->
+        <div id="intro-screen" class="hidden">
+            <div class="mascot-big">🕵️</div>
+            <h1 class="game-title">Logic Puzzles 邏輯小偵探</h1>
+            <div class="tag-pill">讀線索 · 做推理 · 找答案 · Read, Reason & Solve</div>
+            <div id="trophy-pill" class="hidden">🏆 全部關卡完成！All sublevels complete!</div>
+            <p class="intro-desc">
+                小偵探出動！讀懂每一條線索，一步一步推理：不喜歡甜品的烏鴉去了哪間店？贏了兩隻動物的是第幾名？紅色 T 恤的圖案不是星星，那是什麼？小鳥比小兔重，誰最輕？點一點答案卡，用邏輯找出唯一答案！
+                <br><span class="en">Detectives, on the case! Read every clue and reason step by step: if Crow doesn't like desserts, which shop did Crow go to? If Gorilla beat two animals, which place is that? Tap the answer card and use logic to find the one true answer!</span>
+            </p>
+            <button class="btn" onclick="showSetup()">Play!</button>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- SETUP -->
+        <div id="setup-screen" class="hidden">
+            <h2 class="game-title">Logic Puzzles 🔍</h2>
+            <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+            <div class="level-grid">
+                <button class="level-card" id="card-1" onclick="startGame(1)">
+                    <span class="lv-emoji">🔍</span>
+                    <span><span class="lv-name">Sublevel 1: 排除法 · 去哪裡</span><br><span class="lv-sub">排除不可能的，剩下的就是答案！Rule out the impossible — what remains is the answer!</span></span>
+                </button>
+                <button class="level-card" id="card-2" onclick="startGame(2)">
+                    <span class="lv-emoji">🏁</span>
+                    <span><span class="lv-name">Sublevel 2: 排名榜 · 第幾名</span><br><span class="lv-sub">贏了兩隻動物，是第幾名？Beat two animals — which place is that?</span></span>
+                </button>
+                <button class="level-card" id="card-3" onclick="startGame(3)">
+                    <span class="lv-emoji">👕</span>
+                    <span><span class="lv-name">Sublevel 3: 配對推理 · 什麼圖案</span><br><span class="lv-sub">紅色的圖案不是星星，那是什麼？Red is NOT stars — then what is it?</span></span>
+                </button>
+                <button class="level-card" id="card-4" onclick="startGame(4)">
+                    <span class="lv-emoji">⚖️</span>
+                    <span><span class="lv-name">Sublevel 4: 比一比 · 誰最…</span><br><span class="lv-sub">小鳥比小兔重，小兔比小貓重 — 誰最輕？Heavier and heavier — who is the lightest?</span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PLAY -->
+        <div id="play-screen" class="hidden">
+            <div id="progress-pill">第 1 / 5 題 Round</div>
+            <div id="phase-banner">
+                <div id="banner-zh"></div>
+                <div id="banner-en"></div>
+            </div>
+            <div id="clue-card">
+                <div id="clue-intro"></div>
+                <ul id="clue-list"></ul>
+            </div>
+            <div id="qline"></div>
+            <div id="opt-row"></div>
+            <div id="tap-hint"><span class="taphint">點一點正確答案 · Tap the correct answer</span></div>
+            <div id="feedback"></div>
+        </div>
+
+        <!-- END -->
+        <div id="end-screen" class="hidden">
+            <div class="mascot-big">🏆</div>
+            <h2 id="end-title" class="game-title">Super Detective! 邏輯小偵探！</h2>
+            <div id="end-stars">⭐⭐⭐</div>
+            <p id="end-sub"></p>
+            <div id="end-btns">
+                <button id="action-btn" class="btn">Play Again 再玩一次</button>
+                <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <script>
+        // ================= DATA =================
+        const ROUNDS = 5;
+        const ANIMALS = [
+            { emoji: '🐻', zh: '小熊', en: 'Little Bear' },
+            { emoji: '🐰', zh: '小兔', en: 'Little Rabbit' },
+            { emoji: '🐱', zh: '小貓', en: 'Little Cat' },
+            { emoji: '🐶', zh: '小狗', en: 'Little Dog' },
+            { emoji: '🐷', zh: '小豬', en: 'Little Pig' },
+            { emoji: '🐭', zh: '小老鼠', en: 'Little Mouse' },
+            { emoji: '🦊', zh: '小狐狸', en: 'Little Fox' },
+            { emoji: '🐯', zh: '小老虎', en: 'Little Tiger' },
+            { emoji: '🐦', zh: '小鳥', en: 'Little Bird' },
+            { emoji: '🐘', zh: '小象', en: 'Little Elephant' },
+            { emoji: '🦍', zh: '小猩猩', en: 'Little Gorilla' },
+            { emoji: '🐢', zh: '小烏龜', en: 'Little Turtle' },
+        ];
+
+        // ---- Sublevel 1: elimination ----
+        const PLACE_SETS = [
+            { scene: { zh: '一起去行街', en: 'go out shopping' },
+              places: [
+                { emoji: '🧸', zh: '玩具店', en: 'the toy shop', dislike: { zh: '不喜歡玩具', en: "doesn't like toys" } },
+                { emoji: '👗', zh: '服裝店', en: 'the clothing shop', dislike: { zh: '不喜歡買新衣服', en: "doesn't like new clothes" } },
+                { emoji: '🍰', zh: '蛋糕店', en: 'the cake shop', dislike: { zh: '不喜歡甜品', en: "doesn't like desserts" } },
+              ] },
+            { scene: { zh: '一起去郊遊', en: 'go on an outing' },
+              places: [
+                { emoji: '🏖️', zh: '沙灘', en: 'the beach', dislike: { zh: '不喜歡曬太陽', en: "doesn't like the sun" } },
+                { emoji: '🌳', zh: '公園', en: 'the park', dislike: { zh: '不喜歡蚊蟲', en: "doesn't like bugs" } },
+                { emoji: '📚', zh: '圖書館', en: 'the library', dislike: { zh: '不喜歡安靜', en: "doesn't like quiet places" } },
+              ] },
+            { scene: { zh: '一起去上興趣班', en: 'go to hobby classes' },
+              places: [
+                { emoji: '🏊', zh: '游泳班', en: 'the swimming class', dislike: { zh: '不喜歡水', en: "doesn't like water" } },
+                { emoji: '🎨', zh: '畫畫班', en: 'the painting class', dislike: { zh: '不喜歡顏料', en: "doesn't like paint" } },
+                { emoji: '🎵', zh: '音樂班', en: 'the music class', dislike: { zh: '不喜歡唱歌', en: "doesn't like singing" } },
+              ] },
+        ];
+
+        // ---- Sublevel 2: ranking ----
+        const RACE_INTROS = [
+            { zh: '四隻小動物賽跑！', en: 'Four little animals had a running race!' },
+            { zh: '四隻小動物游泳比賽！', en: 'Four little animals had a swimming race!' },
+            { zh: '四隻小動物跳遠比賽！', en: 'Four little animals had a jumping contest!' },
+        ];
+        const ORD_ZH = ['第一名', '第二名', '第三名', '第四名'];
+        const ORD_EN = ['1st', '2nd', '3rd', '4th'];
+        const RANK_CLUES = [
+            { zh: a => `${a.zh}贏了所有動物。`, en: a => `${a.en} beat all the other animals.` },
+            { zh: a => `${a.zh}贏了兩隻動物。`, en: a => `${a.en} beat two animals.` },
+            { zh: a => `${a.zh}只贏了一隻動物。`, en: a => `${a.en} beat only one animal.` },
+            { zh: a => `${a.zh}輸給了所有動物。`, en: a => `${a.en} lost to all the other animals.` },
+        ];
+
+        // ---- Sublevel 3: matching ----
+        const MATCH_SETS = [
+            { item: { zh: 'T恤', en: 'T-shirt', enP: 'T-shirts' },
+              patterns: [
+                { emoji: '⭐', zh: '星星', en: 'stars' },
+                { emoji: '🎵', zh: '音符', en: 'music notes' },
+                { emoji: '❤️', zh: '愛心', en: 'hearts' },
+              ] },
+            { item: { zh: '書包', en: 'backpack', enP: 'backpacks' },
+              patterns: [
+                { emoji: '🦖', zh: '恐龍', en: 'dinosaurs' },
+                { emoji: '🚗', zh: '汽車', en: 'cars' },
+                { emoji: '🌈', zh: '彩虹', en: 'rainbows' },
+              ] },
+        ];
+        const COLORS = [
+            { zh: '藍色', en: 'blue', hex: '#3b82f6' },
+            { zh: '紅色', en: 'red', hex: '#ef4444' },
+            { zh: '黃色', en: 'yellow', hex: '#d97706' },
+        ];
+
+        // ---- Sublevel 4: comparison ----
+        const COMP_SETS = [
+            { intro: { zh: '三隻小動物稱體重！', en: 'Three little animals are being weighed!' },
+              cmp: { zh: '比', en: 'is heavier than' }, adj: { zh: '重', en: 'heavier' },
+              mostQ: { zh: '最重', en: 'heaviest' }, leastQ: { zh: '最輕', en: 'lightest' } },
+            { intro: { zh: '三隻小動物量身高！', en: 'Three little animals are measuring their height!' },
+              cmp: { zh: '比', en: 'is taller than' }, adj: { zh: '高', en: 'taller' },
+              mostQ: { zh: '最高', en: 'tallest' }, leastQ: { zh: '最矮', en: 'shortest' } },
+            { intro: { zh: '三隻小動物賽跑！', en: 'Three little animals had a race!' },
+              cmp: { zh: '比', en: 'is faster than' }, adj: { zh: '快', en: 'faster' },
+              mostQ: { zh: '最快', en: 'fastest' }, leastQ: { zh: '最慢', en: 'slowest' } },
+        ];
+
+        const BANNERS = {
+            1: { zh: '🔍 排除不可能的，剩下的就是答案！', en: 'Rule out the impossible — what remains is the answer!' },
+            2: { zh: '🏁 贏最多是第一名，輸給所有是最後一名！', en: 'Beat everyone = 1st; lost to everyone = last!' },
+            3: { zh: '👕 每種顏色配一個圖案 — 用線索逐一配對！', en: 'One colour, one pattern — match them up with the clues!' },
+            4: { zh: '⚖️ 把兩句「比一比」連起來，就能排出順序！', en: 'Link the two comparisons together to line them up!' },
+        };
+        const HINTS = {
+            1: '再讀一次線索：哪個地方一定不會去？三個地方排除了兩個，剩下的就是答案！🔍<br><span class="fen">Read the clues again: which places are impossible? Rule out two — the last one is the answer!</span>',
+            2: '「贏了所有」是第一名，「贏了兩隻」是第二名 — 先把四隻動物排好名次！🏁<br><span class="fen">"Beat all" means 1st, "beat two" means 2nd — line up all four animals first!</span>',
+            3: '先找出線索直接說的圖案，再用「不是××」排除 — 剩下的顏色配剩下的圖案！👕<br><span class="fen">Start with the pattern a clue tells you directly, then use "NOT ××" to rule out — leftover colour gets the leftover pattern!</span>',
+            4: '把兩句連起來排一排：誰在最前面？誰在最後面？⚖️<br><span class="fen">Link the two sentences and line them up: who comes first? Who comes last?</span>',
+        };
+        const END_SUBS = {
+            1: '不可能的都能排除 — 推理小偵探！You ruled out every impossible — a true detective!',
+            2: '名次排得清清楚楚 — 排名小達人！Every place worked out — a ranking star!',
+            3: '顏色圖案一一配對 — 配對小能手！Colours and patterns all matched — a matching master!',
+            4: '輕重高矮難不倒你 — 比較小專家！Heaviest to lightest, no problem — a comparison pro!',
+        };
+
+        // ================= STATE =================
+        const introScreen = document.getElementById('intro-screen');
+        const setupScreen = document.getElementById('setup-screen');
+        const playScreen = document.getElementById('play-screen');
+        const endScreen = document.getElementById('end-screen');
+        const progressPill = document.getElementById('progress-pill');
+        const bannerZh = document.getElementById('banner-zh');
+        const bannerEn = document.getElementById('banner-en');
+        const clueIntro = document.getElementById('clue-intro');
+        const clueList = document.getElementById('clue-list');
+        const qline = document.getElementById('qline');
+        const optRow = document.getElementById('opt-row');
+        const backBtn = document.getElementById('back-btn');
+        const feedback = document.getElementById('feedback');
+
+        let level = 1, rounds = [], roundIdx = 0, mistakes = 0;
+        let currentQ = null, locked = false;
+
+        let audioStarted = false, synth;
+        function initAudio() { synth = new Tone.PolySynth(Tone.Synth).toDestination(); }
+        function playSound(type) {
+            if (!audioStarted || !synth) return;
+            const now = Tone.now();
+            if (type === 'pop') synth.triggerAttackRelease('A6', '32n', now);
+            else if (type === 'ding') synth.triggerAttackRelease('E6', '16n', now);
+            else if (type === 'correct') ['C5', 'E5', 'G5'].forEach((n, i) => synth.triggerAttackRelease(n, '16n', now + i * 0.07));
+            else if (type === 'wrong') synth.triggerAttackRelease('C2', '8n', now);
+            else if (type === 'fanfare') ['C5', 'E5', 'G5', 'C6'].forEach((n, i) => synth.triggerAttackRelease(n, '8n', now + i * 0.13));
+        }
+
+        function shuffle(a) { return a.sort(() => Math.random() - 0.5); }
+        function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+
+        // ================= GENERATORS =================
+        function genElim() {
+            const set = PLACE_SETS[randInt(0, PLACE_SETS.length - 1)];
+            const animals = shuffle([...ANIMALS]).slice(0, 3);
+            const A = animals[0], B = animals[1], C = animals[2];
+            const t = randInt(0, 2);                             // where A really goes
+            const others = shuffle([0, 1, 2].filter(i => i !== t));
+            const e1 = others[0], e2 = others[1];                // ruled out by dislike / by pair clue
+            const clues = [
+                { zh: `${A.zh}${set.places[e1].dislike.zh}。`, en: `${A.en} ${set.places[e1].dislike.en}.` },
+                { zh: `${A.zh}和${B.zh}都不去${set.places[e2].zh}。`, en: `Neither ${A.en} nor ${B.en} goes to ${set.places[e2].en}.` },
+            ];
+            if (Math.random() < 0.5) clues.reverse();
+            return {
+                intro: { zh: `${A.zh}、${B.zh}和${C.zh}${set.scene.zh}，各自去了不同的地方。`,
+                         en: `${A.en}, ${B.en} and ${C.en} ${set.scene.en}. Each goes to a different place.` },
+                clues,
+                question: { zh: `${A.zh}去了哪裡？`, en: `Where did ${A.en} go?` },
+                options: shuffle(set.places.map((p, i) => ({ emoji: p.emoji, zh: p.zh, en: p.en.replace(/^the /, ''), correct: i === t }))),
+                reason: { zh: `${A.zh}${set.places[e1].dislike.zh} → 不去${set.places[e1].zh}；線索又說不去${set.places[e2].zh}。三個地方排除了兩個，只剩下${set.places[t].zh}！`,
+                          en: `${A.en} ${set.places[e1].dislike.en} → not ${set.places[e1].en}; and not ${set.places[e2].en} either. Two ruled out — only ${set.places[t].en} remains!` },
+            };
+        }
+
+        function genRank() {
+            const animals = shuffle([...ANIMALS]).slice(0, 4);   // animals[i] finished in place i+1
+            const intro = RACE_INTROS[randInt(0, RACE_INTROS.length - 1)];
+            const clues = shuffle(animals.map((a, i) => ({ zh: RANK_CLUES[i].zh(a), en: RANK_CLUES[i].en(a) })));
+            const ask = randInt(0, 3);
+            const medals = ['🥇', '🥈', '🥉', '4️⃣'];
+            const orderZh = animals.map((a, i) => `${medals[i]}${a.zh}`).join('　');
+            const orderEn = animals.map((a, i) => `${medals[i]}${a.en}`).join('  ');
+            return {
+                intro, clues,
+                question: { zh: `${ORD_ZH[ask]}是哪一隻？`, en: `Which animal came ${ORD_EN[ask]}?` },
+                options: shuffle(animals.map((a, i) => ({ emoji: a.emoji, zh: a.zh, en: a.en, correct: i === ask }))),
+                reason: { zh: `贏了所有 → 第一名；贏了兩隻 → 第二名；只贏一隻 → 第三名；輸給所有 → 第四名。${orderZh}`,
+                          en: `Beat all → 1st; beat two → 2nd; beat one → 3rd; lost to all → 4th. ${orderEn}` },
+            };
+        }
+
+        function genMatch() {
+            const set = MATCH_SETS[randInt(0, MATCH_SETS.length - 1)];
+            const owner = ANIMALS[randInt(0, ANIMALS.length - 1)];
+            const colors = shuffle([...COLORS]);          // colors[0]: direct clue, colors[1]: favourite, colors[2]: leftover
+            const pats = shuffle([0, 1, 2]);              // pats[0] → colors[0]; {pats[1], pats[2]} → colors[1], colors[2]
+            const favPat = Math.random() < 0.5 ? pats[1] : pats[2];
+            const notPat = favPat === pats[1] ? pats[2] : pats[1];   // the pattern the favourite is NOT
+            const leftPat = [0, 1, 2].find(x => x !== pats[0] && x !== favPat);
+            const P = set.patterns, it = set.item;
+            const cSpan = c => `<span class="ccol" style="color:${c.hex}">${c.zh}</span>`;
+            return {
+                intro: { zh: `${owner.zh}有三件${it.zh}，分別是${cSpan(colors[0])}、${cSpan(colors[1])}和${cSpan(colors[2])}，每件的圖案都不一樣。`,
+                         en: `${owner.en} has three ${it.enP} — ${colors[0].en}, ${colors[1].en} and ${colors[2].en} — each with a different pattern.` },
+                clues: [
+                    { zh: `${cSpan(colors[0])}${it.zh}是${P[pats[0]].zh}圖案。`, en: `The ${colors[0].en} ${it.en} has a ${P[pats[0]].en} pattern.` },
+                    { zh: `${cSpan(colors[1])}${it.zh}的圖案不是${P[notPat].zh}。`, en: `The ${colors[1].en} ${it.en} does NOT have a ${P[notPat].en} pattern.` },
+                    { zh: `${owner.zh}最喜歡的是${cSpan(colors[1])}。`, en: `${owner.en}'s favourite is the ${colors[1].en} one.` },
+                ],
+                question: { zh: `${owner.zh}最喜歡的${it.zh}是什麼圖案？`, en: `What pattern is on ${owner.en}'s favourite ${it.en}?` },
+                options: shuffle(P.map((p, i) => ({ emoji: p.emoji, zh: p.zh, en: p.en, correct: i === favPat }))),
+                reason: { zh: `${colors[0].zh}是${P[pats[0]].zh}；${colors[1].zh}不是${P[notPat].zh}，所以是${P[favPat].zh}；剩下${colors[2].zh}是${P[leftPat].zh}。最喜歡的是${colors[1].zh} → ${P[favPat].zh}！`,
+                          en: `${colors[0].en} has ${P[pats[0]].en}; ${colors[1].en} is not ${P[notPat].en}, so it must be ${P[favPat].en}; ${colors[2].en} gets ${P[leftPat].en}. The favourite is ${colors[1].en} → ${P[favPat].en}!` },
+            };
+        }
+
+        function genComp() {
+            const set = COMP_SETS[randInt(0, COMP_SETS.length - 1)];
+            const animals = shuffle([...ANIMALS]).slice(0, 3);   // animals[0] most > animals[1] > animals[2] least
+            const [A, B, C] = animals;
+            const clues = [
+                { zh: `${A.zh}${set.cmp.zh}${B.zh}${set.adj.zh}。`, en: `${A.en} ${set.cmp.en} ${B.en}.` },
+                { zh: `${B.zh}${set.cmp.zh}${C.zh}${set.adj.zh}。`, en: `${B.en} ${set.cmp.en} ${C.en}.` },
+            ];
+            if (Math.random() < 0.5) clues.reverse();
+            const askMost = Math.random() < 0.5;
+            const q = askMost ? set.mostQ : set.leastQ;
+            return {
+                intro: set.intro,
+                clues,
+                question: { zh: `哪一隻${q.zh}？`, en: `Which one is the ${q.en}?` },
+                options: shuffle(animals.map((a, i) => ({ emoji: a.emoji, zh: a.zh, en: a.en, correct: askMost ? i === 0 : i === 2 }))),
+                reason: { zh: `排一排：${A.emoji}${A.zh} ＞ ${B.emoji}${B.zh} ＞ ${C.emoji}${C.zh}。所以${q.zh}的是${askMost ? A.zh : C.zh}！`,
+                          en: `Line them up: ${A.emoji}${A.en} ＞ ${B.emoji}${B.en} ＞ ${C.emoji}${C.en}. So the ${q.en} is ${askMost ? A.en : C.en}!` },
+            };
+        }
+
+        function buildRounds(lv) {
+            const gen = { 1: genElim, 2: genRank, 3: genMatch, 4: genComp }[lv];
+            const out = [];
+            for (let i = 0; i < ROUNDS; i++) out.push(gen());
+            return out;
+        }
+    </script>
+    <script>
+        // ================= FLOW =================
+        // password gate — unlocks the intro screen
+        const lockScreen = document.getElementById('lock-screen');
+        const lockInput = document.getElementById('lock-input');
+        const lockError = document.getElementById('lock-error');
+        const PASS_HASH = 1056886225; // djb2-xor of the password
+        function tryUnlock() {
+            const v = lockInput.value.trim().toLowerCase();
+            let h = 5381;
+            for (let i = 0; i < v.length; i++) h = ((h * 33) ^ v.charCodeAt(i)) >>> 0;
+            if (v && h === PASS_HASH) {
+                if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+                playSound('correct');
+                lockScreen.classList.add('hidden');
+                introScreen.classList.remove('hidden');
+            } else {
+                playSound('wrong');
+                lockError.classList.remove('hidden');
+                lockInput.value = '';
+                lockInput.classList.add('error');
+                setTimeout(() => lockInput.classList.remove('error'), 400);
+                lockInput.focus();
+            }
+        }
+        document.getElementById('unlock-btn').onclick = () => tryUnlock();
+        lockInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+        function setBackBtn(mode) {
+            if (mode === 'menu') {
+                backBtn.innerHTML = '&#8592; Menu 目錄';
+                backBtn.onclick = () => backToMenu();
+            } else {
+                backBtn.innerHTML = '&#8592; Home';
+                backBtn.onclick = () => location.href = 'index.html';
+            }
+        }
+        function backToMenu() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            setBackBtn('home');
+        }
+
+        function showSetup() {
+            if (!lockScreen.classList.contains('hidden')) return;
+            if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+            introScreen.classList.add('hidden');
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            setBackBtn('home');
+        }
+
+        function startGame(lv) {
+            level = lv; mistakes = 0;
+            rounds = buildRounds(lv);
+            roundIdx = 0;
+            setupScreen.classList.add('hidden');
+            introScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            playScreen.classList.remove('hidden');
+            setBackBtn('menu');
+            nextRound();
+        }
+
+        // ================= RENDERING =================
+        function renderRound(q) {
+            clueIntro.innerHTML = `${q.intro.zh}<span class="en">${q.intro.en}</span>`;
+            clueList.innerHTML = q.clues.map((c, i) =>
+                `<li><span class="clue-no">${i + 1}</span><span><span class="clue-zh">${c.zh}</span><span class="clue-en">${c.en}</span></span></li>`
+            ).join('');
+            qline.innerHTML = `${q.question.zh}<span class="en">${q.question.en}</span>`;
+            optRow.innerHTML = q.options.map((o, i) =>
+                `<button class="opt-card" data-i="${i}"><span class="opt-emoji">${o.emoji}</span><span class="opt-zh">${o.zh}</span><span class="opt-en">${o.en}</span></button>`
+            ).join('');
+            optRow.querySelectorAll('.opt-card').forEach(el => { el.onclick = () => pickOpt(el, q); });
+        }
+
+        function nextRound() {
+            currentQ = rounds[roundIdx];
+            locked = false;
+            progressPill.textContent = `第 ${roundIdx + 1} / ${ROUNDS} 題 Round ${roundIdx + 1} / ${ROUNDS}`;
+            bannerZh.innerHTML = BANNERS[level].zh;
+            bannerEn.innerHTML = BANNERS[level].en;
+            feedback.textContent = '';
+            feedback.className = '';
+            renderRound(currentQ);
+        }
+
+        // ================= ANSWER =================
+        function pickOpt(el, q) {
+            if (locked || el.classList.contains('bad')) return;
+            const opt = q.options[+el.dataset.i];
+            if (opt.correct) {
+                locked = true;
+                playSound('correct');
+                el.classList.add('good');
+                feedback.className = 'ok';
+                feedback.innerHTML = `🎉 答對了！${q.reason.zh}<br><span class="fen">Correct! ${q.reason.en}</span>`;
+                setTimeout(() => {
+                    roundIdx++;
+                    if (roundIdx >= ROUNDS) showEnd();
+                    else nextRound();
+                }, 3400);
+            } else {
+                mistakes++;
+                playSound('wrong');
+                el.classList.add('bad');
+                feedback.className = 'warn';
+                feedback.innerHTML = HINTS[level];
+            }
+        }
+
+        // ================= END =================
+        function showEnd() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            setBackBtn('home');
+            try { localStorage.setItem('logic_l' + level + '_complete', 'true'); } catch (e) {}
+            decorateCards();
+            const stars = mistakes <= 1 ? '⭐⭐⭐' : mistakes <= 3 ? '⭐⭐' : '⭐';
+            document.getElementById('end-stars').textContent = stars;
+            document.getElementById('end-title').innerText = 'Super Detective! 邏輯小偵探！';
+            document.getElementById('end-sub').innerText = END_SUBS[level];
+            document.getElementById('action-btn').onclick = () => startGame(level);
+            document.getElementById('picker-btn').onclick = () => showSetup();
+            playSound('fanfare');
+            fireConfetti();
+        }
+
+        function decorateCards() {
+            let all = true;
+            for (let i = 1; i <= 4; i++) {
+                let done = false;
+                try { done = localStorage.getItem('logic_l' + i + '_complete') === 'true'; } catch (e) {}
+                const name = document.querySelector('#card-' + i + ' .lv-name');
+                if (done && name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+                if (!done) all = false;
+            }
+            document.getElementById('trophy-pill').classList.toggle('hidden', !all);
+        }
+        decorateCards();
+
+        // ================= CONFETTI =================
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        function fireConfetti() {
+            canvas.width = innerWidth; canvas.height = innerHeight;
+            const pieces = [];
+            const colors = ['#4f46e5', '#f0b429', '#818cf8', '#4d96ff', '#ffffff', '#2bbcb3'];
+            for (let i = 0; i < 130; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width, y: -20 - Math.random() * canvas.height * 0.5,
+                    w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
+                    c: colors[Math.floor(Math.random() * colors.length)],
+                    vy: 2 + Math.random() * 3, vx: -1.5 + Math.random() * 3,
+                    rot: Math.random() * Math.PI, vr: -0.1 + Math.random() * 0.2,
+                });
+            }
+            let start = performance.now();
+            (function tick(now) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                pieces.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+                    if (p.y < canvas.height + 30) alive = true;
+                    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+                    ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                });
+                if (alive && now - start < 4200) requestAnimationFrame(tick);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            })(start);
+        }
+    </script>
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>邏輯推理題是幼小銜接的經典題型，看似沒有「計數」，其實是數學思維的核心：孩子要從文字線索中抽取條件，一步步收窄可能性。本遊戲涵蓋四種基本推理方法 — 「排除法」（把不可能的逐個排除，剩下的就是答案）、「排序」（由「贏了幾多」推出名次，即由數量到順序）、「一一對應配對」（三種顏色配三個圖案，用「是」和「不是」逐步確定），以及「遞移比較」（A 比 B 重、B 比 C 重，所以 A 比 C 重 — 這是日後學習不等式和數線的基礎）。這些能力同時是閱讀理解和小一面試的重要根基。</p>
+        <p class="pg-en">Logic puzzles are a classic of early-years math: children must extract conditions from verbal clues and narrow down the possibilities step by step. This game covers four core reasoning skills — elimination (rule out the impossible; what remains must be true), ordering (turning "beat two animals" into a finishing place, i.e. quantity into position), one-to-one matching (three colours, three patterns — pinning them down with "is" and "is not"), and transitive comparison (A is heavier than B, B is heavier than C, so A is heavier than C — the seed of inequalities and number lines). These are also the foundations of reading comprehension and primary-school interview tasks.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>孩子答錯時，不要急著公布答案 — 把線索逐條再讀一次，每讀一條問：「這條線索告訴我們什麼？哪個選項一定不可能？」鼓勵孩子用手指把排除掉的選項「劃走」，並說出理由：「這個不可能，因為……」說得出理由，才是真的推理。排名題可以借玩具公仔實物排一排；配對題可以畫簡單的表格（顏色一行、圖案一列），在格仔內打勾打叉 — 這就是日後「邏輯方陣」的雛形。</p>
+        <p class="pg-en">When your child gets stuck, don't rush to reveal the answer — re-read the clues one by one and ask: "What does this clue tell us? Which option is impossible now?" Encourage them to "cross out" eliminated options with a finger and say the reason out loud: "This one can't be right, because..." Being able to SAY the reason is real reasoning. For ranking questions, line up toy figures for real; for matching questions, draw a simple grid (colours down the side, patterns across the top) and tick or cross the cells — that's the seed of the classic logic grid.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>生活中處處是邏輯題：吃飯時問「爸爸第一個吃完，我比媽媽快，誰最慢？」；出門時玩「猜猜看」— 「我們不去公園，也不去沙灘，你猜我們去哪？」；收拾襪子時玩配對 — 「這對是爸爸的，這對不是紅色，那是什麼顏色？」乘升降機時比一比身高 — 「我比弟弟高，弟弟比表妹高，誰最矮？」每天一句小線索，孩子的推理力就會慢慢長出來。</p>
+        <p class="pg-en">Logic is everywhere in daily life: at dinner, ask "Dad finished first, I was faster than Mum — who was slowest?"; on the way out, play "guess where" — "We're not going to the park, and not to the beach — where are we going?"; matching socks: "This pair is Dad's, this pair is NOT red — what colour is it?"; in the lift, compare heights: "I'm taller than my brother, he's taller than our cousin — who is shortest?" One little clue a day, and reasoning grows on its own.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+</script>
+<!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

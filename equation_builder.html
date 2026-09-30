@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#4d96ff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Equation Builder 砌算式 | 選數字砌算式 · Build the Equation – MMathWorld</title>
+    <meta name="description" content="Equation Builder 砌算式遊戲：給你幾張數字卡，選對的放入括號砌出正確算式！( )+( )=( ) 五選三有煙幕卡、( )+( )=( )+( ) 兩邊平衡，還有數字屋加減法一家人！Build true equations from given number tiles — decoys, balancing, and fact families! 免費升小數學遊戲！Free math game for kids.">
+    <link rel="canonical" href="https://mathgames.missman.world/equation_builder">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Equation Builder 砌算式 | 選數字砌算式 · Build the Equation – MMathWorld">
+    <meta property="og:description" content="Equation Builder 砌算式遊戲：選對數字卡放入括號，砌出正確算式！( )+( )=( )、( )+( )=( )+( )，還有數字屋加減法一家人，小心煙幕卡！Free equation-building math game for kids.">
+    <meta property="og:url" content="https://mathgames.missman.world/equation_builder">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Equation Builder 砌算式 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Equation Builder 砌算式 | 選數字砌算式 · Build the Equation – MMathWorld">
+    <meta name="twitter:description" content="Equation Builder 砌算式遊戲：選對數字卡砌出正確算式！Build true equations from number tiles!">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Equation Builder",
+      "alternateName": "砌算式",
+      "url": "https://mathgames.missman.world/equation_builder",
+      "description": "Equation Builder 砌算式遊戲：用給定的數字卡選出正確數字放入括號，砌出正確算式 ( )+( )=( )、( )+( )=( )+( )，以及數字屋加減法一家人。Build true equations from given number tiles, spotting decoys, and fact families.",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": ["zh-Hant-HK", "en"],
+      "genre": ["Educational", "Math"],
+      "gamePlatform": ["Web Browser", "Mobile Web"],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "HKD" },
+      "audience": { "@type": "PeopleAudience", "suggestedMinAge": 4, "suggestedMaxAge": 7 },
+      "author": { "@type": "Organization", "name": "MMathWorld", "url": "https://mathgames.missman.world/" },
+      "learningResourceType": "Educational game",
+      "teaches": "用給定數字砌出正確算式：加法組合、等式平衡、加減法互逆（fact family）、排除煙幕 Building true equations from given numbers: addition facts, balancing both sides, fact families, ignoring decoys"
+    }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%234d96ff'/%3E%3Ctext x='24' y='34' font-size='28' text-anchor='middle'%3E🧮%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        :root {
+            --block: #4d96ff; --block-dark: #2b5cb8;
+            --sun: #ffb84d; --sun-dark: #d17f1f;
+            --wood: #a9744f; --wood-dark: #8a5a3b;
+            --cream: #fffdf8; --danger: #e74c3c; --success: #2ecc71;
+            --text-main: #2f3a5f; --text-muted: #7d86a8;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body {
+            min-height: 100vh; min-height: 100dvh;
+            background: linear-gradient(180deg, #b9d7ff 0%, #dceaff 45%, #f5f9ff 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: safe center;
+            padding: 14px; overflow-x: hidden; touch-action: manipulation;
+        }
+        .hidden { display: none !important; }
+        .deco { position: fixed; pointer-events: none; opacity: 0.5; z-index: 0; }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+        #back-btn {
+            position: fixed; top: 12px; left: 12px; z-index: 60;
+            background: #ffffff; border: 3px solid #d9c8b2; color: #8a7458;
+            font-size: 15px; font-weight: 800; border-radius: 999px; padding: 7px 16px;
+            cursor: pointer; box-shadow: 0 3px 0 #d9c8b2; transition: transform 0.12s;
+        }
+        #back-btn:hover { transform: translateY(-2px); }
+
+        #game-container {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: var(--cream); border: 5px solid var(--wood); border-radius: 28px;
+            box-shadow: 0 10px 0 var(--wood-dark), 0 22px 40px rgba(43, 74, 140, 0.22);
+            padding: 20px 22px 24px; text-align: center;
+            max-height: calc(100dvh - 28px); overflow-y: auto;
+        }
+
+        .mascot-big { font-size: 64px; animation: bob 2.6s infinite ease-in-out; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.18)); }
+        .game-title { font-size: 36px; font-weight: 900; color: var(--block-dark); margin: 4px 0 8px; }
+        .tag-pill {
+            display: inline-block; background: #e9f1ff; color: var(--block-dark);
+            border: 3px solid #c4d9fb; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 6px 0 12px;
+        }
+        #trophy-pill {
+            display: inline-block; background: linear-gradient(145deg, #fff3c4, #ffe082);
+            border: 3px solid #f0c93f; color: #9c6500; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 4px 0 8px;
+        }
+        .intro-desc { font-size: 16px; font-weight: 700; color: #4a5578; line-height: 1.55; max-width: 560px; margin: 0 auto 16px; }
+        .intro-desc .en { font-size: 13.5px; color: #9aa3c4; }
+
+        .btn {
+            background: linear-gradient(145deg, #7db4ff, #4d96ff); color: #fff;
+            border: none; border-radius: 999px; font-size: 20px; font-weight: 800;
+            padding: 13px 36px; cursor: pointer; box-shadow: 0 5px 0 var(--block-dark);
+            transition: transform 0.12s, box-shadow 0.12s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--block-dark); }
+        .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn-secondary { background: linear-gradient(145deg, #ffd88a, #ffb84d); box-shadow: 0 5px 0 var(--sun-dark); font-size: 16px; padding: 11px 24px; }
+        .btn-secondary:active { box-shadow: 0 2px 0 var(--sun-dark); }
+        #lock-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+        #lock-input {
+            font-family: inherit; font-size: 18px; font-weight: 700; padding: 12px 18px; width: 220px;
+            border: 3px solid #d3e6ff; border-radius: 999px; outline: none; text-align: center; color: var(--text-main, #3d3550);
+        }
+        #lock-input:focus { border-color: #4d96ff; }
+        #lock-input.error { border-color: #e74c3c; animation: deny 0.35s; }
+        #unlock-btn { background: var(--block); box-shadow: 0 6px 0 var(--block-dark); }
+        #unlock-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        #unlock-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--block-dark); }
+        #lock-error { margin-top: 12px; font-weight: 800; color: #e74c3c; font-size: 15px; }
+
+        .level-grid { display: flex; flex-direction: column; gap: 12px; max-width: 560px; margin: 0 auto; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #ffffff; border: 3px solid #d6e4fb; border-radius: 18px;
+            padding: 13px 18px; cursor: pointer; box-shadow: 0 4px 0 #dbe7fa;
+            transition: transform 0.12s, box-shadow 0.12s; font-family: inherit;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 7px 0 #dbe7fa; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-main); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #9aa3c4; }
+
+        #progress-pill {
+            display: inline-block; background: #e8f4ff; color: var(--block-dark);
+            border: 3px solid #bcd9f5; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 3px 14px; margin-bottom: 8px;
+        }
+
+        #phase-banner {
+            background: #ffffff; border: 3px solid #d6e4fb; border-radius: 18px;
+            padding: 10px 16px 12px; margin-bottom: 14px;
+        }
+        #banner-zh { font-size: 20px; font-weight: 900; color: var(--text-main); line-height: 1.4; }
+        #banner-en { font-size: 14px; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
+
+        /* ---------- Equation row ---------- */
+        #equation {
+            display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+            gap: 8px; margin-bottom: 16px;
+        }
+        #equation.shake { animation: deny 0.35s; }
+        .paren { font-size: 30px; font-weight: 900; color: #c9a06a; }
+        .op { font-size: 32px; font-weight: 900; color: var(--wood-dark); }
+        .slot {
+            width: 68px; height: 68px; border: 3px dashed #9db9e8; border-radius: 16px;
+            background: #f4f8ff; display: flex; align-items: center; justify-content: center;
+            font-size: 32px; font-weight: 800; color: var(--text-main); cursor: pointer;
+            transition: transform 0.12s, background 0.12s, border-color 0.12s; user-select: none;
+        }
+        .slot:hover { transform: translateY(-2px); }
+        .slot.filled { border-style: solid; border-color: var(--block); background: #ffffff; box-shadow: 0 4px 0 #d7e4fb; cursor: grab; touch-action: none; }
+        .slot.filled:active { cursor: grabbing; }
+        .slot.good { border-color: var(--success); background: #eafff2; animation: pop 0.35s; }
+        .slot.drop-hover {
+            border-style: solid; border-color: var(--sun); background: #fff7e6;
+            transform: scale(1.1); box-shadow: 0 0 0 5px rgba(255, 184, 77, 0.28);
+        }
+        .slot.lifting { opacity: 0.35; }
+
+        /* ---------- Fact family house (Sublevel 4) ---------- */
+        #equation.family { display: block; }
+        .house { max-width: 470px; margin: 0 auto 4px; }
+        .house-roof { position: relative; height: 128px; }
+        .house-roof::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(145deg, #ffc46b, #ff9d2e);
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            filter: drop-shadow(0 4px 0 #d17f1f);
+        }
+        .roof-num {
+            position: absolute; width: 62px; height: 62px; border-radius: 50%;
+            background: #ffffff; border: 4px solid #d17f1f;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 28px; font-weight: 900; color: var(--text-main);
+            box-shadow: 0 4px 0 rgba(120, 70, 10, 0.25);
+        }
+        .rn-top { left: 50%; top: 2px; transform: translateX(-50%); }
+        .rn-left { left: 16%; bottom: 2px; }
+        .rn-right { right: 16%; bottom: 2px; }
+        .house-body {
+            background: #ffffff; border: 4px solid #ff9d2e; border-top: none;
+            border-radius: 0 0 18px 18px; padding: 16px 6px 14px;
+        }
+        .fam-row { display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .fam-row + .fam-row { margin-top: 10px; }
+
+        /* ---------- Number tile tray ---------- */
+        #tray-label { font-size: 14px; font-weight: 800; color: var(--text-muted); margin-bottom: 8px; }
+        #tray {
+            display: flex; align-items: center; justify-content: center; flex-wrap: wrap;
+            gap: 12px; min-height: 76px; margin-bottom: 14px;
+            border: 3px dashed transparent; border-radius: 20px; padding: 6px;
+            transition: border-color 0.15s, background 0.15s;
+        }
+        #tray.tray-hover { border-color: var(--sun); background: #fff7e6; }
+        .tile {
+            width: 64px; height: 64px; border-radius: 16px; border: none;
+            color: #ffffff; font-size: 30px; font-weight: 800; font-family: inherit;
+            cursor: grab; user-select: none; touch-action: none; text-shadow: 0 2px 0 rgba(0,0,0,0.15);
+            transition: transform 0.12s, box-shadow 0.12s;
+        }
+        .tile:hover { transform: translateY(-3px) rotate(-2deg); }
+        .tile:active { cursor: grabbing; }
+        .drag-ghost {
+            position: fixed; z-index: 160; pointer-events: none;
+            width: 64px; height: 64px; border-radius: 16px; color: #fff;
+            font-size: 30px; font-weight: 800; display: flex; align-items: center; justify-content: center;
+            transform: translate(-50%, -60%) rotate(-5deg) scale(1.06);
+            filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.3));
+            text-shadow: 0 2px 0 rgba(0,0,0,0.15);
+        }
+
+        #play-btns { display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; }
+        #feedback { min-height: 28px; font-size: 17px; font-weight: 800; margin-top: 10px; line-height: 1.45; }
+
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+        @keyframes deny { 0%, 100% { transform: translateX(0); } 30% { transform: translateX(-5px); } 60% { transform: translateX(5px); } }
+
+        #end-screen .mascot-big { font-size: 58px; }
+        #end-sub { font-weight: 700; color: #8a7458; font-size: 17px; margin-bottom: 14px; }
+        #end-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 120; }
+
+        @media (max-width: 640px) {
+            #game-container { padding: 14px 12px 16px; border-width: 4px; }
+            .game-title { font-size: 27px; }
+            .mascot-big { font-size: 48px; }
+            .slot { width: 52px; height: 52px; font-size: 26px; border-radius: 13px; }
+            .tile { width: 56px; height: 56px; font-size: 26px; border-radius: 14px; }
+            .op { font-size: 25px; }
+            .paren { font-size: 22px; }
+            #equation { gap: 5px; }
+            .house-roof { height: 108px; }
+            .roof-num { width: 52px; height: 52px; font-size: 23px; border-width: 3px; }
+            .fam-row { gap: 5px; }
+            #tray { gap: 9px; min-height: 66px; }
+            #banner-zh { font-size: 17px; }
+            #banner-en { font-size: 12.5px; }
+            #feedback { font-size: 14.5px; }
+            .intro-desc { font-size: 14.5px; }
+        }
+        @media (max-height: 720px) {
+            .mascot-big { font-size: 44px; }
+            .game-title { font-size: 26px; margin: 2px 0 4px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="deco" style="top: 8%; left: 5%; font-size: 44px; animation: bob 3s infinite;">🧮</div>
+    <div class="deco" style="top: 14%; right: 6%; font-size: 40px; animation: bob 3.4s infinite;">➕</div>
+    <div class="deco" style="bottom: 10%; left: 7%; font-size: 42px; animation: bob 2.8s infinite;">✨</div>
+    <div class="deco" style="bottom: 16%; right: 5%; font-size: 38px; animation: bob 3.2s infinite;">🌟</div>
+
+    <button id="back-btn" onclick="location.href='index.html'">&#8592; Home</button>
+
+    <div id="game-container">
+        <!-- LOCK -->
+        <div id="lock-screen">
+            <div class="mascot-big">🔒</div>
+            <h1 class="game-title">Equation Builder 砌算式</h1>
+            <p class="intro-desc">
+                這關需要密碼才能玩！快問老師或者家長拿密碼吧。
+                <br><span class="en">This level is locked — ask your teacher or parent for the password!</span>
+            </p>
+            <div id="lock-row">
+                <input id="lock-input" type="password" placeholder="Password 密碼" autocomplete="off" />
+                <button id="unlock-btn" class="btn">Unlock 解鎖！</button>
+            </div>
+            <div id="lock-error" class="hidden">密碼不對，再試一次！Wrong password — try again! 🤔</div>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- INTRO -->
+        <div id="intro-screen" class="hidden">
+            <div class="mascot-big">🧮</div>
+            <h1 class="game-title">Equation Builder 砌算式</h1>
+            <div class="tag-pill">選數字 · 砌算式 · Pick &amp; Build</div>
+            <div id="trophy-pill" class="hidden">🏆 全部關卡完成！All sublevels complete!</div>
+            <p class="intro-desc">
+                老師給了你幾張數字卡！選對的卡放入括號，砌出一條正確的算式 — 小心，有些卡是煙幕，不需要全部用上！
+                <br><span class="en">Use the number tiles to build a TRUE equation — watch out, some tiles are decoys and you don't need them all!</span>
+            </p>
+            <button class="btn" onclick="showSetup()">Play!</button>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- SETUP -->
+        <div id="setup-screen" class="hidden">
+            <h2 class="game-title">Equation Builder 🧮</h2>
+            <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+            <div class="level-grid">
+                <button class="level-card" id="card-1" onclick="startGame(1)">
+                    <span class="lv-emoji">🧱</span>
+                    <span><span class="lv-name">Sublevel 1: ( )+( )=( ) · 10以內</span><br><span class="lv-sub">5 tiles, pick 3 — two are decoys! 五選三，10以內加法！</span></span>
+                </button>
+                <button class="level-card" id="card-2" onclick="startGame(2)">
+                    <span class="lv-emoji">🚀</span>
+                    <span><span class="lv-name">Sublevel 2: ( )+( )=( ) · 20以內</span><br><span class="lv-sub">Bigger sums up to 20! 更大的數字，20以內加法！</span></span>
+                </button>
+                <button class="level-card" id="card-3" onclick="startGame(3)">
+                    <span class="lv-emoji">⚖️</span>
+                    <span><span class="lv-name">Sublevel 3: ( )+( )=( )+( )</span><br><span class="lv-sub">Use ALL 4 tiles — balance both sides! 四張卡全部用上，兩邊相等！</span></span>
+                </button>
+                <button class="level-card" id="card-4" onclick="startGame(4)">
+                    <span class="lv-emoji">🏠</span>
+                    <span><span class="lv-name">Sublevel 4: 數字屋 Fact Family</span><br><span class="lv-sub">2 additions + 2 subtractions from 3 numbers! 三個數字，砌出兩加兩減！</span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PLAY -->
+        <div id="play-screen" class="hidden">
+            <div id="progress-pill">第 1 / 6 題 Round</div>
+            <div id="phase-banner">
+                <div id="banner-zh"></div>
+                <div id="banner-en"></div>
+            </div>
+            <div id="equation"></div>
+            <div id="tray-label">數字卡 Number Tiles — 拖入格子，拖出來移除！Drag into the boxes — drag out to remove!</div>
+            <div id="tray"></div>
+            <div id="play-btns">
+                <button id="hint-btn" class="btn btn-secondary">💡 提示 Hint</button>
+                <button id="check-btn" class="btn" disabled>檢查！Check!</button>
+            </div>
+            <div id="feedback"></div>
+        </div>
+
+        <!-- END -->
+        <div id="end-screen" class="hidden">
+            <div class="mascot-big">🏆</div>
+            <h2 id="end-title" class="game-title">Equation Master!</h2>
+            <p id="end-sub"></p>
+            <div id="end-btns">
+                <button id="action-btn" class="btn">Play Again 再玩一次</button>
+                <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <script>
+        // ================= DATA =================
+        const ROUNDS = 6;
+        // tile looks: [gradient-light, main, shadow]
+        const TILE_COLORS = [
+            ['#7db4ff', '#4d96ff', '#2b5cb8'],
+            ['#ffc46b', '#ff9d2e', '#d17f1f'],
+            ['#ffa3c8', '#ff6b9d', '#d63377'],
+            ['#7fe3dc', '#2bbcb3', '#189a92'],
+            ['#c9aef2', '#8e5bd6', '#6a3fb5'],
+        ];
+
+        // ================= STATE =================
+        const introScreen = document.getElementById('intro-screen');
+        const setupScreen = document.getElementById('setup-screen');
+        const playScreen = document.getElementById('play-screen');
+        const endScreen = document.getElementById('end-screen');
+        const progressPill = document.getElementById('progress-pill');
+        const bannerZh = document.getElementById('banner-zh');
+        const bannerEn = document.getElementById('banner-en');
+        const equationEl = document.getElementById('equation');
+        const trayEl = document.getElementById('tray');
+        const hintBtn = document.getElementById('hint-btn');
+        const checkBtn = document.getElementById('check-btn');
+        const backBtn = document.getElementById('back-btn');
+        const feedback = document.getElementById('feedback');
+
+        let level = 1, rounds = [], roundIdx = 0;
+        let currentR = null, slots = [], locked = false, slotEls = [];
+
+        let audioStarted = false, synth;
+        function initAudio() { synth = new Tone.PolySynth(Tone.Synth).toDestination(); }
+        function playSound(type) {
+            if (!audioStarted || !synth) return;
+            const now = Tone.now();
+            if (type === 'pop') synth.triggerAttackRelease('A6', '32n', now);
+            else if (type === 'ding') synth.triggerAttackRelease('E6', '16n', now);
+            else if (type === 'correct') ['C5', 'E5', 'G5'].forEach((n, i) => synth.triggerAttackRelease(n, '16n', now + i * 0.07));
+            else if (type === 'wrong') synth.triggerAttackRelease('C2', '8n', now);
+            else if (type === 'fanfare') ['C5', 'E5', 'G5', 'C6'].forEach((n, i) => synth.triggerAttackRelease(n, '8n', now + i * 0.13));
+        }
+
+        function shuffle(a) { return a.sort(() => Math.random() - 0.5); }
+        function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+
+        // ================= FLOW =================
+        // password gate — unlocks the intro screen
+        const lockScreen = document.getElementById('lock-screen');
+        const lockInput = document.getElementById('lock-input');
+        const lockError = document.getElementById('lock-error');
+        const PASS_HASH = 1056886225; // djb2-xor of the password
+        function tryUnlock() {
+            const v = lockInput.value.trim().toLowerCase();
+            let h = 5381;
+            for (let i = 0; i < v.length; i++) h = ((h * 33) ^ v.charCodeAt(i)) >>> 0;
+            if (v && h === PASS_HASH) {
+                if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+                playSound('correct');
+                lockScreen.classList.add('hidden');
+                introScreen.classList.remove('hidden');
+            } else {
+                playSound('wrong');
+                lockError.classList.remove('hidden');
+                lockInput.value = '';
+                lockInput.classList.add('error');
+                setTimeout(() => lockInput.classList.remove('error'), 400);
+                lockInput.focus();
+            }
+        }
+        document.getElementById('unlock-btn').onclick = () => tryUnlock();
+        lockInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+        function setBackBtn(mode) {
+            if (mode === 'menu') {
+                backBtn.innerHTML = '&#8592; Menu 目錄';
+                backBtn.onclick = () => backToMenu();
+            } else {
+                backBtn.innerHTML = '&#8592; Home';
+                backBtn.onclick = () => location.href = 'index.html';
+            }
+        }
+        function backToMenu() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            setBackBtn('home');
+        }
+
+        function showSetup() {
+            if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+            introScreen.classList.add('hidden');
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+        }
+        document.getElementById('picker-btn').onclick = () => showSetup();
+
+        function startGame(l) {
+            if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+            level = l;
+            rounds = buildRounds();
+            roundIdx = 0;
+            setupScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+            introScreen.classList.add('hidden');
+            playScreen.classList.remove('hidden');
+            setBackBtn('menu');
+            showRound();
+        }
+
+        // ================= PUZZLE GENERATION =================
+        // count unordered pairs (i<j) whose sum equals some value in the set —
+        // values are distinct and positive, so a matched sum can never be i or j itself
+        function countWays(vals) {
+            let ways = 0;
+            for (let i = 0; i < vals.length; i++) for (let j = i + 1; j < vals.length; j++) {
+                if (vals.includes(vals[i] + vals[j])) ways++;
+            }
+            return ways;
+        }
+
+        // ( )+( )=( ) — 5 tiles, exactly one possible addition sentence
+        function genSum(minC, maxC, tileMax) {
+            for (let t = 0; t < 300; t++) {
+                const c = randInt(minC, maxC);
+                const a = randInt(Math.max(1, c - 12), Math.min(9, c - 2));
+                const b = c - a;
+                if (a >= b || b > 12) continue;
+                const base = [a, b, c];
+                const pool = [];
+                for (let n = 1; n <= tileMax; n++) if (!base.includes(n)) pool.push(n);
+                shuffle(pool);
+                for (let i = 0; i < pool.length; i++) for (let j = i + 1; j < pool.length; j++) {
+                    const set = [...base, pool[i], pool[j]];
+                    if (countWays(set) === 1) {
+                        const tiles = shuffle([...set]);
+                        return { type: 'sum3', tiles, sol: [tiles.indexOf(a), tiles.indexOf(b), tiles.indexOf(c)] };
+                    }
+                }
+            }
+            const tiles = [3, 6, 9, 1, 10]; // safe fallback
+            return { type: 'sum3', tiles, sol: [0, 1, 2] };
+        }
+
+        // ( )+( )=( )+( ) — 4 tiles, exactly one equal-sum split
+        function genBalance() {
+            for (let t = 0; t < 200; t++) {
+                const n = randInt(1, 9), x = randInt(1, 4), y = randInt(x + 1, 6);
+                if (n + x + y > 15) continue;
+                // n + (n+x+y) == (n+x) + (n+y); the other two pairings are never equal
+                const tiles = shuffle([n, n + x + y, n + x, n + y]);
+                return { type: 'bal4', tiles, sol: [tiles.indexOf(n), tiles.indexOf(n + x + y), tiles.indexOf(n + x), tiles.indexOf(n + y)] };
+            }
+            const tiles = [7, 4, 5, 6]; // safe fallback: 7+4 = 5+6
+            return { type: 'bal4', tiles, sol: [0, 1, 2, 3] };
+        }
+
+        // Fact family house — a+b=c; build a+b=c, b+a=c, c−a=b, c−b=a (a<b, so the 4 facts are the only true ones)
+        function genFamily() {
+            for (let t = 0; t < 200; t++) {
+                const c = randInt(12, 20);
+                const a = randInt(Math.max(2, c - 11), Math.min(9, c - 4));
+                const b = c - a;
+                if (a >= b || b > 11) continue;
+                const tiles = shuffle([a, b, c]);
+                const ai = tiles.indexOf(a), bi = tiles.indexOf(b), ci = tiles.indexOf(c);
+                // canonical slot answers: a+b=c, b+a=c, c−a=b, c−b=a (either row order accepted on check)
+                return { type: 'family', fam: [a, b, c], tiles, sol: [ai, bi, ci, bi, ai, ci, ci, ai, bi, ci, bi, ai] };
+            }
+            const tiles = [7, 9, 16]; // safe fallback
+            return { type: 'family', fam: [7, 9, 16], tiles, sol: [0, 1, 2, 1, 0, 2, 2, 0, 1, 2, 1, 0] };
+        }
+
+        function genRound() {
+            if (level === 1) return genSum(5, 10, 10);
+            if (level === 2) return genSum(11, 18, 19);
+            if (level === 4) return genFamily();
+            return genBalance();
+        }
+
+        function buildRounds() {
+            const target = level === 4 ? 3 : ROUNDS; // 12 slots per house — 3 rounds is plenty
+            const out = [], seen = new Set();
+            let guard = 0;
+            while (out.length < target && guard++ < 500) {
+                const r = genRound();
+                const key = [...r.tiles].sort((p, q) => p - q).join(',');
+                if (seen.has(key)) continue;
+                seen.add(key);
+                out.push(r);
+            }
+            return out;
+        }
+
+        // ================= RENDER =================
+        function tileStyle(i) {
+            const c = TILE_COLORS[i % TILE_COLORS.length];
+            return `background: linear-gradient(145deg, ${c[0]}, ${c[1]}); box-shadow: 0 5px 0 ${c[2]};`;
+        }
+
+        function makeSlotEl(s) {
+            const d = document.createElement('div');
+            d.className = 'slot' + (slots[s] !== null ? ' filled' : '');
+            d.dataset.slot = s;
+            if (slots[s] !== null) {
+                const ti = slots[s];
+                d.textContent = currentR.tiles[ti];
+                d.style.color = TILE_COLORS[ti % TILE_COLORS.length][1];
+                if (!locked) d.addEventListener('pointerdown', e => startDrag(e, 'slot', ti, s));
+            }
+            if (locked) d.classList.add('good');
+            slotEls.push(d);
+            return d;
+        }
+        function makeOpEl(txt) {
+            const o = document.createElement('span');
+            o.className = 'op';
+            o.textContent = txt;
+            return o;
+        }
+
+        function renderEquation() {
+            equationEl.innerHTML = ''; slotEls = [];
+            if (currentR.type === 'family') { renderFamily(); return; }
+            equationEl.classList.remove('family');
+            const n = slots.length;
+            for (let s = 0; s < n; s++) {
+                const p1 = document.createElement('span'); p1.className = 'paren'; p1.textContent = '(';
+                equationEl.appendChild(p1);
+                equationEl.appendChild(makeSlotEl(s));
+                const p2 = document.createElement('span'); p2.className = 'paren'; p2.textContent = ')';
+                equationEl.appendChild(p2);
+                if (s < n - 1) {
+                    equationEl.appendChild(makeOpEl(s === 1 ? '=' : '+')); // ( )+( )=( ) and ( )+( )=( )+( )
+                }
+            }
+        }
+
+        function renderFamily() {
+            equationEl.classList.add('family');
+            const [a, b, c] = currentR.fam;
+            const house = document.createElement('div'); house.className = 'house';
+            const roof = document.createElement('div'); roof.className = 'house-roof';
+            [['rn-top', c], ['rn-left', a], ['rn-right', b]].forEach(([cls, val]) => {
+                const n = document.createElement('div');
+                n.className = 'roof-num ' + cls;
+                n.textContent = val;
+                roof.appendChild(n);
+            });
+            house.appendChild(roof);
+            const body = document.createElement('div'); body.className = 'house-body';
+            for (let r = 0; r < 4; r++) {
+                const row = document.createElement('div'); row.className = 'fam-row';
+                row.appendChild(makeSlotEl(r * 3));
+                row.appendChild(makeOpEl(r < 2 ? '+' : '−'));
+                row.appendChild(makeSlotEl(r * 3 + 1));
+                row.appendChild(makeOpEl('='));
+                row.appendChild(makeSlotEl(r * 3 + 2));
+                body.appendChild(row);
+            }
+            house.appendChild(body);
+            equationEl.appendChild(house);
+        }
+
+        function renderTray() {
+            trayEl.innerHTML = '';
+            currentR.tiles.forEach((v, i) => {
+                if (currentR.type !== 'family' && slots.includes(i)) return; // family tiles are reusable — they stay in the tray
+                const t = document.createElement('button');
+                t.className = 'tile';
+                t.textContent = v;
+                t.style.cssText = tileStyle(i);
+                t.dataset.tile = i;
+                t.addEventListener('pointerdown', e => startDrag(e, 'tray', i));
+                trayEl.appendChild(t);
+            });
+        }
+
+        function renderAll() {
+            renderEquation();
+            renderTray();
+            checkBtn.disabled = slots.includes(null) || locked;
+        }
+
+        // ================= INTERACTION: DRAG & DROP (tap works too) =================
+        function slotAt(x, y) {
+            const el = document.elementFromPoint(x, y);
+            const s = el && el.closest ? el.closest('.slot') : null;
+            return s && equationEl.contains(s) ? s : null;
+        }
+        function overTrayAt(x, y) {
+            const el = document.elementFromPoint(x, y);
+            return !!(el && el.closest && el.closest('#tray'));
+        }
+
+        // tap a tray tile: pop it into the first empty slot
+        function placeTile(ti) {
+            if (locked) return;
+            const s = slots.indexOf(null);
+            if (s === -1) {
+                playSound('wrong');
+                feedback.style.color = '#d63031';
+                feedback.innerText = '格子滿了！想換卡？把卡拖出來，或點一下格子移除它。All slots are full — drag a tile out of a box (or tap it) to remove it!';
+                return;
+            }
+            slots[s] = ti;
+            feedback.innerText = '';
+            playSound('ding');
+            renderAll();
+        }
+
+        let dragSt = null; // active drag: { kind:'tray'|'slot', tile, from, ghost, moved, ... }
+        function startDrag(e, kind, tile, from) {
+            if (locked || dragSt) return;
+            e.preventDefault();
+            const g = document.createElement('div');
+            g.className = 'drag-ghost';
+            g.textContent = currentR.tiles[tile];
+            g.style.cssText = tileStyle(tile);
+            document.body.appendChild(g);
+            dragSt = { kind, tile, from, ghost: g, moved: false, startX: e.clientX, startY: e.clientY, hoverSlot: null };
+            g.style.left = e.clientX + 'px'; g.style.top = e.clientY + 'px';
+            document.addEventListener('pointermove', onDragMove);
+            document.addEventListener('pointerup', onDragEnd);
+            document.addEventListener('pointercancel', onDragCancel);
+        }
+        function setDropHover(sEl, trayOn) {
+            if (dragSt.hoverSlot && dragSt.hoverSlot !== sEl) dragSt.hoverSlot.classList.remove('drop-hover');
+            dragSt.hoverSlot = sEl;
+            if (sEl) sEl.classList.add('drop-hover');
+            trayEl.classList.toggle('tray-hover', !!trayOn);
+        }
+        function onDragMove(ev) {
+            if (!dragSt) return;
+            if (!dragSt.moved && Math.hypot(ev.clientX - dragSt.startX, ev.clientY - dragSt.startY) > 9) {
+                dragSt.moved = true;
+                if (dragSt.kind === 'slot' && slotEls[dragSt.from]) slotEls[dragSt.from].classList.add('lifting');
+            }
+            dragSt.ghost.style.left = ev.clientX + 'px';
+            dragSt.ghost.style.top = ev.clientY + 'px';
+            if (dragSt.moved) setDropHover(slotAt(ev.clientX, ev.clientY), dragSt.kind === 'slot' && overTrayAt(ev.clientX, ev.clientY));
+        }
+        function endDragListeners() {
+            document.removeEventListener('pointermove', onDragMove);
+            document.removeEventListener('pointerup', onDragEnd);
+            document.removeEventListener('pointercancel', onDragCancel);
+        }
+        function clearDragVisuals() {
+            if (dragSt.hoverSlot) dragSt.hoverSlot.classList.remove('drop-hover');
+            trayEl.classList.remove('tray-hover');
+            dragSt.ghost.remove();
+        }
+        function onDragCancel() { // aborted touch — put everything back
+            if (!dragSt) return;
+            endDragListeners(); clearDragVisuals(); dragSt = null;
+        }
+        function onDragEnd(ev) {
+            if (!dragSt) return;
+            const st = dragSt;
+            const sEl = slotAt(ev.clientX, ev.clientY);
+            endDragListeners(); clearDragVisuals(); dragSt = null;
+            feedback.innerText = '';
+
+            if (!st.moved) { // plain tap, no real drag
+                if (st.kind === 'tray') placeTile(st.tile); // tap a tile: first empty slot
+                else { slots[st.from] = null; playSound('pop'); renderAll(); } // tap a filled slot: take it out
+                return;
+            }
+            if (st.kind === 'tray') {
+                if (sEl) { // drop on a slot: place — a tile already there goes back to the tray
+                    slots[+sEl.dataset.slot] = st.tile;
+                    playSound('ding');
+                    renderAll();
+                } // dropped anywhere else: tile stays in the tray
+            } else {
+                if (sEl && +sEl.dataset.slot !== st.from) { // drop on another slot: move / swap
+                    const t = +sEl.dataset.slot;
+                    const tmp = slots[t];
+                    slots[t] = slots[st.from];
+                    slots[st.from] = tmp;
+                    playSound('ding');
+                    renderAll();
+                } else if (!sEl) { // dragged out of the box: back to the tray
+                    slots[st.from] = null;
+                    playSound('pop');
+                    renderAll();
+                } // dropped back on its own slot: nothing changes
+            }
+        }
+
+        // ================= HINT & CHECK =================
+        hintBtn.onclick = () => {
+            if (locked) return;
+            const sol = currentR.sol;
+            for (let s = 0; s < sol.length; s++) {
+                if (slots[s] === sol[s]) continue;
+                const need = sol[s];
+                if (currentR.type === 'family') {
+                    slots[s] = need; // tiles are reusable — just place it
+                } else {
+                    const at = slots.indexOf(need);
+                    const occupant = slots[s];
+                    if (at !== -1) slots[at] = occupant; // swap the needed tile over
+                    slots[s] = need;
+                }
+                playSound('ding');
+                feedback.style.color = '#9c6500';
+                feedback.innerText = '放了一個正確的給你，想想為什麼！One correct tile placed for you — think about why! 💡';
+                renderAll();
+                return;
+            }
+        };
+
+        checkBtn.onclick = () => {
+            if (locked || slots.includes(null)) return;
+            const v = slots.map(i => currentR.tiles[i]);
+            let ok, wrongMsg;
+            if (currentR.type === 'sum3') {
+                const l = v[0] + v[1], r = v[2];
+                ok = l === r;
+                wrongMsg = `${v[0]} + ${v[1]} = ${l}，不是 ${r}！再調整一下卡！That's ${l}, not ${r} — swap some tiles and try again!`;
+            } else if (currentR.type === 'bal4') {
+                const l = v[0] + v[1], r = v[2] + v[3];
+                ok = l === r;
+                wrongMsg = `左邊 ${v[0]}+${v[1]}=${l}，右邊 ${v[2]}+${v[3]}=${r} — 兩邊要相等才可以！The two sides must be EQUAL — try again!`;
+            } else { // family: every row must be true, and all 4 facts different
+                ok = true; wrongMsg = '';
+                for (let r = 0; r < 4; r++) {
+                    const [x, y, z] = [v[3 * r], v[3 * r + 1], v[3 * r + 2]];
+                    if (r < 2 && x + y !== z) {
+                        ok = false;
+                        wrongMsg = `第 ${r + 1} 行：${x} + ${y} = ${x + y}，不是 ${z}！再想想！Row ${r + 1}: that's ${x + y}, not ${z} — try again!`;
+                        break;
+                    }
+                    if (r >= 2) {
+                        if (x < y) {
+                            ok = false;
+                            wrongMsg = `第 ${r + 1} 行：${x} − ${y} 不夠減！減法算式要把最大的數字放最前！Row ${r + 1}: not enough to subtract — the biggest number goes first!`;
+                            break;
+                        }
+                        if (x - y !== z) {
+                            ok = false;
+                            wrongMsg = `第 ${r + 1} 行：${x} − ${y} = ${x - y}，不是 ${z}！再想想！Row ${r + 1}: that's ${x - y}, not ${z} — try again!`;
+                            break;
+                        }
+                    }
+                }
+                if (ok) { // all true — now the 4 facts must all be different
+                    const rows = [0, 1, 2, 3].map(r => `${v[3 * r]},${v[3 * r + 1]},${v[3 * r + 2]}`);
+                    if (new Set(rows).size !== 4) {
+                        ok = false;
+                        wrongMsg = '四條算式要全部不同！試試把其中一行的大數調換位置！All four facts must be DIFFERENT — try swapping the order in one row!';
+                    }
+                }
+            }
+            if (ok) {
+                locked = true;
+                playSound('correct');
+                renderAll();
+                feedback.style.color = '#00b894';
+                let eqText, praises;
+                if (currentR.type === 'sum3') {
+                    eqText = `${v[0]} + ${v[1]} = ${v[2]}`;
+                } else if (currentR.type === 'bal4') {
+                    eqText = `${v[0]} + ${v[1]} = ${v[2]} + ${v[3]}`;
+                } else {
+                    const [a, b, c] = currentR.fam;
+                    eqText = `${a}+${b}=${c} · ${b}+${a}=${c} · ${c}−${a}=${b} · ${c}−${b}=${a}`;
+                }
+                if (currentR.type === 'family') {
+                    praises = [
+                        `答對了！數字屋一家人全部到齊：${eqText} 🎉`,
+                        `正確！${eqText} 🎉 加法和減法真的是一家人！Addition and subtraction really are one family!`,
+                    ];
+                } else {
+                    praises = [
+                        `答對了！${eqText} 🎉 真棒！Correct — well done!`,
+                        `${eqText} ✓ 砌得好！Beautifully built! 🎉`,
+                        `正確！${eqText} 🎉 你是砌算式高手！You're an equation master!`,
+                    ];
+                }
+                feedback.innerText = praises[Math.floor(Math.random() * praises.length)];
+                setTimeout(nextRound, 1800);
+            } else {
+                playSound('wrong');
+                equationEl.classList.add('shake');
+                setTimeout(() => equationEl.classList.remove('shake'), 380);
+                feedback.style.color = '#d63031';
+                feedback.innerText = wrongMsg;
+            }
+        };
+
+        // ================= ROUNDS =================
+        const BANNERS = {
+            1: ['五張卡選三張，砌出 ( )+( )=( )！有兩張是煙幕卡 🃏', 'Pick 3 of the 5 tiles to build ( )+( )=( ) — two tiles are decoys!'],
+            2: ['五張卡選三張，砌出 ( )+( )=( )！答案會大於 10 🚀', 'Pick 3 of the 5 tiles — this time the answer is bigger than 10!'],
+            3: ['四張卡全部用上，砌出 ( )+( )=( )+( )，兩邊要相等！⚖️', 'Use ALL 4 tiles to build ( )+( )=( )+( ) — both sides must be equal!'],
+            4: ['數字屋裡的三個數字是一家人！用它們砌出兩條加法、兩條減法算式！🏠', 'The three numbers in the house are a fact family! Build 2 additions and 2 subtractions with them!'],
+        };
+
+        const TRAY_LABEL = '數字卡 Number Tiles — 拖入格子，拖出來移除！Drag into the boxes — drag out to remove!';
+        const TRAY_LABEL_FAMILY = '數字卡可以重複使用！Reusable tiles — drag them into every box they belong in!';
+
+        function showRound() {
+            if (playScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            currentR = rounds[roundIdx];
+            slots = new Array(currentR.sol.length).fill(null);
+            locked = false;
+            progressPill.innerText = `第 ${roundIdx + 1} / ${rounds.length} 題 Round`;
+            bannerZh.innerText = BANNERS[level][0];
+            bannerEn.innerText = BANNERS[level][1];
+            document.getElementById('tray-label').innerText = currentR.type === 'family' ? TRAY_LABEL_FAMILY : TRAY_LABEL;
+            feedback.innerText = '';
+            renderAll();
+        }
+
+        function nextRound() {
+            if (playScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            roundIdx++;
+            if (roundIdx < rounds.length) { showRound(); return; }
+            showEnd();
+        }
+
+        // ================= END & TROPHIES =================
+        const END_SUBS = {
+            1: '煙幕卡都騙不到你！The decoy tiles can’t fool you!',
+            2: '大數字也難不倒你，厲害！Even the big sums can’t stop you!',
+            3: '每條算式兩邊都平衡了，你是天秤大師！You balanced every equation — scale master!',
+            4: '加法減法一家人，全部都被你找出來了！You found the whole fact family!',
+        };
+
+        function showEnd() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            setBackBtn('home');
+            localStorage.setItem('equation_l' + level + '_complete', 'true');
+            decorateCards();
+            document.getElementById('end-title').innerText = 'Equation Master! 砌算式小達人！';
+            document.getElementById('end-sub').innerText = END_SUBS[level];
+            document.getElementById('action-btn').onclick = () => startGame(level);
+            playSound('fanfare');
+            fireConfetti();
+        }
+
+        function decorateCards() {
+            let all = true;
+            for (let i = 1; i <= 4; i++) {
+                let done = false;
+                try { done = localStorage.getItem('equation_l' + i + '_complete') === 'true'; } catch (e) {}
+                const name = document.querySelector('#card-' + i + ' .lv-name');
+                if (done && name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+                if (!done) all = false;
+            }
+            document.getElementById('trophy-pill').classList.toggle('hidden', !all);
+        }
+        decorateCards();
+
+        // ================= CONFETTI =================
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        function fireConfetti() {
+            canvas.width = innerWidth; canvas.height = innerHeight;
+            const pieces = [];
+            const colors = ['#4d96ff', '#ffb84d', '#ff6b9d', '#2bbcb3', '#ffffff', '#8e5bd6'];
+            for (let i = 0; i < 130; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width, y: -20 - Math.random() * canvas.height * 0.5,
+                    w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
+                    c: colors[Math.floor(Math.random() * colors.length)],
+                    vy: 2 + Math.random() * 3, vx: -1.5 + Math.random() * 3,
+                    rot: Math.random() * Math.PI, vr: -0.1 + Math.random() * 0.2,
+                });
+            }
+            let start = performance.now();
+            (function tick(now) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                pieces.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+                    if (p.y < canvas.height + 30) alive = true;
+                    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+                    ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                });
+                if (alive && now - start < 4200) requestAnimationFrame(tick);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            })(start);
+        }
+    </script>
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>選對數字卡砌出正確算式：由（ ）+（ ）=（ ），進階到兩邊平衡的（ ）+（ ）=（ ）+（ ），再到數字屋 — 用三個數字砌出兩加兩減四條算式，體會加減互逆的「一家人」關係。這種題型訓練加法組合的靈活度，還有「等號」的真正意思 — 等號不是「答案寫在後面」，而是「兩邊相等」。煙幕卡則訓練排除與試誤。</p>
+        <p class="pg-en">Pick the right tiles to build true equations: from ( )+( )=( ), to balancing ( )+( )=( )+( ), to the Fact Family House — using three numbers to build two additions and two subtractions, experiencing how addition and subtraction are inverse "family members". This trains flexible addition facts and the true meaning of the equals sign — not "the answer goes after it", but "both sides are equal". Decoy tiles add elimination and trial-and-error.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>鼓勵「估完要驗算」：砌完之後問「3+6是不是真的9？兩邊是不是相等？」砌錯了不要緊 — 遊戲會告訴他實際算出來是多少，這個即時回饋本身就是最好的學習機會。</p>
+        <p class="pg-en">Encourage "guess, then check": after building, ask "is 3+6 really 9? Are both sides equal?" Wrong answers are fine — the game shows what the equation actually equals, and that instant feedback is the best learning moment.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>撲克牌是絕佳道具：抽4張牌砌一條兩邊相等的算式；或者抽3張牌玩數字屋，砌出四條加減算式。一家人輪流出題 — 由小朋友出題考你，效果最好。</p>
+        <p class="pg-en">Playing cards are the perfect prop: draw 4 cards to build an equation with equal sides; or draw 3 cards and play fact family house, building four addition and subtraction facts. Take turns setting puzzles as a family — letting your child test you works best.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

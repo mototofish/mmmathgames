@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#e11d48">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Left Right 左左右右 | 左右方向 · Left & Right – MMathWorld</title>
+    <meta name="description" content="Left Right 左左右右遊戲：背向你、面向你的小朋友，舉起的是左手還是右手？想像自己是主角，向左轉向右轉後會看到什麼？訓練左右概念與空間想像。Which hand is raised — left or right? Turn left or right and say what you see! Spatial reasoning game for kids. 免費升小數學遊戲！">
+    <link rel="canonical" href="https://mathgames.missman.world/left_right">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Left Right 左左右右 | 左右方向 · Left & Right – MMathWorld">
+    <meta property="og:description" content="Left Right 左左右右遊戲：舉左手還是右手？向左轉向右轉會看到什麼？訓練左右概念與空間想像！Left hand or right hand? Turn and see! Free spatial reasoning game for kids! 免費升小數學遊戲！">
+    <meta property="og:url" content="https://mathgames.missman.world/left_right">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Left Right 左左右右 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Left Right 左左右右 | 左右方向 – MMathWorld">
+    <meta name="twitter:description" content="Left Right 左左右右遊戲：舉左手還是右手？向左轉向右轉會看到什麼？Left hand or right hand? Turn and see!">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Left Right",
+      "alternateName": "左左右右",
+      "url": "https://mathgames.missman.world/left_right",
+      "description": "Left Right 左左右右遊戲：背向你、面向你的小朋友，舉起的是左手還是右手？想像自己是主角，向左轉向右轉後會看到什麼？訓練左右概念、觀點轉換與空間想像。",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": ["zh-Hant-HK", "en"],
+      "genre": ["Educational", "Math"],
+      "gamePlatform": ["Web Browser", "Mobile Web"],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "HKD" },
+      "audience": { "@type": "PeopleAudience", "suggestedMinAge": 4, "suggestedMaxAge": 8 },
+      "author": { "@type": "Organization", "name": "MMathWorld", "url": "https://mathgames.missman.world/" },
+      "learningResourceType": "Educational game",
+      "teaches": "左右概念、觀點轉換（面向與背向）、空間想像與方向旋轉 Left and right, perspective taking (facing vs. back view), spatial imagination and turning"
+    }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%23e11d48'/%3E%3Ctext x='24' y='34' font-size='26' text-anchor='middle'%3E🧭%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        :root {
+            --rose: #e11d48; --rose-dark: #9f1239;
+            --purp: #9333c9; --purp-dark: #7e22a5;
+            --gold: #f0b429; --gold-dark: #c97b12;
+            --cream: #fffdf8; --danger: #e74c3c; --success: #2ecc71;
+            --text-main: #3d3550; --text-muted: #8a81a0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body {
+            min-height: 100vh; min-height: 100dvh;
+            background: linear-gradient(180deg, #ffd3dc 0%, #ffe9ed 45%, #fff8ec 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: safe center;
+            padding: 14px; overflow-x: hidden; touch-action: manipulation;
+        }
+        .hidden { display: none !important; }
+        .deco { position: fixed; pointer-events: none; opacity: 0.5; z-index: 0; }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+        #back-btn {
+            position: fixed; top: 12px; left: 12px; z-index: 60;
+            background: #ffffff; border: 3px solid #f6c6d1; color: #9f1239;
+            font-size: 15px; font-weight: 800; border-radius: 999px; padding: 7px 16px;
+            cursor: pointer; box-shadow: 0 3px 0 #f6c6d1; transition: transform 0.12s;
+        }
+        #back-btn:hover { transform: translateY(-2px); }
+
+        #game-container {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: var(--cream); border: 5px solid #f43f5e; border-radius: 28px;
+            box-shadow: 0 10px 0 #9f1239, 0 22px 40px rgba(90, 20, 40, 0.25);
+            padding: 20px 22px 24px; text-align: center;
+            max-height: calc(100dvh - 28px); overflow-y: auto;
+        }
+
+        .mascot-big { font-size: 64px; animation: bob 2.6s infinite ease-in-out; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.18)); }
+        .game-title { font-size: 36px; font-weight: 900; color: var(--rose-dark); margin: 4px 0 8px; }
+        .tag-pill {
+            display: inline-block; background: #ffe4e9; color: var(--rose-dark);
+            border: 3px solid #f8c3cf; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 6px 0 12px;
+        }
+        #trophy-pill {
+            display: inline-block; background: linear-gradient(145deg, #fff3c4, #ffe082);
+            border: 3px solid #f0c93f; color: #9c6500; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 4px 0 8px;
+        }
+        .intro-desc { font-size: 16px; font-weight: 700; color: #4f5a6e; line-height: 1.55; max-width: 560px; margin: 0 auto 16px; }
+        .intro-desc .en { font-size: 13.5px; color: #9aa3b8; }
+
+        .btn {
+            background: linear-gradient(145deg, #fb7185, #e11d48); color: #fff;
+            border: none; border-radius: 999px; font-size: 20px; font-weight: 800;
+            padding: 13px 36px; cursor: pointer; box-shadow: 0 5px 0 var(--rose-dark);
+            transition: transform 0.12s, box-shadow 0.12s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--rose-dark); }
+        .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn-secondary { background: linear-gradient(145deg, #ffd88a, #ffb84d); box-shadow: 0 5px 0 #d97706; font-size: 16px; padding: 11px 24px; }
+        .btn-secondary:active { box-shadow: 0 2px 0 #d97706; }
+        #play-btns { display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; }
+
+        #lock-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+        #lock-input {
+            font-family: inherit; font-size: 18px; font-weight: 700; padding: 12px 18px; width: 220px;
+            border: 3px solid #f8c3cf; border-radius: 999px; outline: none; text-align: center; color: var(--text-main);
+        }
+        #lock-input:focus { border-color: var(--rose); }
+        #lock-input.error { border-color: var(--danger); animation: deny 0.35s; }
+        #unlock-btn { background: var(--rose); box-shadow: 0 6px 0 var(--rose-dark); }
+        #unlock-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        #unlock-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--rose-dark); }
+        #lock-error { margin-top: 12px; font-weight: 800; color: var(--danger); font-size: 15px; }
+
+        .level-grid { display: flex; flex-direction: column; gap: 12px; max-width: 560px; margin: 0 auto; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #ffffff; border: 3px solid #f8d3dc; border-radius: 18px;
+            padding: 13px 18px; cursor: pointer; box-shadow: 0 4px 0 #fbe0e6;
+            transition: transform 0.12s, box-shadow 0.12s; font-family: inherit;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 7px 0 #fbe0e6; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-main); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #9aa3b8; }
+
+        #progress-pill {
+            display: inline-block; background: #f3e8fd; color: var(--purp-dark);
+            border: 3px solid #ddc5f5; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 3px 14px; margin-bottom: 8px;
+        }
+
+        #phase-banner {
+            background: #ffffff; border: 3px solid #f8d3dc; border-radius: 18px;
+            padding: 10px 16px 12px; margin-bottom: 12px;
+        }
+        #phase-banner.shake { animation: deny 0.35s; }
+        #banner-zh { font-size: 18px; font-weight: 900; color: var(--text-main); line-height: 1.4; }
+        #banner-en { font-size: 13.5px; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
+
+        #rule-chip {
+            display: inline-block; background: linear-gradient(145deg, #fff3c4, #ffe082);
+            border: 3px solid #f0c93f; color: #9c6500; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 5px 18px; margin-bottom: 12px; line-height: 1.45;
+        }
+
+        /* ---------- Question card ---------- */
+        #qcard {
+            background: #ffffff; border: 3px solid #f8c3cf; border-radius: 20px;
+            padding: 14px 16px 16px; margin-bottom: 14px;
+        }
+        #q-zh { font-size: 21px; font-weight: 900; color: var(--text-main); line-height: 1.55; }
+        #q-zh .hl { color: var(--rose-dark); background: #ffe0e6; border-radius: 8px; padding: 0 7px; }
+        #q-en { font-size: 14px; font-weight: 700; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+
+        /* ---------- Sublevel 1: kid cards ---------- */
+        #stage { margin-bottom: 12px; }
+        #kid-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+        .kid-card {
+            background: #ffffff; border: 4px solid #f0dfe4; border-radius: 20px;
+            padding: 10px 8px 6px; cursor: pointer; transition: transform 0.12s, border-color 0.12s;
+            position: relative;
+        }
+        .kid-card:hover { transform: translateY(-3px); }
+        .kid-card svg { display: block; width: 110px; height: auto; }
+        .kid-card.good { border-color: var(--success); background: #eafff2; animation: pop 0.35s; }
+        .kid-card.bad { border-color: var(--danger); background: #ffeceb; animation: deny 0.35s; }
+        .kid-card .tick {
+            position: absolute; top: -12px; right: -10px; font-size: 26px;
+            display: none;
+        }
+        .kid-card.good .tick { display: block; }
+
+        /* ---------- Sublevel 2: turn scene ---------- */
+        #scene {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+            max-width: 430px; margin: 0 auto;
+        }
+        .cell {
+            background: #ffffff; border: 3px solid #f0dfe4; border-radius: 16px;
+            min-height: 92px; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 2px;
+            padding: 8px 4px;
+        }
+        .cell.empty { background: transparent; border-color: transparent; }
+        .cell.obj { cursor: pointer; transition: transform 0.12s, border-color 0.12s; }
+        .cell.obj:hover { transform: translateY(-3px); border-color: #f43f5e; }
+        .cell.obj .obj-emoji { font-size: 40px; line-height: 1.1; }
+        .cell.obj .obj-name { font-size: 14px; font-weight: 800; color: #5d6b8a; }
+        .cell.obj.good { border-color: var(--success); background: #eafff2; animation: pop 0.35s; }
+        .cell.obj.bad { border-color: var(--danger); background: #ffeceb; animation: deny 0.35s; }
+        .cell.center { background: #fff6f7; border-color: #f8c3cf; }
+        .kid-face { font-size: 44px; line-height: 1.1; }
+        .kid-turn { width: 66px; transition: transform 0.26s ease; }
+        .kid-turn svg { display: block; width: 100%; height: auto; }
+        .kid-turn.flip { transform: rotateY(90deg) scale(0.85); }
+        #dir-arrow {
+            font-size: 30px; font-weight: 900; color: var(--rose);
+            line-height: 1; transition: transform 0.6s ease-in-out;
+        }
+        #scene-caption { font-size: 13px; font-weight: 800; color: #9aa3b8; margin-top: 8px; }
+
+        #feedback { min-height: 28px; font-size: 17px; font-weight: 800; margin-top: 10px; line-height: 1.45; }
+        #feedback.ok { color: #1e8e4e; }
+        #feedback.warn { color: var(--danger); }
+        #feedback .fen { font-size: 14px; font-weight: 700; color: #4a9e6d; }
+
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+        @keyframes deny { 0%, 100% { transform: translateX(0); } 30% { transform: translateX(-5px); } 60% { transform: translateX(5px); } }
+
+        #end-screen .mascot-big { font-size: 58px; }
+        #end-stars { font-size: 40px; margin: 4px 0 6px; letter-spacing: 6px; }
+        #end-sub { font-weight: 700; color: #9f1239; font-size: 17px; margin-bottom: 14px; }
+        #end-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 120; }
+
+        @media (max-width: 640px) {
+            #game-container { padding: 14px 12px 16px; border-width: 4px; }
+            .game-title { font-size: 28px; }
+            .mascot-big { font-size: 50px; }
+            #banner-zh { font-size: 16px; }
+            #banner-en { font-size: 12.5px; }
+            #q-zh { font-size: 18px; }
+            #q-en { font-size: 12.5px; }
+            .kid-card svg { width: 88px; }
+            #kid-row { gap: 10px; }
+            .cell { min-height: 78px; }
+            .cell.obj .obj-emoji { font-size: 33px; }
+            .cell.obj .obj-name { font-size: 12.5px; }
+            .kid-face { font-size: 38px; }
+            .kid-turn { width: 54px; }
+            #dir-arrow { font-size: 26px; }
+            #feedback { font-size: 15px; }
+            .intro-desc { font-size: 14.5px; }
+        }
+        @media (max-height: 720px) {
+            .mascot-big { font-size: 44px; }
+            .game-title { font-size: 26px; margin: 2px 0 4px; }
+        }
+
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="deco" style="top: 8%; left: 5%; font-size: 44px; animation: bob 3s infinite;">🧭</div>
+    <div class="deco" style="top: 14%; right: 6%; font-size: 40px; animation: bob 3.4s infinite;">✋</div>
+    <div class="deco" style="bottom: 10%; left: 7%; font-size: 42px; animation: bob 2.8s infinite;">👈</div>
+    <div class="deco" style="bottom: 16%; right: 5%; font-size: 38px; animation: bob 3.2s infinite;">👉</div>
+
+    <button id="back-btn" onclick="location.href='index.html'">&#8592; Home</button>
+
+    <div id="game-container">
+        <!-- LOCK -->
+        <div id="lock-screen">
+            <div class="mascot-big">🔒</div>
+            <h1 class="game-title">Left Right 左左右右</h1>
+            <p class="intro-desc">
+                這關需要密碼才能玩！快問老師或者家長拿密碼吧。
+                <br><span class="en">This level is locked — ask your teacher or parent for the password!</span>
+            </p>
+            <div id="lock-row">
+                <input id="lock-input" type="password" placeholder="Password 密碼" autocomplete="off" />
+                <button id="unlock-btn" class="btn">Unlock 解鎖！</button>
+            </div>
+            <div id="lock-error" class="hidden">密碼不對，再試一次！Wrong password — try again! 🤔</div>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- INTRO -->
+        <div id="intro-screen" class="hidden">
+            <div class="mascot-big">🧭</div>
+            <h1 class="game-title">Left Right 左左右右</h1>
+            <div class="tag-pill">左右概念 · 空間想像 · Left, Right & Turning</div>
+            <div id="trophy-pill" class="hidden">🏆 全部關卡完成！All sublevels complete!</div>
+            <p class="intro-desc">
+                小朋友背向你，舉起的是左手還是右手？如果小朋友面向你，答案還一樣嗎？再想像一下：你是小明，面向大樹，向左轉之後，你會看到什麼？一起來挑戰左右與方向！
+                <br><span class="en">A child with their back to you raises a hand — is it the left or the right? What if the child is FACING you? Then imagine: you are Siu Ming, facing the tree — after turning left, what do you see? Let's master left, right and turning!</span>
+            </p>
+            <button class="btn" onclick="showSetup()">Play!</button>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- SETUP -->
+        <div id="setup-screen" class="hidden">
+            <h2 class="game-title">Left Right 🧭</h2>
+            <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+            <div class="level-grid">
+                <button class="level-card" id="card-1" onclick="startGame(1)">
+                    <span class="lv-emoji">✋</span>
+                    <span><span class="lv-name">Sublevel 1: 舉左手舉右手</span><br><span class="lv-sub">背向你？面向你？舉起的是哪隻手？Back or front view — which hand is up?</span></span>
+                </button>
+                <button class="level-card" id="card-2" onclick="startGame(2)">
+                    <span class="lv-emoji">🔄</span>
+                    <span><span class="lv-name">Sublevel 2: 向左轉向右轉</span><br><span class="lv-sub">想像自己是主角，轉身後會看到什麼？Be the character — what do you see after turning?</span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PLAY -->
+        <div id="play-screen" class="hidden">
+            <div id="progress-pill">第 1 / 5 題 Round</div>
+            <div id="phase-banner">
+                <div id="banner-zh"></div>
+                <div id="banner-en"></div>
+            </div>
+            <div id="play-btns" style="margin-bottom:12px">
+                <button id="hint-btn" class="btn btn-secondary">💡 提示 Hint</button>
+            </div>
+            <div id="rule-chip" class="hidden"></div>
+            <div id="qcard">
+                <div id="q-zh"></div>
+                <div id="q-en"></div>
+            </div>
+            <div id="stage"></div>
+            <div id="feedback"></div>
+        </div>
+
+        <!-- END -->
+        <div id="end-screen" class="hidden">
+            <div class="mascot-big">🏆</div>
+            <h2 id="end-title" class="game-title">Direction Star! 方向小達人！</h2>
+            <div id="end-stars">⭐⭐⭐</div>
+            <p id="end-sub"></p>
+            <div id="end-btns">
+                <button id="action-btn" class="btn">Play Again 再玩一次</button>
+                <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <script>
+        // ================= DATA =================
+        const ROUNDS = 5;
+        const NAMES = [
+            { zh: '小明', en: 'Siu Ming', pro: '他', proEn: 'He' },
+            { zh: '小飛', en: 'Siu Fei', pro: '他', proEn: 'He' },
+            { zh: '家俊', en: 'Ka Chun', pro: '他', proEn: 'He' },
+            { zh: '小美', en: 'Siu Mei', pro: '她', proEn: 'She' },
+            { zh: '家欣', en: 'Ka Yan', pro: '她', proEn: 'She' },
+            { zh: '小晴', en: 'Siu Ching', pro: '她', proEn: 'She' },
+        ];
+        const OBJ_POOL = [
+            { emoji: '🌳', zh: '大樹', en: 'the tree' },
+            { emoji: '🏠', zh: '房子', en: 'the house' },
+            { emoji: '🚗', zh: '汽車', en: 'the car' },
+            { emoji: '🌸', zh: '花朵', en: 'the flower' },
+            { emoji: '⭐', zh: '星星', en: 'the star' },
+            { emoji: '🐶', zh: '小狗', en: 'the dog' },
+            { emoji: '⚽', zh: '足球', en: 'the football' },
+            { emoji: '🍎', zh: '蘋果', en: 'the apple' },
+        ];
+        const DIRS = ['up', 'right', 'down', 'left']; // clockwise
+        const DIR_DEG = { up: 0, right: 90, down: 180, left: 270 };
+
+        const BANNERS = {
+            1: { zh: '✋ 看清楚小朋友面向哪裡，再找出舉起那隻手的人！', en: 'Look which way each child is facing, then find the right hand!' },
+            2: { zh: '🧭 想像自己是主角：先面向他看的方向，再轉一轉！', en: 'Imagine you are the character: face the same way first, then turn!' },
+        };
+        const HINTS = {
+            1: '💡 背向你的小朋友：他的左右和你一樣。面向你的小朋友：他的左右和你相反！A child facing AWAY shares your left/right; a child facing YOU is the opposite!',
+            2: '💡 站起來，和主角面向同一方向，再向左（或右）轉 — 你看到的物件就是答案！Stand up, face the same way as the character, then turn — what you see is the answer!',
+        };
+        const END_SUBS = {
+            1: '左手右手都分得清 — 面向背向都難不倒你！Left and right, facing or away — nothing fools you!',
+            2: '向左轉、向右轉都想到 — 空間想像力滿分！Left turn, right turn — your spatial imagination is top marks!',
+        };
+
+        // ================= STATE =================
+        const introScreen = document.getElementById('intro-screen');
+        const setupScreen = document.getElementById('setup-screen');
+        const playScreen = document.getElementById('play-screen');
+        const endScreen = document.getElementById('end-screen');
+        const progressPill = document.getElementById('progress-pill');
+        const phaseBanner = document.getElementById('phase-banner');
+        const bannerZh = document.getElementById('banner-zh');
+        const bannerEn = document.getElementById('banner-en');
+        const ruleChip = document.getElementById('rule-chip');
+        const qZh = document.getElementById('q-zh');
+        const qEn = document.getElementById('q-en');
+        const stage = document.getElementById('stage');
+        const hintBtn = document.getElementById('hint-btn');
+        const backBtn = document.getElementById('back-btn');
+        const feedback = document.getElementById('feedback');
+
+        let level = 1, rounds = [], roundIdx = 0, mistakes = 0;
+        let currentQ = null, locked = false;
+
+        let audioStarted = false, synth;
+        function initAudio() { synth = new Tone.PolySynth(Tone.Synth).toDestination(); }
+        function playSound(type) {
+            if (!audioStarted || !synth) return;
+            const now = Tone.now();
+            if (type === 'pop') synth.triggerAttackRelease('A6', '32n', now);
+            else if (type === 'ding') synth.triggerAttackRelease('E6', '16n', now);
+            else if (type === 'correct') ['C5', 'E5', 'G5'].forEach((n, i) => synth.triggerAttackRelease(n, '16n', now + i * 0.07));
+            else if (type === 'wrong') synth.triggerAttackRelease('C2', '8n', now);
+            else if (type === 'fanfare') ['C5', 'E5', 'G5', 'C6'].forEach((n, i) => synth.triggerAttackRelease(n, '8n', now + i * 0.13));
+        }
+
+        function shuffle(a) { return a.sort(() => Math.random() - 0.5); }
+        function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+        function hl(x) { return `<b class="hl">${x}</b>`; }
+
+        // ================= FLOW =================
+        // password gate — unlocks the intro screen
+        const lockScreen = document.getElementById('lock-screen');
+        const lockInput = document.getElementById('lock-input');
+        const lockError = document.getElementById('lock-error');
+        const PASS_HASH = 1056886225; // djb2-xor of the password
+        function tryUnlock() {
+            const v = lockInput.value.trim().toLowerCase();
+            let h = 5381;
+            for (let i = 0; i < v.length; i++) h = ((h * 33) ^ v.charCodeAt(i)) >>> 0;
+            if (v && h === PASS_HASH) {
+                if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+                playSound('correct');
+                lockScreen.classList.add('hidden');
+                introScreen.classList.remove('hidden');
+            } else {
+                playSound('wrong');
+                lockError.classList.remove('hidden');
+                lockInput.value = '';
+                lockInput.classList.add('error');
+                setTimeout(() => lockInput.classList.remove('error'), 400);
+                lockInput.focus();
+            }
+        }
+        document.getElementById('unlock-btn').onclick = () => tryUnlock();
+        lockInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+        // in-game back button: Menu while playing (no password needed), Home on menu screens
+        function setBackBtn(mode) {
+            if (mode === 'menu') {
+                backBtn.innerHTML = '&#8592; Menu 目錄';
+                backBtn.onclick = () => backToMenu();
+            } else {
+                backBtn.innerHTML = '&#8592; Home';
+                backBtn.onclick = () => location.href = 'index.html';
+            }
+        }
+        function backToMenu() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            setBackBtn('home');
+        }
+
+        function showSetup() {
+            if (!lockScreen.classList.contains('hidden')) return;
+            if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+            introScreen.classList.add('hidden');
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            setBackBtn('home');
+        }
+
+        function startGame(lv) {
+            level = lv; mistakes = 0;
+            rounds = buildRounds(lv);
+            roundIdx = 0;
+            setupScreen.classList.add('hidden');
+            introScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            playScreen.classList.remove('hidden');
+            setBackBtn('menu');
+            nextRound();
+        }
+
+        hintBtn.onclick = () => {
+            if (!currentQ) return;
+            playSound('ding');
+            ruleChip.innerHTML = HINTS[level];
+            ruleChip.classList.remove('hidden');
+        };
+    </script>
+    <script>
+        // ================= KID SVG BUILDER (Sublevel 1) =================
+        const SKINS = ['#ffd9b3', '#f5c79a', '#eebd8b'];
+        const HAIRS = ['#4a3728', '#2f2a33', '#6b4226'];
+        const SHIRTS = ['#ff6b9d', '#4d96ff', '#2bbcb3', '#f0b429', '#8f7bf0', '#ff8f2e'];
+        const STYLES = ['short', 'pigtails', 'bun'];
+
+        function kidSVG(view, raisedSide, skin, hair, shirt, style) {
+            let arms = '';
+            if (raisedSide === 'L') {
+                arms = `<line x1="40" y1="66" x2="18" y2="34" stroke="${shirt}" stroke-width="11" stroke-linecap="round"/><circle cx="17" cy="31" r="7.5" fill="${skin}"/>`
+                     + `<line x1="80" y1="66" x2="87" y2="94" stroke="${shirt}" stroke-width="11" stroke-linecap="round"/><circle cx="88" cy="97" r="6.5" fill="${skin}"/>`;
+            } else {
+                arms = `<line x1="80" y1="66" x2="102" y2="34" stroke="${shirt}" stroke-width="11" stroke-linecap="round"/><circle cx="103" cy="31" r="7.5" fill="${skin}"/>`
+                     + `<line x1="40" y1="66" x2="33" y2="94" stroke="${shirt}" stroke-width="11" stroke-linecap="round"/><circle cx="32" cy="97" r="6.5" fill="${skin}"/>`;
+            }
+            const neck = `<rect x="54" y="54" width="12" height="10" fill="${skin}"/>`;
+            const body = `<rect x="36" y="60" width="48" height="56" rx="16" fill="${shirt}"/>`;
+            let head = '';
+            if (view === 'front') {
+                head = `<circle cx="60" cy="40" r="22" fill="${skin}"/>`
+                     + `<path d="M38,40 A22,22 0 0 1 82,40 Z" fill="${hair}"/>`;
+                if (style === 'pigtails') head += `<circle cx="35" cy="32" r="7.5" fill="${hair}"/><circle cx="85" cy="32" r="7.5" fill="${hair}"/>`;
+                if (style === 'bun') head += `<circle cx="60" cy="15" r="8" fill="${hair}"/>`;
+                head += `<circle cx="52" cy="42" r="2.6" fill="#3a3040"/><circle cx="68" cy="42" r="2.6" fill="#3a3040"/>`
+                      + `<circle cx="47" cy="48" r="3" fill="#ffb3b3" opacity="0.7"/><circle cx="73" cy="48" r="3" fill="#ffb3b3" opacity="0.7"/>`
+                      + `<path d="M52,50 Q60,56 68,50" stroke="#b3563e" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+            } else {
+                head = `<circle cx="60" cy="38" r="23" fill="${hair}"/>`;
+                if (style === 'pigtails') head += `<circle cx="33" cy="44" r="7.5" fill="${hair}"/><circle cx="87" cy="44" r="7.5" fill="${hair}"/>`;
+                if (style === 'bun') head += `<circle cx="60" cy="12" r="8" fill="${hair}"/>`;
+            }
+            return `<svg viewBox="0 0 120 128" xmlns="http://www.w3.org/2000/svg">${neck}${body}${arms}${head}</svg>`;
+        }
+
+        // standing kid (both arms down) facing a direction:
+        // down = facing viewer (front), up = back to viewer, left/right = side profile
+        function kidTurnSVG(dir, skin, hair, shirt, style) {
+            const neck = `<rect x="54" y="54" width="12" height="10" fill="${skin}"/>`;
+            const body = `<rect x="36" y="60" width="48" height="56" rx="16" fill="${shirt}"/>`;
+            const arms = `<line x1="40" y1="66" x2="33" y2="94" stroke="${shirt}" stroke-width="11" stroke-linecap="round"/><circle cx="32" cy="97" r="6.5" fill="${skin}"/>`
+                       + `<line x1="80" y1="66" x2="87" y2="94" stroke="${shirt}" stroke-width="11" stroke-linecap="round"/><circle cx="88" cy="97" r="6.5" fill="${skin}"/>`;
+            let head = '';
+            if (dir === 'down') {
+                head = `<circle cx="60" cy="40" r="22" fill="${skin}"/>`
+                     + `<path d="M38,40 A22,22 0 0 1 82,40 Z" fill="${hair}"/>`;
+                if (style === 'pigtails') head += `<circle cx="35" cy="32" r="7.5" fill="${hair}"/><circle cx="85" cy="32" r="7.5" fill="${hair}"/>`;
+                if (style === 'bun') head += `<circle cx="60" cy="15" r="8" fill="${hair}"/>`;
+                head += `<circle cx="52" cy="42" r="2.6" fill="#3a3040"/><circle cx="68" cy="42" r="2.6" fill="#3a3040"/>`
+                      + `<circle cx="47" cy="48" r="3" fill="#ffb3b3" opacity="0.7"/><circle cx="73" cy="48" r="3" fill="#ffb3b3" opacity="0.7"/>`
+                      + `<path d="M52,50 Q60,56 68,50" stroke="#b3563e" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+            } else if (dir === 'up') {
+                head = `<circle cx="60" cy="38" r="23" fill="${hair}"/>`;
+                if (style === 'pigtails') head += `<circle cx="33" cy="44" r="7.5" fill="${hair}"/><circle cx="87" cy="44" r="7.5" fill="${hair}"/>`;
+                if (style === 'bun') head += `<circle cx="60" cy="12" r="8" fill="${hair}"/>`;
+            } else {
+                // left-facing profile; mirrored for right
+                let g = `<circle cx="60" cy="40" r="22" fill="${skin}"/>`
+                      + `<circle cx="67" cy="37" r="20" fill="${hair}"/>`;
+                if (style === 'pigtails') g += `<circle cx="86" cy="46" r="7.5" fill="${hair}"/>`;
+                if (style === 'bun') g += `<circle cx="70" cy="15" r="8" fill="${hair}"/>`;
+                g += `<circle cx="48" cy="42" r="2.8" fill="#3a3040"/>`
+                   + `<circle cx="37.5" cy="46.5" r="2.6" fill="${skin}" stroke="#e8b98c" stroke-width="1.2"/>`
+                   + `<circle cx="49" cy="50" r="3" fill="#ffb3b3" opacity="0.7"/>`
+                   + `<path d="M43,52 Q48,56 53,53" stroke="#b3563e" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;
+                head = dir === 'left' ? g : `<g transform="translate(120,0) scale(-1,1)">${g}</g>`;
+            }
+            return `<svg viewBox="0 0 120 128" xmlns="http://www.w3.org/2000/svg">${neck}${body}${arms}${head}</svg>`;
+        }
+
+        // ================= ROUND GENERATION =================
+        function genHand() {
+            const asked = Math.random() < 0.5 ? 'left' : 'right';
+            const other = asked === 'left' ? 'right' : 'left';
+            const views = shuffle(['front', 'back', Math.random() < 0.5 ? 'front' : 'back']);
+            const kids = views.map((view, i) => {
+                const hand = i === 0 ? asked : other;
+                const side = ((view === 'back') === (hand === 'left')) ? 'L' : 'R';
+                return {
+                    view, side, hand, isTarget: i === 0,
+                    skin: SKINS[randInt(0, SKINS.length - 1)],
+                    hair: HAIRS[randInt(0, HAIRS.length - 1)],
+                    shirt: SHIRTS[randInt(0, SHIRTS.length - 1)],
+                    style: STYLES[randInt(0, STYLES.length - 1)],
+                };
+            });
+            return { asked, kids: shuffle(kids) };
+        }
+
+        function genTurn() {
+            const name = NAMES[randInt(0, NAMES.length - 1)];
+            const objs = shuffle([...OBJ_POOL]).slice(0, 4); // order: up, right, down, left
+            const fIdx = randInt(0, 3);
+            const turn = Math.random() < 0.5 ? 'left' : 'right';
+            const tIdx = turn === 'right' ? (fIdx + 1) % 4 : (fIdx + 3) % 4;
+            return {
+                name, objs, fIdx, turn, tIdx, deg: DIR_DEG[DIRS[fIdx]],
+                skin: SKINS[randInt(0, SKINS.length - 1)],
+                hair: HAIRS[randInt(0, HAIRS.length - 1)],
+                shirt: SHIRTS[randInt(0, SHIRTS.length - 1)],
+                kidStyle: name.pro === '他' ? 'short' : (Math.random() < 0.5 ? 'pigtails' : 'bun'),
+            };
+        }
+
+        const GENS = { 1: genHand, 2: genTurn };
+        function buildRounds(lv) {
+            const out = [];
+            for (let i = 0; i < ROUNDS; i++) out.push(GENS[lv]());
+            return out;
+        }
+
+        // ================= RENDERING =================
+        function renderHand(q) {
+            const handZh = q.asked === 'left' ? '左手' : '右手';
+            const handEn = q.asked === 'left' ? 'LEFT' : 'RIGHT';
+            qZh.innerHTML = `請找出舉起${hl(handZh)}的小朋友！`;
+            qEn.innerHTML = `Tap the child raising their <b>${handEn}</b> hand!`;
+            stage.innerHTML = '<div id="kid-row">' + q.kids.map((k, i) =>
+                `<div class="kid-card" data-i="${i}">${kidSVG(k.view, k.side, k.skin, k.hair, k.shirt, k.style)}<span class="tick">✅</span></div>`
+            ).join('') + '</div>';
+            stage.querySelectorAll('.kid-card').forEach(c => {
+                c.onclick = () => pickKid(parseInt(c.dataset.i, 10));
+            });
+        }
+
+        function renderTurn(q) {
+            const turnZh = q.turn === 'left' ? '左' : '右';
+            const turnEn = q.turn.toUpperCase();
+            const faceObj = q.objs[q.fIdx];
+            qZh.innerHTML = `${q.name.zh}面向${hl(faceObj.emoji + faceObj.zh)}。${q.name.pro}向${hl(turnZh)}轉後，會看到什麼？`;
+            qEn.innerHTML = `${q.name.en} is facing ${faceObj.en}. ${q.name.proEn} turns <b>${turnEn}</b> — what does ${q.name.proEn.toLowerCase()} see now?`;
+            const kidSvg = kidTurnSVG(DIRS[q.fIdx], q.skin, q.hair, q.shirt, q.kidStyle);
+            const objCell = i => `<div class="cell obj" data-i="${i}"><span class="obj-emoji">${q.objs[i].emoji}</span><span class="obj-name">${q.objs[i].zh}</span></div>`;
+            stage.innerHTML = `<div id="scene">`
+                + `<div class="cell empty"></div>${objCell(0)}<div class="cell empty"></div>`
+                + `${objCell(3)}<div class="cell center"><div class="kid-turn" id="kid-turn">${kidSvg}</div><div id="dir-arrow" style="transform:rotate(${q.deg}deg)">⬆</div></div>${objCell(1)}`
+                + `<div class="cell empty"></div>${objCell(2)}<div class="cell empty"></div>`
+                + `</div><div id="scene-caption">點選${q.name.pro}轉身後看到的物件 · Tap what ${q.name.proEn.toLowerCase()} sees after turning</div>`;
+            stage.querySelectorAll('.cell.obj').forEach(c => {
+                c.onclick = () => pickObj(parseInt(c.dataset.i, 10));
+            });
+        }
+
+        function nextRound() {
+            currentQ = rounds[roundIdx];
+            locked = false;
+            progressPill.textContent = `第 ${roundIdx + 1} / ${ROUNDS} 題 Round ${roundIdx + 1} / ${ROUNDS}`;
+            bannerZh.innerHTML = BANNERS[level].zh;
+            bannerEn.innerHTML = BANNERS[level].en;
+            ruleChip.classList.add('hidden');
+            feedback.textContent = '';
+            feedback.className = '';
+            if (level === 1) renderHand(currentQ); else renderTurn(currentQ);
+        }
+
+        // ================= ANSWERS =================
+        function advance() {
+            roundIdx++;
+            if (roundIdx >= ROUNDS) showEnd();
+            else nextRound();
+        }
+
+        function pickKid(i) {
+            if (locked || !currentQ) return;
+            const kid = currentQ.kids[i];
+            const card = stage.querySelectorAll('.kid-card')[i];
+            if (kid.isTarget) {
+                locked = true;
+                playSound('correct');
+                card.classList.add('good');
+                const handZh = currentQ.asked === 'left' ? '左手' : '右手';
+                const handEn = currentQ.asked;
+                const reasonZh = kid.view === 'back'
+                    ? `這個小朋友背向我們 — 方向和我們相同，所以舉起的是${handZh}！`
+                    : `這個小朋友面向我們 — 左右和我們相反，所以舉起的是${handZh}！`;
+                const reasonEn = kid.view === 'back'
+                    ? `This child faces AWAY — same direction as us, so that's the ${handEn} hand!`
+                    : `This child faces US — left and right are swapped, so that's the ${handEn} hand!`;
+                feedback.className = 'ok';
+                feedback.innerHTML = `🎉 答對了！${reasonZh}<br><span class="fen">Correct! ${reasonEn}</span>`;
+                setTimeout(advance, 2100);
+            } else {
+                mistakes++;
+                playSound('wrong');
+                card.classList.add('bad');
+                feedback.className = 'warn';
+                feedback.innerHTML = '再看清楚 — 這個小朋友是面向你，還是背向你？🤔<br><span class="fen">Look again — is this child FACING you or facing AWAY?</span>';
+                setTimeout(() => card.classList.remove('bad'), 600);
+            }
+        }
+
+        function pickObj(i) {
+            if (locked || !currentQ) return;
+            const q = currentQ;
+            const cell = stage.querySelector(`.cell.obj[data-i="${i}"]`);
+            if (i === q.tIdx) {
+                locked = true;
+                playSound('correct');
+                cell.classList.add('good');
+                const arrow = document.getElementById('dir-arrow');
+                if (arrow) arrow.style.transform = `rotate(${q.deg + (q.turn === 'right' ? 90 : -90)}deg)`;
+                const kt = document.getElementById('kid-turn');
+                if (kt) {
+                    kt.classList.add('flip');
+                    setTimeout(() => {
+                        kt.innerHTML = kidTurnSVG(DIRS[q.tIdx], q.skin, q.hair, q.shirt, q.kidStyle);
+                        kt.classList.remove('flip');
+                    }, 260);
+                }
+                const turnZh = q.turn === 'left' ? '左' : '右';
+                const obj = q.objs[q.tIdx];
+                feedback.className = 'ok';
+                feedback.innerHTML = `🎉 答對了！${q.name.zh}向${turnZh}轉 → 見到${obj.emoji}${obj.zh}！<br><span class="fen">Correct! Turning ${q.turn}, ${q.name.en} sees ${obj.en}!</span>`;
+                setTimeout(advance, 2200);
+            } else {
+                mistakes++;
+                playSound('wrong');
+                cell.classList.add('bad');
+                const turnZh = q.turn === 'left' ? '左' : '右';
+                feedback.className = 'warn';
+                feedback.innerHTML = `想像自己是${q.name.zh} — 面向${q.objs[q.fIdx].zh}，再向${turnZh}轉！🤔<br><span class="fen">Imagine you are ${q.name.en} — face ${q.objs[q.fIdx].en}, then turn ${q.turn}!</span>`;
+                setTimeout(() => cell.classList.remove('bad'), 600);
+            }
+        }
+
+        // ================= END =================
+        function showEnd() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            setBackBtn('home');
+            try { localStorage.setItem('lr_l' + level + '_complete', 'true'); } catch (e) {}
+            decorateCards();
+            const stars = mistakes <= 1 ? '⭐⭐⭐' : mistakes <= 3 ? '⭐⭐' : '⭐';
+            document.getElementById('end-stars').textContent = stars;
+            document.getElementById('end-title').innerText = 'Direction Star! 方向小達人！';
+            document.getElementById('end-sub').innerText = END_SUBS[level];
+            document.getElementById('action-btn').onclick = () => startGame(level);
+            document.getElementById('picker-btn').onclick = () => showSetup();
+            playSound('fanfare');
+            fireConfetti();
+        }
+
+        function decorateCards() {
+            let all = true;
+            for (let i = 1; i <= 2; i++) {
+                let done = false;
+                try { done = localStorage.getItem('lr_l' + i + '_complete') === 'true'; } catch (e) {}
+                const name = document.querySelector('#card-' + i + ' .lv-name');
+                if (done && name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+                if (!done) all = false;
+            }
+            document.getElementById('trophy-pill').classList.toggle('hidden', !all);
+        }
+        decorateCards();
+
+        // ================= CONFETTI =================
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        function fireConfetti() {
+            canvas.width = innerWidth; canvas.height = innerHeight;
+            const pieces = [];
+            const colors = ['#e11d48', '#f0b429', '#fb7185', '#4d96ff', '#ffffff', '#2bbcb3'];
+            for (let i = 0; i < 130; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width, y: -20 - Math.random() * canvas.height * 0.5,
+                    w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
+                    c: colors[Math.floor(Math.random() * colors.length)],
+                    vy: 2 + Math.random() * 3, vx: -1.5 + Math.random() * 3,
+                    rot: Math.random() * Math.PI, vr: -0.1 + Math.random() * 0.2,
+                });
+            }
+            let start = performance.now();
+            (function tick(now) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                pieces.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+                    if (p.y < canvas.height + 30) alive = true;
+                    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+                    ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                });
+                if (alive && now - start < 4200) requestAnimationFrame(tick);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            })(start);
+        }
+    </script>
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>左右概念看似簡單，卻是小一面試和校內評估的常見失分位。關鍵在於「觀點轉換」：背向我們的人，左右和我們相同；面向我們的人，左右和我們相反。第二關更進一步，要求孩子想像自己置身圖中，模擬主角轉向後看到的景象 — 這種「心智旋轉」正是空間想像力的核心，也是日後學習方向、座標與幾何的基礎。</p>
+        <p class="pg-en">Left and right seem simple, yet they are a classic stumbling block in Primary One interviews and assessments. The key skill is perspective-taking: a person with their back to us shares our left and right, while a person facing us is mirrored. The second sublevel goes further — children must imagine themselves inside the picture and mentally rotate with the character. This "mental rotation" is the heart of spatial imagination and the foundation for directions, coordinates and geometry later on.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>先用身體學習：和孩子面對面玩「跟我做」— 你舉左手，孩子要舉起和你同一邊的手，他自然會發現面向你的人左右是相反的。答錯時不用急著糾正，請孩子站起來，親自面向圖中主角的方向，再慢慢轉一次。也可以在孩子右手背貼一張小貼紙作為標記，熟練之後才把貼紙拿掉。</p>
+        <p class="pg-en">Learn with the body first: play "copy me" face to face — you raise your left hand and your child raises the hand on the same side; they will discover for themselves that someone facing you is mirrored. When an answer is wrong, don't rush to correct it — ask your child to stand up, face the same way as the character, and turn slowly. A small sticker on the back of the right hand works wonders as a marker until it is no longer needed.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>生活處處是方向練習：過馬路時「向左望、向右望」；收拾玩具時「把車車放進左邊的箱子」；跳舞做體操時聽口令轉向。煮飯時也可以問：「你面向雪櫃，向左轉會看到什麼？」每天幾句方向口令，左右概念自然內化。</p>
+        <p class="pg-en">Direction practice is everywhere: "look left, look right" before crossing the road; "put the cars in the box on the left" at tidy-up time; turning to commands during dance or PE. Even while cooking: "face the fridge — what would you see if you turned left?" A few direction prompts a day and left/right becomes second nature.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+</script>
+<!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

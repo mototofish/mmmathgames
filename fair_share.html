@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#ff5a6e">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Fair Share 平均分配 | 除法分享遊戲 · Equal Sharing – MMathWorld</title>
+    <meta name="description" content="Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！選出答案，看著糖果曲奇平均入籃，邊玩邊學除法與乘法的關係，更有進一法除法文字題（需密碼）：14人搭的士、每架坐4人，最少要多少架？免費升小學數學練習！Share items equally into groups — a fun first division game for kids.">
+    <link rel="canonical" href="https://mathgames.missman.world/fair_share">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Fair Share 平均分配 | 除法分享遊戲 · Equal Sharing – MMathWorld">
+    <meta property="og:description" content="Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！邊玩邊學除法與乘法的關係，更有進一法除法文字題（需密碼）：14人搭的士、每架坐4人，最少要多少架？Share items equally into groups — a fun first division game for kids.">
+    <meta property="og:url" content="https://mathgames.missman.world/fair_share">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Fair Share 平均分配 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fair Share 平均分配 | 除法分享遊戲 · Equal Sharing – MMathWorld">
+    <meta name="twitter:description" content="Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！邊玩邊學除法與乘法的關係，更有進一法除法文字題（需密碼）：14人搭的士、每架坐4人，最少要多少架？Share items equally into groups — a fun first division game for kids.">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Fair Share",
+      "alternateName": "平均分配",
+      "url": "https://mathgames.missman.world/fair_share",
+      "description": "Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！邊玩邊學除法與乘法的關係，更有進一法除法文字題（需密碼）：14人搭的士、每架坐4人，最少要多少架？Share items equally into groups — a fun first division game for kids.",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": [
+            "zh-Hant-HK",
+            "en"
+      ],
+      "genre": [
+            "Educational",
+            "Math"
+      ],
+      "gamePlatform": [
+            "Web Browser",
+            "Mobile Web"
+      ],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HKD"
+      },
+      "audience": {
+            "@type": "PeopleAudience",
+            "suggestedMinAge": 4,
+            "suggestedMaxAge": 7
+      },
+      "author": {
+            "@type": "Organization",
+            "name": "MMathWorld",
+            "url": "https://mathgames.missman.world/"
+      },
+      "learningResourceType": "Educational game",
+      "teaches": "除法分享、除法文字題、進一法 Equal sharing, first division, division word problems, and rounding up"
+}
+    </script>
+    <!-- Include Tone.js for synthesized sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #ff5a6e;
+            --primary-dark: #d6304a;
+            --secondary: #ffb020;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --text-color: #6b2432;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Comic Sans MS', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(180deg, #ffe9d6 0%, #fff4e8 45%, #ffe3e8 100%);
+            color: var(--text-color);
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+            overscroll-behavior: none;
+        }
+        button { touch-action: manipulation; }
+
+        /* Floating picnic decorations */
+        .park-deco { position: fixed; font-size: 60px; opacity: 0.5; z-index: 1; animation: float 6s ease-in-out infinite; pointer-events: none; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+        #game-container {
+            background-color: rgba(255, 255, 255, 0.96);
+            padding: 46px 30px 30px 30px;
+            border-radius: 34px;
+            box-shadow: 0 14px 0 rgba(214, 48, 74, 0.10), 0 26px 50px rgba(107, 36, 50, 0.16);
+            border: 5px solid #ffffff;
+            max-width: 560px;
+            width: 92%;
+            position: relative;
+            z-index: 10;
+            max-height: 100dvh;
+            overflow-y: auto;
+        }
+
+        .game-title { font-size: 34px; font-weight: 800; margin: 0 0 8px 0; letter-spacing: 1px; }
+
+        .btn {
+            border: none; border-radius: 50px; cursor: pointer;
+            font-family: inherit; font-weight: 800; color: white;
+            padding: 12px 30px; font-size: 19px;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.12);
+        }
+        .btn-primary { background: linear-gradient(145deg, #ff8a98, var(--primary)); box-shadow: 0 6px 0 var(--primary-dark); }
+        .btn-primary:hover { filter: brightness(1.06); transform: translateY(-2px); }
+        .btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--primary-dark); }
+        .btn-secondary { background: linear-gradient(145deg, #ffc65c, var(--secondary)); box-shadow: 0 6px 0 #d98e04; color: #5b3a00; text-shadow: none; }
+        .btn-secondary:hover { filter: brightness(1.05); transform: translateY(-2px); }
+        .btn-secondary:active { transform: translateY(3px); box-shadow: 0 2px 0 #d98e04; }
+
+        #back-btn {
+            position: absolute; top: 14px; left: 14px;
+            background: #ffe0e4; color: #c22843;
+            padding: 8px 16px; border-radius: 999px; cursor: pointer;
+            border: none; box-shadow: 0 4px 0 #f3b3bd;
+            font-size: 15px; font-weight: 800; font-family: inherit; z-index: 30;
+        }
+        #back-btn:active { transform: translateY(2px); box-shadow: 0 0 0 transparent; }
+
+        .hidden { display: none !important; }
+
+        /* Sublevel picker */
+        .tag-pill {
+            display: inline-block; font-size: 17px; font-weight: 800;
+            color: #c22843; background-color: #ffe0e4;
+            border: 3px solid #f7a8b4; padding: 6px 18px;
+            border-radius: 999px; margin-bottom: 16px;
+        }
+        .level-grid { display: flex; flex-direction: column; gap: 10px; margin: 12px auto 6px; max-width: 470px; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #fff1f3; border: 3px solid #fad4da; border-radius: 18px;
+            padding: 12px 16px; cursor: pointer; font-family: inherit;
+            box-shadow: 0 5px 0 #fad4da;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #fad4da; filter: brightness(1.02); }
+        .level-card:active { transform: translateY(2px); box-shadow: 0 2px 0 #fad4da; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-color); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #b06372; }
+        .mode-row { display: flex; justify-content: center; gap: 10px; margin: 4px auto 4px; flex-wrap: wrap; }
+        .mode-btn {
+            font-family: inherit; font-size: 16px; font-weight: 800; padding: 9px 18px;
+            border-radius: 999px; border: 3px solid var(--primary); background: #fff;
+            color: var(--primary-dark); cursor: pointer; transition: all 0.15s;
+            box-shadow: 0 4px 0 #fad4da;
+        }
+        .mode-btn.active { background: var(--primary); color: #fff; }
+        .mode-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #fad4da; }
+
+        /* Top Bar: Progress */
+        #top-bar { display: flex; justify-content: center; align-items: center; margin-top: 4px; margin-bottom: 6px; gap: 10px; }
+        #progress-display { font-size: 21px; letter-spacing: 2px; }
+        .scale-unfed { opacity: 0.25; filter: grayscale(1); }
+
+        /* Question text */
+        #question-text { font-size: 22px; font-weight: 800; line-height: 1.35; margin: 4px 0 8px; min-height: 60px; }
+        #question-text .qw { color: var(--primary-dark); background: #ffe0e4; padding: 1px 10px; border-radius: 999px; white-space: nowrap; }
+        #question-text .qzh { font-size: 18px; color: #a04556; }
+
+        /* The item pile (display only) */
+        #pile {
+            display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 4px;
+            background: #fff8e6; border: 3px dashed #ffd98a; border-radius: 18px;
+            padding: 12px; max-width: 460px; min-height: 76px;
+            margin: 0 auto 10px;
+        }
+        #pile span { font-size: 30px; line-height: 1.15; transition: opacity 0.15s; }
+        @keyframes popin { 0% { transform: scale(0.2); } 70% { transform: scale(1.25); } 100% { transform: scale(1); } }
+
+        /* Containers */
+        #containers-row { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+        .container-box {
+            background: #fff; border: 3px solid #ffd3da; border-radius: 18px;
+            padding: 8px 10px 10px; min-width: 100px; max-width: 150px;
+            box-shadow: 0 5px 0 #ffd3da;
+        }
+        .container-box .c-emoji { font-size: 36px; line-height: 1.1; }
+        .container-box .c-name { font-size: 13px; font-weight: 800; color: #a04556; }
+        .container-box .box-items { display: flex; flex-wrap: wrap; justify-content: center; gap: 2px; min-height: 28px; margin-top: 4px; }
+        .container-box .box-items span { font-size: 21px; animation: popin 0.25s; }
+        .container-box.compact { min-width: 62px; max-width: 84px; padding: 4px 5px 5px; }
+        .container-box.compact .c-emoji { font-size: 24px; }
+        .container-box.compact .c-name { font-size: 11px; }
+        .container-box.compact .box-items { min-height: 18px; gap: 1px; }
+        .container-box.compact .box-items span { font-size: 14px; }
+        .container-box.jiggle { animation: jiggle 0.3s; }
+        @keyframes jiggle { 0%,100% { transform: rotate(0); } 30% { transform: rotate(-3deg); } 70% { transform: rotate(3deg); } }
+
+        /* Equation reveal: 4 + 4 + 4 = 12 */
+        #equation {
+            max-width: 460px; margin: 2px auto 8px; padding: 8px 14px;
+            background: #fff1f3; border: 3px solid #fad4da; border-radius: 18px;
+            animation: popin 0.35s;
+        }
+        #equation .eq-main { font-size: 32px; font-weight: 800; color: var(--primary-dark); letter-spacing: 1px; white-space: nowrap; overflow-x: auto; }
+        #equation .eq-sub { font-size: 15px; font-weight: 800; color: #a04556; margin-top: 2px; }
+
+        /* Answer choices */
+        #choices { display: flex; justify-content: center; gap: 12px; margin-top: 6px; flex-wrap: wrap; }
+        .num-choice {
+            background: #fff1f3; border: 3px solid #fad4da; border-radius: 18px;
+            padding: 8px 24px; cursor: pointer; font-family: inherit;
+            font-size: 30px; font-weight: 800; color: var(--text-color);
+            box-shadow: 0 5px 0 #fad4da; min-width: 84px;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .text-choice {
+            background: #fff1f3; border: 3px solid #fad4da; border-radius: 18px;
+            padding: 10px 18px; cursor: pointer; font-family: inherit;
+            font-size: 17px; font-weight: 800; color: var(--text-color); line-height: 1.3;
+            box-shadow: 0 5px 0 #fad4da; max-width: 210px;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .num-choice:hover, .text-choice:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #fad4da; filter: brightness(1.03); }
+        .num-choice:active, .text-choice:active { transform: translateY(2px); box-shadow: 0 2px 0 #fad4da; }
+        .num-choice.is-correct, .text-choice.is-correct { background: #d7f7e3; border-color: #7bdca0; box-shadow: 0 5px 0 #7bdca0; }
+        .num-choice.is-wrong, .text-choice.is-wrong { background: #ffd9d5; border-color: #f2a59e; box-shadow: 0 5px 0 #f2a59e; }
+        .num-choice.is-dim, .text-choice.is-dim { opacity: 0.45; }
+
+        /* Feedback & Timer */
+        #feedback { font-size: 20px; font-weight: 800; min-height: 28px; margin: 6px 0 4px; }
+        #timer-area { position: relative; height: 18px; background: #ffe0e4; border-radius: 999px; overflow: hidden; margin-top: 4px; border: 2px solid #f7a8b4; }
+        /* Timer on/off toggle */
+        .tt-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 12px; }
+        .tt-text { font-size: 15px; font-weight: 800; color: #b06372; }
+        .tt-state { font-size: 14px; font-weight: 800; color: #b06372; min-width: 58px; text-align: left; }
+        .tt-switch { position: relative; width: 56px; height: 30px; border-radius: 999px; border: none; background: #cbd5e1; cursor: pointer; transition: background 0.2s; padding: 0; flex-shrink: 0; }
+        .tt-switch.on { background: #2ecc71; }
+        .tt-knob { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; transition: left 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.25); }
+        .tt-switch.on .tt-knob { left: 29px; }
+        #timer-bar { height: 100%; width: 100%; background: var(--primary); border-radius: 999px; transition: width 0.05s linear; }
+
+        /* End screen */
+        #end-screen { padding: 20px 0; }
+        #final-message { font-size: 20px; font-weight: 800; color: #a04556; margin-bottom: 18px; }
+        #end-btns { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+        .trophy-bounce { display: inline-block; animation: jump 1.2s infinite; }
+        @keyframes jump { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+        /* Confetti */
+        #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 100; }
+
+        .anim-shake { animation: shake 0.4s; }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+        /* ===== Sublevel 10: division word problems ===== */
+        .word-chip {
+            display: inline-flex; align-items: center; gap: 6px;
+            background: #fff; border: 3px solid #ffd3da; border-radius: 999px;
+            font-size: 16px; font-weight: 800; color: var(--text-color); padding: 4px 12px;
+        }
+        .sheep-black { filter: grayscale(1) brightness(0.45); }
+        .queue-bear { background: #ffe0e4; border-radius: 10px; box-shadow: 0 0 0 3px var(--primary); }
+
+        /* ===== Sublevel 10 lock overlay ===== */
+        #sublock-overlay {
+            position: fixed; inset: 0; z-index: 150; padding: 16px;
+            background: rgba(107, 36, 50, 0.45);
+            display: flex; align-items: center; justify-content: center;
+        }
+        #sublock-card {
+            background: #fff; border: 4px solid #fad4da; border-radius: 24px;
+            padding: 22px 24px 20px; max-width: 430px; width: 100%; text-align: center;
+            box-shadow: 0 10px 0 rgba(214, 48, 74, 0.15), 0 24px 48px rgba(107, 36, 50, 0.35);
+        }
+        #sublock-card .game-title { font-size: 25px; color: var(--primary-dark); }
+        #sublock-card p { font-size: 15px; font-weight: 700; color: #a04556; margin: 4px 0 12px; }
+        #sublock-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+        #sublock-input {
+            font-family: inherit; font-size: 17px; font-weight: 700; padding: 11px 16px; width: 200px;
+            border: 3px solid #fad4da; border-radius: 999px; outline: none; text-align: center; color: var(--text-color);
+        }
+        #sublock-input:focus { border-color: var(--primary); }
+        #sublock-input.error { border-color: var(--danger); animation: shake 0.3s; }
+        #sublock-error { margin-top: 10px; font-weight: 800; color: var(--danger); font-size: 14px; }
+
+        @media (max-width: 450px) {
+            #game-container { padding: 42px 12px 20px 12px; width: 94%; }
+            .game-title { font-size: 27px; }
+            #question-text { font-size: 18px; min-height: 54px; }
+            #question-text .qzh { font-size: 16px; }
+            #pile span { font-size: 26px; }
+            #equation .eq-main { font-size: 26px; }
+            .container-box { min-width: 88px; padding: 6px 8px 8px; }
+            .num-choice { font-size: 26px; min-width: 74px; padding: 8px 18px; }
+        }
+        @media (max-height: 700px) {
+            #question-text { min-height: 0; }
+            #pile { min-height: 70px; }
+        }
+        @media (max-height: 560px) {
+            #game-container { padding: 34px 16px 14px; max-height: 100dvh; overflow-y: auto; }
+            #top-bar { margin: 0; }
+            #progress-display { font-size: 16px; }
+            #question-text { font-size: 16px; margin: 2px 0 4px; }
+            #question-text .qzh { font-size: 14px; }
+            #pile { min-height: 0; padding: 6px 10px; margin-bottom: 6px; }
+            #pile span { font-size: 20px !important; }
+            .container-box { padding: 4px 8px 6px; min-width: 78px; }
+            .container-box .c-emoji { font-size: 26px; }
+            .container-box .box-items { min-height: 20px; }
+            .container-box .box-items span { font-size: 16px; }
+            #equation { padding: 4px 10px; margin-bottom: 4px; }
+            #equation .eq-main { font-size: 22px; }
+            #equation .eq-sub { font-size: 13px; }
+            .num-choice { font-size: 22px; min-width: 64px; padding: 4px 16px; }
+            #feedback { font-size: 16px; min-height: 20px; margin: 2px 0; }
+            #timer-area { height: 14px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <!-- Floating picnic decorations -->
+    <div class="park-deco" style="top: 8%; left: 4%;">🧺</div>
+    <div class="park-deco" style="top: 12%; right: 5%; animation-delay: 1.2s;">🍓</div>
+    <div class="park-deco" style="bottom: 10%; left: 6%; animation-delay: 2s;">🌼</div>
+    <div class="park-deco" style="bottom: 14%; right: 4%; animation-delay: 0.6s;">🧃</div>
+
+    <!-- Confetti overlay -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <div id="game-container">
+
+        <!-- BACK BUTTON -->
+        <button id="back-btn" onclick="goBack()">&#8592; Home</button>
+
+        <!-- INTRO SCREEN -->
+        <div id="intro-screen">
+            <div style="font-size: 72px; margin-bottom: 6px; animation: jump 2s infinite;">🧺</div>
+            <h1 class="game-title" style="color: var(--primary);">Fair Share 平均分配</h1>
+            <div class="tag-pill">除法分享 · Equal Sharing</div>
+            <p style="font-size: 17px; font-weight: 700; color: #a04556; margin: 0 0 22px;">
+                Pick the answer and watch them share out fairly!<br>選出答案，看看怎樣平均分！<br>
+                <span style="font-size: 14.5px;">每個數字會玩兩次：12 = 4+4+4，也是 3+3+3+3！</span>
+            </p>
+            <button class="btn btn-primary" onclick="showSetup()" style="font-size: 26px; padding: 14px 50px; animation: jump 2s infinite;">Play!</button>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- SETUP SCREEN: pick a sublevel -->
+        <div id="setup-screen" class="hidden">
+            <h2 class="game-title" style="color: var(--primary);">Fair Share 平均分配</h2>
+            <div class="tag-pill">Pick a mode 選擇模式：</div>
+            <div class="mode-row">
+                <button class="mode-btn" id="mode-pictures" onclick="setMode(true)">🖼️ 看圖答題 With Pictures</button>
+                <button class="mode-btn" id="mode-words" onclick="setMode(false)">📝 淨文字題 Words Only</button>
+            </div>
+            <div class="tt-row">
+                <span class="tt-text">⏱️ 計時器 Timer</span>
+                <button class="tt-switch on" id="timer-switch" onclick="toggleTimer()" aria-label="Timer on or off"><span class="tt-knob"></span></button>
+                <span class="tt-state" id="timer-state">開 ON</span>
+            </div>
+            <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+            <div class="level-grid">
+                <button class="level-card" id="lv-card-1" onclick="startGame(1)">
+                    <span class="lv-emoji">✌️</span>
+                    <span><span class="lv-name">Sublevel 1: 除以 2</span><br><span class="lv-sub">Divide by 2 — halves! 分入 2 份（至 20）</span></span>
+                </button>
+                <button class="level-card" id="lv-card-2" onclick="startGame(2)">
+                    <span class="lv-emoji">🧺</span>
+                    <span><span class="lv-name">Sublevel 2: 除以 3、4、5</span><br><span class="lv-sub">Divide by 3, 4, 5 — 12 = 4+4+4 = 3+3+3+3!</span></span>
+                </button>
+                <button class="level-card" id="lv-card-3" onclick="startGame(3)">
+                    <span class="lv-emoji">🎒</span>
+                    <span><span class="lv-name">Sublevel 3: 除以 6–10</span><br><span class="lv-sub">Divide by 6, 7, 8, 9, 10 分入 6 至 10 份</span></span>
+                </button>
+                <button class="level-card" id="lv-card-4" onclick="startGame(4)">
+                    <span class="lv-emoji">⭐</span>
+                    <span><span class="lv-name">Sublevel 4: 混合挑戰</span><br><span class="lv-sub">Mixed Challenge — all divisors to 10!</span></span>
+                </button>
+                <button class="level-card" id="lv-card-10" onclick="tryStartLocked(10)">
+                    <span class="lv-emoji">🧮</span>
+                    <span><span class="lv-name">Sublevel 10: 除法文字題 🔒</span><br><span class="lv-sub">Word Problems — 14 人搭的士，每架坐 4 人，最少要多少架？(Password 需要密碼)</span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PLAY SCREEN -->
+        <div id="play-screen" class="hidden">
+            <div id="top-bar">
+                <div id="progress-display"></div>
+            </div>
+
+            <div id="question-text"></div>
+            <div id="pile" class="hidden"></div>
+            <div id="containers-row"></div>
+            <div id="equation" class="hidden"></div>
+            <div id="choices"></div>
+
+            <div id="feedback"></div>
+            <div id="timer-area"><div id="timer-bar"></div></div>
+        </div>
+
+        <!-- END SCREEN -->
+        <div id="end-screen" class="hidden">
+            <div style="font-size: 60px; margin: 10px 0;"><span class="trophy-bounce">🏆</span></div>
+            <h2 id="end-title" class="game-title">All done!</h2>
+            <div id="final-message"></div>
+            <div id="end-btns">
+                <button id="action-btn" class="btn btn-primary"></button>
+                <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
+            </div>
+        </div>
+
+        <!-- SUBLEVEL 10 LOCK -->
+        <div id="sublock-overlay" class="hidden">
+            <div id="sublock-card">
+                <div style="font-size: 50px;">🔒</div>
+                <h2 class="game-title" id="sublock-title">Sublevel 10: 除法文字題</h2>
+                <p>
+                    這關需要密碼才能玩！快問老師或者家長拿密碼吧。
+                    <br>This sublevel is locked — ask your teacher or parent for the password!
+                </p>
+                <div id="sublock-row">
+                    <input id="sublock-input" type="password" placeholder="Password 密碼" autocomplete="off" />
+                    <button id="sublock-btn" class="btn btn-primary">Unlock 解鎖！</button>
+                </div>
+                <div id="sublock-error" class="hidden">密碼不對，再試一次！Wrong password — try again! 🤔</div>
+                <button id="sublock-cancel" class="btn-parent">← 返回 Back</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    // ---- Tone.js Setup ----
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const noiseSynth = new Tone.NoiseSynth({ noise: { type: 'white' }, envelope: { attack: 0.01, decay: 0.12, sustain: 0 } }).toDestination();
+    noiseSynth.volume.value = -16;
+    let audioContextStarted = false;
+
+    // ---- DOM References ----
+    const introScreen = document.getElementById('intro-screen');
+    const setupScreen = document.getElementById('setup-screen');
+    const playScreen = document.getElementById('play-screen');
+    const endScreen = document.getElementById('end-screen');
+    const backBtn = document.getElementById('back-btn');
+    const progressDisplay = document.getElementById('progress-display');
+    const questionText = document.getElementById('question-text');
+    const pileDiv = document.getElementById('pile');
+    const containersRow = document.getElementById('containers-row');
+    const equationDiv = document.getElementById('equation');
+    const choicesDiv = document.getElementById('choices');
+    const feedbackDisplay = document.getElementById('feedback');
+    const timerBar = document.getElementById('timer-bar');
+    const actionBtn = document.getElementById('action-btn');
+    const pickerBtn = document.getElementById('picker-btn');
+
+    // ---- Game Variables ----
+    let currentQuestion = null;
+    let questionPool = [];
+    let mistakes = [];
+    let currentChoices = [];
+    let isTransitioning = false;
+    let isCorrectionRound = false;
+    let gameActive = false;
+    let activeLevelId = 1;
+    let questionsDone = 0, totalQuestions = 10;
+    let timerInterval = null;
+    let timeLeft = 0;
+    let timeLimit = 20000;
+
+    // ---- Items & Containers ----
+    const DEAL_ITEMS = [
+        { item: '🍬', itemZh: '糖果', itemEn: 'candies', oneEn: 'candy', cont: '🫙', contZh: '樽', contEn: 'jar' },
+        { item: '🍌', itemZh: '香蕉', itemEn: 'bananas', oneEn: 'banana', cont: '🧺', contZh: '籃', contEn: 'basket' },
+        { item: '🍪', itemZh: '曲奇', itemEn: 'cookies', oneEn: 'cookie', cont: '🍽️', contZh: '碟', contEn: 'plate' },
+        { item: '🍎', itemZh: '蘋果', itemEn: 'apples', oneEn: 'apple', cont: '📦', contZh: '盒', contEn: 'box' },
+        { item: '🍓', itemZh: '草莓', itemEn: 'strawberries', oneEn: 'strawberry', cont: '🥣', contZh: '碗', contEn: 'bowl' },
+        { item: '🥕', itemZh: '紅蘿蔔', itemEn: 'carrots', oneEn: 'carrot', cont: '🧺', contZh: '籃', contEn: 'basket' },
+        { item: '🐟', itemZh: '小魚', itemEn: 'fish', oneEn: 'fish', cont: '🪣', contZh: '桶', contEn: 'bucket' },
+        { item: '🥚', itemZh: '雞蛋', itemEn: 'eggs', oneEn: 'egg', cont: '📦', contZh: '盒', contEn: 'box' },
+        { item: '🌸', itemZh: '花朵', itemEn: 'flowers', oneEn: 'flower', cont: '🏺', contZh: '花瓶', contEn: 'vase' },
+        { item: '🧁', itemZh: '杯子蛋糕', itemEn: 'cupcakes', oneEn: 'cupcake', cont: '🍽️', contZh: '碟', contEn: 'plate' }
+    ];
+
+    function randPick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+    function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+
+    // ---- Sounds ----
+    function playSound(type) {
+        if (!audioContextStarted) return;
+        const now = Tone.now();
+        if (type === 'correct') {
+            synth.triggerAttackRelease(['C5', 'E5'], '16n', now);
+            synth.triggerAttackRelease('G5', '8n', now + 0.1);
+        } else if (type === 'wrong') {
+            synth.triggerAttackRelease('C3', '8n', now);
+            synth.triggerAttackRelease('G2', '8n', now + 0.15);
+        } else if (type === 'deal') {
+            synth.triggerAttackRelease('E5', '32n', now);
+        } else if (type === 'tick') {
+            noiseSynth.triggerAttackRelease('32n', now);
+        } else if (type === 'timeout') {
+            synth.triggerAttackRelease('A3', '8n', now);
+            synth.triggerAttackRelease('E3', '8n', now + 0.2);
+        } else if (type === 'fanfare') {
+            synth.triggerAttackRelease(['C5', 'E5', 'G5'], '8n', now);
+            synth.triggerAttackRelease(['D5', 'F5', 'A5'], '8n', now + 0.15);
+            synth.triggerAttackRelease(['E5', 'G5', 'C6'], '4n', now + 0.3);
+        }
+    }
+
+    // ---- Confetti ----
+    function fireConfetti(x, y, multiplier = 1) {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const colors = ['#ff5a6e', '#ffb020', '#2ecc71', '#56ccf2', '#a29bfe', '#ffd93d'];
+        const particles = [];
+        for (let i = 0; i < 45 * multiplier; i++) {
+            particles.push({
+                x, y,
+                vx: (Math.random() - 0.5) * 13,
+                vy: Math.random() * -11 - 3,
+                size: Math.random() * 7 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rotation: Math.random() * 360,
+                vr: (Math.random() - 0.5) * 22,
+                life: 1
+            });
+        }
+        let frame;
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let alive = false;
+            particles.forEach(p => {
+                if (p.life <= 0) return;
+                alive = true;
+                p.x += p.vx; p.y += p.vy; p.vy += 0.35;
+                p.rotation += p.vr; p.life -= 0.012;
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation * Math.PI / 180);
+                ctx.globalAlpha = Math.max(p.life, 0);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.62);
+                ctx.restore();
+            });
+            if (alive) frame = requestAnimationFrame(animate);
+            else { ctx.clearRect(0, 0, canvas.width, canvas.height); cancelAnimationFrame(frame); }
+        }
+        animate();
+    }
+
+    // ---- Choices builder ----
+    // Decoys always include M (the group count) so kids must tell 12÷3=4 apart from 12÷4=3
+    function shareChoices(M, ans) {
+        const set = new Set([ans]);
+        const cands = shuffle([M, ans - 1, ans + 1, ans + 2, ans - 2, ans + 3, ans - 3]);
+        for (const c of cands) {
+            if (set.size >= 3) break;
+            if (c >= 1 && !set.has(c)) set.add(c);
+        }
+        return shuffle([...set]).map(v => ({ v, label: String(v) }));
+    }
+
+    // ---- Question factory ----
+    function makeQ(item, M, per) {
+        const N = M * per;
+        return { kind: 'share', item, N, M, answer: per,
+                 answerLabel: String(per), choices: shareChoices(M, per) };
+    }
+
+    // Factor pairs for the mixed challenge: N = a × b (always a < b, N ≤ 40).
+    // Every product is asked twice in a row — N ÷ a = b and N ÷ b = a —
+    // so kids see that 12 is 4+4+4 AND 3+3+3+3 (3×4 = 4×3)
+    const MIXED_FAMILIES = [[2,3],[2,4],[3,4],[2,5],[3,5],[2,6],[4,5],[3,6],[2,7],[2,8],
+        [3,7],[4,6],[5,6],[3,8],[4,7],[3,9],[4,8],[5,7],[4,9],[5,8],[2,9],[2,10],[3,10],[4,10]];
+
+    // In SL2 (÷3, 4, 5) the three perfect pairs stay together: 12, 15, 20
+    function makePair(a, b) {
+        const item = randPick(DEAL_ITEMS);
+        const smallFirst = Math.random() < 0.5;
+        return smallFirst ? [makeQ(item, a, b), makeQ(item, b, a)]
+                          : [makeQ(item, b, a), makeQ(item, a, b)];
+    }
+
+    // ---- Pool builder: 10 questions per game ----
+    function buildPool(level) {
+        if (level === 10) return buildWordPool();
+        if (level === 1) {
+            // ÷2 practice: 2÷2=1 all the way to 20÷2=10, shuffled
+            return shuffle([1,2,3,4,5,6,7,8,9,10]).map(per => makeQ(randPick(DEAL_ITEMS), 2, per));
+        }
+        if (level === 2) {
+            // ÷3, ÷4, ÷5: the three commutative pairs (12, 15, 20) + 4 extras
+            const blocks = shuffle([[3,4],[3,5],[4,5]]).map(([a,b]) => makePair(a, b));
+            const extras = shuffle([[3,6],[3,7],[3,8],[3,9],[4,6],[4,7],[5,6]]).slice(0, 4)
+                .map(([M, per]) => [makeQ(randPick(DEAL_ITEMS), M, per)]);
+            return shuffle([...blocks, ...extras]).flat();
+        }
+        if (level === 3) {
+            // ÷6, ÷7, ÷8, ÷9, ÷10 (products capped at 40)
+            const opts = [];
+            for (const M of [6,7,8,9,10]) {
+                for (let per = 2; per <= Math.min(10, Math.floor(40 / M)); per++) opts.push([M, per]);
+            }
+            return shuffle(opts).slice(0, 10).map(([M, per]) => makeQ(randPick(DEAL_ITEMS), M, per));
+        }
+        // SL4 mixed challenge: 5 products × 2 commutative pairings
+        const fams = shuffle(MIXED_FAMILIES).slice(0, 5);
+        return shuffle(fams.map(([a, b]) => makePair(a, b))).flat();
+    }
+
+    // ================= SUBLEVEL 10: DIVISION WORD PROBLEMS =================
+    // Four story types, all answered with division — mostly "round up" (進一法):
+    // days (homework pages), taxi (passengers per taxi), boat (add two groups, then
+    // divide), wheel (queue position → which cabin). All numbers ≤ 20.
+    const WORD_KIDS = [
+        { zh: '小飛', en: 'Siu Fei', pro: '他', enPro: 'He' },
+        { zh: '小美', en: 'Siu Mei', pro: '她', enPro: 'She' },
+        { zh: '小明', en: 'Siu Ming', pro: '他', enPro: 'He' },
+        { zh: '小芳', en: 'Siu Fong', pro: '她', enPro: 'She' },
+        { zh: '家欣', en: 'Ka Yan', pro: '她', enPro: 'She' },
+        { zh: '小華', en: 'Siu Wa', pro: '他', enPro: 'He' },
+    ];
+    const WHEEL_ANIMALS = ['🦁', '🐰', '🐸', '🐵', '🦊', '🐷', '🐯', '🐨', '🐶', '🐱'];
+    const QUEUE_PEOPLE = ['🧒', '👧', '👦', '🧑', '👩', '👨'];
+
+    // 4 numeric options; extras feed the classic mistakes (e.g. forgetting to round up)
+    function wordChoices(ans, extras) {
+        const set = new Set([ans]);
+        const cands = shuffle([...extras, ans - 1, ans + 1, ans + 2, ans - 2, ans + 3]);
+        for (const c of cands) {
+            if (set.size >= 4) break;
+            if (c >= 1 && c <= 20 && !set.has(c)) set.add(c);
+        }
+        return shuffle([...set]).map(v => ({ v, label: String(v) }));
+    }
+
+    function ceilExplain(N, d, unitZh, unitEn) {
+        const q = Math.floor(N / d), r = N % d, ans = Math.ceil(N / d);
+        if (r === 0) return `<div class="eq-main">${N} ÷ ${d} = ${ans}</div><div class="eq-sub">啱啱好 ${ans} ${unitZh}！Exactly ${ans} ${unitEn}!</div>`;
+        return `<div class="eq-main">${N} ÷ ${d} = ${q} 餘 ${r} → ${q} + 1 = ${ans}</div><div class="eq-sub">剩下的 ${r} 個都要多 1 ${unitZh}！The remaining ${r} still need one more ${unitEn.replace(/s$/, '')}!</div>`;
+    }
+
+    // Type 1: "小飛有14版假期功課要做，他每一日做5版，需要多少日才能做完所有功課？"
+    function genWordDays(fixedN, fixedD, fixedKid) {
+        const kid = fixedKid || randPick(WORD_KIDS);
+        const d = fixedD || randInt(2, 6);
+        let N = fixedN || 0;
+        if (!N) { do { N = randInt(7, 20); } while (N % d === 0); }
+        const ans = Math.ceil(N / d);
+        return {
+            kind: 'word', subtype: 'days', answer: ans, answerLabel: String(ans),
+            choices: wordChoices(ans, [Math.floor(N / d), d]),
+            zh: `${kid.zh}有 <span class="qw">${N}</span> 版假期功課要做，${kid.pro}每一日做 <span class="qw">${d}</span> 版，最少需要多少日才能做完所有功課？`,
+            en: `${kid.en} has ${N} pages of holiday homework and does ${d} pages a day. At least how many days does ${kid.enPro.toLowerCase()} need to finish it all?`,
+            visual: `<span style="font-size:40px;">📚</span><span class="word-chip">${N} 版 pages</span><span style="font-size:40px;">📅</span><span class="word-chip">每日 ${d} 版 · ${d} / day</span>`,
+            explainHTML: ceilExplain(N, d, '日', 'days')
+        };
+    }
+
+    // Type 2: "有14個人排隊搭的士，一個的士可以坐4位乘客，最少要多少輛的士？"
+    function genWordTaxi(fixedN, fixedS) {
+        const s = fixedS || randInt(3, 5);
+        let N = fixedN || 0;
+        if (!N) { do { N = randInt(7, 20); } while (N % s === 0); }
+        const ans = Math.ceil(N / s);
+        const people = Array.from({ length: N }, () => randPick(QUEUE_PEOPLE)).join('');
+        return {
+            kind: 'word', subtype: 'taxi', answer: ans, answerLabel: String(ans),
+            choices: wordChoices(ans, [Math.floor(N / s), s]),
+            zh: `有 <span class="qw">${N}</span> 個人排隊搭的士，一架的士可以坐 <span class="qw">${s}</span> 位乘客，最少要多少架的士才可以載晒所有人？`,
+            en: `${N} people are queuing for taxis. Each taxi can carry ${s} passengers. At least how many taxis are needed to take everyone?`,
+            visual: `<div style="font-size:22px; line-height:1.3;">${people}</div><span class="word-chip">🚕 每架坐 ${s} 人 · ${s} per taxi</span>`,
+            explainHTML: ceilExplain(N, s, '架', 'taxis')
+        };
+    }
+
+    // Type 3: "6隻小白羊，6隻小黑羊坐船過河，一艘船可以坐3隻羊，共要幾艘船" — add first, then divide
+    function genWordBoat(fixedA, fixedB, fixedC) {
+        let a = fixedA, b = fixedB, c = fixedC;
+        if (!a) {
+            c = randInt(2, 4);
+            const k = randInt(2, Math.min(6, Math.floor(20 / c)));
+            const total = c * k;
+            a = randInt(1, total - 1); b = total - a;
+        }
+        const total = a + b, ans = total / c;
+        const white = '🐑'.repeat(a);
+        const black = Array.from({ length: b }, () => '<span class="sheep-black">🐑</span>').join('');
+        return {
+            kind: 'word', subtype: 'boat', answer: ans, answerLabel: String(ans),
+            choices: wordChoices(ans, [a, b, ans - 1, ans + 1]),
+            zh: `<span class="qw">${a}</span> 隻小白羊和 <span class="qw">${b}</span> 隻小黑羊坐船過河，一艘船可以坐 <span class="qw">${c}</span> 隻羊，最少共要多少艘船？`,
+            en: `${a} white sheep and ${b} black sheep are crossing the river by boat. Each boat can carry ${c} sheep. At least how many boats are needed?`,
+            visual: `<div style="font-size:24px; line-height:1.3;">${white}${black}</div><span class="word-chip">⛵ 每艘坐 ${c} 隻 · ${c} per boat</span>`,
+            explainHTML: `<div class="eq-main">${a} + ${b} = ${total}，${total} ÷ ${c} = ${ans}</div><div class="eq-sub">先加起來，再分船！Add them up first, then share into boats!</div>`
+        };
+    }
+
+    // Type 4: "小熊排10，一架摩天輪坐3隻動物，小熊坐第幾架" — queue position → ceil(p / c)
+    function genWordWheel(fixedP, fixedC) {
+        let p = fixedP, c = fixedC;
+        if (!p) {
+            c = randInt(2, 5);
+            const k = randInt(2, Math.min(6, Math.floor(20 / c)));
+            p = c * (k - 1) + randInt(1, c); // position inside cabin k (sometimes exactly the last seat)
+        }
+        const ans = Math.ceil(p / c);
+        const queue = Array.from({ length: p }, (_, i) =>
+            i === p - 1 ? '<span class="queue-bear">🐻</span>' : randPick(WHEEL_ANIMALS)).join('');
+        return {
+            kind: 'word', subtype: 'wheel', answer: ans, answerLabel: `第 ${ans} 架`,
+            choices: wordChoices(ans, [Math.floor(p / c), c]),
+            zh: `小動物排隊搭摩天輪，小熊排第 <span class="qw">${p}</span>，如果一架摩天輪可以坐 <span class="qw">${c}</span> 隻動物，小熊可以坐第幾架？`,
+            en: `Animals are queuing for the Ferris wheel. Little Bear is number ${p} in line. Each wheel takes ${c} animals. Which wheel will Little Bear ride?`,
+            visual: `<div style="font-size:21px; line-height:1.35;">${queue}</div><span class="word-chip">🎡 每架坐 ${c} 隻 · ${c} per wheel</span>`,
+            explainHTML: (() => {
+                const q = Math.floor(p / c), r = p % c;
+                if (r === 0) return `<div class="eq-main">${p} ÷ ${c} = ${ans}</div><div class="eq-sub">小熊啱啱坐第 ${ans} 架最後一個位！Little Bear takes the very last seat of wheel ${ans}!</div>`;
+                return `<div class="eq-main">${p} ÷ ${c} = ${q} 餘 ${r} → 第 ${q} + 1 = ${ans} 架</div><div class="eq-sub">前 ${q} 架坐滿了，小熊坐下一架！The first ${q} wheels are full — Bear rides the next one!</div>`;
+            })()
+        };
+    }
+
+    // 10 questions: the 4 classic problems + 6 fresh variations, all shuffled
+    function buildWordPool() {
+        const fixed = [
+            genWordDays(14, 5, WORD_KIDS[0]), // 小飛
+            genWordTaxi(14, 4),
+            genWordBoat(6, 6, 3),
+            genWordWheel(10, 3),
+        ];
+        const fresh = shuffle([
+            genWordDays(), genWordTaxi(),
+            genWordBoat(), genWordBoat(),
+            genWordWheel(), genWordWheel(),
+        ]);
+        return shuffle([...fixed, ...fresh]);
+    }
+
+    // ---- Picture mode: show pile and containers, or word problem only ----
+    let showPictures = true;
+    try { showPictures = localStorage.getItem('fairshare_pictures') !== '0'; } catch (e) {}
+    function setMode(pic) {
+        showPictures = pic;
+        try { localStorage.setItem('fairshare_pictures', pic ? '1' : '0'); } catch (e) {}
+        updateModeButtons();
+    }
+    function updateModeButtons() {
+        document.getElementById('mode-pictures').classList.toggle('active', showPictures);
+        document.getElementById('mode-words').classList.toggle('active', !showPictures);
+    }
+    updateModeButtons();
+
+    // ---- Rendering ----
+    function renderWordQuestion(q) {
+        choicesDiv.innerHTML = '';
+        feedbackDisplay.innerText = '';
+        containersRow.innerHTML = '';
+        containersRow.classList.add('hidden');
+        equationDiv.classList.add('hidden');
+        equationDiv.innerHTML = '';
+        timeLimit = 30000; // word problems need reading time
+        questionText.innerHTML = `${q.zh}<br><span class="qzh">${q.en}</span>`;
+        pileDiv.innerHTML = q.visual || '';
+        pileDiv.classList.toggle('hidden', !showPictures || !q.visual);
+        showChoices(q);
+    }
+
+    function renderQuestion(q) {
+        if (q.kind === 'word') { renderWordQuestion(q); return; }
+        choicesDiv.innerHTML = '';
+        feedbackDisplay.innerText = '';
+        containersRow.innerHTML = '';
+        containersRow.classList.toggle('hidden', !showPictures);
+        equationDiv.classList.add('hidden');
+        equationDiv.innerHTML = '';
+        timeLimit = 20000;
+
+        questionText.innerHTML = `把 <span class="qw">${q.N}</span> 件${q.item.itemZh}平均分入 <span class="qw">${q.M}</span> 個${q.item.contZh}，每個${q.item.contZh}有多少件？<br><span class="qzh">Share ${q.N} ${q.item.itemEn} equally into ${q.M} ${q.item.contEn === 'box' ? 'boxes' : q.item.contEn + 's'}. How many in each ${q.item.contEn}?</span>`;
+
+        pileDiv.classList.toggle('hidden', !showPictures);
+        pileDiv.innerHTML = '';
+        if (showPictures) {
+            const fs = q.N <= 12 ? 30 : (q.N <= 20 ? 25 : 20);
+            for (let i = 0; i < q.N; i++) {
+                const s = document.createElement('span');
+                s.innerText = q.item.item;
+                s.style.fontSize = fs + 'px';
+                pileDiv.appendChild(s);
+            }
+            for (let i = 0; i < q.M; i++) {
+                const box = document.createElement('div');
+                box.className = 'container-box';
+                box.innerHTML = `<div class="c-emoji">${q.item.cont}</div><div class="c-name">${q.item.contZh} ${q.item.contEn}</div><div class="box-items"></div>`;
+                if (q.M >= 6) box.classList.add('compact');
+                containersRow.appendChild(box);
+            }
+        }
+        showChoices(q);
+    }
+
+    function showChoices(q) {
+        choicesDiv.innerHTML = '';
+        q.choices.forEach((c, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'num-choice';
+            btn.innerHTML = c.label;
+            btn.onclick = () => checkAnswer(i, btn);
+            choicesDiv.appendChild(btn);
+        });
+    }
+
+    // After answering, items pop into the containers round-robin, then the equation appears
+    function runReveal(q, done) {
+        if (q.kind === 'word') {
+            showEquation(q);
+            setTimeout(done, 3200); // longer read for the worked solution
+            return;
+        }
+        if (!showPictures) {
+            showEquation(q);
+            setTimeout(done, 2300);
+            return;
+        }
+        const spans = [...pileDiv.querySelectorAll('span')];
+        const boxes = [...containersRow.children];
+        const step = Math.max(55, Math.min(160, Math.round(1700 / q.N)));
+        let i = 0;
+        const iv = setInterval(() => {
+            if (i >= q.N) {
+                clearInterval(iv);
+                showEquation(q);
+                setTimeout(done, 2300);
+                return;
+            }
+            if (spans[i]) spans[i].style.opacity = '0.15';
+            const mini = document.createElement('span');
+            mini.innerText = q.item.item;
+            boxes[i % q.M].querySelector('.box-items').appendChild(mini);
+            playSound('deal');
+            i++;
+        }, step);
+    }
+
+    function showEquation(q) {
+        if (q.kind === 'word') {
+            equationDiv.innerHTML = q.explainHTML;
+            const main = equationDiv.querySelector('.eq-main');
+            if (main && main.innerText.length > 18) main.style.fontSize = '24px';
+            equationDiv.classList.remove('hidden');
+            return;
+        }
+        const terms = Array(q.M).fill(q.answer).join(' + ');
+        equationDiv.innerHTML = `<div class="eq-main">${terms} = ${q.N}</div><div class="eq-sub">每個${q.item.contZh}有 ${q.answer} 件 · Each ${q.item.contEn} has ${q.answer}!</div>`;
+        if (q.M >= 7) equationDiv.querySelector('.eq-main').style.fontSize = '22px';
+        equationDiv.classList.remove('hidden');
+    }
+
+    // ---- Progress & Timer ----
+    function updateProgress() {
+        progressDisplay.innerHTML = '';
+        for (let i = 0; i < totalQuestions; i++) {
+            const span = document.createElement('span');
+            span.innerText = '🧺';
+            if (i >= questionsDone) span.className = 'scale-unfed';
+            progressDisplay.appendChild(span);
+        }
+    }
+
+    // ---- Timer on/off toggle (shared preference across games) ----
+    let timerEnabled = true; // timer is ON by default on every visit
+    function toggleTimer() {
+        timerEnabled = !timerEnabled;
+        updateTimerToggle();
+    }
+    function updateTimerToggle() {
+        const sw = document.getElementById('timer-switch');
+        const st = document.getElementById('timer-state');
+        if (!sw || !st) return;
+        sw.classList.toggle('on', timerEnabled);
+        st.innerText = timerEnabled ? '開 ON' : '關 OFF';
+    }
+    updateTimerToggle();
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        const area = document.getElementById('timer-area');
+        if (!timerEnabled) { area.style.visibility = 'hidden'; return; }
+        area.style.visibility = 'visible';
+        timeLeft = timeLimit;
+        timerBar.style.width = '100%';
+        timerBar.style.backgroundColor = 'var(--primary)';
+        timerInterval = setInterval(() => {
+            timeLeft -= 50;
+            timerBar.style.width = (timeLeft / timeLimit * 100) + '%';
+            if (timeLeft <= 5000 && timeLeft % 1000 === 0) playSound('tick');
+            if (timeLeft <= 5000) timerBar.style.backgroundColor = 'var(--danger)';
+            if (timeLeft <= 0) { clearInterval(timerInterval); handleTimeout(); }
+        }, 50);
+    }
+
+    // ---- Navigation ----
+    function showSetup() {
+        if (!audioContextStarted) { Tone.start(); audioContextStarted = true; }
+        introScreen.classList.add('hidden');
+        setupScreen.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+    }
+
+    function goBack() {
+        if (!playScreen.classList.contains('hidden') || !endScreen.classList.contains('hidden')) {
+            gameActive = false;
+            clearInterval(timerInterval);
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            backBtn.innerText = '← Back';
+        } else if (!setupScreen.classList.contains('hidden')) {
+            setupScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+            backBtn.innerText = '← Home';
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
+
+    // ---- Main Loop ----
+    function startGame(level) {
+        if (!audioContextStarted) { Tone.start(); audioContextStarted = true; }
+        activeLevelId = level;
+        mistakes = [];
+        isCorrectionRound = false;
+        isTransitioning = false;
+        gameActive = true;
+        questionsDone = 0;
+        questionPool = buildPool(level);
+        totalQuestions = questionPool.length;
+        updateProgress();
+        introScreen.classList.add('hidden');
+        setupScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        playScreen.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+        feedbackDisplay.innerText = '';
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (questionPool.length === 0) { handleRoundEnd(); return; }
+        currentQuestion = questionPool.pop();
+        currentChoices = currentQuestion.choices;
+        renderQuestion(currentQuestion);
+        isTransitioning = false;
+        startTimer();
+    }
+
+    function checkAnswer(idx, btn) {
+        if (isTransitioning || !gameActive) return;
+        isTransitioning = true;
+        clearInterval(timerInterval);
+        const chosen = currentChoices[idx];
+        if (chosen.v === currentQuestion.answer) handleCorrect(btn);
+        else handleWrong(btn);
+    }
+
+    function handleCorrect(btn) {
+        playSound('correct');
+        btn.classList.add('is-correct');
+        const r = btn.getBoundingClientRect();
+        fireConfetti(r.left + r.width / 2, r.top + r.height / 2, 1);
+        questionsDone++;
+        updateProgress();
+        feedbackDisplay.style.color = 'var(--success)';
+        feedbackDisplay.innerText = '答對了！Correct! 🎉';
+        runReveal(currentQuestion, () => { feedbackDisplay.innerText = ''; nextQuestion(); });
+    }
+
+    function handleWrong(btn) {
+        playSound('wrong');
+        btn.classList.add('is-wrong', 'anim-shake');
+        setTimeout(() => btn.classList.remove('anim-shake'), 400);
+        mistakes.push(currentQuestion);
+        highlightCorrect();
+        feedbackDisplay.style.color = 'var(--danger)';
+        feedbackDisplay.innerText = `答錯了！It was ${currentQuestion.answerLabel}！`;
+        runReveal(currentQuestion, () => { feedbackDisplay.innerText = ''; nextQuestion(); });
+    }
+
+    function handleTimeout() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        playSound('timeout');
+        mistakes.push(currentQuestion);
+        highlightCorrect();
+        feedbackDisplay.style.color = 'var(--danger)';
+        feedbackDisplay.innerText = `時間到！Time's Up! It was ${currentQuestion.answerLabel}！`;
+        runReveal(currentQuestion, () => { feedbackDisplay.innerText = ''; nextQuestion(); });
+    }
+
+    function highlightCorrect() {
+        const btns = choicesDiv.querySelectorAll('button');
+        btns.forEach((b, i) => {
+            if (currentChoices[i] && currentChoices[i].v === currentQuestion.answer) b.classList.add('is-correct');
+            else b.classList.add('is-wrong', 'is-dim');
+        });
+    }
+
+    function handleRoundEnd() {
+        gameActive = false;
+        playScreen.classList.add('hidden');
+        endScreen.classList.remove('hidden');
+        pickerBtn.onclick = () => goBack();
+        if (mistakes.length === 0) {
+            playSound('fanfare');
+            markLevelComplete(activeLevelId);
+            document.getElementById('end-title').innerText = 'Level Complete! 🎉';
+            document.getElementById('final-message').innerText = 'Perfect Score! 全部答對！';
+            actionBtn.innerText = 'Play Again 再玩一次';
+            actionBtn.onclick = () => startGame(activeLevelId);
+        } else {
+            document.getElementById('end-title').innerText = 'Almost there! 差一點點！';
+            document.getElementById('final-message').innerText = `還有 ${mistakes.length} 題要複習！Fix ${mistakes.length} more!`;
+            actionBtn.innerText = '改正錯題 Review Mistakes';
+            actionBtn.onclick = startCorrectionRound;
+        }
+    }
+
+    function startCorrectionRound() {
+        isCorrectionRound = true;
+        questionPool = shuffle(mistakes);
+        mistakes = [];
+        questionsDone = 0;
+        totalQuestions = questionPool.length;
+        updateProgress();
+        gameActive = true;
+        endScreen.classList.add('hidden');
+        playScreen.classList.remove('hidden');
+        feedbackDisplay.innerText = '';
+        nextQuestion();
+    }
+
+    // ---- Trophies ----
+    function markLevelComplete(id) {
+        try { localStorage.setItem(`share_l${id}_complete`, '1'); } catch (e) {}
+        decorateCard(id);
+    }
+    function decorateCard(id) {
+        const card = document.getElementById(`lv-card-${id}`);
+        if (!card) return;
+        const name = card.querySelector('.lv-name');
+        if (name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+    }
+    for (const i of [1, 2, 3, 4, 10]) {
+        try { if (localStorage.getItem(`share_l${i}_complete`) === '1') decorateCard(i); } catch (e) {}
+    }
+
+    // ---- Sublevel 10 lock gate (same password as Money Match Sublevels 7-9) ----
+    const sublockOverlay = document.getElementById('sublock-overlay');
+    const sublockInput = document.getElementById('sublock-input');
+    const sublockError = document.getElementById('sublock-error');
+    const SUB_PASS_HASH = 1056886225; // djb2-xor of the password
+    function tryStartLocked(level) {
+        sublockInput.value = '';
+        sublockError.classList.add('hidden');
+        sublockOverlay.classList.remove('hidden');
+        setTimeout(() => sublockInput.focus(), 60);
+    }
+    function closeSubLock() { sublockOverlay.classList.add('hidden'); }
+    function trySubUnlock() {
+        const v = sublockInput.value.trim().toLowerCase();
+        let h = 5381;
+        for (let i = 0; i < v.length; i++) h = ((h * 33) ^ v.charCodeAt(i)) >>> 0;
+        if (v && h === SUB_PASS_HASH) {
+            sublockOverlay.classList.add('hidden');
+            startGame(10);
+        } else {
+            playSound('wrong');
+            sublockError.classList.remove('hidden');
+            sublockInput.value = '';
+            sublockInput.classList.add('error');
+            setTimeout(() => sublockInput.classList.remove('error'), 400);
+            sublockInput.focus();
+        }
+    }
+    document.getElementById('sublock-btn').onclick = () => trySubUnlock();
+    document.getElementById('sublock-cancel').onclick = () => closeSubLock();
+    sublockInput.addEventListener('keydown', e => { if (e.key === 'Enter') trySubUnlock(); if (e.key === 'Escape') closeSubLock(); });
+    sublockOverlay.addEventListener('click', e => { if (e.target === sublockOverlay) closeSubLock(); });
+    </script>
+
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>把糖果逐粒分進不同的瓶子：每人一份、份份一樣多，才叫「平均」。這是除法的前概念 — 除法不是口訣，而是「分東西分到大家一樣多」。遊戲還會問「分不分得完？有沒有剩？」帶出餘數的初步感覺，為正式除法打好底。第十關「除法文字題」（需密碼）把除法放進生活故事：「14 版功課、每日做 5 版，要多少日做完？」「14 個人搭的士、每架坐 4 人，最少要多少架？」— 關鍵是「有剩都要加一」（進一法）：14 ÷ 5 = 2 餘 4，剩下的 4 版都要做多一日，所以是 3 日。另有「6 隻白羊加 6 隻黑羊、每船坐 3 隻」的先加後除，和「小熊排第 10、每架摩天輪坐 3 隻」的排隊位置題，訓練小朋友從文字中找出「總數」和「每份」，自己決定怎樣分。</p>
+        <p class="pg-en">Deal the candies one by one into jars: everyone gets the same amount — that's what "equal" means. This is the pre-concept of division: division isn't a chant, it's "sharing until everyone has the same". The game also asks "did it share out exactly? Any left over?" — a first feel for remainders, laying the ground for formal division. Sublevel 10 (password required) wraps division in real-life stories: "14 pages of homework, 5 pages a day — how many days to finish?" and "14 people, 4 per taxi — how many taxis at least?" The key idea is rounding up: 14 ÷ 5 = 2 remainder 4, and those last 4 pages still need one more day — so 3 days. There are also add-then-divide boat problems ("6 white sheep + 6 black sheep, 3 per boat") and queue-position problems ("Bear is 10th in line, 3 per Ferris wheel — which wheel?"), training children to spot the total and the group size in a story and decide how to share.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>跟小朋友強調「逐粒逐粒、輪流分」的策略（一一分配），分完一起檢查：「每份一不一樣多？這樣才公平。」遇到分不完，一起討論「多出來的可以怎樣處理？」— 問題本身已經是很好的思考訓練。</p>
+        <p class="pg-en">Emphasise the "one by one, take turns" strategy (dealing out), then check together: "Is every share the same? That's what fair means." When it doesn't share out exactly, discuss "what could we do with the extras?" — the question itself is excellent thinking practice.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>分餐具、分水果給家人是最自然的練習：「12粒車厘茄，4個人，每人幾粒？」每天晚餐桌，都可以是數學桌。</p>
+        <p class="pg-en">Sharing cutlery and fruit among the family is the most natural practice: "12 cherry tomatoes, 4 people — how many each?" Every dinner table can be a maths table.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

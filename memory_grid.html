@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#8e5bd6">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Memory Grid 記憶格子 | 看圖記住 · Look & Remember – MMathWorld</title>
+    <meta name="description" content="Memory Grid 記憶格子遊戲：看著格子圖記住物品位置，再拖回正確的格子！3×3 三種物品、3×4 相似物品加空格，訓練觀察力同短期記憶。Look, remember, then drag the right item into the correct cells — 3×3 and 3×4 visual memory challenges for kids! 免費升小記憶力遊戲！Free memory game for kids.">
+    <link rel="canonical" href="https://mathgames.missman.world/memory_grid">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Memory Grid 記憶格子 | 看圖記住 · Look & Remember – MMathWorld">
+    <meta property="og:description" content="Memory Grid 記憶格子遊戲：看著格子圖記住物品位置，再拖回正確的格子！3×3 三種物品、3×4 相似物品加空格。Look, remember, then drag the right item into the correct cells! 免費升小記憶力遊戲！">
+    <meta property="og:url" content="https://mathgames.missman.world/memory_grid">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Memory Grid 記憶格子 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Memory Grid 記憶格子 | 看圖記住 · Look & Remember – MMathWorld">
+    <meta name="twitter:description" content="Memory Grid 記憶格子遊戲：看著記住物品位置，再拖回正確的格子！Look & remember visual memory game for kids!">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Memory Grid",
+      "alternateName": "記憶格子",
+      "url": "https://mathgames.missman.world/memory_grid",
+      "description": "Memory Grid 記憶格子遊戲：看著格子圖記住物品位置，再拖回正確的格子！3×3 三種物品、3×4 相似物品加空格。Look, remember, then drag the right item into the correct cells.",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": ["zh-Hant-HK", "en"],
+      "genre": ["Educational", "Math"],
+      "gamePlatform": ["Web Browser", "Mobile Web"],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "HKD" },
+      "audience": { "@type": "PeopleAudience", "suggestedMinAge": 4, "suggestedMaxAge": 7 },
+      "author": { "@type": "Organization", "name": "MMathWorld", "url": "https://mathgames.missman.world/" },
+      "learningResourceType": "Educational game",
+      "teaches": "記住物品在格子裡的位置：觀察力、短期記憶、空間位置 Visual memory and spatial positions in 3×3 and 3×4 grids"
+    }
+    </script>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%238e5bd6'/%3E%3Ctext x='24' y='34' font-size='28' text-anchor='middle'%3E🧠%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <style>
+        :root {
+            --grape: #8e5bd6; --grape-dark: #6a3fb5;
+            --sky: #4fa8e0; --sky-dark: #2c6fb0;
+            --wood: #a9744f; --wood-dark: #8a5a3b;
+            --cream: #fffdf8; --danger: #e74c3c; --success: #2ecc71;
+            --text-main: #3d3550; --text-muted: #8a81a0;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body {
+            min-height: 100vh; min-height: 100dvh;
+            background: linear-gradient(180deg, #cbb7f2 0%, #e6dcfa 45%, #f3edfd 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: safe center;
+            padding: 14px; overflow-x: hidden; touch-action: manipulation;
+        }
+        .hidden { display: none !important; }
+        .deco { position: fixed; pointer-events: none; opacity: 0.5; z-index: 0; }
+        @keyframes bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-9px); } }
+
+        #back-btn {
+            position: fixed; top: 12px; left: 12px; z-index: 60;
+            background: #ffffff; border: 3px solid #d9c8b2; color: #8a7458;
+            font-size: 15px; font-weight: 800; border-radius: 999px; padding: 7px 16px;
+            cursor: pointer; box-shadow: 0 3px 0 #d9c8b2; transition: transform 0.12s;
+        }
+        #back-btn:hover { transform: translateY(-2px); }
+
+        #game-container {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: var(--cream); border: 5px solid var(--wood); border-radius: 28px;
+            box-shadow: 0 10px 0 var(--wood-dark), 0 22px 40px rgba(60, 45, 100, 0.25);
+            padding: 20px 22px 24px; text-align: center;
+            max-height: calc(100dvh - 28px); overflow-y: auto;
+        }
+
+        .mascot-big { font-size: 64px; animation: bob 2.6s infinite ease-in-out; filter: drop-shadow(0 6px 8px rgba(0,0,0,0.18)); }
+        .game-title { font-size: 36px; font-weight: 900; color: var(--grape-dark); margin: 4px 0 8px; }
+        .tag-pill {
+            display: inline-block; background: #f1eafc; color: var(--grape-dark);
+            border: 3px solid #d9c8f5; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 6px 0 12px;
+        }
+        #trophy-pill {
+            display: inline-block; background: linear-gradient(145deg, #fff3c4, #ffe082);
+            border: 3px solid #f0c93f; color: #9c6500; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 4px 16px; margin: 4px 0 8px;
+        }
+        .intro-desc { font-size: 16px; font-weight: 700; color: #5a4f72; line-height: 1.55; max-width: 560px; margin: 0 auto 16px; }
+        .intro-desc .en { font-size: 13.5px; color: #a79dc4; }
+
+        .btn {
+            background: linear-gradient(145deg, #a67ce8, #8e5bd6); color: #fff;
+            border: none; border-radius: 999px; font-size: 20px; font-weight: 800;
+            padding: 13px 36px; cursor: pointer; box-shadow: 0 5px 0 var(--grape-dark);
+            transition: transform 0.12s, box-shadow 0.12s;
+        }
+        .btn:hover { transform: translateY(-2px); }
+        .btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--grape-dark); }
+        .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+        .btn-secondary { background: linear-gradient(145deg, #8ec9f5, #4fa8e0); box-shadow: 0 5px 0 var(--sky-dark); font-size: 16px; padding: 11px 24px; }
+        .btn-secondary:active { box-shadow: 0 2px 0 var(--sky-dark); }
+        #place-btns { display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; }
+        #peek-btn { font-size: 15px; padding: 11px 20px; }
+        #lock-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 6px; }
+        #lock-input {
+            font-family: inherit; font-size: 18px; font-weight: 700; padding: 12px 18px; width: 220px;
+            border: 3px solid #e3d7f3; border-radius: 999px; outline: none; text-align: center; color: var(--text-main);
+        }
+        #lock-input:focus { border-color: var(--grape); }
+        #lock-input.error { border-color: var(--danger); animation: deny 0.35s; }
+        #unlock-btn { background: var(--grape); box-shadow: 0 6px 0 var(--grape-dark); }
+        #unlock-btn:hover { filter: brightness(1.08); transform: translateY(-2px); }
+        #unlock-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 var(--grape-dark); }
+        #lock-error { margin-top: 12px; font-weight: 800; color: var(--danger); font-size: 15px; }
+        #grid.place-mode .cell.filled { cursor: grab; }
+
+        .level-grid { display: flex; flex-direction: column; gap: 12px; max-width: 560px; margin: 0 auto; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #ffffff; border: 3px solid #e3d7f3; border-radius: 18px;
+            padding: 13px 18px; cursor: pointer; box-shadow: 0 4px 0 #e7dcf7;
+            transition: transform 0.12s, box-shadow 0.12s; font-family: inherit;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 7px 0 #e7dcf7; }
+        .mode-row { display: flex; gap: 12px; max-width: 560px; margin: 0 auto 18px; }
+        .mode-btn {
+            flex: 1; background: #ffffff; border: 3px solid #e3d7f3; border-radius: 18px;
+            padding: 12px 10px; cursor: pointer; box-shadow: 0 4px 0 #e7dcf7;
+            font-family: inherit; font-size: 17px; font-weight: 800; color: var(--text-main);
+            line-height: 1.35; transition: transform 0.12s, box-shadow 0.12s, border-color 0.12s, background 0.12s;
+        }
+        .mode-btn:hover { transform: translateY(-3px); box-shadow: 0 7px 0 #e7dcf7; }
+        .mode-btn .mode-sub { font-size: 12.5px; font-weight: 700; color: #a79dc4; }
+        .mode-btn.selected { border-color: var(--grape); background: #f3ecfd; box-shadow: 0 4px 0 #cdb4ee; }
+        .mode-btn.selected .mode-sub { color: var(--grape-dark); }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-main); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #a79dc4; }
+
+        #progress-pill {
+            display: inline-block; background: #e8f4ff; color: var(--sky-dark);
+            border: 3px solid #bcd9f5; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 3px 14px; margin-bottom: 8px;
+        }
+
+        #phase-banner {
+            background: #ffffff; border: 3px solid #e3d7f3; border-radius: 18px;
+            padding: 10px 16px 12px; margin-bottom: 12px;
+        }
+        #phase-banner.shake { animation: deny 0.35s; }
+        #banner-zh { font-size: 21px; font-weight: 900; color: var(--text-main); line-height: 1.4; }
+        #banner-zh .big { font-size: 30px; vertical-align: -4px; }
+        #banner-en { font-size: 14.5px; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
+
+        #grid { display: grid; gap: 8px; margin: 0 auto 12px; width: 100%; }
+        #grid.g3 { max-width: 400px; }
+        #grid.g4 { max-width: 540px; }
+        .cell {
+            aspect-ratio: 1; background: #ffffff; border: 3px solid #d9cfef; border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 46px; line-height: 1; position: relative;
+        }
+        #grid.g4 .cell { font-size: 42px; }
+        #grid.place-mode .cell { cursor: pointer; background: #f8f5ff; border-style: dashed; }
+        .cell.filled { border-style: solid; border-color: var(--grape); background: #ffffff; }
+        .cell.good { border-color: #2ecc71; background: #eafff2; animation: pop 0.35s; }
+        .cell.bad { border-color: #e74c3c; background: #ffeceb; animation: deny 0.35s; }
+        .cell.miss { border-color: #f0c93f; background: #fffbe0; border-style: solid; }
+        .cell .ghost { opacity: 0.45; }
+        .cell.locked { border-style: solid; border-color: #b7a6e0; background: #f3edff; cursor: default; }
+        .cell.locked span { opacity: 0.8; }
+
+        #timer-bar {
+            height: 16px; background: #efe9fb; border-radius: 999px; overflow: hidden;
+            border: 2px solid #d9cfef; margin-bottom: 12px;
+        }
+        #timer-fill {
+            height: 100%; width: 100%; border-radius: 999px;
+            background: linear-gradient(90deg, #b18cff, #8e5bd6);
+        }
+
+        #tray { display: flex; align-items: center; justify-content: center; gap: 16px; margin-bottom: 12px; }
+        #tray-item {
+            width: 86px; height: 86px; border-radius: 50%;
+            background: #ffffff; border: 4px solid var(--grape);
+            font-size: 50px; line-height: 1; cursor: grab;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 5px 0 var(--grape-dark); user-select: none; touch-action: none;
+        }
+        #tray-item:active { cursor: grabbing; }
+        #tray-count { font-size: 18px; font-weight: 900; color: var(--grape-dark); }
+        .drag-ghost {
+            position: fixed; z-index: 160; pointer-events: none; font-size: 54px; line-height: 1;
+            transform: translate(-50%, -60%); filter: drop-shadow(0 8px 8px rgba(0, 0, 0, 0.3));
+        }
+
+        #feedback { min-height: 28px; font-size: 17px; font-weight: 800; margin-top: 4px; line-height: 1.4; }
+
+        @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
+        @keyframes deny { 0%, 100% { transform: translateX(0); } 30% { transform: translateX(-5px); } 60% { transform: translateX(5px); } }
+
+        #end-screen .mascot-big { font-size: 58px; }
+        #end-sub { font-weight: 700; color: #8a7458; font-size: 17px; margin-bottom: 14px; }
+        #end-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+        #confetti-canvas { position: fixed; inset: 0; pointer-events: none; z-index: 120; }
+
+        @media (max-width: 640px) {
+            #game-container { padding: 14px 12px 16px; border-width: 4px; }
+            .game-title { font-size: 28px; }
+            .mascot-big { font-size: 50px; }
+            .cell { font-size: 38px; border-radius: 11px; }
+            #grid.g4 .cell { font-size: 32px; }
+            #grid { gap: 6px; }
+            #banner-zh { font-size: 18px; }
+            #banner-zh .big { font-size: 25px; }
+            #banner-en { font-size: 13px; }
+            #tray-item { width: 72px; height: 72px; font-size: 42px; }
+            #feedback { font-size: 15px; }
+            .intro-desc { font-size: 14.5px; }
+        }
+        @media (max-height: 720px) {
+            .mascot-big { font-size: 44px; }
+            .game-title { font-size: 26px; margin: 2px 0 4px; }
+        }
+    
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 1; width: 100%; max-width: 760px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #eee5d8;
+            box-shadow: 0 8px 24px rgba(60, 50, 90, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: #4a3f35; margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #8a6d4f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    
+        /* ---------- Parent guide toggle ---------- */
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #e8dcc8; background: #ffffff; color: #8a6d4f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #e0d4bd; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #e0d4bd; }
+        .parent-guide.pg-hidden { display: none; }
+    </style>
+</head>
+<body>
+    <div class="deco" style="top: 8%; left: 5%; font-size: 44px; animation: bob 3s infinite;">🧠</div>
+    <div class="deco" style="top: 14%; right: 6%; font-size: 40px; animation: bob 3.4s infinite;">✨</div>
+    <div class="deco" style="bottom: 10%; left: 7%; font-size: 42px; animation: bob 2.8s infinite;">🔍</div>
+    <div class="deco" style="bottom: 16%; right: 5%; font-size: 38px; animation: bob 3.2s infinite;">🌟</div>
+
+    <button id="back-btn" onclick="location.href='index.html'">&#8592; Home</button>
+
+    <div id="game-container">
+        <!-- INTRO -->
+        <!-- LOCK -->
+        <div id="lock-screen">
+            <div class="mascot-big">🔒</div>
+            <h1 class="game-title">Memory Grid 記憶格子</h1>
+            <p class="intro-desc">
+                這關需要密碼才能玩！快問老師或者家長拿密碼吧。
+                <br><span class="en">This level is locked — ask your teacher or parent for the password!</span>
+            </p>
+            <div id="lock-row">
+                <input id="lock-input" type="password" placeholder="Password 密碼" autocomplete="off" />
+                <button id="unlock-btn" class="btn">Unlock 解鎖！</button>
+            </div>
+            <div id="lock-error" class="hidden">密碼不對，再試一次！Wrong password — try again! 🤔</div>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- INTRO -->
+        <div id="intro-screen" class="hidden">
+            <div class="mascot-big">🧠</div>
+            <h1 class="game-title">Memory Grid 記憶格子</h1>
+            <div class="tag-pill">看圖 · 記住 · 拖回原位 · Look, Remember, Place</div>
+            <div id="trophy-pill" class="hidden">🏆 全部關卡完成！All sublevels complete!</div>
+            <p class="intro-desc">
+                先用眼睛記住格子裡每樣物品在哪裡，然後圖畫會收起來 — 逐樣拖回正確的格子，直到完成整幅圖！
+                <br><span class="en">Look at the grid and remember where everything is. Then the picture hides — drag each item back into the correct cells, one by one, until the grid is complete!</span>
+            </p>
+            <button class="btn" onclick="showSetup()">Play!</button>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- SETUP -->
+        <div id="setup-screen" class="hidden">
+            <h2 class="game-title">Memory Grid 🧠</h2>
+            <div class="tag-pill">Pick a mode 選擇模式：</div>
+            <div class="mode-row">
+                <button class="mode-btn selected" id="mode-timer" onclick="setMode(true)">
+                    ⏱️ 限時挑戰 Timer<br><span class="mode-sub">Beat the clock! 鬥快記住！</span>
+                </button>
+                <button class="mode-btn" id="mode-free" onclick="setMode(false)">
+                    🐢 慢慢記 No Timer<br><span class="mode-sub">Take your time! 記好再按！</span>
+                </button>
+            </div>
+            <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+            <div class="level-grid">
+                <button class="level-card" id="card-1" onclick="startGame(1)">
+                    <span class="lv-emoji">🥕</span>
+                    <span><span class="lv-name">Sublevel 1: 3×3 三種物品</span><br><span class="lv-sub">Three Items — remember 3 different things in a 3×3 grid!</span></span>
+                </button>
+                <button class="level-card" id="card-2" onclick="startGame(2)">
+                    <span class="lv-emoji">🚗</span>
+                    <span><span class="lv-name">Sublevel 2: 3×4 相似物品 + 空格</span><br><span class="lv-sub">Look-alikes + Blanks — two similar things and empty cells in a 3×4 grid!</span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PLAY -->
+        <div id="play-screen" class="hidden">
+            <div id="progress-pill">第 1 / 6 題 Round</div>
+            <div id="phase-banner">
+                <div id="banner-zh"></div>
+                <div id="banner-en"></div>
+            </div>
+            <div id="grid" class="g3"></div>
+            <div id="memo-footer">
+                <div id="timer-bar"><div id="timer-fill"></div></div>
+                <button id="ready-btn" class="btn">記住了！Got it!</button>
+            </div>
+            <div id="place-footer" class="hidden">
+                <div id="tray">
+                    <div id="tray-item"></div>
+                    <div id="tray-count"></div>
+                </div>
+                <div id="place-btns">
+                    <button id="peek-btn" class="btn btn-secondary hidden">👀 再看一次 Peek</button>
+                    <button id="check-btn" class="btn" disabled>檢查！Check!</button>
+                </div>
+            </div>
+            <div id="feedback"></div>
+        </div>
+
+        <!-- END -->
+        <div id="end-screen" class="hidden">
+            <div class="mascot-big">🏆</div>
+            <h2 id="end-title" class="game-title">Memory Master!</h2>
+            <p id="end-sub"></p>
+            <div id="end-btns">
+                <button id="action-btn" class="btn">Play Again 再玩一次</button>
+                <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
+            </div>
+        </div>
+    </div>
+
+    <canvas id="confetti-canvas"></canvas>
+    <script>
+        // ================= DATA =================
+        // Sublevel 1: 3 different items in a 3x3 grid (like the veggies worksheet)
+        const THEMES3 = [
+            [{ e: '🥕', zh: '紅蘿蔔', en: 'carrots' }, { e: '🥬', zh: '白菜', en: 'cabbages' }, { e: '🌽', zh: '粟米', en: 'corn cobs' }],
+            [{ e: '🍎', zh: '蘋果', en: 'apples' }, { e: '🍌', zh: '香蕉', en: 'bananas' }, { e: '🍇', zh: '提子', en: 'grapes' }],
+            [{ e: '🐶', zh: '小狗', en: 'puppies' }, { e: '🐱', zh: '小貓', en: 'kittens' }, { e: '🐰', zh: '小兔', en: 'bunnies' }],
+            [{ e: '🚗', zh: '車車', en: 'cars' }, { e: '🚌', zh: '巴士', en: 'buses' }, { e: '🚲', zh: '單車', en: 'bikes' }],
+            [{ e: '🐟', zh: '魚魚', en: 'fish' }, { e: '🐙', zh: '八爪魚', en: 'octopuses' }, { e: '🐢', zh: '海龜', en: 'turtles' }],
+            [{ e: '☀️', zh: '太陽', en: 'suns' }, { e: '☁️', zh: '雲雲', en: 'clouds' }, { e: '⭐', zh: '星星', en: 'stars' }],
+        ];
+        // Sublevel 2: two VERY similar items + blanks in a 3x4 grid (like the cars worksheet)
+        const PAIRS = [
+            [{ e: '🚗', zh: '紅色車', en: 'red car' }, { e: '🚙', zh: '藍色車', en: 'blue car' }],
+            [{ e: '🍎', zh: '紅蘋果', en: 'red apple' }, { e: '🍏', zh: '青蘋果', en: 'green apple' }],
+            [{ e: '⭐', zh: '星星', en: 'plain star' }, { e: '🌟', zh: '閃閃星星', en: 'sparkling star' }],
+            [{ e: '🐱', zh: '貓貓樣', en: 'cat face' }, { e: '🐈', zh: '貓貓身', en: 'cat body' }],
+            [{ e: '🌕', zh: '滿月', en: 'full moon' }, { e: '🌑', zh: '新月', en: 'new moon' }],
+        ];
+        const MEMO_MS = [0, 15000, 15000]; // per-sublevel memorise time (timer mode)
+        const PICS = [0, 2, 3]; // pictures per game: L1 = 2 pics × 3 items, L2 = 3 pics × 2 items (6 questions each)
+
+        // ================= STATE =================
+        const introScreen = document.getElementById('intro-screen');
+        const setupScreen = document.getElementById('setup-screen');
+        const playScreen = document.getElementById('play-screen');
+        const endScreen = document.getElementById('end-screen');
+        const progressPill = document.getElementById('progress-pill');
+        const phaseBanner = document.getElementById('phase-banner');
+        const bannerZh = document.getElementById('banner-zh');
+        const bannerEn = document.getElementById('banner-en');
+        const grid = document.getElementById('grid');
+        const memoFooter = document.getElementById('memo-footer');
+        const placeFooter = document.getElementById('place-footer');
+        const timerFill = document.getElementById('timer-fill');
+        const trayItem = document.getElementById('tray-item');
+        const trayCount = document.getElementById('tray-count');
+        const checkBtn = document.getElementById('check-btn');
+        const backBtn = document.getElementById('back-btn');   // ← Home nav button
+        const peekBtn = document.getElementById('peek-btn');   // no-timer peek button
+        const feedback = document.getElementById('feedback');
+
+        let level = 1, pool = [], picIdx = 0, itemPos = 0, mistakes = [], isReview = false;
+        let currentR = null, locked = false, inPlace = false;
+        let placed = new Set(), lockedCells = new Set(), cellEls = [], memoTimer = null;
+        let reviewPool = [], revIdx = 0;
+        let timerOn = true; // mode: with / without memorise countdown
+
+        let audioStarted = false, synth;
+        function initAudio() { synth = new Tone.PolySynth(Tone.Synth).toDestination(); }
+        function playSound(type) {
+            if (!audioStarted || !synth) return;
+            const now = Tone.now();
+            if (type === 'pop') synth.triggerAttackRelease('A6', '32n', now);
+            else if (type === 'ding') synth.triggerAttackRelease('E6', '16n', now);
+            else if (type === 'correct') ['C5', 'E5', 'G5'].forEach((n, i) => synth.triggerAttackRelease(n, '16n', now + i * 0.07));
+            else if (type === 'wrong') synth.triggerAttackRelease('C2', '8n', now);
+            else if (type === 'fanfare') ['C5', 'E5', 'G5', 'C6'].forEach((n, i) => synth.triggerAttackRelease(n, '8n', now + i * 0.13));
+        }
+
+        function shuffle(a) { return a.sort(() => Math.random() - 0.5); }
+        function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+
+        // ================= FLOW =================
+        // password gate — unlocks the intro screen
+        const lockScreen = document.getElementById('lock-screen');
+        const lockInput = document.getElementById('lock-input');
+        const lockError = document.getElementById('lock-error');
+        const PASS_HASH = 1056886225; // djb2-xor of the password
+        function tryUnlock() {
+            const v = lockInput.value.trim().toLowerCase();
+            let h = 5381;
+            for (let i = 0; i < v.length; i++) h = ((h * 33) ^ v.charCodeAt(i)) >>> 0;
+            if (v && h === PASS_HASH) {
+                if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+                playSound('correct');
+                lockScreen.classList.add('hidden');
+                introScreen.classList.remove('hidden');
+            } else {
+                playSound('wrong');
+                lockError.classList.remove('hidden');
+                lockInput.value = '';
+                lockInput.classList.add('error');
+                setTimeout(() => lockInput.classList.remove('error'), 400);
+                lockInput.focus();
+            }
+        }
+        document.getElementById('unlock-btn').onclick = () => tryUnlock();
+        lockInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryUnlock(); });
+
+        // in-game back button: Menu while playing (no password needed), Home on menu screens
+        function setBackBtn(mode) {
+            if (mode === 'menu') {
+                backBtn.innerHTML = '&#8592; Menu 目錄';
+                backBtn.onclick = () => backToMenu();
+            } else {
+                backBtn.innerHTML = '&#8592; Home';
+                backBtn.onclick = () => location.href = 'index.html';
+            }
+        }
+        function backToMenu() {
+            clearInterval(memoTimer);
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            setBackBtn('home');
+        }
+
+        function showSetup() {
+            if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+            introScreen.classList.add('hidden');
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+        }
+        function setMode(on) {
+            timerOn = on;
+            playSound('pop');
+            document.getElementById('mode-timer').classList.toggle('selected', on);
+            document.getElementById('mode-free').classList.toggle('selected', !on);
+        }
+        document.getElementById('picker-btn').onclick = () => showSetup();
+
+        function startGame(l) {
+            if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
+            level = l;
+            pool = buildPool();
+            picIdx = 0; itemPos = 0; mistakes = []; isReview = false;
+            setupScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+            introScreen.classList.add('hidden');
+            playScreen.classList.remove('hidden');
+            setBackBtn('menu');
+            showRound();
+        }
+
+        // ================= ROUND GENERATION =================
+        function buildRound() {
+            if (level === 1) {
+                const ti = randInt(0, THEMES3.length - 1);
+                const items = THEMES3[ti];
+                const counts = [3, 3, 3]; // every item appears exactly 3 times
+                const cells = [];
+                counts.forEach((n, i) => { for (let k = 0; k < n; k++) cells.push(i); });
+                shuffle(cells);
+                return { rows: 3, cols: 3, cells, items };
+            }
+            const pi = randInt(0, PAIRS.length - 1);
+            const items = PAIRS[pi];
+            const c0 = randInt(3, 4), c1 = randInt(3, 4);
+            const cells = [];
+            for (let k = 0; k < c0; k++) cells.push(0);
+            for (let k = 0; k < c1; k++) cells.push(1);
+            while (cells.length < 12) cells.push(-1);
+            shuffle(cells);
+            return { rows: 3, cols: 4, cells, items };
+        }
+
+        function buildPool() {
+            const out = [], seen = new Set();
+            let guard = 0;
+            while (out.length < PICS[level] && guard++ < 500) {
+                const r = buildRound();
+                const key = JSON.stringify([r.cells, r.items[0].e]);
+                if (seen.has(key)) continue;
+                seen.add(key);
+                out.push(r);
+            }
+            return out;
+        }
+
+        // ================= PHASE 1: MEMORISE =================
+        function updatePill() {
+            const total = pool.reduce((s, p) => s + p.items.length, 0);
+            const done = pool.slice(0, picIdx).reduce((s, p) => s + p.items.length, 0);
+            progressPill.innerText = `第 ${done + itemPos + 1} / ${total} 題 Round`;
+        }
+
+        function showRound() {
+            if (playScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            locked = false; inPlace = false;
+            placed = new Set(); lockedCells = new Set();
+            itemPos = 0;
+            currentR = pool[picIdx];
+            updatePill();
+            bannerZh.innerHTML = `用眼睛記住這幅圖！每樣物品在哪些格子？`; // no hint about what we'll ask
+            bannerEn.innerText = `Look carefully — remember where EVERYTHING is!`;
+            feedback.innerText = '';
+            memoFooter.classList.remove('hidden');
+            placeFooter.classList.add('hidden');
+            renderGrid(true);
+            startMemoTimer();
+        }
+
+        function startMemoTimer() {
+            clearInterval(memoTimer);
+            const bar = document.getElementById('timer-bar');
+            if (!timerOn) { bar.classList.add('hidden'); return; } // no-timer mode: stay until 「記住了！」
+            bar.classList.remove('hidden');
+            const total = MEMO_MS[level], t0 = Date.now();
+            timerFill.style.width = '100%';
+            memoTimer = setInterval(() => {
+                const left = total - (Date.now() - t0);
+                timerFill.style.width = Math.max(0, (left / total) * 100) + '%';
+                if (left <= 0) startPlace();
+            }, 100);
+        }
+        document.getElementById('ready-btn').onclick = () => startPlace();
+
+        // ================= PHASE 2: PLACE =================
+        function renderGrid(filled) {
+            grid.innerHTML = ''; cellEls = [];
+            grid.className = currentR.cols === 3 ? 'g3' : 'g4';
+            if (!filled) grid.classList.add('place-mode');
+            grid.style.gridTemplateColumns = `repeat(${currentR.cols}, 1fr)`;
+            currentR.cells.forEach((v, idx) => {
+                const c = document.createElement('div');
+                c.className = 'cell';
+                c.dataset.idx = idx;
+                if (filled && v >= 0) {
+                    const s = document.createElement('span');
+                    s.textContent = currentR.items[v].e;
+                    c.appendChild(s);
+                }
+                if (!filled) {
+                    c.addEventListener('click', () => tapCell(idx));
+                    c.addEventListener('pointerdown', e => startCellDrag(e, idx));
+                }
+                grid.appendChild(c);
+                cellEls.push(c);
+                if (!filled && lockedCells.has(idx)) { // earlier items stay put
+                    c.classList.add('locked');
+                    const s = document.createElement('span');
+                    s.textContent = currentR.items[v].e;
+                    c.appendChild(s);
+                } else if (!filled && placed.has(idx)) paintCell(idx); // keep answers when re-rendering (e.g. after peek)
+            });
+        }
+
+        function startPlace() {
+            if (inPlace) return;
+            if (playScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            inPlace = true;
+            clearInterval(memoTimer);
+            askItem();
+        }
+
+        // ask for ONE item of the current picture — earlier items stay locked on the grid
+        function askItem() {
+            const tIdx = itemPos;
+            const t = currentR.items[tIdx];
+            const count = currentR.cells.filter(v => v === tIdx).length;
+            currentR.targetIdx = tIdx; currentR.targetCount = count;
+            updatePill();
+            bannerZh.innerHTML = `拖 <span class="big">${t.e}</span> ${t.zh} 到正確的格子！要放 ${count} 個`;
+            bannerEn.innerText = `Drag the ${t.en} into the correct cells — place ${count}!`;
+            feedback.innerText = '';
+            memoFooter.classList.add('hidden');
+            placeFooter.classList.remove('hidden');
+            peekBtn.classList.toggle('hidden', timerOn); // peek only in no-timer mode
+            trayItem.textContent = t.e;
+            renderGrid(false);
+            updateTray();
+        }
+
+        function updateTray() {
+            trayCount.innerText = `已放 ${placed.size} / ${currentR.targetCount} 個`;
+            checkBtn.disabled = placed.size !== currentR.targetCount;
+        }
+
+        function paintCell(idx) {
+            const c = cellEls[idx];
+            c.innerHTML = '';
+            c.classList.toggle('filled', placed.has(idx));
+            if (placed.has(idx)) {
+                const s = document.createElement('span');
+                s.textContent = currentR.items[currentR.targetIdx].e;
+                c.appendChild(s);
+            }
+        }
+
+        function tapCell(idx) {
+            if (locked || !inPlace || lockedCells.has(idx)) return;
+            const c = cellEls[idx];
+            if (placed.has(idx)) {
+                placed.delete(idx);
+                paintCell(idx);
+                playSound('pop');
+            } else if (placed.size >= currentR.targetCount) {
+                c.classList.add('bad');
+                setTimeout(() => c.classList.remove('bad'), 360);
+                playSound('wrong');
+                feedback.style.color = '#d63031';
+                feedback.innerText = `只需要放 ${currentR.targetCount} 個！想改？把已放的拖到另一格，或者先點走一個。Only ${currentR.targetCount} needed — drag a placed one to move it, or tap one to remove it!`;
+                setTimeout(() => { if (!locked) feedback.innerText = ''; }, 1800);
+                return;
+            } else {
+                placed.add(idx);
+                paintCell(idx);
+                playSound('ding');
+            }
+            updateTray();
+        }
+
+        // drag from the tray (touch + mouse); tapping a cell works too
+        trayItem.addEventListener('pointerdown', e => {
+            if (locked || !inPlace) return;
+            e.preventDefault();
+            const g = document.createElement('div');
+            g.className = 'drag-ghost';
+            g.textContent = currentR.items[currentR.targetIdx].e;
+            document.body.appendChild(g);
+            const move = ev => { g.style.left = ev.clientX + 'px'; g.style.top = ev.clientY + 'px'; };
+            move(e);
+            const up = ev => {
+                document.removeEventListener('pointermove', move);
+                document.removeEventListener('pointerup', up);
+                document.removeEventListener('pointercancel', up);
+                g.remove();
+                const el = document.elementFromPoint(ev.clientX, ev.clientY);
+                const cell = el && el.closest ? el.closest('.cell') : null;
+                if (cell && cellEls.includes(cell)) tapCell(+cell.dataset.idx);
+            };
+            document.addEventListener('pointermove', move);
+            document.addEventListener('pointerup', up);
+            document.addEventListener('pointercancel', up);
+        });
+
+        // drag a placed item to another cell to change the answer
+        function startCellDrag(e, idx) {
+            if (locked || !inPlace || !placed.has(idx)) return;
+            e.preventDefault();
+            const g = document.createElement('div');
+            g.className = 'drag-ghost';
+            g.textContent = currentR.items[currentR.targetIdx].e;
+            document.body.appendChild(g);
+            const move = ev => { g.style.left = ev.clientX + 'px'; g.style.top = ev.clientY + 'px'; };
+            move(e);
+            const up = ev => {
+                document.removeEventListener('pointermove', move);
+                document.removeEventListener('pointerup', up);
+                document.removeEventListener('pointercancel', up);
+                g.remove();
+                const el = document.elementFromPoint(ev.clientX, ev.clientY);
+                const cell = el && el.closest ? el.closest('.cell') : null;
+                if (!cell || !cellEls.includes(cell)) return;           // dropped outside: keep as-is
+                const target = +cell.dataset.idx;
+                if (target === idx) return;                             // same cell: the tap toggles it off
+                if (placed.has(target) || lockedCells.has(target)) { playSound('wrong'); return; } // occupied/locked: cancel the move
+                placed.delete(idx); placed.add(target);
+                paintCell(idx); paintCell(target);
+                playSound('ding');
+                updateTray();
+            };
+            document.addEventListener('pointermove', move);
+            document.addEventListener('pointerup', up);
+            document.addEventListener('pointercancel', up);
+        }
+
+        // no-timer mode: peek back at the picture — placed answers are kept
+        function peekBack() {
+            if (locked || !inPlace || timerOn) return;
+            inPlace = false;
+            playSound('pop');
+            const t = currentR.items[currentR.targetIdx];
+            bannerZh.innerHTML = `再看一次！記住 <span class="big">${t.e}</span> ${t.zh} 在哪些格子！`;
+            bannerEn.innerText = `One more look — your placed answers are kept!`;
+            feedback.innerText = '';
+            placeFooter.classList.add('hidden');
+            memoFooter.classList.remove('hidden');
+            renderGrid(true);
+        }
+        peekBtn.onclick = () => peekBack();
+
+        // ================= CHECK =================
+        checkBtn.onclick = () => {
+            if (locked || !inPlace || placed.size !== currentR.targetCount) return;
+            locked = true;
+            const tIdx = currentR.targetIdx;
+            const ok = [...placed].every(i => currentR.cells[i] === tIdx);
+            if (ok) {
+                playSound('correct');
+                placed.forEach(i => cellEls[i].classList.add('good'));
+                feedback.style.color = '#00b894';
+                const praises = [
+                    '答對了！記性真好！Correct — super memory! 🎉',
+                    '真棒！全部正確！All correct, well done! 🎉',
+                    '正確！你對眼真利害！Brilliant — sharp eyes! 🎉',
+                ];
+                feedback.innerText = praises[Math.floor(Math.random() * praises.length)];
+                setTimeout(nextStep, 1500);
+            } else {
+                playSound('wrong');
+                phaseBanner.classList.add('shake');
+                setTimeout(() => phaseBanner.classList.remove('shake'), 380);
+                if (!isReview && !mistakes.some(m => m.pic === currentR && m.itemPos === itemPos)) mistakes.push({ pic: currentR, itemPos });
+                placed.forEach(i => cellEls[i].classList.add(currentR.cells[i] === tIdx ? 'good' : 'bad'));
+                currentR.cells.forEach((v, i) => {
+                    if (v === tIdx && !placed.has(i)) {
+                        cellEls[i].classList.add('miss');
+                        const s = document.createElement('span');
+                        s.className = 'ghost';
+                        s.textContent = currentR.items[tIdx].e;
+                        cellEls[i].appendChild(s);
+                    }
+                });
+                feedback.style.color = '#d63031';
+                feedback.innerText = '差一點！黃色格才是正確的位置，記住它，稍後再試一次！Almost! The yellow cells are the right spots — you can try this one again later!';
+                setTimeout(nextStep, 4200);
+            }
+        };
+
+        function nextStep() {
+            if (playScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            // lock in the item just checked (wrong ones are auto-completed after the reveal)
+            const tIdx = currentR.targetIdx;
+            currentR.cells.forEach((v, i) => { if (v === tIdx) lockedCells.add(i); });
+
+            if (isReview) { // review asks only the missed item, then moves on
+                revIdx++;
+                if (revIdx < reviewPool.length) { startReviewRound(); return; }
+                showEnd();
+                return;
+            }
+
+            itemPos++;
+            if (itemPos < currentR.items.length) { // next item, same picture
+                placed = new Set();
+                locked = false;
+                askItem();
+                return;
+            }
+            picIdx++;
+            if (picIdx < pool.length) { // picture complete — on to the next
+                feedback.style.color = '#9c6500';
+                feedback.innerText = '幅圖完成啦！下一幅！Grid complete — here comes the next one! 🎉';
+                setTimeout(showRound, 1600);
+                return;
+            }
+            if (mistakes.length > 0) { // review the tricky ones
+                isReview = true;
+                reviewPool = mistakes; mistakes = [];
+                revIdx = 0;
+                feedback.style.color = '#9c6500';
+                feedback.innerText = '🔄 再試一次！Let’s review the tricky ones!';
+                setTimeout(startReviewRound, 1600);
+                return;
+            }
+            showEnd();
+        }
+
+        function startReviewRound() {
+            if (playScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            const m = reviewPool[revIdx];
+            currentR = m.pic; itemPos = m.itemPos;
+            lockedCells = new Set();
+            currentR.cells.forEach((v, i) => { if (v >= 0 && v < itemPos) lockedCells.add(i); }); // earlier items stay put
+            locked = false; inPlace = true; placed = new Set();
+            askItem();
+            progressPill.innerText = '🔄 再試一次 Review';
+        }
+
+        // ================= END & TROPHIES =================
+        const END_SUBS = {
+            1: '你對眼好犀利，記性好好！Sharp eyes and a super memory!',
+            2: '相似的東西都騙不到你！Even the look-alikes can’t fool you!',
+        };
+
+        function showEnd() {
+            playScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            setBackBtn('home');
+            localStorage.setItem('memory_l' + level + '_complete', 'true');
+            decorateCards();
+            document.getElementById('end-title').innerText = 'Memory Master! 記憶小達人！';
+            document.getElementById('end-sub').innerText = END_SUBS[level];
+            document.getElementById('action-btn').onclick = () => startGame(level);
+            playSound('fanfare');
+            fireConfetti();
+        }
+
+        function decorateCards() {
+            let all = true;
+            for (let i = 1; i <= 2; i++) {
+                let done = false;
+                try { done = localStorage.getItem('memory_l' + i + '_complete') === 'true'; } catch (e) {}
+                const name = document.querySelector('#card-' + i + ' .lv-name');
+                if (done && name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+                if (!done) all = false;
+            }
+            document.getElementById('trophy-pill').classList.toggle('hidden', !all);
+        }
+        decorateCards();
+
+        // ================= CONFETTI =================
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        function fireConfetti() {
+            canvas.width = innerWidth; canvas.height = innerHeight;
+            const pieces = [];
+            const colors = ['#8e5bd6', '#4fa8e0', '#ffd54a', '#ff8a65', '#ffffff', '#b18cff'];
+            for (let i = 0; i < 130; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width, y: -20 - Math.random() * canvas.height * 0.5,
+                    w: 6 + Math.random() * 6, h: 8 + Math.random() * 8,
+                    c: colors[Math.floor(Math.random() * colors.length)],
+                    vy: 2 + Math.random() * 3, vx: -1.5 + Math.random() * 3,
+                    rot: Math.random() * Math.PI, vr: -0.1 + Math.random() * 0.2,
+                });
+            }
+            let start = performance.now();
+            (function tick(now) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                let alive = false;
+                pieces.forEach(p => {
+                    p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+                    if (p.y < canvas.height + 30) alive = true;
+                    ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+                    ctx.fillStyle = p.c; ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+                    ctx.restore();
+                });
+                if (alive && now - start < 4200) requestAnimationFrame(tick);
+                else ctx.clearRect(0, 0, canvas.width, canvas.height);
+            })(start);
+        }
+    </script>
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>看著格子圖、記住物品位置、再拖回正確的格子 — 訓練短期記憶、空間位置感與專注力。不少小一面試都有「看圖記憶」環節：給你看幾十秒圖畫，收起之後問細節。這個遊戲正是針對式練習，還分了3×3與3×4兩種難度。</p>
+        <p class="pg-en">Look at the grid, remember where everything is, and drag each item back to its cell — training short-term memory, spatial awareness, and focus. Many Primary One interviews include a "memorise the picture" segment: study a picture for a few dozen seconds, then answer details after it's hidden. This game is targeted practice, with 3×3 and 3×4 difficulties.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>教小朋友用「講故事」策略：不要死記，用說話說出位置 — 「車車在左上角、魚魚在中間」。把位置說出口，記憶會穩固很多。由3×3三種物品開始，熟練之後才挑戰有相似物品的3×4。</p>
+        <p class="pg-en">Teach the "tell a story" strategy: don't memorise blindly — say the positions out loud: "the car is top-left, the fish is in the middle." Verbalising positions strengthens memory. Start with 3×3 and three items; move to 3×4 with similar-looking items once confident.</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>家中實物版：把4-5樣物品放在托盤，讓小朋友看10秒，蓋住、拿走一樣，問「少了哪樣？」簡單但非常有效的記憶訓練，等位、搭車都玩得到。</p>
+        <p class="pg-en">A home version: place 4–5 objects on a tray, show your child for 10 seconds, cover it, remove one, and ask "what's missing?" Simple but highly effective memory training — playable while waiting or travelling.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>

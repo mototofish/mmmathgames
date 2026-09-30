@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#4d96ff">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Number Train 連加連減 | 三個數加減（20以內）· Chain Add &amp; Subtract – MMathWorld</title>
+    <meta name="description" content="Number Train 連加連減遊戲：3+5+8、17−12−3、13+4−8！三個數連加、連減、加減混合，全部20以內。看著彩色算式，學會由左至右兩步計算！免費升小學數學練習！Chain addition and subtraction within 20 — three-number problems with step-by-step working.">
+    <link rel="canonical" href="https://mathgames.missman.world/number_train">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="MMathWorld">
+    <meta property="og:locale" content="zh_HK">
+    <meta property="og:title" content="Number Train 連加連減 | 三個數加減（20以內）· Chain Add &amp; Subtract – MMathWorld">
+    <meta property="og:description" content="Number Train 連加連減遊戲：3+5+8、17−12−3、13+4−8！三個數連加、連減、加減混合，全部20以內。Chain addition and subtraction within 20 — three-number problems with step-by-step working.">
+    <meta property="og:url" content="https://mathgames.missman.world/number_train">
+    <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Number Train 連加連減 — MMathWorld 免費升小數學遊戲 free math game">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Number Train 連加連減 | 三個數加減（20以內）· Chain Add &amp; Subtract – MMathWorld">
+    <meta name="twitter:description" content="Number Train 連加連減遊戲：3+5+8、17−12−3、13+4−8！三個數連加、連減、加減混合，全部20以內。Chain addition and subtraction within 20 — three-number problems with step-by-step working.">
+    <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
+    <script type="application/ld+json">
+{
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Number Train",
+      "alternateName": "連加連減",
+      "url": "https://mathgames.missman.world/number_train",
+      "description": "Number Train 連加連減遊戲：3+5+8、17−12−3、13+4−8！三個數連加、連減、加減混合，全部20以內。Chain addition and subtraction within 20 — three-number problems with step-by-step working.",
+      "image": "https://mathgames.missman.world/og-image.png",
+      "inLanguage": [
+            "zh-Hant-HK",
+            "en"
+      ],
+      "genre": [
+            "Educational",
+            "Math"
+      ],
+      "gamePlatform": [
+            "Web Browser",
+            "Mobile Web"
+      ],
+      "applicationCategory": "EducationalGame",
+      "operatingSystem": "Any (web browser)",
+      "isAccessibleForFree": true,
+      "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "HKD"
+      },
+      "audience": {
+            "@type": "PeopleAudience",
+            "suggestedMinAge": 4,
+            "suggestedMaxAge": 7
+      },
+      "author": {
+            "@type": "Organization",
+            "name": "MMathWorld",
+            "url": "https://mathgames.missman.world/"
+      },
+      "learningResourceType": "Educational game",
+      "teaches": "連加、連減、加減混合（20以內） Chain addition, chain subtraction, and mixed addition-subtraction within 20"
+}
+    </script>
+    <!-- Include Tone.js for synthesized sound effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4d96ff;
+            --primary-dark: #2f5fc4;
+            --secondary: #ffb020;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --text-color: #24305b;
+            --t1: #4d96ff;
+            --t2: #ff8a3d;
+            --t3: #2ecc71;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            font-family: 'Baloo 2', 'Noto Sans TC', 'PingFang TC', 'Microsoft JhengHei', 'Comic Sans MS', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            min-height: 100dvh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(180deg, #dceaff 0%, #eef5ff 45%, #e3f7ee 100%);
+            color: var(--text-color);
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-text-size-adjust: 100%;
+            touch-action: manipulation;
+            overscroll-behavior: none;
+        }
+        button { touch-action: manipulation; }
+
+        /* Floating decorations */
+        .park-deco { position: fixed; font-size: 60px; opacity: 0.5; z-index: 1; animation: float 6s ease-in-out infinite; pointer-events: none; }
+        @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+        #game-container {
+            background-color: rgba(255, 255, 255, 0.96);
+            padding: 46px 30px 30px 30px;
+            border-radius: 34px;
+            box-shadow: 0 14px 0 rgba(47, 95, 196, 0.10), 0 26px 50px rgba(36, 48, 91, 0.16);
+            border: 5px solid #ffffff;
+            max-width: 560px;
+            width: 92%;
+            position: relative;
+            z-index: 10;
+            max-height: 100dvh;
+            overflow-y: auto;
+        }
+
+        .game-title { font-size: 34px; font-weight: 800; margin: 0 0 8px 0; letter-spacing: 1px; }
+
+        .btn {
+            border: none; border-radius: 50px; cursor: pointer;
+            font-family: inherit; font-weight: 800; color: white;
+            padding: 12px 30px; font-size: 19px;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+            text-shadow: 0 2px 0 rgba(0,0,0,0.12);
+        }
+        .btn-primary { background: linear-gradient(145deg, #7ab3ff, var(--primary)); box-shadow: 0 6px 0 var(--primary-dark); }
+        .btn-primary:hover { filter: brightness(1.06); transform: translateY(-2px); }
+        .btn-primary:active { transform: translateY(3px); box-shadow: 0 2px 0 var(--primary-dark); }
+        .btn-secondary { background: linear-gradient(145deg, #ffc65c, var(--secondary)); box-shadow: 0 6px 0 #d98e04; color: #5b3a00; text-shadow: none; }
+        .btn-secondary:hover { filter: brightness(1.05); transform: translateY(-2px); }
+        .btn-secondary:active { transform: translateY(3px); box-shadow: 0 2px 0 #d98e04; }
+        .btn-parent { display: block; margin: 16px auto 0; padding: 10px 24px; border-radius: 999px; border: 3px solid #d7e3f8; background: #ffffff; color: #4a5f8f; font-family: inherit; font-size: 15px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 0 #d7e3f8; transition: transform .15s, box-shadow .15s; }
+        .btn-parent:hover { transform: translateY(-2px); }
+        .btn-parent:active { transform: translateY(2px); box-shadow: 0 1px 0 #d7e3f8; }
+
+        #back-btn {
+            position: absolute; top: 14px; left: 14px;
+            background: #dcebff; color: #2f5fc4;
+            padding: 8px 16px; border-radius: 999px; cursor: pointer;
+            border: none; box-shadow: 0 4px 0 #b3cdf5;
+            font-size: 15px; font-weight: 800; font-family: inherit; z-index: 30;
+        }
+        #back-btn:active { transform: translateY(2px); box-shadow: 0 0 0 transparent; }
+
+        .hidden { display: none !important; }
+
+        /* Sublevel picker */
+        .tag-pill {
+            display: inline-block; font-size: 17px; font-weight: 800;
+            color: #2f5fc4; background-color: #dcebff;
+            border: 3px solid #a9c8f7; padding: 6px 18px;
+            border-radius: 999px; margin-bottom: 16px;
+        }
+        .level-grid { display: flex; flex-direction: column; gap: 10px; margin: 12px auto 6px; max-width: 470px; }
+        .level-card {
+            display: flex; align-items: center; gap: 14px; text-align: left;
+            background: #eef5ff; border: 3px solid #d0e2fb; border-radius: 18px;
+            padding: 12px 16px; cursor: pointer; font-family: inherit;
+            box-shadow: 0 5px 0 #d0e2fb;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .level-card:hover { transform: translateY(-3px); box-shadow: 0 8px 0 #d0e2fb; filter: brightness(1.02); }
+        .level-card:active { transform: translateY(2px); box-shadow: 0 2px 0 #d0e2fb; }
+        .level-card .lv-emoji { font-size: 34px; }
+        .level-card .lv-name { font-size: 19px; font-weight: 800; color: var(--text-color); }
+        .level-card .lv-sub { font-size: 13.5px; font-weight: 700; color: #5b6d99; }
+
+        /* Top Bar: Progress */
+        #top-bar { display: flex; justify-content: center; align-items: center; margin-top: 4px; margin-bottom: 6px; gap: 10px; }
+        #progress-display { font-size: 21px; letter-spacing: 2px; }
+        .scale-unfed { opacity: 0.25; filter: grayscale(1); }
+
+        /* Question text */
+        #question-text { font-size: 21px; font-weight: 800; line-height: 1.35; margin: 4px 0 8px; min-height: 34px; }
+        #question-text .qzh { font-size: 16px; color: #5b6d99; }
+
+        /* Big chain equation */
+        #chain-expr { font-size: 46px; font-weight: 800; letter-spacing: 2px; margin: 2px 0 10px; color: var(--text-color); }
+        #chain-expr .t1 { color: var(--t1); }
+        #chain-expr .t2 { color: var(--t2); }
+        #chain-expr .t3 { color: var(--t3); }
+        #chain-expr .op { color: #8fa3c8; padding: 0 4px; }
+        #chain-expr .eq { color: var(--text-color); }
+        #chain-expr .qm { color: var(--primary-dark); }
+
+        /* Equation reveal: 3 + 5 = 8 → 8 + 8 = 16 */
+        #equation {
+            max-width: 460px; margin: 2px auto 8px; padding: 8px 14px;
+            background: #eef5ff; border: 3px solid #d0e2fb; border-radius: 18px;
+            animation: popin 0.35s;
+        }
+        @keyframes popin { 0% { transform: scale(0.2); } 70% { transform: scale(1.25); } 100% { transform: scale(1); } }
+        #equation .eq-main { font-size: 30px; font-weight: 800; color: var(--primary-dark); letter-spacing: 1px; }
+        #equation .eq-sub { font-size: 15px; font-weight: 800; color: #5b6d99; margin-top: 2px; }
+
+        /* Answer choices */
+        #choices { display: flex; justify-content: center; gap: 12px; margin-top: 6px; flex-wrap: wrap; }
+        .num-choice {
+            background: #eef5ff; border: 3px solid #d0e2fb; border-radius: 18px;
+            padding: 8px 24px; cursor: pointer; font-family: inherit;
+            font-size: 30px; font-weight: 800; color: var(--text-color);
+            box-shadow: 0 5px 0 #d0e2fb; min-width: 84px;
+            transition: transform 0.12s, box-shadow 0.12s, filter 0.15s;
+        }
+        .num-choice:hover { transform: translateY(-2px); filter: brightness(1.03); }
+        .num-choice:active { transform: translateY(2px); box-shadow: 0 2px 0 #d0e2fb; }
+        .num-choice.is-correct { background: #d7f7e3; border-color: #7bdca0; box-shadow: 0 5px 0 #7bdca0; }
+        .num-choice.is-wrong { background: #ffd9d5; border-color: #f2a59e; box-shadow: 0 5px 0 #f2a59e; }
+        .num-choice.is-dim { opacity: 0.45; }
+
+        #feedback { min-height: 30px; font-size: 19px; font-weight: 800; margin-top: 8px; line-height: 1.45; }
+
+        #timer-area { position: relative; height: 18px; background: #dcebff; border-radius: 999px; overflow: hidden; margin-top: 4px; border: 2px solid #a9c8f7; }
+        #timer-bar { height: 100%; width: 100%; background: var(--primary); border-radius: 999px; transition: width 0.05s linear; }
+
+        /* Timer on/off toggle */
+        .tt-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin: 10px 0 12px; }
+        .tt-text { font-size: 15px; font-weight: 800; color: #5b6d99; }
+        .tt-state { font-size: 14px; font-weight: 800; color: #5b6d99; min-width: 58px; text-align: left; }
+        .tt-switch { position: relative; width: 56px; height: 30px; border-radius: 999px; border: none; background: #cbd5e1; cursor: pointer; transition: background 0.2s; padding: 0; flex-shrink: 0; }
+        .tt-switch.on { background: #2ecc71; }
+        .tt-knob { position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; border-radius: 50%; background: #fff; transition: left 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.25); }
+        .tt-switch.on .tt-knob { left: 29px; }
+
+        /* End screen */
+        #end-screen { padding: 20px 0; }
+        #final-message { font-size: 20px; font-weight: 800; color: #5b6d99; margin-bottom: 18px; }
+        #end-btns { display: flex; flex-direction: column; gap: 12px; align-items: center; }
+        .trophy-bounce { display: inline-block; animation: jump 1.2s infinite; }
+        @keyframes jump { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+
+        /* Confetti */
+        #confetti-canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 100; }
+
+        .anim-shake { animation: shake 0.4s; }
+        @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+
+        @media (max-width: 520px) {
+            #chain-expr { font-size: 36px; }
+            #timer-area { height: 14px; }
+        }
+
+        /* ---------- Parent guide ---------- */
+        body { flex-direction: column; justify-content: safe center; row-gap: 6px; }
+        .parent-guide {
+            position: relative; z-index: 10; width: 92%; max-width: 560px;
+            background: #ffffff; border-radius: 22px; border: 3px solid #e2eaf6;
+            box-shadow: 0 8px 24px rgba(36, 48, 91, 0.10);
+            padding: 22px 26px; margin: 20px auto 0; text-align: left;
+        }
+        .parent-guide h2 { font-size: 21px; font-weight: 900; color: var(--text-color); margin-bottom: 10px; }
+        .parent-guide h3 { font-size: 16px; font-weight: 800; color: #4a5f8f; margin: 14px 0 4px; }
+        .parent-guide p { font-size: 15px; font-weight: 600; color: #5d6b8a; line-height: 1.8; }
+        .parent-guide .pg-en { color: #9aa3b8; font-size: 13.5px; margin-top: 4px; line-height: 1.7; }
+        .parent-guide.pg-hidden { display: none; }
+        @media (max-width: 640px) { .parent-guide { padding: 18px 16px; } .parent-guide h2 { font-size: 19px; } }
+    </style>
+</head>
+<body>
+    <div class="park-deco" style="top: 8%; left: 5%;">🚂</div>
+    <div class="park-deco" style="top: 12%; right: 6%; animation-delay: 1s;">☁️</div>
+    <div class="park-deco" style="bottom: 12%; left: 7%; animation-delay: 2s;">🌳</div>
+    <div class="park-deco" style="bottom: 8%; right: 5%; animation-delay: 0.5s;">🚉</div>
+
+    <!-- Confetti overlay -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <div id="game-container">
+
+        <!-- BACK BUTTON -->
+        <button id="back-btn" onclick="goBack()">&#8592; Home</button>
+
+        <!-- INTRO SCREEN -->
+        <div id="intro-screen">
+            <div style="font-size: 72px; margin-bottom: 6px; animation: jump 2s infinite;">🚂</div>
+            <h1 class="game-title" style="color: var(--primary);">Number Train 連加連減</h1>
+            <div class="tag-pill">三個數加減 · Chain Add &amp; Subtract</div>
+            <p style="font-size: 17px; font-weight: 700; color: #4a5f8f; margin: 0 0 22px;">
+                3 + 5 + 8 = ? 17 − 12 − 3 = ? 由左至右，兩步計好！<br>Three numbers, two steps — work left to right!<br>
+                <span style="font-size: 14.5px;">全部 20 以內 · All answers within 20</span>
+            </p>
+            <button class="btn btn-primary" onclick="showSetup()" style="font-size: 26px; padding: 14px 50px; animation: jump 2s infinite;">Play!</button>
+            <button class="btn-parent" onclick="toggleParentGuide()">📚 給家長的話 · For Parents</button>
+        </div>
+
+        <!-- SETUP SCREEN: pick a sublevel -->
+        <div id="setup-screen" class="hidden">
+            <h2 class="game-title" style="color: var(--primary);">Number Train 連加連減</h2>
+            <div class="tt-row">
+                <span class="tt-text">⏱️ 計時器 Timer</span>
+                <button class="tt-switch on" id="timer-switch" onclick="toggleTimer()" aria-label="Timer on or off"><span class="tt-knob"></span></button>
+                <span class="tt-state" id="timer-state">開 ON</span>
+            </div>
+            <div class="tag-pill">Pick a sublevel 選擇關卡：</div>
+            <div class="level-grid">
+                <button class="level-card" id="lv-card-1" onclick="startGame(1)">
+                    <span class="lv-emoji">➕</span>
+                    <span><span class="lv-name">Sublevel 1: 連加</span><br><span class="lv-sub">Chain Addition — 3 + 5 + 8，三個數加埋唔多過 20！</span></span>
+                </button>
+                <button class="level-card" id="lv-card-2" onclick="startGame(2)">
+                    <span class="lv-emoji">➖</span>
+                    <span><span class="lv-name">Sublevel 2: 連減</span><br><span class="lv-sub">Chain Subtraction — 17 − 12 − 3，由 20 以內逐步減！</span></span>
+                </button>
+                <button class="level-card" id="lv-card-3" onclick="startGame(3)">
+                    <span class="lv-emoji">🎢</span>
+                    <span><span class="lv-name">Sublevel 3: 加減混合</span><br><span class="lv-sub">Mixed — 13 + 4 − 8，有加有減，睇清楚符號！</span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- PLAY SCREEN -->
+        <div id="play-screen" class="hidden">
+            <div id="top-bar">
+                <div id="progress-display"></div>
+            </div>
+
+            <div id="question-text"></div>
+            <div id="chain-expr"></div>
+            <div id="equation" class="hidden"></div>
+            <div id="choices"></div>
+
+            <div id="feedback"></div>
+            <div id="timer-area"><div id="timer-bar"></div></div>
+        </div>
+
+        <!-- END SCREEN -->
+        <div id="end-screen" class="hidden">
+            <div style="font-size: 60px; margin: 10px 0;"><span class="trophy-bounce">🏆</span></div>
+            <h2 id="end-title" class="game-title">All done!</h2>
+            <div id="final-message"></div>
+            <div id="end-btns">
+                <button id="action-btn" class="btn btn-primary"></button>
+                <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    // ---- Tone.js Setup ----
+    const synth = new Tone.PolySynth(Tone.Synth).toDestination();
+    const noiseSynth = new Tone.NoiseSynth({ noise: { type: 'white' }, envelope: { attack: 0.01, decay: 0.12, sustain: 0 } }).toDestination();
+    noiseSynth.volume.value = -16;
+    let audioContextStarted = false;
+
+    // ---- DOM References ----
+    const introScreen = document.getElementById('intro-screen');
+    const setupScreen = document.getElementById('setup-screen');
+    const playScreen = document.getElementById('play-screen');
+    const endScreen = document.getElementById('end-screen');
+    const backBtn = document.getElementById('back-btn');
+    const progressDisplay = document.getElementById('progress-display');
+    const questionText = document.getElementById('question-text');
+    const chainExpr = document.getElementById('chain-expr');
+    const equationDiv = document.getElementById('equation');
+    const choicesDiv = document.getElementById('choices');
+    const feedbackDisplay = document.getElementById('feedback');
+    const timerBar = document.getElementById('timer-bar');
+    const actionBtn = document.getElementById('action-btn');
+    const pickerBtn = document.getElementById('picker-btn');
+
+    // ---- Game Variables ----
+    let currentQuestion = null;
+    let questionPool = [];
+    let mistakes = [];
+    let currentChoices = [];
+    let isTransitioning = false;
+    let isCorrectionRound = false;
+    let gameActive = false;
+    let activeLevelId = 1;
+    let questionsDone = 0, totalQuestions = 10;
+    let timerInterval = null;
+    let timeLeft = 0;
+    let timeLimit = 20000;
+
+    const TERM_COLORS = ['var(--t1)', 'var(--t2)', 'var(--t3)'];
+
+    function randPick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+    function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+    function randInt(lo, hi) { return lo + Math.floor(Math.random() * (hi - lo + 1)); }
+
+    // ---- Sounds ----
+    function playSound(type) {
+        if (!audioContextStarted) return;
+        const now = Tone.now();
+        if (type === 'correct') {
+            synth.triggerAttackRelease(['C5', 'E5'], '16n', now);
+            synth.triggerAttackRelease('G5', '8n', now + 0.1);
+        } else if (type === 'wrong') {
+            synth.triggerAttackRelease('C3', '8n', now);
+            synth.triggerAttackRelease('G2', '8n', now + 0.15);
+        } else if (type === 'tick') {
+            noiseSynth.triggerAttackRelease('32n', now);
+        } else if (type === 'timeout') {
+            synth.triggerAttackRelease('A3', '8n', now);
+            synth.triggerAttackRelease('E3', '8n', now + 0.2);
+        } else if (type === 'fanfare') {
+            synth.triggerAttackRelease(['C5', 'E5', 'G5'], '8n', now);
+            synth.triggerAttackRelease(['D5', 'F5', 'A5'], '8n', now + 0.15);
+            synth.triggerAttackRelease(['E5', 'G5', 'C6'], '4n', now + 0.3);
+        }
+    }
+
+    // ---- Confetti ----
+    function fireConfetti(x, y, multiplier = 1) {
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const colors = ['#4d96ff', '#ffb020', '#2ecc71', '#ff8a3d', '#a29bfe', '#ffd93d'];
+        const particles = [];
+        for (let i = 0; i < 45 * multiplier; i++) {
+            particles.push({
+                x, y,
+                vx: (Math.random() - 0.5) * 13,
+                vy: Math.random() * -11 - 3,
+                size: Math.random() * 7 + 4,
+                color: colors[Math.floor(Math.random() * colors.length)],
+                rotation: Math.random() * 360,
+                vr: (Math.random() - 0.5) * 22,
+                life: 1
+            });
+        }
+        let frame;
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let alive = false;
+            particles.forEach(p => {
+                if (p.life <= 0) return;
+                alive = true;
+                p.x += p.vx; p.y += p.vy; p.vy += 0.35;
+                p.rotation += p.vr; p.life -= 0.012;
+                ctx.save();
+                ctx.translate(p.x, p.y);
+                ctx.rotate(p.rotation * Math.PI / 180);
+                ctx.globalAlpha = Math.max(p.life, 0);
+                ctx.fillStyle = p.color;
+                ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size * 0.62);
+                ctx.restore();
+            });
+            if (alive) frame = requestAnimationFrame(animate);
+            else { ctx.clearRect(0, 0, canvas.width, canvas.height); cancelAnimationFrame(frame); }
+        }
+        animate();
+    }
+
+    // ================= QUESTION GENERATORS (all within 20) =================
+    // terms: [a, b, c], ops: ['+'|'-', '+'|'-'], answer = ((a op1 b) op2 c)
+    function evalChain(terms, ops) {
+        const s1 = ops[0] === '+' ? terms[0] + terms[1] : terms[0] - terms[1];
+        return { s1, ans: ops[1] === '+' ? s1 + terms[2] : s1 - terms[2] };
+    }
+
+    // 4 options; extras feed the classic mistakes (e.g. forgetting the third number)
+    function chainChoices(ans, extras) {
+        const set = new Set([ans]);
+        const cands = shuffle([...extras, ans - 1, ans + 1, ans + 2, ans - 2]);
+        for (const c of cands) {
+            if (set.size >= 4) break;
+            if (c >= 0 && c <= 20 && !set.has(c)) set.add(c);
+        }
+        let guard = 0;
+        while (set.size < 4 && guard++ < 50) {
+            const c = randInt(Math.max(0, ans - 4), Math.min(20, ans + 4));
+            if (!set.has(c)) set.add(c);
+        }
+        return shuffle([...set]).map(v => ({ v, label: String(v) }));
+    }
+
+    // Sublevel 1 連加: a + b + c, sum ≤ 20
+    function genChainAdd() {
+        let a, b, c;
+        do {
+            a = randInt(2, 9); b = randInt(2, 9);
+            c = randInt(1, Math.min(9, 20 - a - b));
+        } while (a + b + c > 20 || a + b + c < 8);
+        const terms = [a, b, c], ops = ['+', '+'];
+        const { ans } = evalChain(terms, ops);
+        return {
+            terms, ops, answer: ans, answerLabel: String(ans),
+            choices: chainChoices(ans, [a + b, b + c, a + c]) // forgot to add the last one
+        };
+    }
+
+    // Sublevel 2 連減: a − b − c, a ≤ 20, every step ≥ 0
+    function genChainSub() {
+        let a, b, c;
+        do {
+            a = randInt(8, 20);
+            b = randInt(2, Math.min(12, a - 1));
+            c = randInt(1, Math.min(9, a - b));
+        } while (a - b - c < 0 || b + c > a || a - b === c);
+        const terms = [a, b, c], ops = ['-', '-'];
+        const { ans } = evalChain(terms, ops);
+        return {
+            terms, ops, answer: ans, answerLabel: String(ans),
+            choices: chainChoices(ans, [a - b, a - b + c, a + b - c].filter(x => x !== ans)) // forgot 2nd minus / wrong sign
+        };
+    }
+
+    // Sublevel 3 加減混合: a + b − c or a − b + c, every step stays within 0–20
+    function genChainMixed() {
+        let terms, ops;
+        if (Math.random() < 0.5) {
+            // a + b − c: intermediate a+b ≤ 20, final ≥ 1
+            let a, b, c;
+            do {
+                a = randInt(3, 15); b = randInt(1, 20 - a);
+                c = randInt(1, a + b - 1);
+            } while (c === b || a + b - c > 20);
+            terms = [a, b, c]; ops = ['+', '-'];
+        } else {
+            // a − b + c: intermediate a−b ≥ 0, final ≤ 20
+            let a, b, c;
+            do {
+                a = randInt(5, 20); b = randInt(1, a);
+                c = randInt(1, 20 - (a - b));
+            } while (a - b + c > 20 || a - b + c < 1 || c === b);
+            terms = [a, b, c]; ops = ['-', '+'];
+        }
+        const { s1, ans } = evalChain(terms, ops);
+        const wrongSign = ops[0] === '+' ? s1 + terms[2] : s1 - terms[2];
+        return {
+            terms, ops, answer: ans, answerLabel: String(ans),
+            choices: chainChoices(ans, [s1, wrongSign].filter(x => x >= 0 && x <= 20 && x !== ans)) // stopped after 1 step / misread sign
+        };
+    }
+
+    function buildPool(level) {
+        const gen = level === 1 ? genChainAdd : level === 2 ? genChainSub : genChainMixed;
+        return Array.from({ length: 10 }, gen);
+    }
+
+    // ---- Rendering ----
+    const OP_TXT = { '+': '+', '-': '−' };
+    function exprOf(q) { return `${q.terms[0]} ${OP_TXT[q.ops[0]]} ${q.terms[1]} ${OP_TXT[q.ops[1]]} ${q.terms[2]}`; }
+
+    function renderQuestion(q) {
+        choicesDiv.innerHTML = '';
+        feedbackDisplay.innerText = '';
+        equationDiv.classList.add('hidden');
+        equationDiv.innerHTML = '';
+        timeLimit = 20000;
+
+        questionText.innerHTML = `幾多？算出答案！<br><span class="qzh">Work it out — left to right, two steps!</span>`;
+
+        // Big color-coded equation
+        chainExpr.innerHTML =
+            `<span class="t1">${q.terms[0]}</span><span class="op">${OP_TXT[q.ops[0]]}</span>` +
+            `<span class="t2">${q.terms[1]}</span><span class="op">${OP_TXT[q.ops[1]]}</span>` +
+            `<span class="t3">${q.terms[2]}</span><span class="eq"> = </span><span class="qm">?</span>`;
+
+        showChoices(q);
+    }
+
+    function showChoices(q) {
+        choicesDiv.innerHTML = '';
+        q.choices.forEach((c, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'num-choice';
+            btn.innerHTML = c.label;
+            btn.onclick = () => checkAnswer(i, btn);
+            choicesDiv.appendChild(btn);
+        });
+    }
+
+    // Two-step worked solution: 3 + 5 = 8 → 8 + 8 = 16
+    function showEquation(q) {
+        const { s1 } = evalChain(q.terms, q.ops);
+        const step1 = `${q.terms[0]} ${OP_TXT[q.ops[0]]} ${q.terms[1]} = ${s1}`;
+        const step2 = `${s1} ${OP_TXT[q.ops[1]]} ${q.terms[2]} = ${q.answer}`;
+        equationDiv.innerHTML = `<div class="eq-main">${step1} → ${step2}</div><div class="eq-sub">由左至右，逐步計！Work from left to right, step by step!</div>`;
+        equationDiv.classList.remove('hidden');
+    }
+
+    function runReveal(q, done) {
+        showEquation(q);
+        setTimeout(done, 2600);
+    }
+
+    // ---- Progress & Timer ----
+    function updateProgress() {
+        progressDisplay.innerHTML = '';
+        for (let i = 0; i < totalQuestions; i++) {
+            const span = document.createElement('span');
+            span.innerText = '🚃';
+            if (i >= questionsDone) span.className = 'scale-unfed';
+            progressDisplay.appendChild(span);
+        }
+    }
+
+    // ---- Timer on/off toggle ----
+    let timerEnabled = true; // timer is ON by default on every visit
+    function toggleTimer() {
+        timerEnabled = !timerEnabled;
+        updateTimerToggle();
+    }
+    function updateTimerToggle() {
+        const sw = document.getElementById('timer-switch');
+        const st = document.getElementById('timer-state');
+        if (!sw || !st) return;
+        sw.classList.toggle('on', timerEnabled);
+        st.innerText = timerEnabled ? '開 ON' : '關 OFF';
+    }
+    updateTimerToggle();
+
+    function startTimer() {
+        clearInterval(timerInterval);
+        const area = document.getElementById('timer-area');
+        if (!timerEnabled) { area.style.visibility = 'hidden'; return; }
+        area.style.visibility = 'visible';
+        timeLeft = timeLimit;
+        timerBar.style.width = '100%';
+        timerBar.style.backgroundColor = 'var(--primary)';
+        timerInterval = setInterval(() => {
+            timeLeft -= 50;
+            timerBar.style.width = (timeLeft / timeLimit * 100) + '%';
+            if (timeLeft <= 5000 && timeLeft % 1000 === 0) playSound('tick');
+            if (timeLeft <= 5000) timerBar.style.backgroundColor = 'var(--danger)';
+            if (timeLeft <= 0) { clearInterval(timerInterval); handleTimeout(); }
+        }, 50);
+    }
+
+    // ---- Navigation ----
+    function showSetup() {
+        if (!audioContextStarted) { Tone.start(); audioContextStarted = true; }
+        introScreen.classList.add('hidden');
+        setupScreen.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+    }
+
+    function goBack() {
+        if (!playScreen.classList.contains('hidden') || !endScreen.classList.contains('hidden')) {
+            gameActive = false;
+            clearInterval(timerInterval);
+            playScreen.classList.add('hidden');
+            endScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+            backBtn.innerText = '← Back';
+        } else if (!setupScreen.classList.contains('hidden')) {
+            setupScreen.classList.add('hidden');
+            introScreen.classList.remove('hidden');
+            backBtn.innerText = '← Home';
+        } else {
+            window.location.href = 'index.html';
+        }
+    }
+
+    // ---- Main Loop ----
+    function startGame(level) {
+        if (!audioContextStarted) { Tone.start(); audioContextStarted = true; }
+        activeLevelId = level;
+        mistakes = [];
+        isCorrectionRound = false;
+        isTransitioning = false;
+        gameActive = true;
+        questionsDone = 0;
+        questionPool = buildPool(level);
+        totalQuestions = questionPool.length;
+        updateProgress();
+        introScreen.classList.add('hidden');
+        setupScreen.classList.add('hidden');
+        endScreen.classList.add('hidden');
+        playScreen.classList.remove('hidden');
+        backBtn.innerText = '← Back';
+        feedbackDisplay.innerText = '';
+        nextQuestion();
+    }
+
+    function nextQuestion() {
+        if (questionPool.length === 0) { handleRoundEnd(); return; }
+        currentQuestion = questionPool.pop();
+        currentChoices = currentQuestion.choices;
+        renderQuestion(currentQuestion);
+        isTransitioning = false;
+        startTimer();
+    }
+
+    function checkAnswer(idx, btn) {
+        if (isTransitioning || !gameActive) return;
+        isTransitioning = true;
+        clearInterval(timerInterval);
+        const chosen = currentChoices[idx];
+        if (chosen.v === currentQuestion.answer) handleCorrect(btn);
+        else handleWrong(btn);
+    }
+
+    function handleCorrect(btn) {
+        playSound('correct');
+        btn.classList.add('is-correct');
+        const r = btn.getBoundingClientRect();
+        fireConfetti(r.left + r.width / 2, r.top + r.height / 2, 1);
+        questionsDone++;
+        updateProgress();
+        feedbackDisplay.style.color = 'var(--success)';
+        feedbackDisplay.innerText = '答對了！Correct! 🎉';
+        runReveal(currentQuestion, () => { feedbackDisplay.innerText = ''; nextQuestion(); });
+    }
+
+    function handleWrong(btn) {
+        playSound('wrong');
+        btn.classList.add('is-wrong', 'anim-shake');
+        setTimeout(() => btn.classList.remove('anim-shake'), 400);
+        mistakes.push(currentQuestion);
+        highlightCorrect();
+        feedbackDisplay.style.color = 'var(--danger)';
+        feedbackDisplay.innerText = `答錯了！It was ${currentQuestion.answerLabel}！`;
+        runReveal(currentQuestion, () => { feedbackDisplay.innerText = ''; nextQuestion(); });
+    }
+
+    function handleTimeout() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        playSound('timeout');
+        mistakes.push(currentQuestion);
+        highlightCorrect();
+        feedbackDisplay.style.color = 'var(--danger)';
+        feedbackDisplay.innerText = `時間到！Time's Up! It was ${currentQuestion.answerLabel}！`;
+        runReveal(currentQuestion, () => { feedbackDisplay.innerText = ''; nextQuestion(); });
+    }
+
+    function highlightCorrect() {
+        const btns = choicesDiv.querySelectorAll('button');
+        btns.forEach((b, i) => {
+            if (currentChoices[i] && currentChoices[i].v === currentQuestion.answer) b.classList.add('is-correct');
+            else b.classList.add('is-wrong', 'is-dim');
+        });
+    }
+
+    function handleRoundEnd() {
+        gameActive = false;
+        playScreen.classList.add('hidden');
+        endScreen.classList.remove('hidden');
+        pickerBtn.onclick = () => goBack();
+        if (mistakes.length === 0) {
+            playSound('fanfare');
+            markLevelComplete(activeLevelId);
+            document.getElementById('end-title').innerText = 'Level Complete! 🎉';
+            document.getElementById('final-message').innerText = 'Perfect Score! 全部答對！';
+            actionBtn.innerText = 'Play Again 再玩一次';
+            actionBtn.onclick = () => startGame(activeLevelId);
+        } else {
+            document.getElementById('end-title').innerText = 'Almost there! 差一點點！';
+            document.getElementById('final-message').innerText = `還有 ${mistakes.length} 題要複習！Fix ${mistakes.length} more!`;
+            actionBtn.innerText = '改正錯題 Review Mistakes';
+            actionBtn.onclick = startCorrectionRound;
+        }
+    }
+
+    function startCorrectionRound() {
+        isCorrectionRound = true;
+        questionPool = shuffle(mistakes);
+        mistakes = [];
+        questionsDone = 0;
+        totalQuestions = questionPool.length;
+        updateProgress();
+        gameActive = true;
+        endScreen.classList.add('hidden');
+        playScreen.classList.remove('hidden');
+        feedbackDisplay.innerText = '';
+        nextQuestion();
+    }
+
+    // ---- Trophies ----
+    function markLevelComplete(id) {
+        try { localStorage.setItem(`train_l${id}_complete`, '1'); } catch (e) {}
+        decorateCard(id);
+    }
+    function decorateCard(id) {
+        const card = document.getElementById(`lv-card-${id}`);
+        if (!card) return;
+        const name = card.querySelector('.lv-name');
+        if (name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
+    }
+    for (let i = 1; i <= 3; i++) {
+        try { if (localStorage.getItem(`train_l${i}_complete`) === '1') decorateCard(i); } catch (e) {}
+    }
+    </script>
+
+    <section class="parent-guide pg-hidden">
+        <h2>📚 給家長的話 · For Parents</h2>
+        <h3>🎯 學習重點 · Learning Focus</h3>
+        <p>連加連減是 20 以內加減的延伸：3 + 5 + 8 不是一步算出，而是「由左至右、分兩步」— 先算 3 + 5 = 8，再算 8 + 8 = 16。這個「先記住中間答案」的過程，正是工作記憶和運算順序的訓練，也是小一數學科的必考題型。三個數分別用藍、橙、綠色顯示，答完後會逐步展示計算過程，幫小朋友睇清楚每一步。</p>
+        <p class="pg-en">Chain addition and subtraction extend basic facts within 20: 3 + 5 + 8 isn't one leap, but two steps from left to right — first 3 + 5 = 8, then 8 + 8 = 16. Holding that intermediate answer trains working memory and order of operations, a must-have Primary One skill. The three terms are colour-coded blue, orange and green, and after each answer the calculation is revealed step by step so children can see every move clearly.</p>
+        <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
+        <p>鼓勵小朋友說出中間步驟：「3 加 5 等於 8，8 再加 8 等於 16。」講出聲比默算更穩固。答錯時一起找出錯在哪一步 — 是第一步算錯，還是忘記了第三個數？</p>
+        <p class="pg-en">Encourage your child to say the middle step out loud: "3 plus 5 is 8, then 8 plus 8 is 16." Verbalising beats silent guessing. When they slip, find together which step went wrong — was it the first step, or did they forget the third number?</p>
+        <h3>🏠 生活延伸練習 · Everyday Practice</h3>
+        <p>日常隨口出題：「我哋買了 4 個橙、3 個蘋果、5 隻香蕉，一共幾多個生果？」「18 塊餅，你吃 3 塊、我吃 5 塊，剩幾多塊？」生活化的三個數加減，比工作紙更有效。</p>
+        <p class="pg-en">Pose questions in daily life: "We bought 4 oranges, 3 apples and 5 bananas — how many fruits in total?" "18 cookies, you eat 3 and I eat 5 — how many are left?" Real-life three-number problems beat worksheets.</p>
+    </section>
+
+<script>
+    function toggleParentGuide() {
+        var g = document.querySelector('.parent-guide');
+        if (!g) return;
+        g.classList.toggle('pg-hidden');
+        if (!g.classList.contains('pg-hidden')) {
+            g.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+    </script>
+
+    <!-- Cloudflare Web Analytics -->
+<script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "0100c82ba2884607a7a2c750ccbebc84"}'></script>
+<!-- End Cloudflare Web Analytics -->
+</body>
+</html>
