@@ -31,14 +31,8 @@
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://mathgames.missman.world/number_train</loc>
-        <lastmod>2026-09-26</lastmod>
-        <changefreq>monthly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    <url>
         <loc>https://mathgames.missman.world/money_match</loc>
-        <lastmod>2026-08-29</lastmod>
+        <lastmod>2026-09-25</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
@@ -98,7 +92,7 @@
     </url>
     <url>
         <loc>https://mathgames.missman.world/memory_grid</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-05</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>

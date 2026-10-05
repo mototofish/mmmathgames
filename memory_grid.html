@@ -5,13 +5,13 @@
     <meta name="theme-color" content="#8e5bd6">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Memory Grid 記憶格子 | 看圖記住 · Look & Remember – MMathWorld</title>
-    <meta name="description" content="Memory Grid 記憶格子遊戲：看著格子圖記住物品位置，再拖回正確的格子！3×3 三種物品、3×4 相似物品加空格，訓練觀察力同短期記憶。Look, remember, then drag the right item into the correct cells — 3×3 and 3×4 visual memory challenges for kids! 免費升小記憶力遊戲！Free memory game for kids.">
+    <meta name="description" content="Memory Grid 記憶格子遊戲：看著格子圖記住物品位置，再拖回正確的格子！3×3 三種物品、3×4 相似物品加空格、對調偵探找不同，訓練觀察力同短期記憶。Look, remember, then drag the right item into the correct cells — 3×3, 3×4 and spot-the-swap memory challenges for kids! 免費升小記憶力遊戲！Free memory game for kids.">
     <link rel="canonical" href="https://mathgames.missman.world/memory_grid">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="MMathWorld">
     <meta property="og:locale" content="zh_HK">
     <meta property="og:title" content="Memory Grid 記憶格子 | 看圖記住 · Look & Remember – MMathWorld">
-    <meta property="og:description" content="Memory Grid 記憶格子遊戲：看著格子圖記住物品位置，再拖回正確的格子！3×3 三種物品、3×4 相似物品加空格。Look, remember, then drag the right item into the correct cells! 免費升小記憶力遊戲！">
+    <meta property="og:description" content="Memory Grid 記憶格子遊戲：看著格子圖記住物品位置，再拖回正確的格子！3×3 三種物品、3×4 相似物品加空格、對調偵探找不同。Look, remember, then drag the right item into the correct cells! 免費升小記憶力遊戲！">
     <meta property="og:url" content="https://mathgames.missman.world/memory_grid">
     <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -28,7 +28,7 @@
       "name": "Memory Grid",
       "alternateName": "記憶格子",
       "url": "https://mathgames.missman.world/memory_grid",
-      "description": "Memory Grid 記憶格子遊戲：看著格子圖記住物品位置，再拖回正確的格子！3×3 三種物品、3×4 相似物品加空格。Look, remember, then drag the right item into the correct cells.",
+      "description": "Memory Grid 記憶格子遊戲：看著格子圖記住物品位置，再拖回正確的格子！3×3 三種物品、3×4 相似物品加空格、對調偵探找不同。Look, remember, then drag the right item into the correct cells.",
       "image": "https://mathgames.missman.world/og-image.png",
       "inLanguage": ["zh-Hant-HK", "en"],
       "genre": ["Educational", "Math"],
@@ -40,7 +40,7 @@
       "audience": { "@type": "PeopleAudience", "suggestedMinAge": 4, "suggestedMaxAge": 7 },
       "author": { "@type": "Organization", "name": "MMathWorld", "url": "https://mathgames.missman.world/" },
       "learningResourceType": "Educational game",
-      "teaches": "記住物品在格子裡的位置：觀察力、短期記憶、空間位置 Visual memory and spatial positions in 3×3 and 3×4 grids"
+      "teaches": "記住物品在格子裡的位置：觀察力、短期記憶、空間位置、順序記憶 Visual memory, spatial positions in 3×3 and 3×4 grids, and sequential memory (spot the swap)"
     }
     </script>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='12' fill='%238e5bd6'/%3E%3Ctext x='24' y='34' font-size='28' text-anchor='middle'%3E🧠%3C/text%3E%3C/svg%3E">
@@ -209,6 +209,45 @@
         @keyframes pop { 0% { transform: scale(1); } 50% { transform: scale(1.12); } 100% { transform: scale(1); } }
         @keyframes deny { 0%, 100% { transform: translateX(0); } 30% { transform: translateX(-5px); } 60% { transform: translateX(5px); } }
 
+        /* ---------- Sublevel 3: Swap Detective ---------- */
+        #diff-pill {
+            display: inline-block; background: #e8f4ff; color: var(--sky-dark);
+            border: 3px solid #bcd9f5; border-radius: 999px;
+            font-weight: 800; font-size: 15px; padding: 3px 14px; margin-bottom: 8px;
+        }
+        #diff-banner {
+            background: #ffffff; border: 3px solid #e3d7f3; border-radius: 18px;
+            padding: 10px 16px 12px; margin-bottom: 12px;
+        }
+        #diff-banner.shake { animation: deny 0.35s; }
+        #diff-banner-zh { font-size: 21px; font-weight: 900; color: var(--text-main); line-height: 1.4; }
+        #diff-banner-zh .big { font-size: 30px; vertical-align: -4px; }
+        #diff-banner-en { font-size: 14.5px; font-weight: 700; color: var(--text-muted); margin-top: 2px; }
+        #diff-row { display: flex; justify-content: center; gap: 8px; width: 100%; max-width: 640px; margin: 0 auto 14px; }
+        .diff-slot { flex: 1 1 0; max-width: 88px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .diff-cell {
+            width: 100%; aspect-ratio: 1; background: #ffffff; border: 3px solid #d9cfef; border-radius: 16px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: min(48px, 7.5vw); line-height: 1;
+            transition: transform 0.12s, border-color 0.12s, background 0.12s;
+        }
+        #diff-row.pick-mode .diff-cell { cursor: pointer; border-style: dashed; background: #f8f5ff; }
+        #diff-row.pick-mode .diff-slot:hover .diff-cell { transform: translateY(-3px); }
+        .diff-cell.picked { border-style: solid; border-color: var(--grape); background: #f3edff; transform: translateY(-4px); box-shadow: 0 5px 0 #cdb4ee; }
+        .diff-cell.good { border-style: solid; border-color: #2ecc71; background: #eafff2; animation: pop 0.35s; }
+        .diff-cell.bad { border-style: solid; border-color: #e74c3c; background: #ffeceb; animation: deny 0.35s; }
+        .diff-pos { font-size: 13px; font-weight: 800; color: #a79dc4; }
+        #diff-timer-bar { height: 16px; background: #efe9fb; border-radius: 999px; overflow: hidden; border: 2px solid #d9cfef; margin-bottom: 12px; }
+        #diff-timer-fill { height: 100%; width: 100%; border-radius: 999px; background: linear-gradient(90deg, #b18cff, #8e5bd6); }
+        #diff-feedback { min-height: 28px; font-size: 17px; font-weight: 800; margin-top: 4px; line-height: 1.4; }
+        @media (max-width: 640px) {
+            #diff-row { gap: 5px; }
+            .diff-cell { border-radius: 12px; }
+            .diff-pos { font-size: 11px; }
+            #diff-banner-zh { font-size: 18px; }
+            #diff-banner-en { font-size: 13px; }
+        }
+
         #end-screen .mascot-big { font-size: 58px; }
         #end-sub { font-weight: 700; color: #8a7458; font-size: 17px; margin-bottom: 14px; }
         #end-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
@@ -317,6 +356,10 @@
                     <span class="lv-emoji">🚗</span>
                     <span><span class="lv-name">Sublevel 2: 3×4 相似物品 + 空格</span><br><span class="lv-sub">Look-alikes + Blanks — two similar things and empty cells in a 3×4 grid!</span></span>
                 </button>
+                <button class="level-card" id="card-3" onclick="startGame(3)">
+                    <span class="lv-emoji">🔍</span>
+                    <span><span class="lv-name">Sublevel 3: 對調偵探 Spot the Swap</span><br><span class="lv-sub">Remember the row — which two swapped places? 記住順序，找出對調了位置的兩個！</span></span>
+                </button>
             </div>
         </div>
 
@@ -343,6 +386,21 @@
                 </div>
             </div>
             <div id="feedback"></div>
+        </div>
+
+        <!-- SPOT THE SWAP (Sublevel 3) -->
+        <div id="diff-screen" class="hidden">
+            <div id="diff-pill">第 1 / 6 題 Round</div>
+            <div id="diff-banner">
+                <div id="diff-banner-zh"></div>
+                <div id="diff-banner-en"></div>
+            </div>
+            <div id="diff-row"></div>
+            <div id="diff-memo-footer">
+                <div id="diff-timer-bar"><div id="diff-timer-fill"></div></div>
+                <button id="diff-ready-btn" class="btn">記住了！Got it!</button>
+            </div>
+            <div id="diff-feedback"></div>
         </div>
 
         <!-- END -->
@@ -377,8 +435,20 @@
             [{ e: '🐱', zh: '貓貓樣', en: 'cat face' }, { e: '🐈', zh: '貓貓身', en: 'cat body' }],
             [{ e: '🌕', zh: '滿月', en: 'full moon' }, { e: '🌑', zh: '新月', en: 'new moon' }],
         ];
-        const MEMO_MS = [0, 15000, 15000]; // per-sublevel memorise time (timer mode)
+        const MEMO_MS = [0, 15000, 15000, 10000]; // per-sublevel memorise time (timer mode) — L3 = 10s
         const PICS = [0, 2, 3]; // pictures per game: L1 = 2 pics × 3 items, L2 = 3 pics × 2 items (6 questions each)
+
+        // Sublevel 3: memorise a row of icons, then spot which TWO swapped places
+        // each theme has 7 distinct icons (animals from the teacher's worksheet + variations)
+        const SWAP_THEMES = [
+            [{ e: '🐘', zh: '大象', en: 'elephant' }, { e: '🦓', zh: '斑馬', en: 'zebra' }, { e: '🦁', zh: '獅子', en: 'lion' }, { e: '🐵', zh: '猴子', en: 'monkey' }, { e: '🐰', zh: '小兔', en: 'rabbit' }, { e: '🦒', zh: '長頸鹿', en: 'giraffe' }, { e: '🐯', zh: '老虎', en: 'tiger' }],
+            [{ e: '🍎', zh: '蘋果', en: 'apple' }, { e: '🍌', zh: '香蕉', en: 'banana' }, { e: '🍇', zh: '提子', en: 'grapes' }, { e: '🍓', zh: '草莓', en: 'strawberry' }, { e: '🍊', zh: '橙', en: 'orange' }, { e: '🍉', zh: '西瓜', en: 'watermelon' }, { e: '🍑', zh: '桃', en: 'peach' }],
+            [{ e: '🧸', zh: '玩具熊', en: 'teddy bear' }, { e: '🪀', zh: '搖搖', en: 'yo-yo' }, { e: '🎈', zh: '氣球', en: 'balloon' }, { e: '⚽', zh: '皮球', en: 'ball' }, { e: '🪁', zh: '風箏', en: 'kite' }, { e: '🎠', zh: '旋轉木馬', en: 'carousel horse' }, { e: '🪆', zh: '套娃', en: 'nesting doll' }],
+            [{ e: '🔴', zh: '紅色', en: 'red dot' }, { e: '🟠', zh: '橙色', en: 'orange dot' }, { e: '🟡', zh: '黃色', en: 'yellow dot' }, { e: '🟢', zh: '綠色', en: 'green dot' }, { e: '🔵', zh: '藍色', en: 'blue dot' }, { e: '🟣', zh: '紫色', en: 'purple dot' }, { e: '🟤', zh: '啡色', en: 'brown dot' }],
+            [{ e: '🚗', zh: '車車', en: 'car' }, { e: '🚌', zh: '巴士', en: 'bus' }, { e: '🚲', zh: '單車', en: 'bike' }, { e: '🚒', zh: '消防車', en: 'fire truck' }, { e: '🚑', zh: '救護車', en: 'ambulance' }, { e: '🚜', zh: '拖拉機', en: 'tractor' }, { e: '✈️', zh: '飛機', en: 'plane' }],
+            [{ e: '🐟', zh: '魚魚', en: 'fish' }, { e: '🐙', zh: '八爪魚', en: 'octopus' }, { e: '🐢', zh: '海龜', en: 'turtle' }, { e: '🐬', zh: '海豚', en: 'dolphin' }, { e: '🦀', zh: '螃蟹', en: 'crab' }, { e: '🐳', zh: '鯨魚', en: 'whale' }, { e: '🦑', zh: '魷魚', en: 'squid' }],
+            [{ e: '🍰', zh: '蛋糕', en: 'cake' }, { e: '🧁', zh: '杯子蛋糕', en: 'cupcake' }, { e: '🍩', zh: '冬甩', en: 'doughnut' }, { e: '🍪', zh: '曲奇', en: 'cookie' }, { e: '🍮', zh: '布甸', en: 'pudding' }, { e: '🍭', zh: '波板糖', en: 'lollipop' }, { e: '🍦', zh: '雪糕', en: 'ice cream' }],
+        ];
 
         // ================= STATE =================
         const introScreen = document.getElementById('intro-screen');
@@ -399,12 +469,24 @@
         const backBtn = document.getElementById('back-btn');   // ← Home nav button
         const peekBtn = document.getElementById('peek-btn');   // no-timer peek button
         const feedback = document.getElementById('feedback');
+        const diffScreen = document.getElementById('diff-screen');
+        const diffPill = document.getElementById('diff-pill');
+        const diffBanner = document.getElementById('diff-banner');
+        const diffBannerZh = document.getElementById('diff-banner-zh');
+        const diffBannerEn = document.getElementById('diff-banner-en');
+        const diffRow = document.getElementById('diff-row');
+        const diffMemoFooter = document.getElementById('diff-memo-footer');
+        const diffTimerFill = document.getElementById('diff-timer-fill');
+        const diffFeedback = document.getElementById('diff-feedback');
 
         let level = 1, pool = [], picIdx = 0, itemPos = 0, mistakes = [], isReview = false;
         let currentR = null, locked = false, inPlace = false;
         let placed = new Set(), lockedCells = new Set(), cellEls = [], memoTimer = null;
         let reviewPool = [], revIdx = 0;
         let timerOn = true; // mode: with / without memorise countdown
+        let diffPool = [], diffIdx = 0, diffMistakes = [], diffReview = false, diffRevIdx = 0;
+        let diffCurrent = null, diffPicked = new Set(), diffCellEls = [];
+        let diffLocked = false, diffPicking = false, diffTimer = null;
 
         let audioStarted = false, synth;
         function initAudio() { synth = new Tone.PolySynth(Tone.Synth).toDestination(); }
@@ -460,7 +542,10 @@
         }
         function backToMenu() {
             clearInterval(memoTimer);
+            clearInterval(diffTimer);
+            diffPicking = false;
             playScreen.classList.add('hidden');
+            diffScreen.classList.add('hidden');
             endScreen.classList.add('hidden');
             setupScreen.classList.remove('hidden');
             setBackBtn('home');
@@ -470,6 +555,7 @@
             if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
             introScreen.classList.add('hidden');
             playScreen.classList.add('hidden');
+            diffScreen.classList.add('hidden');
             endScreen.classList.add('hidden');
             setupScreen.classList.remove('hidden');
         }
@@ -484,6 +570,7 @@
         function startGame(l) {
             if (!audioStarted) { Tone.start(); initAudio(); audioStarted = true; }
             level = l;
+            if (l === 3) { startDiffGame(); return; }
             pool = buildPool();
             picIdx = 0; itemPos = 0; mistakes = []; isReview = false;
             setupScreen.classList.add('hidden'); endScreen.classList.add('hidden');
@@ -819,10 +906,192 @@
             progressPill.innerText = '🔄 再試一次 Review';
         }
 
+        // ================= SUBLEVEL 3: SWAP DETECTIVE =================
+        function buildDiffRound(ti, n) {
+            // n distinct icons from one theme; pic2 = pic1 with two positions swapped
+            const items = shuffle(SWAP_THEMES[ti].slice()).slice(0, n);
+            const i = randInt(0, n - 1);
+            let j = randInt(0, n - 2); if (j >= i) j++; // j != i
+            const pic2 = items.slice();
+            const tmp = pic2[i]; pic2[i] = pic2[j]; pic2[j] = tmp;
+            return { items, pic2, swap: [Math.min(i, j), Math.max(i, j)] };
+        }
+
+        function buildDiffPool() {
+            const sizes = [5, 5, 6, 6, 7, 7]; // short rows first, longer rows later
+            const themeIdx = shuffle(SWAP_THEMES.map((_, i) => i)).slice(0, 6); // no theme repeats in a game
+            return sizes.map((n, k) => buildDiffRound(themeIdx[k], n));
+        }
+
+        function startDiffGame() {
+            diffPool = buildDiffPool();
+            diffIdx = 0; diffMistakes = []; diffReview = false; diffRevIdx = 0;
+            setupScreen.classList.add('hidden'); endScreen.classList.add('hidden');
+            introScreen.classList.add('hidden'); playScreen.classList.add('hidden');
+            diffScreen.classList.remove('hidden');
+            setBackBtn('menu');
+            showDiffRound();
+        }
+
+        function showDiffRound() {
+            if (diffScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            diffPicked = new Set(); diffLocked = false; diffPicking = false;
+            diffCurrent = diffPool[diffIdx];
+            diffPill.innerText = `第 ${diffIdx + 1} / ${diffPool.length} 題 Round`;
+            startDiffMemo();
+        }
+
+        function startDiffMemo() {
+            diffBannerZh.innerHTML = '用眼睛記住這一排！每個在第幾位？';
+            diffBannerEn.innerText = 'Look carefully — remember the order!';
+            diffFeedback.innerText = '';
+            diffMemoFooter.classList.remove('hidden');
+            renderDiffRow(diffCurrent.items, false);
+            startDiffTimer();
+        }
+
+        function startDiffTimer() {
+            clearInterval(diffTimer);
+            const bar = document.getElementById('diff-timer-bar');
+            if (!timerOn) { bar.classList.add('hidden'); return; } // no-timer mode: stay until 「記住了！」
+            bar.classList.remove('hidden');
+            const total = MEMO_MS[3], t0 = Date.now();
+            diffTimerFill.style.width = '100%';
+            diffTimer = setInterval(() => {
+                const left = total - (Date.now() - t0);
+                diffTimerFill.style.width = Math.max(0, (left / total) * 100) + '%';
+                if (left <= 0) startDiffPick();
+            }, 100);
+        }
+        document.getElementById('diff-ready-btn').onclick = () => startDiffPick();
+
+        function renderDiffRow(list, pickMode) {
+            diffRow.innerHTML = ''; diffCellEls = [];
+            diffRow.classList.toggle('pick-mode', pickMode);
+            list.forEach((t, pos) => {
+                const slot = document.createElement('div');
+                slot.className = 'diff-slot';
+                const c = document.createElement('div');
+                c.className = 'diff-cell';
+                c.dataset.pos = pos;
+                const s = document.createElement('span');
+                s.textContent = t.e;
+                c.appendChild(s);
+                const p = document.createElement('div');
+                p.className = 'diff-pos';
+                p.innerText = pos + 1;
+                slot.appendChild(c); slot.appendChild(p);
+                if (pickMode) c.addEventListener('click', () => tapDiffCell(pos));
+                diffRow.appendChild(slot);
+                diffCellEls.push(c);
+            });
+        }
+
+        function startDiffPick() {
+            if (diffScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            if (diffPicking) return;
+            clearInterval(diffTimer);
+            diffPicking = true;
+            diffBannerZh.innerHTML = '哪兩個對調了位置？點出那兩個！';
+            diffBannerEn.innerText = 'Which TWO swapped places? Tap them both!';
+            diffMemoFooter.classList.add('hidden');
+            renderDiffRow(diffCurrent.pic2, true);
+        }
+
+        function tapDiffCell(pos) {
+            if (diffLocked || !diffPicking) return;
+            const c = diffCellEls[pos];
+            if (diffPicked.has(pos)) {
+                diffPicked.delete(pos);
+                c.classList.remove('picked');
+                playSound('pop');
+                return;
+            }
+            if (diffPicked.size >= 2) {
+                playSound('wrong');
+                diffFeedback.style.color = '#d63031';
+                diffFeedback.innerText = '只選兩個！想改？再點一次已選的取消。Pick only TWO — tap a picked one again to un-pick it!';
+                setTimeout(() => { if (!diffLocked) diffFeedback.innerText = ''; }, 1800);
+                return;
+            }
+            diffPicked.add(pos);
+            c.classList.add('picked');
+            playSound('ding');
+            if (diffPicked.size === 2) setTimeout(checkDiff, 450);
+        }
+
+        function checkDiff() {
+            if (diffLocked) return;
+            diffLocked = true;
+            const a = diffCurrent.swap[0], b = diffCurrent.swap[1];
+            const ok = diffPicked.has(a) && diffPicked.has(b);
+            const t1 = diffCurrent.items[a], t2 = diffCurrent.items[b];
+            if (ok) {
+                playSound('correct');
+                diffPicked.forEach(p => diffCellEls[p].classList.add('good'));
+                diffFeedback.style.color = '#00b894';
+                const praises = [
+                    `答對了！第${a + 1}位的${t1.e}和第${b + 1}位的${t2.e}對調了！<br>Correct — positions ${a + 1} and ${b + 1} (the ${t1.en} and the ${t2.en}) swapped! 🎉`,
+                    `真棒！就是${t1.e} ${t1.zh}和${t2.e} ${t2.zh}對調了！<br>Well done — the ${t1.en} and the ${t2.en} swapped! 🎉`,
+                ];
+                diffFeedback.innerHTML = praises[Math.floor(Math.random() * praises.length)];
+                setTimeout(nextDiff, 2800);
+            } else {
+                playSound('wrong');
+                diffBanner.classList.add('shake');
+                setTimeout(() => diffBanner.classList.remove('shake'), 380);
+                diffPicked.forEach(p => diffCellEls[p].classList.add(diffCurrent.swap.includes(p) ? 'good' : 'bad'));
+                diffCurrent.swap.forEach(p => diffCellEls[p].classList.add('good')); // reveal the true pair
+                if (!diffReview && !diffMistakes.includes(diffCurrent)) diffMistakes.push(diffCurrent);
+                diffFeedback.style.color = '#d63031';
+                diffFeedback.innerHTML = `差一點！其實是第${a + 1}位的${t1.e} ${t1.zh}和第${b + 1}位的${t2.e} ${t2.zh}對調了。記住它，稍後再試一次！<br>Almost! It was the ${t1.en} and the ${t2.en} — you can try this one again later!`;
+                setTimeout(nextDiff, 4600);
+            }
+        }
+
+        function nextDiff() {
+            if (diffScreen.classList.contains('hidden')) return; // bailed to menu while a timer was pending
+            diffPicking = false;
+            if (diffReview) {
+                diffRevIdx++;
+                if (diffRevIdx < diffMistakes.length) { startDiffMemo(); return; }
+                showDiffEnd();
+                return;
+            }
+            diffIdx++;
+            if (diffIdx < diffPool.length) { showDiffRound(); return; }
+            if (diffMistakes.length > 0) { // review the tricky ones
+                diffReview = true;
+                diffRevIdx = 0;
+                diffPicked = new Set(); diffLocked = false;
+                diffCurrent = diffMistakes[0];
+                diffPill.innerText = '🔄 再試一次 Review';
+                diffFeedback.style.color = '#9c6500';
+                diffFeedback.innerText = '🔄 再試一次！Let’s review the tricky ones!';
+                setTimeout(() => { if (!diffScreen.classList.contains('hidden')) startDiffMemo(); }, 1600);
+                return;
+            }
+            showDiffEnd();
+        }
+
+        function showDiffEnd() {
+            diffScreen.classList.add('hidden');
+            endScreen.classList.remove('hidden');
+            setBackBtn('home');
+            localStorage.setItem('memory_l3_complete', 'true');
+            decorateCards();
+            document.getElementById('end-title').innerText = '對調偵探！Swap Detective!';
+            document.getElementById('end-sub').innerText = END_SUBS[3];
+            document.getElementById('action-btn').onclick = () => startGame(3);
+            playSound('fanfare');
+            fireConfetti();
+        }
+
         // ================= END & TROPHIES =================
         const END_SUBS = {
             1: '你對眼好犀利，記性好好！Sharp eyes and a super memory!',
             2: '相似的東西都騙不到你！Even the look-alikes can’t fool you!',
+            3: '任何對調都逃不過你對眼！No swap escapes your sharp eyes!',
         };
 
         function showEnd() {
@@ -840,7 +1109,7 @@
 
         function decorateCards() {
             let all = true;
-            for (let i = 1; i <= 2; i++) {
+            for (let i = 1; i <= 3; i++) {
                 let done = false;
                 try { done = localStorage.getItem('memory_l' + i + '_complete') === 'true'; } catch (e) {}
                 const name = document.querySelector('#card-' + i + ' .lv-name');
@@ -887,11 +1156,11 @@
     <section class="parent-guide pg-hidden">
         <h2>📚 給家長的話 · For Parents</h2>
         <h3>🎯 學習重點 · Learning Focus</h3>
-        <p>看著格子圖、記住物品位置、再拖回正確的格子 — 訓練短期記憶、空間位置感與專注力。不少小一面試都有「看圖記憶」環節：給你看幾十秒圖畫，收起之後問細節。這個遊戲正是針對式練習，還分了3×3與3×4兩種難度。</p>
-        <p class="pg-en">Look at the grid, remember where everything is, and drag each item back to its cell — training short-term memory, spatial awareness, and focus. Many Primary One interviews include a "memorise the picture" segment: study a picture for a few dozen seconds, then answer details after it's hidden. This game is targeted practice, with 3×3 and 3×4 difficulties.</p>
+        <p>看著格子圖、記住物品位置、再拖回正確的格子 — 訓練短期記憶、空間位置感與專注力。不少小一面試都有「看圖記憶」環節：給你看幾十秒圖畫，收起之後問細節。這個遊戲正是針對式練習，除了3×3與3×4兩種難度，還有第三關「對調偵探」：先記住一排圖案的順序（第一位、第二位……），圖案收起再出現時，其中兩個對調了位置，小朋友要找出是哪兩個 — 訓練順序記憶與專注觀察，還自然練習到序數（第幾位）的概念。</p>
+        <p class="pg-en">Look at the grid, remember where everything is, and drag each item back to its cell — training short-term memory, spatial awareness, and focus. Many Primary One interviews include a "memorise the picture" segment: study a picture for a few dozen seconds, then answer details after it's hidden. This game is targeted practice with 3×3 and 3×4 difficulties, plus Sublevel 3 "Swap Detective": memorise the order of a row of icons (1st, 2nd…); the row hides and returns with two icons swapped, and your child must find which two — training sequential memory, close observation, and ordinal numbers.</p>
         <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
-        <p>教小朋友用「講故事」策略：不要死記，用說話說出位置 — 「車車在左上角、魚魚在中間」。把位置說出口，記憶會穩固很多。由3×3三種物品開始，熟練之後才挑戰有相似物品的3×4。</p>
-        <p class="pg-en">Teach the "tell a story" strategy: don't memorise blindly — say the positions out loud: "the car is top-left, the fish is in the middle." Verbalising positions strengthens memory. Start with 3×3 and three items; move to 3×4 with similar-looking items once confident.</p>
+        <p>教小朋友用「講故事」策略：不要死記，用說話說出位置 — 「車車在左上角、魚魚在中間」。把位置說出口，記憶會穩固很多。由3×3三種物品開始，熟練之後才挑戰有相似物品的3×4。玩「對調偵探」時，鼓勵小朋友把順序讀出聲：「第一位是大象、第二位是斑馬……」把位置說出口，比默默看記得牢固得多。</p>
+        <p class="pg-en">Teach the "tell a story" strategy: don't memorise blindly — say the positions out loud: "the car is top-left, the fish is in the middle." Verbalising positions strengthens memory. Start with 3×3 and three items; move to 3×4 with similar-looking items once confident. For Swap Detective, encourage your child to read the row aloud: "first is the elephant, second is the zebra…" — saying it out loud sticks far better than silent looking.</p>
         <h3>🏠 生活延伸練習 · Everyday Practice</h3>
         <p>家中實物版：把4-5樣物品放在托盤，讓小朋友看10秒，蓋住、拿走一樣，問「少了哪樣？」簡單但非常有效的記憶訓練，等位、搭車都玩得到。</p>
         <p class="pg-en">A home version: place 4–5 objects on a tray, show your child for 10 seconds, cover it, remove one, and ask "what's missing?" Simple but highly effective memory training — playable while waiting or travelling.</p>

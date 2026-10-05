@@ -5,13 +5,13 @@
     <meta name="theme-color" content="#ff5a6e">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Fair Share 平均分配 | 除法分享遊戲 · Equal Sharing – MMathWorld</title>
-    <meta name="description" content="Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！選出答案，看著糖果曲奇平均入籃，邊玩邊學除法與乘法的關係，更有進一法除法文字題（需密碼）：14人搭的士、每架坐4人，最少要多少架？免費升小學數學練習！Share items equally into groups — a fun first division game for kids.">
+    <meta name="description" content="Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！選出答案，看著糖果曲奇平均入籃，邊玩邊學除法與乘法的關係！免費升小學數學練習！Share items equally into groups — a fun first division game for kids.">
     <link rel="canonical" href="https://mathgames.missman.world/fair_share">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="MMathWorld">
     <meta property="og:locale" content="zh_HK">
     <meta property="og:title" content="Fair Share 平均分配 | 除法分享遊戲 · Equal Sharing – MMathWorld">
-    <meta property="og:description" content="Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！邊玩邊學除法與乘法的關係，更有進一法除法文字題（需密碼）：14人搭的士、每架坐4人，最少要多少架？Share items equally into groups — a fun first division game for kids.">
+    <meta property="og:description" content="Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！邊玩邊學除法與乘法的關係！Share items equally into groups — a fun first division game for kids.">
     <meta property="og:url" content="https://mathgames.missman.world/fair_share">
     <meta property="og:image" content="https://mathgames.missman.world/og-image.png">
     <meta property="og:image:width" content="1200">
@@ -19,7 +19,7 @@
     <meta property="og:image:alt" content="Fair Share 平均分配 — MMathWorld 免費升小數學遊戲 free math game">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Fair Share 平均分配 | 除法分享遊戲 · Equal Sharing – MMathWorld">
-    <meta name="twitter:description" content="Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！邊玩邊學除法與乘法的關係，更有進一法除法文字題（需密碼）：14人搭的士、每架坐4人，最少要多少架？Share items equally into groups — a fun first division game for kids.">
+    <meta name="twitter:description" content="Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！邊玩邊學除法與乘法的關係！Share items equally into groups — a fun first division game for kids.">
     <meta name="twitter:image" content="https://mathgames.missman.world/og-image.png">
     <script type="application/ld+json">
 {
@@ -28,7 +28,7 @@
       "name": "Fair Share",
       "alternateName": "平均分配",
       "url": "https://mathgames.missman.world/fair_share",
-      "description": "Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！邊玩邊學除法與乘法的關係，更有進一法除法文字題（需密碼）：14人搭的士、每架坐4人，最少要多少架？Share items equally into groups — a fun first division game for kids.",
+      "description": "Fair Share 平均分配遊戲：12 可以分成 4+4+4，亦可以分成 3+3+3+3！邊玩邊學除法與乘法的關係！Share items equally into groups — a fun first division game for kids.",
       "image": "https://mathgames.missman.world/og-image.png",
       "inLanguage": [
             "zh-Hant-HK",
@@ -61,7 +61,7 @@
             "url": "https://mathgames.missman.world/"
       },
       "learningResourceType": "Educational game",
-      "teaches": "除法分享、除法文字題、進一法 Equal sharing, first division, division word problems, and rounding up"
+      "teaches": "除法分享 Equal sharing and first division"
 }
     </script>
     <!-- Include Tone.js for synthesized sound effects -->
@@ -274,37 +274,6 @@
         .anim-shake { animation: shake 0.4s; }
         @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
 
-        /* ===== Sublevel 10: division word problems ===== */
-        .word-chip {
-            display: inline-flex; align-items: center; gap: 6px;
-            background: #fff; border: 3px solid #ffd3da; border-radius: 999px;
-            font-size: 16px; font-weight: 800; color: var(--text-color); padding: 4px 12px;
-        }
-        .sheep-black { filter: grayscale(1) brightness(0.45); }
-        .queue-bear { background: #ffe0e4; border-radius: 10px; box-shadow: 0 0 0 3px var(--primary); }
-
-        /* ===== Sublevel 10 lock overlay ===== */
-        #sublock-overlay {
-            position: fixed; inset: 0; z-index: 150; padding: 16px;
-            background: rgba(107, 36, 50, 0.45);
-            display: flex; align-items: center; justify-content: center;
-        }
-        #sublock-card {
-            background: #fff; border: 4px solid #fad4da; border-radius: 24px;
-            padding: 22px 24px 20px; max-width: 430px; width: 100%; text-align: center;
-            box-shadow: 0 10px 0 rgba(214, 48, 74, 0.15), 0 24px 48px rgba(107, 36, 50, 0.35);
-        }
-        #sublock-card .game-title { font-size: 25px; color: var(--primary-dark); }
-        #sublock-card p { font-size: 15px; font-weight: 700; color: #a04556; margin: 4px 0 12px; }
-        #sublock-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 6px; }
-        #sublock-input {
-            font-family: inherit; font-size: 17px; font-weight: 700; padding: 11px 16px; width: 200px;
-            border: 3px solid #fad4da; border-radius: 999px; outline: none; text-align: center; color: var(--text-color);
-        }
-        #sublock-input:focus { border-color: var(--primary); }
-        #sublock-input.error { border-color: var(--danger); animation: shake 0.3s; }
-        #sublock-error { margin-top: 10px; font-weight: 800; color: var(--danger); font-size: 14px; }
-
         @media (max-width: 450px) {
             #game-container { padding: 42px 12px 20px 12px; width: 94%; }
             .game-title { font-size: 27px; }
@@ -420,10 +389,6 @@
                     <span class="lv-emoji">⭐</span>
                     <span><span class="lv-name">Sublevel 4: 混合挑戰</span><br><span class="lv-sub">Mixed Challenge — all divisors to 10!</span></span>
                 </button>
-                <button class="level-card" id="lv-card-10" onclick="tryStartLocked(10)">
-                    <span class="lv-emoji">🧮</span>
-                    <span><span class="lv-name">Sublevel 10: 除法文字題 🔒</span><br><span class="lv-sub">Word Problems — 14 人搭的士，每架坐 4 人，最少要多少架？(Password 需要密碼)</span></span>
-                </button>
             </div>
         </div>
 
@@ -451,24 +416,6 @@
             <div id="end-btns">
                 <button id="action-btn" class="btn btn-primary"></button>
                 <button id="picker-btn" class="btn btn-secondary">選擇關卡 Pick a Sublevel</button>
-            </div>
-        </div>
-
-        <!-- SUBLEVEL 10 LOCK -->
-        <div id="sublock-overlay" class="hidden">
-            <div id="sublock-card">
-                <div style="font-size: 50px;">🔒</div>
-                <h2 class="game-title" id="sublock-title">Sublevel 10: 除法文字題</h2>
-                <p>
-                    這關需要密碼才能玩！快問老師或者家長拿密碼吧。
-                    <br>This sublevel is locked — ask your teacher or parent for the password!
-                </p>
-                <div id="sublock-row">
-                    <input id="sublock-input" type="password" placeholder="Password 密碼" autocomplete="off" />
-                    <button id="sublock-btn" class="btn btn-primary">Unlock 解鎖！</button>
-                </div>
-                <div id="sublock-error" class="hidden">密碼不對，再試一次！Wrong password — try again! 🤔</div>
-                <button id="sublock-cancel" class="btn-parent">← 返回 Back</button>
             </div>
         </div>
 
@@ -632,7 +579,6 @@
 
     // ---- Pool builder: 10 questions per game ----
     function buildPool(level) {
-        if (level === 10) return buildWordPool();
         if (level === 1) {
             // ÷2 practice: 2÷2=1 all the way to 20÷2=10, shuffled
             return shuffle([1,2,3,4,5,6,7,8,9,10]).map(per => makeQ(randPick(DEAL_ITEMS), 2, per));
@@ -657,135 +603,6 @@
         return shuffle(fams.map(([a, b]) => makePair(a, b))).flat();
     }
 
-    // ================= SUBLEVEL 10: DIVISION WORD PROBLEMS =================
-    // Four story types, all answered with division — mostly "round up" (進一法):
-    // days (homework pages), taxi (passengers per taxi), boat (add two groups, then
-    // divide), wheel (queue position → which cabin). All numbers ≤ 20.
-    const WORD_KIDS = [
-        { zh: '小飛', en: 'Siu Fei', pro: '他', enPro: 'He' },
-        { zh: '小美', en: 'Siu Mei', pro: '她', enPro: 'She' },
-        { zh: '小明', en: 'Siu Ming', pro: '他', enPro: 'He' },
-        { zh: '小芳', en: 'Siu Fong', pro: '她', enPro: 'She' },
-        { zh: '家欣', en: 'Ka Yan', pro: '她', enPro: 'She' },
-        { zh: '小華', en: 'Siu Wa', pro: '他', enPro: 'He' },
-    ];
-    const WHEEL_ANIMALS = ['🦁', '🐰', '🐸', '🐵', '🦊', '🐷', '🐯', '🐨', '🐶', '🐱'];
-    const QUEUE_PEOPLE = ['🧒', '👧', '👦', '🧑', '👩', '👨'];
-
-    // 4 numeric options; extras feed the classic mistakes (e.g. forgetting to round up)
-    function wordChoices(ans, extras) {
-        const set = new Set([ans]);
-        const cands = shuffle([...extras, ans - 1, ans + 1, ans + 2, ans - 2, ans + 3]);
-        for (const c of cands) {
-            if (set.size >= 4) break;
-            if (c >= 1 && c <= 20 && !set.has(c)) set.add(c);
-        }
-        return shuffle([...set]).map(v => ({ v, label: String(v) }));
-    }
-
-    function ceilExplain(N, d, unitZh, unitEn) {
-        const q = Math.floor(N / d), r = N % d, ans = Math.ceil(N / d);
-        if (r === 0) return `<div class="eq-main">${N} ÷ ${d} = ${ans}</div><div class="eq-sub">啱啱好 ${ans} ${unitZh}！Exactly ${ans} ${unitEn}!</div>`;
-        return `<div class="eq-main">${N} ÷ ${d} = ${q} 餘 ${r} → ${q} + 1 = ${ans}</div><div class="eq-sub">剩下的 ${r} 個都要多 1 ${unitZh}！The remaining ${r} still need one more ${unitEn.replace(/s$/, '')}!</div>`;
-    }
-
-    // Type 1: "小飛有14版假期功課要做，他每一日做5版，需要多少日才能做完所有功課？"
-    function genWordDays(fixedN, fixedD, fixedKid) {
-        const kid = fixedKid || randPick(WORD_KIDS);
-        const d = fixedD || randInt(2, 6);
-        let N = fixedN || 0;
-        if (!N) { do { N = randInt(7, 20); } while (N % d === 0); }
-        const ans = Math.ceil(N / d);
-        return {
-            kind: 'word', subtype: 'days', answer: ans, answerLabel: String(ans),
-            choices: wordChoices(ans, [Math.floor(N / d), d]),
-            zh: `${kid.zh}有 <span class="qw">${N}</span> 版假期功課要做，${kid.pro}每一日做 <span class="qw">${d}</span> 版，最少需要多少日才能做完所有功課？`,
-            en: `${kid.en} has ${N} pages of holiday homework and does ${d} pages a day. At least how many days does ${kid.enPro.toLowerCase()} need to finish it all?`,
-            visual: `<span style="font-size:40px;">📚</span><span class="word-chip">${N} 版 pages</span><span style="font-size:40px;">📅</span><span class="word-chip">每日 ${d} 版 · ${d} / day</span>`,
-            explainHTML: ceilExplain(N, d, '日', 'days')
-        };
-    }
-
-    // Type 2: "有14個人排隊搭的士，一個的士可以坐4位乘客，最少要多少輛的士？"
-    function genWordTaxi(fixedN, fixedS) {
-        const s = fixedS || randInt(3, 5);
-        let N = fixedN || 0;
-        if (!N) { do { N = randInt(7, 20); } while (N % s === 0); }
-        const ans = Math.ceil(N / s);
-        const people = Array.from({ length: N }, () => randPick(QUEUE_PEOPLE)).join('');
-        return {
-            kind: 'word', subtype: 'taxi', answer: ans, answerLabel: String(ans),
-            choices: wordChoices(ans, [Math.floor(N / s), s]),
-            zh: `有 <span class="qw">${N}</span> 個人排隊搭的士，一架的士可以坐 <span class="qw">${s}</span> 位乘客，最少要多少架的士才可以載晒所有人？`,
-            en: `${N} people are queuing for taxis. Each taxi can carry ${s} passengers. At least how many taxis are needed to take everyone?`,
-            visual: `<div style="font-size:22px; line-height:1.3;">${people}</div><span class="word-chip">🚕 每架坐 ${s} 人 · ${s} per taxi</span>`,
-            explainHTML: ceilExplain(N, s, '架', 'taxis')
-        };
-    }
-
-    // Type 3: "6隻小白羊，6隻小黑羊坐船過河，一艘船可以坐3隻羊，共要幾艘船" — add first, then divide
-    function genWordBoat(fixedA, fixedB, fixedC) {
-        let a = fixedA, b = fixedB, c = fixedC;
-        if (!a) {
-            c = randInt(2, 4);
-            const k = randInt(2, Math.min(6, Math.floor(20 / c)));
-            const total = c * k;
-            a = randInt(1, total - 1); b = total - a;
-        }
-        const total = a + b, ans = total / c;
-        const white = '🐑'.repeat(a);
-        const black = Array.from({ length: b }, () => '<span class="sheep-black">🐑</span>').join('');
-        return {
-            kind: 'word', subtype: 'boat', answer: ans, answerLabel: String(ans),
-            choices: wordChoices(ans, [a, b, ans - 1, ans + 1]),
-            zh: `<span class="qw">${a}</span> 隻小白羊和 <span class="qw">${b}</span> 隻小黑羊坐船過河，一艘船可以坐 <span class="qw">${c}</span> 隻羊，最少共要多少艘船？`,
-            en: `${a} white sheep and ${b} black sheep are crossing the river by boat. Each boat can carry ${c} sheep. At least how many boats are needed?`,
-            visual: `<div style="font-size:24px; line-height:1.3;">${white}${black}</div><span class="word-chip">⛵ 每艘坐 ${c} 隻 · ${c} per boat</span>`,
-            explainHTML: `<div class="eq-main">${a} + ${b} = ${total}，${total} ÷ ${c} = ${ans}</div><div class="eq-sub">先加起來，再分船！Add them up first, then share into boats!</div>`
-        };
-    }
-
-    // Type 4: "小熊排10，一架摩天輪坐3隻動物，小熊坐第幾架" — queue position → ceil(p / c)
-    function genWordWheel(fixedP, fixedC) {
-        let p = fixedP, c = fixedC;
-        if (!p) {
-            c = randInt(2, 5);
-            const k = randInt(2, Math.min(6, Math.floor(20 / c)));
-            p = c * (k - 1) + randInt(1, c); // position inside cabin k (sometimes exactly the last seat)
-        }
-        const ans = Math.ceil(p / c);
-        const queue = Array.from({ length: p }, (_, i) =>
-            i === p - 1 ? '<span class="queue-bear">🐻</span>' : randPick(WHEEL_ANIMALS)).join('');
-        return {
-            kind: 'word', subtype: 'wheel', answer: ans, answerLabel: `第 ${ans} 架`,
-            choices: wordChoices(ans, [Math.floor(p / c), c]),
-            zh: `小動物排隊搭摩天輪，小熊排第 <span class="qw">${p}</span>，如果一架摩天輪可以坐 <span class="qw">${c}</span> 隻動物，小熊可以坐第幾架？`,
-            en: `Animals are queuing for the Ferris wheel. Little Bear is number ${p} in line. Each wheel takes ${c} animals. Which wheel will Little Bear ride?`,
-            visual: `<div style="font-size:21px; line-height:1.35;">${queue}</div><span class="word-chip">🎡 每架坐 ${c} 隻 · ${c} per wheel</span>`,
-            explainHTML: (() => {
-                const q = Math.floor(p / c), r = p % c;
-                if (r === 0) return `<div class="eq-main">${p} ÷ ${c} = ${ans}</div><div class="eq-sub">小熊啱啱坐第 ${ans} 架最後一個位！Little Bear takes the very last seat of wheel ${ans}!</div>`;
-                return `<div class="eq-main">${p} ÷ ${c} = ${q} 餘 ${r} → 第 ${q} + 1 = ${ans} 架</div><div class="eq-sub">前 ${q} 架坐滿了，小熊坐下一架！The first ${q} wheels are full — Bear rides the next one!</div>`;
-            })()
-        };
-    }
-
-    // 10 questions: the 4 classic problems + 6 fresh variations, all shuffled
-    function buildWordPool() {
-        const fixed = [
-            genWordDays(14, 5, WORD_KIDS[0]), // 小飛
-            genWordTaxi(14, 4),
-            genWordBoat(6, 6, 3),
-            genWordWheel(10, 3),
-        ];
-        const fresh = shuffle([
-            genWordDays(), genWordTaxi(),
-            genWordBoat(), genWordBoat(),
-            genWordWheel(), genWordWheel(),
-        ]);
-        return shuffle([...fixed, ...fresh]);
-    }
-
     // ---- Picture mode: show pile and containers, or word problem only ----
     let showPictures = true;
     try { showPictures = localStorage.getItem('fairshare_pictures') !== '0'; } catch (e) {}
@@ -801,22 +618,7 @@
     updateModeButtons();
 
     // ---- Rendering ----
-    function renderWordQuestion(q) {
-        choicesDiv.innerHTML = '';
-        feedbackDisplay.innerText = '';
-        containersRow.innerHTML = '';
-        containersRow.classList.add('hidden');
-        equationDiv.classList.add('hidden');
-        equationDiv.innerHTML = '';
-        timeLimit = 30000; // word problems need reading time
-        questionText.innerHTML = `${q.zh}<br><span class="qzh">${q.en}</span>`;
-        pileDiv.innerHTML = q.visual || '';
-        pileDiv.classList.toggle('hidden', !showPictures || !q.visual);
-        showChoices(q);
-    }
-
     function renderQuestion(q) {
-        if (q.kind === 'word') { renderWordQuestion(q); return; }
         choicesDiv.innerHTML = '';
         feedbackDisplay.innerText = '';
         containersRow.innerHTML = '';
@@ -861,11 +663,6 @@
 
     // After answering, items pop into the containers round-robin, then the equation appears
     function runReveal(q, done) {
-        if (q.kind === 'word') {
-            showEquation(q);
-            setTimeout(done, 3200); // longer read for the worked solution
-            return;
-        }
         if (!showPictures) {
             showEquation(q);
             setTimeout(done, 2300);
@@ -892,13 +689,6 @@
     }
 
     function showEquation(q) {
-        if (q.kind === 'word') {
-            equationDiv.innerHTML = q.explainHTML;
-            const main = equationDiv.querySelector('.eq-main');
-            if (main && main.innerText.length > 18) main.style.fontSize = '24px';
-            equationDiv.classList.remove('hidden');
-            return;
-        }
         const terms = Array(q.M).fill(q.answer).join(' + ');
         equationDiv.innerHTML = `<div class="eq-main">${terms} = ${q.N}</div><div class="eq-sub">每個${q.item.contZh}有 ${q.answer} 件 · Each ${q.item.contEn} has ${q.answer}!</div>`;
         if (q.M >= 7) equationDiv.querySelector('.eq-main').style.fontSize = '22px';
@@ -1099,50 +889,17 @@
         const name = card.querySelector('.lv-name');
         if (name && !name.innerText.includes('🏆')) name.innerText += ' 🏆';
     }
-    for (const i of [1, 2, 3, 4, 10]) {
+    for (let i = 1; i <= 4; i++) {
         try { if (localStorage.getItem(`share_l${i}_complete`) === '1') decorateCard(i); } catch (e) {}
     }
-
-    // ---- Sublevel 10 lock gate (same password as Money Match Sublevels 7-9) ----
-    const sublockOverlay = document.getElementById('sublock-overlay');
-    const sublockInput = document.getElementById('sublock-input');
-    const sublockError = document.getElementById('sublock-error');
-    const SUB_PASS_HASH = 1056886225; // djb2-xor of the password
-    function tryStartLocked(level) {
-        sublockInput.value = '';
-        sublockError.classList.add('hidden');
-        sublockOverlay.classList.remove('hidden');
-        setTimeout(() => sublockInput.focus(), 60);
-    }
-    function closeSubLock() { sublockOverlay.classList.add('hidden'); }
-    function trySubUnlock() {
-        const v = sublockInput.value.trim().toLowerCase();
-        let h = 5381;
-        for (let i = 0; i < v.length; i++) h = ((h * 33) ^ v.charCodeAt(i)) >>> 0;
-        if (v && h === SUB_PASS_HASH) {
-            sublockOverlay.classList.add('hidden');
-            startGame(10);
-        } else {
-            playSound('wrong');
-            sublockError.classList.remove('hidden');
-            sublockInput.value = '';
-            sublockInput.classList.add('error');
-            setTimeout(() => sublockInput.classList.remove('error'), 400);
-            sublockInput.focus();
-        }
-    }
-    document.getElementById('sublock-btn').onclick = () => trySubUnlock();
-    document.getElementById('sublock-cancel').onclick = () => closeSubLock();
-    sublockInput.addEventListener('keydown', e => { if (e.key === 'Enter') trySubUnlock(); if (e.key === 'Escape') closeSubLock(); });
-    sublockOverlay.addEventListener('click', e => { if (e.target === sublockOverlay) closeSubLock(); });
     </script>
 
 
     <section class="parent-guide pg-hidden">
         <h2>📚 給家長的話 · For Parents</h2>
         <h3>🎯 學習重點 · Learning Focus</h3>
-        <p>把糖果逐粒分進不同的瓶子：每人一份、份份一樣多，才叫「平均」。這是除法的前概念 — 除法不是口訣，而是「分東西分到大家一樣多」。遊戲還會問「分不分得完？有沒有剩？」帶出餘數的初步感覺，為正式除法打好底。第十關「除法文字題」（需密碼）把除法放進生活故事：「14 版功課、每日做 5 版，要多少日做完？」「14 個人搭的士、每架坐 4 人，最少要多少架？」— 關鍵是「有剩都要加一」（進一法）：14 ÷ 5 = 2 餘 4，剩下的 4 版都要做多一日，所以是 3 日。另有「6 隻白羊加 6 隻黑羊、每船坐 3 隻」的先加後除，和「小熊排第 10、每架摩天輪坐 3 隻」的排隊位置題，訓練小朋友從文字中找出「總數」和「每份」，自己決定怎樣分。</p>
-        <p class="pg-en">Deal the candies one by one into jars: everyone gets the same amount — that's what "equal" means. This is the pre-concept of division: division isn't a chant, it's "sharing until everyone has the same". The game also asks "did it share out exactly? Any left over?" — a first feel for remainders, laying the ground for formal division. Sublevel 10 (password required) wraps division in real-life stories: "14 pages of homework, 5 pages a day — how many days to finish?" and "14 people, 4 per taxi — how many taxis at least?" The key idea is rounding up: 14 ÷ 5 = 2 remainder 4, and those last 4 pages still need one more day — so 3 days. There are also add-then-divide boat problems ("6 white sheep + 6 black sheep, 3 per boat") and queue-position problems ("Bear is 10th in line, 3 per Ferris wheel — which wheel?"), training children to spot the total and the group size in a story and decide how to share.</p>
+        <p>把糖果逐粒分進不同的瓶子：每人一份、份份一樣多，才叫「平均」。這是除法的前概念 — 除法不是口訣，而是「分東西分到大家一樣多」。遊戲還會問「分不分得完？有沒有剩？」帶出餘數的初步感覺，為正式除法打好底。</p>
+        <p class="pg-en">Deal the candies one by one into jars: everyone gets the same amount — that's what "equal" means. This is the pre-concept of division: division isn't a chant, it's "sharing until everyone has the same". The game also asks "did it share out exactly? Any left over?" — a first feel for remainders, laying the ground for formal division.</p>
         <h3>👨‍👩‍👧 陪玩小貼士 · Playing Together</h3>
         <p>跟小朋友強調「逐粒逐粒、輪流分」的策略（一一分配），分完一起檢查：「每份一不一樣多？這樣才公平。」遇到分不完，一起討論「多出來的可以怎樣處理？」— 問題本身已經是很好的思考訓練。</p>
         <p class="pg-en">Emphasise the "one by one, take turns" strategy (dealing out), then check together: "Is every share the same? That's what fair means." When it doesn't share out exactly, discuss "what could we do with the extras?" — the question itself is excellent thinking practice.</p>
